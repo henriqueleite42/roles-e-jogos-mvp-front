@@ -7,18 +7,840 @@ import { Search } from "lucide-react"
 import Image from "next/image"
 
 // Sample data for our items
-const items = [
-	{
-		id: 1,
-		title: "Gizmos",
-		url: "https://ludopedia.com.br/jogo/gizmos",
-		rating: 2.04,
-		image: "/games/gizmos.webp",
-		persons: [
-			{ name: "Henrique Leite", avatar: "/users/henrique-leite.jpg" },
+const items = Object.values({
+	"70": {
+		"id": 70,
+		"url": "https://ludopedia.com.br/jogo/village",
+		"image": "https://storage.googleapis.com/ludopedia-capas/70_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
 		],
+		"title": "Village"
 	},
-]
+	"71": {
+		"id": 71,
+		"url": "https://ludopedia.com.br/jogo/zombicide",
+		"image": "https://storage.googleapis.com/ludopedia-capas/71_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Zombicide"
+	},
+	"333": {
+		"id": 333,
+		"url": "https://ludopedia.com.br/jogo/fungi-morels",
+		"image": "https://storage.googleapis.com/ludopedia-capas/333_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Fungi"
+	},
+	"397": {
+		"id": 397,
+		"url": "https://ludopedia.com.br/jogo/catan-the-settlers-of-catan",
+		"image": "https://storage.googleapis.com/ludopedia-capas/397_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Catan: O Jogo"
+	},
+	"612": {
+		"id": 612,
+		"url": "https://ludopedia.com.br/jogo/dixit-odyssey",
+		"image": "https://storage.googleapis.com/ludopedia-capas/612_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Dixit: Odyssey"
+	},
+	"618": {
+		"id": 618,
+		"url": "https://ludopedia.com.br/jogo/uno",
+		"image": "https://storage.googleapis.com/ludopedia-capas/618_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Uno"
+	},
+	"772": {
+		"id": 772,
+		"url": "https://ludopedia.com.br/jogo/alhambra",
+		"image": "https://storage.googleapis.com/ludopedia-capas/772_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Alhambra"
+	},
+	"1041": {
+		"id": 1041,
+		"url": "https://ludopedia.com.br/jogo/dominoes",
+		"image": "https://storage.googleapis.com/ludopedia-capas/1041_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Dominó"
+	},
+	"1261": {
+		"id": 1261,
+		"url": "https://ludopedia.com.br/jogo/jaipur",
+		"image": "https://storage.googleapis.com/ludopedia-capas/1261_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Jaipur"
+	},
+	"1896": {
+		"id": 1896,
+		"url": "https://ludopedia.com.br/jogo/abalone-polaris",
+		"image": "https://storage.googleapis.com/ludopedia-capas/1896_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Abalone / Polaris"
+	},
+	"3857": {
+		"id": 3857,
+		"url": "https://ludopedia.com.br/jogo/dobble-spot-it",
+		"image": "https://storage.googleapis.com/ludopedia-capas/3857_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Dobble"
+	},
+	"3952": {
+		"id": 3952,
+		"url": "https://ludopedia.com.br/jogo/uno-stacko",
+		"image": "https://storage.googleapis.com/ludopedia-capas/3952_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "UNO Stacko"
+	},
+	"4699": {
+		"id": 4699,
+		"url": "https://ludopedia.com.br/jogo/la-granja",
+		"image": "https://storage.googleapis.com/ludopedia-capas/4699_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "La Granja"
+	},
+	"11466": {
+		"id": 11466,
+		"url": "https://ludopedia.com.br/jogo/black-stories-3",
+		"image": "https://storage.googleapis.com/ludopedia-capas/11466_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Histórias Sinistras 3"
+	},
+	"15400": {
+		"id": 15400,
+		"url": "https://ludopedia.com.br/jogo/bandido",
+		"image": "https://storage.googleapis.com/ludopedia-capas/15400_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Bandido"
+	},
+	"15752": {
+		"id": 15752,
+		"url": "https://ludopedia.com.br/jogo/hora-de-aventuras-juego-de-rol-rpg",
+		"image": "https://storage.googleapis.com/ludopedia-capas/15752_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Hora de Aventura: Roleplaying Game"
+	},
+	"17305": {
+		"id": 17305,
+		"url": "https://ludopedia.com.br/jogo/the-mind",
+		"image": "https://storage.googleapis.com/ludopedia-capas/17305_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "The Mind"
+	},
+	"17906": {
+		"id": 17906,
+		"url": "https://ludopedia.com.br/jogo/gizmos",
+		"image": "https://storage.googleapis.com/ludopedia-capas/17906_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Gizmos"
+	},
+	"18135": {
+		"id": 18135,
+		"url": "https://ludopedia.com.br/jogo/claim-2",
+		"image": "https://storage.googleapis.com/ludopedia-capas/18135_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Claim 2"
+	},
+	"18993": {
+		"id": 18993,
+		"url": "https://ludopedia.com.br/jogo/barrage",
+		"image": "https://storage.googleapis.com/ludopedia-capas/18993_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Barrage"
+	},
+	"19973": {
+		"id": 19973,
+		"url": "https://ludopedia.com.br/jogo/q-death-on-4th-of-july",
+		"image": "https://storage.googleapis.com/ludopedia-capas/19973_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Elementar: Morte em 4 de Julho"
+	},
+	"19974": {
+		"id": 19974,
+		"url": "https://ludopedia.com.br/jogo/sherlock-last-call",
+		"image": "https://storage.googleapis.com/ludopedia-capas/19974_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Elementar: Última Chamada"
+	},
+	"19975": {
+		"id": 19975,
+		"url": "https://ludopedia.com.br/jogo/q-tomb-of-the-archaeologist",
+		"image": "https://storage.googleapis.com/ludopedia-capas/19975_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Elementar: A Tumba do Arqueólogo"
+	},
+	"20870": {
+		"id": 20870,
+		"url": "https://ludopedia.com.br/jogo/-l-l-a-m-a",
+		"image": "https://storage.googleapis.com/ludopedia-capas/20870_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "LHAMA"
+	},
+	"21817": {
+		"id": 21817,
+		"url": "https://ludopedia.com.br/jogo/carnival-zombie-second-edition",
+		"image": "https://storage.googleapis.com/ludopedia-capas/21817_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Carnival Zombie (Segunda Edição)"
+	},
+	"23152": {
+		"id": 23152,
+		"url": "https://ludopedia.com.br/jogo/banco-imobiliario-mundo",
+		"image": "https://storage.googleapis.com/ludopedia-capas/23152_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Banco Imobiliário Mundo"
+	},
+	"23156": {
+		"id": 23156,
+		"url": "https://ludopedia.com.br/jogo/cafe",
+		"image": "https://storage.googleapis.com/ludopedia-capas/23156_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Café"
+	},
+	"23331": {
+		"id": 23331,
+		"url": "https://ludopedia.com.br/jogo/super-cats",
+		"image": "https://storage.googleapis.com/ludopedia-capas/23331_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Super Cats"
+	},
+	"24032": {
+		"id": 24032,
+		"url": "https://ludopedia.com.br/jogo/telma-2-edicao",
+		"image": "https://storage.googleapis.com/ludopedia-capas/24032_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Telma (2ª Edição)"
+	},
+	"24141": {
+		"id": 24141,
+		"url": "https://ludopedia.com.br/jogo/golem",
+		"image": "https://storage.googleapis.com/ludopedia-capas/24141_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Golem"
+	},
+	"24269": {
+		"id": 24269,
+		"url": "https://ludopedia.com.br/jogo/taco-cat-goat-cheese-pizza",
+		"image": "https://storage.googleapis.com/ludopedia-capas/24269_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Taco Gato Cabra Queijo Pizza"
+	},
+	"24635": {
+		"id": 24635,
+		"url": "https://ludopedia.com.br/jogo/vampiro-sozinho-na-escuridao",
+		"image": "https://storage.googleapis.com/ludopedia-capas/24635_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Vampiro - Sozinho na Escuridão"
+	},
+	"25925": {
+		"id": 25925,
+		"url": "https://ludopedia.com.br/jogo/flourish",
+		"image": "https://storage.googleapis.com/ludopedia-capas/25925_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Flourish"
+	},
+	"26076": {
+		"id": 26076,
+		"url": "https://ludopedia.com.br/jogo/a-heranca-de-cthulhu",
+		"image": "https://storage.googleapis.com/ludopedia-capas/26076_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "A Herança de Cthulhu"
+	},
+	"26078": {
+		"id": 26078,
+		"url": "https://ludopedia.com.br/jogo/frostpunk-the-board-game",
+		"image": "https://storage.googleapis.com/ludopedia-capas/26078_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Frostpunk: The Board Game"
+	},
+	"26234": {
+		"id": 26234,
+		"url": "https://ludopedia.com.br/jogo/mysterium-park",
+		"image": "https://storage.googleapis.com/ludopedia-capas/26234_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Mysterium Park"
+	},
+	"26473": {
+		"id": 26473,
+		"url": "https://ludopedia.com.br/jogo/canvas",
+		"image": "https://storage.googleapis.com/ludopedia-capas/26473_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Canvas"
+	},
+	"26753": {
+		"id": 26753,
+		"url": "https://ludopedia.com.br/jogo/3-jogos-ludo-dama-trilha",
+		"image": "https://storage.googleapis.com/ludopedia-capas/26753_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "3 Jogos: Ludo, Dama, Trilha"
+	},
+	"29051": {
+		"id": 29051,
+		"url": "https://ludopedia.com.br/jogo/pandemic-hot-zone-europe",
+		"image": "https://storage.googleapis.com/ludopedia-capas/29051_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Pandemic: Zona Crítica - Europa"
+	},
+	"31085": {
+		"id": 31085,
+		"url": "https://ludopedia.com.br/jogo/glow",
+		"image": "https://storage.googleapis.com/ludopedia-capas/31085_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Lume"
+	},
+	"31177": {
+		"id": 31177,
+		"url": "https://ludopedia.com.br/jogo/monopoly-bid",
+		"image": "https://storage.googleapis.com/ludopedia-capas/31177_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Monopoly: Bid"
+	},
+	"31428": {
+		"id": 31428,
+		"url": "https://ludopedia.com.br/jogo/city-of-mist-player-s-guide",
+		"image": "https://storage.googleapis.com/ludopedia-capas/31428_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "City of Mist: Guia do Jogador"
+	},
+	"32443": {
+		"id": 32443,
+		"url": "https://ludopedia.com.br/jogo/licantropo-maldicao-de-sangue",
+		"image": "https://storage.googleapis.com/ludopedia-capas/32443_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Licantropo - Maldição de Sangue"
+	},
+	"32444": {
+		"id": 32444,
+		"url": "https://ludopedia.com.br/jogo/bruxo-pacto-das-sombras",
+		"image": "https://storage.googleapis.com/ludopedia-capas/32444_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Bruxo - Pacto das Sombras"
+	},
+	"32453": {
+		"id": 32453,
+		"url": "https://ludopedia.com.br/jogo/savage",
+		"image": "https://storage.googleapis.com/ludopedia-capas/32453_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Savage"
+	},
+	"33333": {
+		"id": 33333,
+		"url": "https://ludopedia.com.br/jogo/tindaya",
+		"image": "https://storage.googleapis.com/ludopedia-capas/33333_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Tindaya"
+	},
+	"34618": {
+		"id": 34618,
+		"url": "https://ludopedia.com.br/jogo/as-7-baladas-do-oeste",
+		"image": "https://storage.googleapis.com/ludopedia-capas/34618_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "As 7 Baladas do Oeste"
+	},
+	"35117": {
+		"id": 35117,
+		"url": "https://ludopedia.com.br/jogo/santa-kaos",
+		"image": "https://storage.googleapis.com/ludopedia-capas/35117_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Santa Kaos"
+	},
+	"35122": {
+		"id": 35122,
+		"url": "https://ludopedia.com.br/jogo/uno-all-wild",
+		"image": "https://storage.googleapis.com/ludopedia-capas/35122_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "UNO: All Wild!"
+	},
+	"35130": {
+		"id": 35130,
+		"url": "https://ludopedia.com.br/jogo/alieninjas",
+		"image": "https://storage.googleapis.com/ludopedia-capas/35130_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Alieninjas"
+	},
+	"36508": {
+		"id": 36508,
+		"url": "https://ludopedia.com.br/jogo/four-against-darkness-four-against-the-great-old-ones",
+		"image": "https://storage.googleapis.com/ludopedia-capas/36508_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Four Against Darkness: Contra os Grandes Antigos"
+	},
+	"36562": {
+		"id": 36562,
+		"url": "https://ludopedia.com.br/jogo/oh-my-brain",
+		"image": "https://storage.googleapis.com/ludopedia-capas/36562_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Oh My Brain"
+	},
+	"40988": {
+		"id": 40988,
+		"url": "https://ludopedia.com.br/jogo/ferias-em-dupla",
+		"image": "https://storage.googleapis.com/ludopedia-capas/40988_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Férias em Dupla"
+	},
+	"52242": {
+		"id": 52242,
+		"url": "https://ludopedia.com.br/jogo/zurvivors-origem",
+		"image": "https://storage.googleapis.com/ludopedia-capas/52242_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Zurvivors Origem"
+	},
+	"52818": {
+		"id": 52818,
+		"url": "https://ludopedia.com.br/jogo/quartz-o-jogo-de-cartas",
+		"image": "https://storage.googleapis.com/ludopedia-capas/52818_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Quartz: O Jogo de Cartas"
+	},
+	"53216": {
+		"id": 53216,
+		"url": "https://ludopedia.com.br/jogo/trolls-and-princesses",
+		"image": "https://storage.googleapis.com/ludopedia-capas/53216_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Trolls e Princesas"
+	},
+	"53927": {
+		"id": 53927,
+		"url": "https://ludopedia.com.br/jogo/chule",
+		"image": "https://storage.googleapis.com/ludopedia-capas/53927_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Chulé"
+	},
+	"58247": {
+		"id": 58247,
+		"url": "https://ludopedia.com.br/jogo/fuga-do-sanatorio-moreau",
+		"image": "https://storage.googleapis.com/ludopedia-capas/58247_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Fuga do Sanatório Moreau"
+	},
+	"66307": {
+		"id": 66307,
+		"url": "https://ludopedia.com.br/jogo/rolling-ranch-celeiros-rebanhos",
+		"image": "https://storage.googleapis.com/ludopedia-capas/66307_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Rolling Ranch: Celeiros & Rebanhos"
+	},
+	"66725": {
+		"id": 66725,
+		"url": "https://ludopedia.com.br/jogo/candela-obscura",
+		"image": "https://storage.googleapis.com/ludopedia-capas/66725_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Candela Obscura"
+	},
+	"66840": {
+		"id": 66840,
+		"url": "https://ludopedia.com.br/jogo/azul-summer-pavilion-mini",
+		"image": "https://storage.googleapis.com/ludopedia-capas/66840_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Azul Mini: Pavilhão de Verão"
+	},
+	"67134": {
+		"id": 67134,
+		"url": "https://ludopedia.com.br/jogo/balaio-de-gato",
+		"image": "https://storage.googleapis.com/ludopedia-capas/67134_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Balaio de Gato"
+	},
+	"69678": {
+		"id": 69678,
+		"url": "https://ludopedia.com.br/jogo/wilderfeast",
+		"image": "https://storage.googleapis.com/ludopedia-capas/69678_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Wilderfeast"
+	},
+	"76468": {
+		"id": 76468,
+		"url": "https://ludopedia.com.br/jogo/grasse-segunda-edicao",
+		"image": "https://storage.googleapis.com/ludopedia-capas/76468_t.jpg",
+		"persons": [
+			{
+				"avatar": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg",
+				"id": 292342,
+				"name": "henriqueleite42"
+			}
+		],
+		"title": "Grasse: Segunda Edição"
+	}
+})
 
 export default function Home() {
 	const [searchQuery, setSearchQuery] = useState("")
@@ -49,11 +871,11 @@ export default function Home() {
 								<div className="flex flex-col md:flex-row">
 									<div className="flex-1 p-6">
 										<h2 className="text-2xl font-bold">{item.title}</h2>
-										<div className="flex items-center mt-2 mb-4">
+										{/* <div className="flex items-center mt-2 mb-4">
 											<div className="flex items-center bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">
 												{item.rating.toFixed(1)}
 											</div>
-										</div>
+										</div> */}
 										<div className="flex">
 											{item.persons.map((person, index) => (
 												<div key={index} className="relative group mr-1">
