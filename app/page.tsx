@@ -84,6 +84,10 @@ export default function Home() {
 					</div>
 				)}
 			</div>
+
+			<div className="space-y-4 mt-8 flex justify-center">
+				<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1TdBj-p79GEwf-pMyPUEzDQsuuZb1ryU&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>
+			</div>
 		</main>
 	)
 }
