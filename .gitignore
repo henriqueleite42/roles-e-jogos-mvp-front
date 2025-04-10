@@ -20,7 +20,7 @@ yarn-error.log*
 .env*
 
 # scripts
-/get-data.ts
+/get-data/*
 
 # vercel
 .vercel
