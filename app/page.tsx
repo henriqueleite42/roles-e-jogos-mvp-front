@@ -3,10 +3,11 @@
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { Search } from "lucide-react"
+import { Search, Users } from "lucide-react"
 import Image from "next/image"
+import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-// Sample data for our items
 const items = Object.values({
 	"70": {
 		"Game": {
@@ -1206,18 +1207,21 @@ const items = Object.values({
 
 export default function Home() {
 	const [searchQuery, setSearchQuery] = useState("")
+	const [activeView, setActiveView] = useState("cards")
 
 	// Filter items based on search query
 	const filteredItems = items.filter((item) => item.Game.Name.toLowerCase().includes(searchQuery.toLowerCase()))
 
 	return (
 		<main className="container mx-auto py-8 px-4">
+			<h1 className="text-3xl font-bold mb-6">Roles & Jogos</h1>
+
 			<div className="mb-8">
 				<div className="relative">
 					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
 					<Input
 						type="text"
-						placeholder="Search by title..."
+						placeholder="Pesquisar jogos..."
 						className="pl-10"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
@@ -1225,54 +1229,88 @@ export default function Home() {
 				</div>
 			</div>
 
-			<div className="space-y-4">
-				{filteredItems.length > 0 ? (
-					filteredItems.map((item) => (
-						<Card key={item.Game.Id} className="overflow-hidden">
-							<CardContent className="p-0">
-								<div className="flex flex-col md:flex-row">
-									<div className="flex-1 p-6">
-										<h2 className="text-2xl font-bold">{item.Game.Name}</h2>
-										{/* <div className="flex items-center mt-2 mb-4">
-											<div className="flex items-center bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">
-												{item.rating.toFixed(1)}
+			<Tabs defaultValue="cards" className="mb-8">
+				<TabsList>
+					<TabsTrigger value="cards" onClick={() => setActiveView("cards")}>
+						Cards
+					</TabsTrigger>
+					<TabsTrigger value="map" onClick={() => setActiveView("map")}>
+						Mapa
+					</TabsTrigger>
+				</TabsList>
+
+				<TabsContent value="cards" className="space-y-4 mt-4">
+					{filteredItems.length > 0 ? (
+						filteredItems.map((item) => (
+							<Card key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
+								<CardContent className="p-0">
+									<div className="flex flex-row">
+										<div className="flex-1 p-4 md:p-6">
+											<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
+											<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
+												<Badge variant="outline" className="mr-2 mb-1">
+													{item.Game.MinAmountOfPlayers}-{item.Game.MaxAmountOfPlayers} jogadores
+												</Badge>
+												<a
+													href={item.Game.LudopediaUrl}
+													target="_blank"
+													rel="noopener noreferrer"
+													className="text-sm text-blue-600 hover:underline"
+												>
+													Ver na Ludopedia
+												</a>
 											</div>
-										</div> */}
-										<div className="flex">
-											{item.Owners.map((person, index) => (
-												<div key={index} className="relative group mr-1">
-													<Image
-														src={person.AvatarUrl}
-														alt={person.AccountId.toString()}
-														width={40}
-														height={40}
-														className="rounded-full border-2 border-background"
-													/>
-													<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-														{person.AccountId}
-													</div>
+											<div className="flex items-center">
+												<Users className="h-4 w-4 mr-2 text-muted-foreground" />
+												<div className="flex">
+													{item.Owners.map((person, index) => (
+														<div key={index} className="relative group -ml-2 first:ml-0">
+															<Image
+																src={person.AvatarUrl || "/placeholder.svg"}
+																alt={`Usuário ${person.AccountId}`}
+																width={32}
+																height={32}
+																className="rounded-full border-2 border-background md:w-10 md:h-10"
+															/>
+															<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+																ID: {person.AccountId}
+															</div>
+														</div>
+													))}
 												</div>
-											))}
+											</div>
+										</div>
+										<div className="w-[100px] h-[140px] md:w-[200px] md:h-[200px] relative">
+											<Image
+												src={item.Game.IconUrl || "/placeholder.svg"}
+												alt={item.Game.Name}
+												fill
+												className="object-cover"
+											/>
 										</div>
 									</div>
-									<div className="md:w-[300px] h-[200px] relative">
-										<Image src={item.Game.IconUrl} alt={item.Game.Name} fill className="object-cover" />
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					))
-				) : (
-					<div className="text-center py-10">
-						<p className="text-muted-foreground">Nenhum jogo encontrado.</p>
-					</div>
-				)}
-			</div>
+								</CardContent>
+							</Card>
+						))
+					) : (
+						<div className="text-center py-10">
+							<p className="text-muted-foreground">Nenhum jogo encontrado.</p>
+						</div>
+					)}
+				</TabsContent>
 
-			<div className="space-y-4 mt-8 flex justify-center">
-				<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1TdBj-p79GEwf-pMyPUEzDQsuuZb1ryU&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>
-			</div>
+				<TabsContent value="map" className="mt-4">
+					<div className="rounded-lg overflow-hidden border">
+						<iframe
+							src="https://www.google.com/maps/d/u/0/embed?mid=1TdBj-p79GEwf-pMyPUEzDQsuuZb1ryU&ehbc=2E312F&noprof=1"
+							width="100%"
+							height="480"
+							title="Mapa de jogos"
+							className="border-0"
+						></iframe>
+					</div>
+				</TabsContent>
+			</Tabs>
 		</main>
 	)
 }
-
