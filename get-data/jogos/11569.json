@@ -1,0 +1,9 @@
+{
+  "Id": 11569,
+  "Name": "Fat Food",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/11569_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/fat-food",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

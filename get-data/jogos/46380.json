@@ -1,0 +1,9 @@
+{
+  "Id": 46380,
+  "Name": "Azul Mini",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/46380_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/azul-mini",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

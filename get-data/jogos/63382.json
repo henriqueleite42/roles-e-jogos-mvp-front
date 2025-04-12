@@ -1,0 +1,9 @@
+{
+  "Id": 63382,
+  "Name": "Survive the Island",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/63382_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/survive-the-island",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

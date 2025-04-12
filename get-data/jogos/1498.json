@@ -1,0 +1,9 @@
+{
+  "Id": 1498,
+  "Name": "Combate",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/1498_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/stratego",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 2,
+  "Kind": "GAME"
+}

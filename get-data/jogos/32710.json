@@ -1,0 +1,9 @@
+{
+  "Id": 32710,
+  "Name": "Flamecraft",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/32710_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/flamecraft",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

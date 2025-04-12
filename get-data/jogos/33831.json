@@ -1,0 +1,9 @@
+{
+  "Id": 33831,
+  "Name": "Monstros & Tesouros",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/33831_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/monstros-tesouros",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

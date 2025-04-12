@@ -1,0 +1,9 @@
+{
+  "Id": 55,
+  "Name": "Carcassonne",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/55_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/carcassonne",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

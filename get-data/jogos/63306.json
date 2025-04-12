@@ -1,0 +1,9 @@
+{
+  "Id": 63306,
+  "Name": "Harmonies",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/63306_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/harmonies",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

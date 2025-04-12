@@ -9,6 +9,60 @@ import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const items = Object.values({
+	"15": {
+		"Game": {
+			"Id": 15,
+			"Name": "Bang!",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/15_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/bang",
+			"MinAmountOfPlayers": 4,
+			"MaxAmountOfPlayers": 7,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"47": {
+		"Game": {
+			"Id": 47,
+			"Name": "Race for the Galaxy",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/47_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/race-for-the-galaxy",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"55": {
+		"Game": {
+			"Id": 55,
+			"Name": "Carcassonne",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/55_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/carcassonne",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"70": {
 		"Game": {
 			"Id": 70,
@@ -63,6 +117,65 @@ const items = Object.values({
 			}
 		]
 	},
+	"334": {
+		"Game": {
+			"Id": 334,
+			"Name": "Munchkin",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/334_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/munchkin",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			}
+		]
+	},
+	"394": {
+		"Game": {
+			"Id": 394,
+			"Name": "War Batalhas Mitológicas",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/394_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/war-batalhas-mitologicas",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"395": {
+		"Game": {
+			"Id": 395,
+			"Name": "Rummikub",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/395_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/rummikub",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"397": {
 		"Game": {
 			"Id": 397,
@@ -89,6 +202,52 @@ const items = Object.values({
 			}
 		]
 	},
+	"460": {
+		"Game": {
+			"Id": 460,
+			"Name": "Coup",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/460_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/coup",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			},
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"570": {
+		"Game": {
+			"Id": 570,
+			"Name": "Hanabi",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/570_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/hanabi",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"612": {
 		"Game": {
 			"Id": 612,
@@ -104,6 +263,24 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"616": {
+		"Game": {
+			"Id": 616,
+			"Name": "Brasilis",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/616_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/bra-ilis",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -125,6 +302,132 @@ const items = Object.values({
 			}
 		]
 	},
+	"620": {
+		"Game": {
+			"Id": 620,
+			"Name": "Saboteur",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/620_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/saboteur",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 10,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"675": {
+		"Game": {
+			"Id": 675,
+			"Name": "Imagem & Ação 2",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/675_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/imagem-acao-2",
+			"MinAmountOfPlayers": 4,
+			"MaxAmountOfPlayers": 16,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"680": {
+		"Game": {
+			"Id": 680,
+			"Name": "Wizard",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/680_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/wizard",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 121554,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			}
+		]
+	},
+	"681": {
+		"Game": {
+			"Id": 681,
+			"Name": "Pega em 6!",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/681_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/6-nimmt-25-jahre",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 10,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"682": {
+		"Game": {
+			"Id": 682,
+			"Name": "Genial",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/682_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/ingenious",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"710": {
+		"Game": {
+			"Id": 710,
+			"Name": "Magic: The Gathering",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/710_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/magic-the-gathering",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"727": {
+		"Game": {
+			"Id": 727,
+			"Name": "Quest Edição Família",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/727_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/quest-edicao-familia",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"772": {
 		"Game": {
 			"Id": 772,
@@ -143,6 +446,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"780": {
+		"Game": {
+			"Id": 780,
+			"Name": "The Resistance",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/780_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-resistance",
+			"MinAmountOfPlayers": 5,
+			"MaxAmountOfPlayers": 10,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"1041": {
 		"Game": {
 			"Id": 1041,
@@ -158,6 +479,11 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			},
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -179,6 +505,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"1498": {
+		"Game": {
+			"Id": 1498,
+			"Name": "Combate",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/1498_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/stratego",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"1896": {
 		"Game": {
 			"Id": 1896,
@@ -194,6 +538,114 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"1934": {
+		"Game": {
+			"Id": 1934,
+			"Name": "WAR: Edição Especial",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/1934_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/war-edicao-especial",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"2000": {
+		"Game": {
+			"Id": 2000,
+			"Name": "Monopoly: City",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/2000_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/monopoly-city",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"2036": {
+		"Game": {
+			"Id": 2036,
+			"Name": "Eldritch Horror",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/2036_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/eldritch-horror",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"2664": {
+		"Game": {
+			"Id": 2664,
+			"Name": "Istanbul",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/2664_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/istanbul",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"2786": {
+		"Game": {
+			"Id": 2786,
+			"Name": "Detetive 3D",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/2786_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/clue-3d",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"3261": {
+		"Game": {
+			"Id": 3261,
+			"Name": "Bananagrams",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/3261_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/bananagrams",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -237,6 +689,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"4465": {
+		"Game": {
+			"Id": 4465,
+			"Name": "Take 5!",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/4465_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/take-5",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"4699": {
 		"Game": {
 			"Id": 4699,
@@ -259,6 +729,420 @@ const items = Object.values({
 			}
 		]
 	},
+	"5779": {
+		"Game": {
+			"Id": 5779,
+			"Name": "Colt Express",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/5779_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/colt-express",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"6550": {
+		"Game": {
+			"Id": 6550,
+			"Name": "Orléans",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/6550_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/orleans",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 121554,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			}
+		]
+	},
+	"6635": {
+		"Game": {
+			"Id": 6635,
+			"Name": "Red7",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/6635_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/red7",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"7007": {
+		"Game": {
+			"Id": 7007,
+			"Name": "Exploding Kittens",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7007_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/exploding-kittens",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"7138": {
+		"Game": {
+			"Id": 7138,
+			"Name": "Imagem & Ação: Edição Especial",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7138_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/imagem-acao-edicao-especial",
+			"MinAmountOfPlayers": 4,
+			"MaxAmountOfPlayers": 20,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"7168": {
+		"Game": {
+			"Id": 7168,
+			"Name": "Blood Rage",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7168_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/blood-rage",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"7220": {
+		"Game": {
+			"Id": 7220,
+			"Name": "Die die DIE",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7220_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/die-die-die",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"7438": {
+		"Game": {
+			"Id": 7438,
+			"Name": "Cidades Sombrias: Salem 1692",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7438_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/salem-1692",
+			"MinAmountOfPlayers": 4,
+			"MaxAmountOfPlayers": 12,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"7482": {
+		"Game": {
+			"Id": 7482,
+			"Name": "Zombicide: Black Plague",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7482_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/zombicide-black-plague",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"8147": {
+		"Game": {
+			"Id": 8147,
+			"Name": "Código Secreto",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/8147_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/codenames",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"8285": {
+		"Game": {
+			"Id": 8285,
+			"Name": "7 Wonders Duel",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/8285_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/7-wonders-duel",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"8858": {
+		"Game": {
+			"Id": 8858,
+			"Name": "Terraforming Mars",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/8858_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/terraforming-mars",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"9330": {
+		"Game": {
+			"Id": 9330,
+			"Name": "Star Wars: Rebellion",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9330_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/star-wars-rebellion",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"9339": {
+		"Game": {
+			"Id": 9339,
+			"Name": "Troca (Bazaar)",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9339_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/troca-bazaar",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"9347": {
+		"Game": {
+			"Id": 9347,
+			"Name": "Oh My Goods!",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9347_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/oh-my-goods",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"9538": {
+		"Game": {
+			"Id": 9538,
+			"Name": "Anachrony",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9538_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/anachrony",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"9637": {
+		"Game": {
+			"Id": 9637,
+			"Name": "Skull",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9637_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/skull",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"9712": {
+		"Game": {
+			"Id": 9712,
+			"Name": "Catan: Plus",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9712_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/catan-plus-catan-big-box",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"9867": {
+		"Game": {
+			"Id": 9867,
+			"Name": "Pandemic: O Reino de Cthulhu",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9867_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/pandemic-reign-of-cthulhu",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"9935": {
+		"Game": {
+			"Id": 9935,
+			"Name": "Dead of Winter: A Noite Sem Fim",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/9935_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dead-of-winter-the-long-night",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"10117": {
+		"Game": {
+			"Id": 10117,
+			"Name": "Nós Não Testamos Este Troço",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/10117_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/we-didn-t-playtest-this-at-all",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 10,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"11384": {
+		"Game": {
+			"Id": 11384,
+			"Name": "Kingdomino",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/11384_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/kingdomino",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"11429": {
+		"Game": {
+			"Id": 11429,
+			"Name": "Sherlock",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/11429_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/sherlock-13",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"11466": {
 		"Game": {
 			"Id": 11466,
@@ -274,6 +1158,132 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"11538": {
+		"Game": {
+			"Id": 11538,
+			"Name": "Rising Sun",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/11538_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/rising-sun",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"11569": {
+		"Game": {
+			"Id": 11569,
+			"Name": "Fat Food",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/11569_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/fat-food",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"11837": {
+		"Game": {
+			"Id": 11837,
+			"Name": "Trick of the Rails",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/11837_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/trick-of-the-rails",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"12129": {
+		"Game": {
+			"Id": 12129,
+			"Name": "Jenga BOOM",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/12129_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/jenga-boom",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"12618": {
+		"Game": {
+			"Id": 12618,
+			"Name": "Os Pilares da Terra: O Jogo de Cartas",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/12618_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/die-saulen-der-erde-das-kartenspiel",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"14001": {
+		"Game": {
+			"Id": 14001,
+			"Name": "Uno Fast",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/14001_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/uno-fast",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"14981": {
+		"Game": {
+			"Id": 14981,
+			"Name": "Azul",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/14981_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/azul",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 121554,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -339,6 +1349,78 @@ const items = Object.values({
 			}
 		]
 	},
+	"15919": {
+		"Game": {
+			"Id": 15919,
+			"Name": "Pingo no I",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/15919_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/pingo-no-i",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"16126": {
+		"Game": {
+			"Id": 16126,
+			"Name": "Clue Clássico",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/16126_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/clue-game",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"16230": {
+		"Game": {
+			"Id": 16230,
+			"Name": "Fantasy Realms",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/16230_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/fantasy-realms",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"16304": {
+		"Game": {
+			"Id": 16304,
+			"Name": "Claim",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/16304_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/claim",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"17305": {
 		"Game": {
 			"Id": 17305,
@@ -362,6 +1444,24 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			}
+		]
+	},
+	"17646": {
+		"Game": {
+			"Id": 17646,
+			"Name": "The Grizzled: Armistício",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/17646_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-grizzled-armistice-edition",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -427,6 +1527,47 @@ const items = Object.values({
 			}
 		]
 	},
+	"18756": {
+		"Game": {
+			"Id": 18756,
+			"Name": "Cthulhu: Death May Die",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/18756_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/cthulhu-death-may-die",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"18839": {
+		"Game": {
+			"Id": 18839,
+			"Name": "Kariba",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/18839_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/kariba",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"18993": {
 		"Game": {
 			"Id": 18993,
@@ -442,6 +1583,24 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"19852": {
+		"Game": {
+			"Id": 19852,
+			"Name": "Project L",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/19852_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/project-l",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -499,6 +1658,60 @@ const items = Object.values({
 			}
 		]
 	},
+	"20418": {
+		"Game": {
+			"Id": 20418,
+			"Name": "Wingspan",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/20418_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/wingspan",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"20722": {
+		"Game": {
+			"Id": 20722,
+			"Name": "Histórias Sinistras: Ficção Científica",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/20722_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/black-stories-science-fiction-edition",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 22,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"20829": {
+		"Game": {
+			"Id": 20829,
+			"Name": "O Senhor dos Anéis: Jornadas na Terra Média",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/20829_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-lord-of-the-rings-journeys-in-middle-earth",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"20870": {
 		"Game": {
 			"Id": 20870,
@@ -517,6 +1730,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"21195": {
+		"Game": {
+			"Id": 21195,
+			"Name": "TIME Stories Revolution: A Midsummer Night",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/21195_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/time-stories-revolution-a-midsummer-night",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"21817": {
 		"Game": {
 			"Id": 21817,
@@ -532,6 +1763,96 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"22306": {
+		"Game": {
+			"Id": 22306,
+			"Name": "Skytear",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/22306_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/skytear",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"22315": {
+		"Game": {
+			"Id": 22315,
+			"Name": "The Few and Cursed",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/22315_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-few-and-cursed",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"22533": {
+		"Game": {
+			"Id": 22533,
+			"Name": "Love Letter (2ª Edição)",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/22533_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/love-letter-2019-edition",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"22608": {
+		"Game": {
+			"Id": 22608,
+			"Name": "Trial By Trolley",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/22608_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/trial-by-trolley",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 13,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"22650": {
+		"Game": {
+			"Id": 22650,
+			"Name": "Honey Buzz",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/22650_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/honey-buzz",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 121554,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -571,6 +1892,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"23260": {
+		"Game": {
+			"Id": 23260,
+			"Name": "The Mind Extreme",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/23260_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-mind-extreme",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"23331": {
 		"Game": {
 			"Id": 23331,
@@ -586,6 +1925,34 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"23524": {
+		"Game": {
+			"Id": 23524,
+			"Name": "Convidados Indesejados",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/23524_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/awkward-guests-the-walton-case",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			},
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -651,6 +2018,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"24550": {
+		"Game": {
+			"Id": 24550,
+			"Name": "Tawantinsuyu: O Império Inca",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/24550_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/tawantinsuyu-the-inca-empire",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"24635": {
 		"Game": {
 			"Id": 24635,
@@ -669,6 +2054,119 @@ const items = Object.values({
 			}
 		]
 	},
+	"24784": {
+		"Game": {
+			"Id": 24784,
+			"Name": "Tiny Epic Pirates",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/24784_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/tiny-epic-pirates",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"25048": {
+		"Game": {
+			"Id": 25048,
+			"Name": "Gloomhaven: Presas do Leão",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25048_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/gloomhaven-jaws-of-the-lion",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 121554,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			}
+		]
+	},
+	"25167": {
+		"Game": {
+			"Id": 25167,
+			"Name": "Os Desejos do Sultão",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25167_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/os-desejos-do-sultao",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"25219": {
+		"Game": {
+			"Id": 25219,
+			"Name": "Spicy",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25219_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/spicy",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"25840": {
+		"Game": {
+			"Id": 25840,
+			"Name": "Coatl",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25840_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/coatl",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"25876": {
+		"Game": {
+			"Id": 25876,
+			"Name": "Misty",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25876_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/misty",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"25925": {
 		"Game": {
 			"Id": 25925,
@@ -684,6 +2182,65 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"25941": {
+		"Game": {
+			"Id": 25941,
+			"Name": "Duna: Imperium",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25941_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dune-imperium",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"25958": {
+		"Game": {
+			"Id": 25958,
+			"Name": "Schotten Totten 2",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25958_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/schotten-totten-2",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"25979": {
+		"Game": {
+			"Id": 25979,
+			"Name": "7 Wonders: Segunda Edição",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25979_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/7-wonders-second-edition",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 7,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
 			}
 		]
 	},
@@ -738,6 +2295,24 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"26432": {
+		"Game": {
+			"Id": 26432,
+			"Name": "Master Entretenimento",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/26432_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/master-entretenimento",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -803,6 +2378,96 @@ const items = Object.values({
 			}
 		]
 	},
+	"29115": {
+		"Game": {
+			"Id": 29115,
+			"Name": "Red Rising",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/29115_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/red-rising",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"30662": {
+		"Game": {
+			"Id": 30662,
+			"Name": "The Crew: Mission Deep Sea",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/30662_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-crew-mission-deep-sea",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"30841": {
+		"Game": {
+			"Id": 30841,
+			"Name": "Esquenta O Jogo",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/30841_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/esquenta-o-jogo",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 10,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"30987": {
+		"Game": {
+			"Id": 30987,
+			"Name": "Marvel United: X-Men",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/30987_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/marvel-united-x-men",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"31030": {
+		"Game": {
+			"Id": 31030,
+			"Name": "Encantados (3ª Edição)",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/31030_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/encantados-3-edicao",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"31085": {
 		"Game": {
 			"Id": 31085,
@@ -854,6 +2519,78 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"31743": {
+		"Game": {
+			"Id": 31743,
+			"Name": "ColorFox",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/31743_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/colorfox",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"31744": {
+		"Game": {
+			"Id": 31744,
+			"Name": "StickUp",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/31744_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/stickup",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"31747": {
+		"Game": {
+			"Id": 31747,
+			"Name": "SixStix",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/31747_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/sixstix",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"32088": {
+		"Game": {
+			"Id": 32088,
+			"Name": "Arkham Horror: The Card Game (Revised Edition)",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32088_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/arkham-horror-the-card-game-revised-edition",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -911,6 +2648,96 @@ const items = Object.values({
 			}
 		]
 	},
+	"32625": {
+		"Game": {
+			"Id": 32625,
+			"Name": "Corrosion",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32625_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/corrosion",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"32656": {
+		"Game": {
+			"Id": 32656,
+			"Name": "Power Grid: Versão Energizada",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32656_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/power-grid-recharged-edition",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"32710": {
+		"Game": {
+			"Id": 32710,
+			"Name": "Flamecraft",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32710_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/flamecraft",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"32717": {
+		"Game": {
+			"Id": 32717,
+			"Name": "Dungeons & Drinks",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32717_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dungeons-drinks",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"32777": {
+		"Game": {
+			"Id": 32777,
+			"Name": "Dobro",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32777_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dobro",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			}
+		]
+	},
 	"33333": {
 		"Game": {
 			"Id": 33333,
@@ -926,6 +2753,24 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"33831": {
+		"Game": {
+			"Id": 33831,
+			"Name": "Monstros & Tesouros",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/33831_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/monstros-tesouros",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -1001,6 +2846,42 @@ const items = Object.values({
 			}
 		]
 	},
+	"35704": {
+		"Game": {
+			"Id": 35704,
+			"Name": "A Game of Cat & Mouth",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/35704_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/a-game-of-cat-mouth",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"36319": {
+		"Game": {
+			"Id": 36319,
+			"Name": "Cala a Boca e Bebe Logo",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/36319_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/tomalo-vos-this-game-will-make-you-drink",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
 	"36508": {
 		"Game": {
 			"Id": 36508,
@@ -1037,6 +2918,101 @@ const items = Object.values({
 			}
 		]
 	},
+	"36938": {
+		"Game": {
+			"Id": 36938,
+			"Name": "Dungeon Fighter (2ª Edição)",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/36938_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dungeon-fighter-second-edition",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"36940": {
+		"Game": {
+			"Id": 36940,
+			"Name": "Splito",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/36940_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/splito",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			}
+		]
+	},
+	"37047": {
+		"Game": {
+			"Id": 37047,
+			"Name": "Heat: Pedal to the Metal",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/37047_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/heat-pedal-to-the-metal",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"38286": {
+		"Game": {
+			"Id": 38286,
+			"Name": "Sea Salt & Paper",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/38286_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/sea-salt-paper",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			}
+		]
+	},
+	"39293": {
+		"Game": {
+			"Id": 39293,
+			"Name": "Let's Go! To Japan",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/39293_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/let-s-go-to-japan",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
 	"40988": {
 		"Game": {
 			"Id": 40988,
@@ -1052,6 +3028,142 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"41025": {
+		"Game": {
+			"Id": 41025,
+			"Name": "Dobrões",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/41025_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dobroes",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"41382": {
+		"Game": {
+			"Id": 41382,
+			"Name": "Pest",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/41382_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/pest",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"44800": {
+		"Game": {
+			"Id": 44800,
+			"Name": "Tapple",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/44800_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/tapple",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"46380": {
+		"Game": {
+			"Id": 46380,
+			"Name": "Azul Mini",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/46380_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/azul-mini",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"50577": {
+		"Game": {
+			"Id": 50577,
+			"Name": "Trio",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/50577_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/trio",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"51006": {
+		"Game": {
+			"Id": 51006,
+			"Name": "Stranger Things: Mundo Invertido",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/51006_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/stranger-things-upside-down",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"52238": {
+		"Game": {
+			"Id": 52238,
+			"Name": "Estranho no Ninho",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/52238_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/estranho-no-ninho",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
 			}
 		]
 	},
@@ -1109,6 +3221,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"53864": {
+		"Game": {
+			"Id": 53864,
+			"Name": "Duo Regna",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/53864_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/duo-regna",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"53927": {
 		"Game": {
 			"Id": 53927,
@@ -1160,6 +3290,96 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"58996": {
+		"Game": {
+			"Id": 58996,
+			"Name": "Oak Deluxe",
+			"IconUrl": "https://ludopedia.com.br/images/jogos/capas/58996_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/oak-deluxe",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"60103": {
+		"Game": {
+			"Id": 60103,
+			"Name": "Convidados Indesejados 2: Os casos Berwick",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/60103_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/awkward-guests-2-the-berwick-cases",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			}
+		]
+	},
+	"62347": {
+		"Game": {
+			"Id": 62347,
+			"Name": "Exploding Kittens: Bem vs. Mal",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/62347_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/exploding-kittens-good-vs-evil",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"63306": {
+		"Game": {
+			"Id": 63306,
+			"Name": "Harmonies",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/63306_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/harmonies",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"63382": {
+		"Game": {
+			"Id": 63382,
+			"Name": "Survive the Island",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/63382_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/survive-the-island",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -1254,6 +3474,24 @@ const items = Object.values({
 			{
 				"AccountId": 292342,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"77893": {
+		"Game": {
+			"Id": 77893,
+			"Name": "Frost Shelter",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/77893_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/frost-shelter",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	}

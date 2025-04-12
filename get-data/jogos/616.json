@@ -1,0 +1,9 @@
+{
+  "Id": 616,
+  "Name": "Brasilis",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/616_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/bra-ilis",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

@@ -1,0 +1,9 @@
+{
+  "Id": 31747,
+  "Name": "SixStix",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/31747_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/sixstix",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

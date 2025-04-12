@@ -1,0 +1,9 @@
+{
+  "Id": 620,
+  "Name": "Saboteur",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/620_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/saboteur",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 10,
+  "Kind": "GAME"
+}

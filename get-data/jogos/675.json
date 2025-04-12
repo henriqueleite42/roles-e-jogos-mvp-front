@@ -1,0 +1,9 @@
+{
+  "Id": 675,
+  "Name": "Imagem & Ação 2",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/675_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/imagem-acao-2",
+  "MinAmountOfPlayers": 4,
+  "MaxAmountOfPlayers": 16,
+  "Kind": "GAME"
+}

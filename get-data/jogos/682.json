@@ -1,0 +1,9 @@
+{
+  "Id": 682,
+  "Name": "Genial",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/682_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/ingenious",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

@@ -1,0 +1,9 @@
+{
+  "Id": 9339,
+  "Name": "Troca (Bazaar)",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/9339_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/troca-bazaar",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

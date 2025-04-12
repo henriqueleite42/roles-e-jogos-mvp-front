@@ -1,0 +1,9 @@
+{
+  "Id": 12129,
+  "Name": "Jenga BOOM",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/12129_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/jenga-boom",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 8,
+  "Kind": "GAME"
+}

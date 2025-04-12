@@ -1,0 +1,9 @@
+{
+  "Id": 2664,
+  "Name": "Istanbul",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/2664_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/istanbul",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

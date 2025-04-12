@@ -1,0 +1,9 @@
+{
+  "Id": 30987,
+  "Name": "Marvel United: X-Men",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/30987_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/marvel-united-x-men",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

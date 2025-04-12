@@ -1,0 +1,9 @@
+{
+  "Id": 6635,
+  "Name": "Red7",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/6635_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/red7",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

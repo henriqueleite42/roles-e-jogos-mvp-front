@@ -1,0 +1,9 @@
+{
+  "Id": 47,
+  "Name": "Race for the Galaxy",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/47_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/race-for-the-galaxy",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

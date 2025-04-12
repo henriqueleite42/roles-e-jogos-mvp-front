@@ -1,0 +1,9 @@
+{
+  "Id": 25876,
+  "Name": "Misty",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/25876_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/misty",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

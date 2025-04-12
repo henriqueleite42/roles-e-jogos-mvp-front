@@ -1,0 +1,9 @@
+{
+  "Id": 50577,
+  "Name": "Trio",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/50577_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/trio",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

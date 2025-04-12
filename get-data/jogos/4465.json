@@ -1,0 +1,9 @@
+{
+  "Id": 4465,
+  "Name": "Take 5!",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/4465_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/take-5",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

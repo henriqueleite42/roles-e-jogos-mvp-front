@@ -1,0 +1,9 @@
+{
+  "Id": 41382,
+  "Name": "Pest",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/41382_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/pest",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

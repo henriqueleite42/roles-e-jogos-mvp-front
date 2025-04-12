@@ -1,0 +1,9 @@
+{
+  "Id": 7168,
+  "Name": "Blood Rage",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/7168_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/blood-rage",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

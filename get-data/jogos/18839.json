@@ -1,0 +1,9 @@
+{
+  "Id": 18839,
+  "Name": "Kariba",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/18839_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/kariba",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

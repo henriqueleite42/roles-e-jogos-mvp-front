@@ -1,0 +1,9 @@
+{
+  "Id": 52238,
+  "Name": "Estranho no Ninho",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/52238_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/estranho-no-ninho",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

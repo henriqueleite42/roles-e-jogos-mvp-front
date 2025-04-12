@@ -1,0 +1,9 @@
+{
+  "Id": 11384,
+  "Name": "Kingdomino",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/11384_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/kingdomino",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

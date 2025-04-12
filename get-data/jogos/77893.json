@@ -1,0 +1,9 @@
+{
+  "Id": 77893,
+  "Name": "Frost Shelter",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/77893_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/frost-shelter",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

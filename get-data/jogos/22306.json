@@ -1,0 +1,9 @@
+{
+  "Id": 22306,
+  "Name": "Skytear",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/22306_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/skytear",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 8,
+  "Kind": "GAME"
+}

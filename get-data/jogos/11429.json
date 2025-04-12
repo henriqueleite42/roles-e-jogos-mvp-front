@@ -1,0 +1,9 @@
+{
+  "Id": 11429,
+  "Name": "Sherlock",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/11429_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/sherlock-13",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

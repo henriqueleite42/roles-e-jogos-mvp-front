@@ -1,0 +1,9 @@
+{
+  "Id": 22650,
+  "Name": "Honey Buzz",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/22650_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/honey-buzz",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

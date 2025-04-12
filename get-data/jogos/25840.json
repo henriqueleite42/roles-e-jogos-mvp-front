@@ -1,0 +1,9 @@
+{
+  "Id": 25840,
+  "Name": "Coatl",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/25840_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/coatl",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

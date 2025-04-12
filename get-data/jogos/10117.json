@@ -1,0 +1,9 @@
+{
+  "Id": 10117,
+  "Name": "Nós Não Testamos Este Troço",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/10117_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/we-didn-t-playtest-this-at-all",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 10,
+  "Kind": "GAME"
+}

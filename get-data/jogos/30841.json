@@ -1,0 +1,9 @@
+{
+  "Id": 30841,
+  "Name": "Esquenta O Jogo",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/30841_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/esquenta-o-jogo",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 10,
+  "Kind": "GAME"
+}

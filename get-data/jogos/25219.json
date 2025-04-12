@@ -1,0 +1,9 @@
+{
+  "Id": 25219,
+  "Name": "Spicy",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/25219_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/spicy",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

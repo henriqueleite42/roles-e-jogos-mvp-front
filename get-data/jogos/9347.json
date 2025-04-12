@@ -1,0 +1,9 @@
+{
+  "Id": 9347,
+  "Name": "Oh My Goods!",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/9347_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/oh-my-goods",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

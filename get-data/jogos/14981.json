@@ -1,0 +1,9 @@
+{
+  "Id": 14981,
+  "Name": "Azul",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/14981_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/azul",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

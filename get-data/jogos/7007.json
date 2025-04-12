@@ -1,0 +1,9 @@
+{
+  "Id": 7007,
+  "Name": "Exploding Kittens",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/7007_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/exploding-kittens",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

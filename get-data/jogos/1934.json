@@ -1,0 +1,9 @@
+{
+  "Id": 1934,
+  "Name": "WAR: Edição Especial",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/1934_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/war-edicao-especial",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

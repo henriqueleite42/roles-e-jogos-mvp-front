@@ -1,0 +1,9 @@
+{
+  "Id": 14001,
+  "Name": "Uno Fast",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/14001_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/uno-fast",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}
