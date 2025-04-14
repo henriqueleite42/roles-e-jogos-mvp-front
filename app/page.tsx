@@ -3551,7 +3551,11 @@ export default function Home() {
 											<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
 											<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
 												<Badge variant="outline" className="mr-2 mb-1">
-													{item.Game.MinAmountOfPlayers}-{item.Game.MaxAmountOfPlayers} jogadores
+													{item.Game.MinAmountOfPlayers === item.Game.MaxAmountOfPlayers ? (
+														item.Game.MinAmountOfPlayers + " jogadores"
+													) : (
+														item.Game.MinAmountOfPlayers + "-" + item.Game.MaxAmountOfPlayers + " jogadores"
+													)}
 												</Badge>
 												<a
 													href={item.Game.LudopediaUrl}
@@ -3567,13 +3571,15 @@ export default function Home() {
 												<div className="flex">
 													{item.Owners.map((person, index) => (
 														<div key={index} className="relative group -ml-2 first:ml-0">
-															<Image
-																src={person.AvatarUrl || "/placeholder.svg"}
-																alt={`Usuário ${person.AccountId}`}
-																width={32}
-																height={32}
-																className="rounded-full border-2 border-background w-10 h-10"
-															/>
+															<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
+																<Image
+																	src={person.AvatarUrl || "/placeholder.svg"}
+																	alt={`Usuário ${person.AccountId}`}
+																	width={32}
+																	height={32}
+																	className="w-full h-full object-cover object-center"
+																/>
+															</div>
 															<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
 																ID: {person.AccountId}
 															</div>
