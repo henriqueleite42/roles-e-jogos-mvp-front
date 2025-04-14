@@ -352,7 +352,7 @@ const items = Object.values({
 			{
 				"AccountId": 121554,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -761,7 +761,7 @@ const items = Object.values({
 			{
 				"AccountId": 121554,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -887,7 +887,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -923,7 +923,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1283,7 +1283,7 @@ const items = Object.values({
 			{
 				"AccountId": 121554,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1399,7 +1399,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1417,7 +1417,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1541,7 +1541,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1564,7 +1564,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1708,7 +1708,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1852,7 +1852,7 @@ const items = Object.values({
 			{
 				"AccountId": 121554,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1952,7 +1952,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -2086,7 +2086,7 @@ const items = Object.values({
 			{
 				"AccountId": 121554,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -2122,7 +2122,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -2199,7 +2199,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			},
 			{
 				"AccountId": 295469,
@@ -2590,7 +2590,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -2770,7 +2770,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -3127,7 +3127,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -3145,7 +3145,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -3235,7 +3235,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -3343,7 +3343,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -3491,7 +3491,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	}
@@ -3505,7 +3505,7 @@ const items = Object.values({
 
 export default function Home() {
 	const [searchQuery, setSearchQuery] = useState("")
-	const [activeView, setActiveView] = useState("cards")
+	const [activeView, setActiveView] = useState("games")
 
 	// Filter items based on search query
 	const filteredItems = items.filter((item) => item.Game.Name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -3527,17 +3527,21 @@ export default function Home() {
 				</div>
 			</div>
 
-			<Tabs defaultValue="cards" className="mb-8">
+			<div className="pb-5">
+				<b>{filteredItems.length} jogos encontrados</b>
+			</div>
+
+			<Tabs defaultValue="games" className="mb-8">
 				<TabsList>
-					<TabsTrigger value="cards" onClick={() => setActiveView("cards")}>
-						Cards
+					<TabsTrigger value="games" onClick={() => setActiveView("games")}>
+						Jogos
 					</TabsTrigger>
 					<TabsTrigger value="map" onClick={() => setActiveView("map")}>
 						Mapa
 					</TabsTrigger>
 				</TabsList>
 
-				<TabsContent value="cards" className="space-y-4 mt-4">
+				<TabsContent value="games" className="space-y-4 mt-4">
 					{filteredItems.length > 0 ? (
 						filteredItems.map((item) => (
 							<Card key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
@@ -3568,7 +3572,7 @@ export default function Home() {
 																alt={`Usuário ${person.AccountId}`}
 																width={32}
 																height={32}
-																className="rounded-full border-2 border-background md:w-10 md:h-10"
+																className="rounded-full border-2 border-background w-10 h-10"
 															/>
 															<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
 																ID: {person.AccountId}
