@@ -88,7 +88,7 @@ async function bootstrap() {
 				"sec-fetch-mode": "cors",
 				"sec-fetch-site": "same-origin",
 				"sec-gpc": "1",
-				"cookie": "PHPSESSID=5f9546684f5b8f2e9b8834ffde479baa; ludo_consent_cookie=true",
+				"cookie": `PHPSESSID=${process.env.LUDOPEDIA_COOKIE}; ludo_consent_cookie=true`,
 				"Referer": `https://ludopedia.com.br/colecao?lista=colecao&usuario=${encodeURIComponent(i.Handle)}`,
 				"Referrer-Policy": "strict-origin-when-cross-origin"
 			},

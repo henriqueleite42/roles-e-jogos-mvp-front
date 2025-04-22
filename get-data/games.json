@@ -3306,6 +3306,24 @@
 			}
 		]
 	},
+	"54495": {
+		"Game": {
+			"Id": 54495,
+			"Name": "Forest Shuffle",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/54495_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/forest-shuffle",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"57670": {
 		"Game": {
 			"Id": 57670,
@@ -3514,6 +3532,24 @@
 			}
 		]
 	},
+	"71893": {
+		"Game": {
+			"Id": 71893,
+			"Name": "Balde de Caranguejo",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/71893_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/balde-de-caranguejo",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"76468": {
 		"Game": {
 			"Id": 76468,
@@ -3533,6 +3569,24 @@
 			}
 		]
 	},
+	"77892": {
+		"Game": {
+			"Id": 77892,
+			"Name": "Pool Party Stars",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/77892_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/pool-party-stars",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"77893": {
 		"Game": {
 			"Id": 77893,
@@ -3548,6 +3602,24 @@
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			}
+		]
+	},
+	"77894": {
+		"Game": {
+			"Id": 77894,
+			"Name": "AmaZoom",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/77894_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/amazoom",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	}

@@ -1,0 +1,9 @@
+{
+  "Id": 77894,
+  "Name": "AmaZoom",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/77894_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/amazoom",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}
