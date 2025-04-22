@@ -3715,7 +3715,7 @@ export default function Home() {
 							Filtros
 							{(selectedOwner !== "all" || minPlayers !== "any") && (
 								<Badge variant="secondary" className="ml-1 rounded-full h-5 w-5 p-0 flex items-center justify-center">
-									{(selectedOwner !== "all" ? 1 : 0) + (minPlayers ? 1 : 0)}
+									{(selectedOwner !== "all" ? 1 : 0) + (minPlayers !== "any" ? 1 : 0)}
 								</Badge>
 							)}
 						</Button>
