@@ -30,11 +30,11 @@ const users = {
 	"296463": {
 		AccountId: 296463,
 		Handle: "lfernandomoda",
-		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 	},
 	"121554": {
 		AccountId: 121554,
-		Handle: "lfernandomoda",
+		Handle: "Guig",
 		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 	},
 	"295469": {
@@ -78,6 +78,10 @@ function sleep(s: number): Promise<void> {
 
 async function bootstrap() {
 	const games = GAMES as unknown as { [gameId: number]: GroupCollectionItem }
+
+	for (const i in games) {
+		games[i].Owners = []
+	}
 
 	const usersArr = Object.values(users)
 

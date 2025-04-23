@@ -129,6 +129,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"133": {
+		"Game": {
+			"Id": 133,
+			"Name": "Ticket to Ride: Europa",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/133_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/ticket-to-ride-europe",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
 	"187": {
 		"Game": {
 			"Id": 187,
@@ -238,17 +256,19 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 292342,
-				"Handle": "henriqueleite42",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			},
 			{
 				"AccountId": 267985,
+				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			},
 			{
-				"AccountId": 68006,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -403,8 +423,8 @@ const items = Object.values({
 		"Owners": [
 			{
 				"AccountId": 121554,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -530,14 +550,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 292342,
-				"Handle": "henriqueleite42",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
 				"AccountId": 267985,
 				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			},
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -554,14 +574,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 292342,
-				"Handle": "henriqueleite42",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
 				"AccountId": 289094,
 				"Handle": "freymonkal",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			},
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -741,13 +761,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 121554,
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			},
+			{
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
-				"AccountId": 121554,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -801,13 +822,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 121554,
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			},
+			{
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
-				"AccountId": 121554,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -860,8 +882,8 @@ const items = Object.values({
 		"Owners": [
 			{
 				"AccountId": 121554,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -880,6 +902,24 @@ const items = Object.values({
 				"AccountId": 267985,
 				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"6876": {
+		"Game": {
+			"Id": 6876,
+			"Name": "Patchwork",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/6876_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/patchwork",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 121554,
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -1021,14 +1061,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 296463,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
-			},
-			{
 				"AccountId": 289094,
 				"Handle": "freymonkal",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			},
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1460,8 +1500,8 @@ const items = Object.values({
 		"Owners": [
 			{
 				"AccountId": 121554,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -1478,17 +1518,19 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 292342,
-				"Handle": "henriqueleite42",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			},
 			{
 				"AccountId": 267985,
+				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			},
 			{
-				"AccountId": 68006,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -1596,14 +1638,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 296463,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
-			},
-			{
 				"AccountId": 289094,
 				"Handle": "freymonkal",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			},
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -1656,16 +1698,23 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 121554,
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			},
+			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			},
+			{
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			},
 			{
-				"AccountId": 267985,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
-			},
-			{
 				"AccountId": 296463,
+				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
@@ -1701,22 +1750,24 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 292342,
-				"Handle": "henriqueleite42",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+				"AccountId": 199395,
+				"Handle": "leopg",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
 			},
 			{
 				"AccountId": 267985,
+				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
-			},
-			{
-				"AccountId": 199395,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
 			},
 			{
 				"AccountId": 289094,
 				"Handle": "freymonkal",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			},
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -2124,8 +2175,8 @@ const items = Object.values({
 		"Owners": [
 			{
 				"AccountId": 121554,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -2319,16 +2370,18 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			},
 			{
-				"AccountId": 68006,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
-			},
-			{
 				"AccountId": 296463,
+				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
@@ -2399,11 +2452,6 @@ const items = Object.values({
 			"Kind": "GAME"
 		},
 		"Owners": [
-			{
-				"AccountId": 121554,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
-			},
 			{
 				"AccountId": 289094,
 				"Handle": "freymonkal",
@@ -2537,14 +2585,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
-				"AccountId": 296463,
-				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
-			},
-			{
 				"AccountId": 295469,
 				"Handle": "Ciskow",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			},
+			{
+				"AccountId": 296463,
+				"Handle": "lfernandomoda",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -2672,13 +2720,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			},
+			{
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
-				"AccountId": 267985,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -2701,6 +2750,7 @@ const items = Object.values({
 			},
 			{
 				"AccountId": 296463,
+				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
@@ -3110,6 +3160,11 @@ const items = Object.values({
 				"AccountId": 68006,
 				"Handle": "Gi Veiga",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 121554,
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
 			}
 		]
 	},
@@ -3740,7 +3795,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -3927,13 +3982,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 267985,
+				"Handle": "denysmorais1",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			},
+			{
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
-				"AccountId": 267985,
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
 			}
 		]
 	},
@@ -3989,7 +4045,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -4026,7 +4082,7 @@ const items = Object.values({
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	},
@@ -4041,6 +4097,11 @@ const items = Object.values({
 			"Kind": "GAME"
 		},
 		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
@@ -4060,9 +4121,14 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
 			}
 		]
 	}
