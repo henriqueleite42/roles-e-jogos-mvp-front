@@ -1,0 +1,9 @@
+{
+  "Id": 107,
+  "Name": "Pandemic",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/107_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/pandemic",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

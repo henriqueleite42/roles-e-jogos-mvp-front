@@ -1,0 +1,9 @@
+{
+  "Id": 32897,
+  "Name": "Scout",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/32897_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/scout",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

@@ -1,0 +1,9 @@
+{
+  "Id": 187,
+  "Name": "The Castles of Burgundy",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/187_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/the-castles-of-burgundy",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

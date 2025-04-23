@@ -1,0 +1,9 @@
+{
+  "Id": 32507,
+  "Name": "Ark Nova",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/32507_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/ark-nova",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

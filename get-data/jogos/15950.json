@@ -1,0 +1,9 @@
+{
+  "Id": 15950,
+  "Name": "Root",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/15950_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/root",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

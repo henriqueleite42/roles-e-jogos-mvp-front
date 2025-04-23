@@ -1,0 +1,9 @@
+{
+  "Id": 5230,
+  "Name": "Schotten Totten",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/5230_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/schotten-totten",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 2,
+  "Kind": "GAME"
+}

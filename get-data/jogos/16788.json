@@ -1,0 +1,9 @@
+{
+  "Id": 16788,
+  "Name": "Everdell",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/16788_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/everdell",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

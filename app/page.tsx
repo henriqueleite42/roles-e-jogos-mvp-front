@@ -65,6 +65,11 @@ const items = Object.values({
 				"AccountId": 68006,
 				"Handle": "Gi Veiga",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -103,6 +108,42 @@ const items = Object.values({
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"107": {
+		"Game": {
+			"Id": 107,
+			"Name": "Pandemic",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/107_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/pandemic",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
+	"187": {
+		"Game": {
+			"Id": 187,
+			"Name": "The Castles of Burgundy",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/187_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-castles-of-burgundy",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -516,6 +557,11 @@ const items = Object.values({
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -664,6 +710,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"3607": {
+		"Game": {
+			"Id": 3607,
+			"Name": "Splendor",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/3607_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/splendor",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"3857": {
 		"Game": {
 			"Id": 3857,
@@ -744,6 +808,24 @@ const items = Object.values({
 			{
 				"AccountId": 121554,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			}
+		]
+	},
+	"5230": {
+		"Game": {
+			"Id": 5230,
+			"Name": "Schotten Totten",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/5230_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/schotten-totten",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -942,6 +1024,29 @@ const items = Object.values({
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
+	"8380": {
+		"Game": {
+			"Id": 8380,
+			"Name": "Potion Explosion",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/8380_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/potion-explosion",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -1125,6 +1230,42 @@ const items = Object.values({
 			}
 		]
 	},
+	"10425": {
+		"Game": {
+			"Id": 10425,
+			"Name": "Aeon's End",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/10425_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/aeon-s-end",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
+	"11178": {
+		"Game": {
+			"Id": 11178,
+			"Name": "Clank!: Uma Aventura de Construção de Baralho",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/11178_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/clank-a-deck-building-adventure",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"11384": {
 		"Game": {
 			"Id": 11384,
@@ -1288,6 +1429,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"14346": {
+		"Game": {
+			"Id": 14346,
+			"Name": "Brazil: Imperial",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/14346_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/brazil-imperial",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"14981": {
 		"Game": {
 			"Id": 14981,
@@ -1389,6 +1548,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"15950": {
+		"Game": {
+			"Id": 15950,
+			"Name": "Root",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/15950_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/root",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"16126": {
 		"Game": {
 			"Id": 16126,
@@ -1422,6 +1599,11 @@ const items = Object.values({
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -1440,6 +1622,24 @@ const items = Object.values({
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			}
+		]
+	},
+	"16788": {
+		"Game": {
+			"Id": 16788,
+			"Name": "Everdell",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/16788_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/everdell",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -1512,6 +1712,11 @@ const items = Object.values({
 			{
 				"AccountId": 199395,
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -1779,6 +1984,42 @@ const items = Object.values({
 			}
 		]
 	},
+	"21612": {
+		"Game": {
+			"Id": 21612,
+			"Name": "Destemidos: Normandia",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/21612_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/undaunted-normandy",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 2,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
+	"21614": {
+		"Game": {
+			"Id": 21614,
+			"Name": "Cartógrafos",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/21614_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/cartographers-a-roll-player-tale",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 100,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"21817": {
 		"Game": {
 			"Id": 21817,
@@ -1963,6 +2204,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"23508": {
+		"Game": {
+			"Id": 23508,
+			"Name": "Paper Dungeons: Um Jogo de Rabiscar Masmorras",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/23508_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/paper-dungeons-a-dungeon-scrawler-game",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"23524": {
 		"Game": {
 			"Id": 23524,
@@ -2026,6 +2285,24 @@ const items = Object.values({
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"24157": {
+		"Game": {
+			"Id": 24157,
+			"Name": "Marvel United",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/24157_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/marvel-united",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -2126,6 +2403,11 @@ const items = Object.values({
 				"AccountId": 121554,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -2162,6 +2444,24 @@ const items = Object.values({
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+			}
+		]
+	},
+	"25231": {
+		"Game": {
+			"Id": 25231,
+			"Name": "Here to Slay",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25231_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/here-to-slay",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -2442,6 +2742,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"29986": {
+		"Game": {
+			"Id": 29986,
+			"Name": "Tiny Epic Dungeons",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/29986_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/tiny-epic-dungeons",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"30662": {
 		"Game": {
 			"Id": 30662,
@@ -2478,6 +2796,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"30978": {
+		"Game": {
+			"Id": 30978,
+			"Name": "O Inconsciente",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/30978_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/unconscious-mind-deluxe-edition",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"30987": {
 		"Game": {
 			"Id": 30987,
@@ -2493,6 +2829,11 @@ const items = Object.values({
 				"AccountId": 68006,
 				"Handle": "Gi Veiga",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -2700,6 +3041,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"32507": {
+		"Game": {
+			"Id": 32507,
+			"Name": "Ark Nova",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32507_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/ark-nova",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			}
+		]
+	},
 	"32625": {
 		"Game": {
 			"Id": 32625,
@@ -2787,6 +3146,24 @@ const items = Object.values({
 				"AccountId": 199395,
 				"Handle": "leopg",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			}
+		]
+	},
+	"32897": {
+		"Game": {
+			"Id": 32897,
+			"Name": "Scout",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32897_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/scout",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -3051,6 +3428,11 @@ const items = Object.values({
 				"AccountId": 199395,
 				"Handle": "leopg",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -3165,6 +3547,11 @@ const items = Object.values({
 				"AccountId": 267985,
 				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -3243,6 +3630,24 @@ const items = Object.values({
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"52395": {
+		"Game": {
+			"Id": 52395,
+			"Name": "Ascension: Edição de 10º Aniversário",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/52395_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/ascension-10-year-anniversary-edition",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -3336,6 +3741,24 @@ const items = Object.values({
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"55088": {
+		"Game": {
+			"Id": 55088,
+			"Name": "The Vale of Eternity",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/55088_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/the-vale-of-eternity",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
@@ -3446,6 +3869,11 @@ const items = Object.values({
 				"AccountId": 68006,
 				"Handle": "Gi Veiga",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 289094,
+				"Handle": "freymonkal",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
 			}
 		]
 	},
