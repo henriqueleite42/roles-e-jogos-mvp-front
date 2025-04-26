@@ -1,0 +1,9 @@
+{
+  "Id": 30935,
+  "Name": "Hippocrates",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/30935_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/hippocrates",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

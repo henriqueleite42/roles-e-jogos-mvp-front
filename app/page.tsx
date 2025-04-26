@@ -1270,6 +1270,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"10167": {
+		"Game": {
+			"Id": 10167,
+			"Name": "Jórvík",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/10167_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/jorvik",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 5,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
 	"10425": {
 		"Game": {
 			"Id": 10425,
@@ -1441,6 +1459,24 @@ const items = Object.values({
 			"LudopediaUrl": "https://ludopedia.com.br/jogo/die-saulen-der-erde-das-kartenspiel",
 			"MinAmountOfPlayers": 3,
 			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	"12620": {
+		"Game": {
+			"Id": 12620,
+			"Name": "Santo Domingo",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/12620_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/santo-domingo",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 6,
 			"Kind": "GAME"
 		},
 		"Owners": [
@@ -1884,6 +1920,24 @@ const items = Object.values({
 				"AccountId": 267985,
 				"Handle": "denysmorais1",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
+			}
+		]
+	},
+	"19876": {
+		"Game": {
+			"Id": 19876,
+			"Name": "Camel Up (2ª Edição)",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/19876_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/camel-up-second-edition",
+			"MinAmountOfPlayers": 3,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -2846,6 +2900,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"30935": {
+		"Game": {
+			"Id": 30935,
+			"Name": "Hippocrates",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/30935_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/hippocrates",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
 	"30978": {
 		"Game": {
 			"Id": 30978,
@@ -2921,6 +2993,24 @@ const items = Object.values({
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"31174": {
+		"Game": {
+			"Id": 31174,
+			"Name": "Great Western Trail: Nova Zelândia",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/31174_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/great-western-trail-new-zealand",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -4043,6 +4133,11 @@ const items = Object.values({
 		},
 		"Owners": [
 			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
@@ -4079,6 +4174,11 @@ const items = Object.values({
 			"Kind": "GAME"
 		},
 		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
 			{
 				"AccountId": 296463,
 				"Handle": "lfernandomoda",
@@ -4173,7 +4273,7 @@ export default function Home() {
 				selectedOwner === "all" || item.Owners.some((owner) => owner.AccountId.toString() === selectedOwner)
 
 			// Filter by minimum players
-			const playerMatch = minPlayers === "any" || item.Game.MinAmountOfPlayers >= Number.parseInt(minPlayers, 10)
+			const playerMatch = minPlayers === "any" || Number.parseInt(minPlayers, 10) >= item.Game.MinAmountOfPlayers
 
 			return nameMatch && ownerMatch && playerMatch
 		})
