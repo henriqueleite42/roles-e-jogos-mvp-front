@@ -534,6 +534,11 @@ const items = Object.values({
 				"AccountId": 68006,
 				"Handle": "Gi Veiga",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -1673,6 +1678,11 @@ const items = Object.values({
 			"Kind": "GAME"
 		},
 		"Owners": [
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
 			{
 				"AccountId": 289094,
 				"Handle": "freymonkal",
@@ -3309,6 +3319,11 @@ const items = Object.values({
 				"AccountId": 289094,
 				"Handle": "freymonkal",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
+			},
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -3440,6 +3455,24 @@ const items = Object.values({
 				"AccountId": 295469,
 				"Handle": "Ciskow",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"36097": {
+		"Game": {
+			"Id": 36097,
+			"Name": "Evergreen",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/36097_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/evergreen",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},
@@ -3596,6 +3629,24 @@ const items = Object.values({
 				"AccountId": 295469,
 				"Handle": "Ciskow",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	"40161": {
+		"Game": {
+			"Id": 40161,
+			"Name": "Perfil 7",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/40161_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/perfil-7",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 99,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
 			}
 		]
 	},

@@ -1,0 +1,9 @@
+{
+  "Id": 40161,
+  "Name": "Perfil 7",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/40161_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/perfil-7",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 99,
+  "Kind": "GAME"
+}
