@@ -14,8 +14,6 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<link rel="icon" href="/favicon.ico" sizes="any" />
-
 				<meta name="application-name" content="Rolês & Jogos" />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -29,6 +27,7 @@ export default function RootLayout({
 
 				<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+				<link rel="icon" href="/favicon.ico" sizes="any" />
 				<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 				<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 				<link rel="manifest" href="/manifest.json" />
@@ -40,6 +39,11 @@ export default function RootLayout({
 				<meta property="og:site_name" content="Rolês & Jogos" />
 				<meta property="og:url" content="https://roles-e-jogos-mvp-front.vercel.app" />
 				<meta property="og:image" content="https://roles-e-jogos-mvp-front.vercel.app/favicon.png" />
+
+				<meta
+					name='viewport'
+					content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+				/>
 			</head>
 			<body>{children}</body>
 		</html>

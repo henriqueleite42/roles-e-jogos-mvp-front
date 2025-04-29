@@ -1,6 +1,6 @@
 {
 	"name": "Rolês & Jogos",
-	"short_name": "R&J",
+	"short_name": "Rolês & Jogos",
 	"icons": [
 		{
 			"src": "/android-chrome-192x192.png",
@@ -32,5 +32,5 @@
 	"background_color": "#ffffff",
 	"start_url": "/",
 	"display": "fullscreen",
-	"orientation": "any"
+	"orientation": "portrait"
 }
