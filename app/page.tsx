@@ -4388,7 +4388,7 @@ export default function Home() {
 	const [searchQuery, setSearchQuery] = useState("")
 	const [activeView, setActiveView] = useState("games")
 	const [selectedOwner, setSelectedOwner] = useState("all")
-	const [minPlayers, setMinPlayers] = useState("any")
+	const [maxPlayers, setMaxPlayers] = useState("0")
 
 	// Filter items based on all criteria
 	const filteredItems = useMemo(() => {
@@ -4401,17 +4401,18 @@ export default function Home() {
 				selectedOwner === "all" || item.Owners.some((owner) => owner.AccountId.toString() === selectedOwner)
 
 			// Filter by minimum players
-			const playerMatch = minPlayers === "any" || Number.parseInt(minPlayers, 10) >= item.Game.MinAmountOfPlayers
+			const playerMatch = maxPlayers === "0" || Number.parseInt(maxPlayers, 10) <= item.Game.MaxAmountOfPlayers
 
 			return nameMatch && ownerMatch && playerMatch
 		})
-	}, [searchQuery, selectedOwner, minPlayers])
+	}, [searchQuery, selectedOwner, maxPlayers])
+
 
 	// Reset all filters
 	const resetFilters = () => {
 		setSearchQuery("")
 		setSelectedOwner("all")
-		setMinPlayers("any")
+		setMaxPlayers("0")
 	}
 
 	return (
@@ -4435,9 +4436,9 @@ export default function Home() {
 						<Button variant="outline" className="gap-2">
 							<Filter className="h-4 w-4" />
 							Filtros
-							{(selectedOwner !== "all" || minPlayers !== "any") && (
+							{(selectedOwner !== "all" || maxPlayers !== "0") && (
 								<Badge variant="secondary" className="ml-1 rounded-full h-5 w-5 p-0 flex items-center justify-center">
-									{(selectedOwner !== "all" ? 1 : 0) + (minPlayers !== "any" ? 1 : 0)}
+									{(selectedOwner !== "all" ? 1 : 0) + (maxPlayers !== "0" ? 1 : 0)}
 								</Badge>
 							)}
 						</Button>
@@ -4466,13 +4467,13 @@ export default function Home() {
 									</Select>
 								</div>
 								<div className="grid gap-1">
-									<Label htmlFor="minPlayers">Mínimo de jogadores</Label>
-									<Select value={minPlayers} onValueChange={setMinPlayers}>
-										<SelectTrigger id="minPlayers">
+									<Label htmlFor="maxPlayers">Máximo de jogadores</Label>
+									<Select value={maxPlayers} onValueChange={setMaxPlayers}>
+										<SelectTrigger id="maxPlayers">
 											<SelectValue placeholder="Qualquer número" />
 										</SelectTrigger>
 										<SelectContent>
-											<SelectItem value="any">Qualquer número</SelectItem>
+											<SelectItem value="0">Qualquer número</SelectItem>
 											<SelectItem value="2">2+</SelectItem>
 											<SelectItem value="3">3+</SelectItem>
 											<SelectItem value="4">4+</SelectItem>
