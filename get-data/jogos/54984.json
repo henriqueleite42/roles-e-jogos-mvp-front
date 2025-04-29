@@ -1,0 +1,9 @@
+{
+  "Id": 54984,
+  "Name": "Fromage",
+  "IconUrl": "https://ludopedia.com.br/images/jogos/capas/54984_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/fromage",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

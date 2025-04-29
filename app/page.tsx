@@ -3723,6 +3723,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"45683": {
+		"Game": {
+			"Id": 45683,
+			"Name": "Coffee Rush",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/45683_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/coffee-rush",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
 	"46380": {
 		"Game": {
 			"Id": 46380,
@@ -3940,6 +3958,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"54984": {
+		"Game": {
+			"Id": 54984,
+			"Name": "Fromage",
+			"IconUrl": "https://ludopedia.com.br/images/jogos/capas/54984_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/fromage",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
 	"55088": {
 		"Game": {
 			"Id": 55088,
@@ -4088,6 +4124,11 @@ const items = Object.values({
 				"AccountId": 68006,
 				"Handle": "Gi Veiga",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
 			}
 		]
 	},
@@ -4153,6 +4194,24 @@ const items = Object.values({
 			}
 		]
 	},
+	"69574": {
+		"Game": {
+			"Id": 69574,
+			"Name": "Dobble: Turma da Mônica",
+			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/69574_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/dobble-turma-da-monica",
+			"MinAmountOfPlayers": 2,
+			"MaxAmountOfPlayers": 8,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
 	"69678": {
 		"Game": {
 			"Id": 69678,
@@ -4211,6 +4270,24 @@ const items = Object.values({
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			}
+		]
+	},
+	"76739": {
+		"Game": {
+			"Id": 76739,
+			"Name": "Formaggio",
+			"IconUrl": "https://ludopedia.com.br/images/jogos/capas/76739_t.jpg",
+			"LudopediaUrl": "https://ludopedia.com.br/jogo/formaggio",
+			"MinAmountOfPlayers": 1,
+			"MaxAmountOfPlayers": 4,
+			"Kind": "GAME"
+		},
+		"Owners": [
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
 			}
 		]
 	},

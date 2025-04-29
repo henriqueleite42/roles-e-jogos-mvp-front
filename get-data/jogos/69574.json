@@ -1,0 +1,9 @@
+{
+  "Id": 69574,
+  "Name": "Dobble: Turma da Mônica",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/69574_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/dobble-turma-da-monica",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 8,
+  "Kind": "GAME"
+}
