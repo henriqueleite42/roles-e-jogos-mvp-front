@@ -1,0 +1,9 @@
+{
+  "Id": 503,
+  "Name": "Twilight Struggle",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/503_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/twilight-struggle",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 2,
+  "Kind": "GAME"
+}

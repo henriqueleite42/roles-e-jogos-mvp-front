@@ -1,0 +1,9 @@
+{
+  "Id": 390,
+  "Name": "Star Wars: The Card Game",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/390_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/star-wars-the-card-game",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 2,
+  "Kind": "GAME"
+}

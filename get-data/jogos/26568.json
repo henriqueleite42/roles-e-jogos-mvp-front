@@ -1,0 +1,9 @@
+{
+  "Id": 26568,
+  "Name": "Mörk Borg",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/26568_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/mork-borg",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 10,
+  "Kind": "GAME"
+}

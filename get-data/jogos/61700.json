@@ -1,0 +1,9 @@
+{
+  "Id": 61700,
+  "Name": "Wyrmspan",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/61700_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/wyrmspan",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

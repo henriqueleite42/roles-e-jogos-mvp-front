@@ -1,0 +1,9 @@
+{
+  "Id": 745,
+  "Name": "Warhammer: Invasion",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/745_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/warhammer-invasion",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}
