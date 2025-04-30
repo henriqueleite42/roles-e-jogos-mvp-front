@@ -7,9 +7,7 @@ import { CalendarClock, MapPin, Users, Info } from 'lucide-react'
 import Image from "next/image"
 
 import EVENTS from "../../get-data/events.json"
-
 const now = new Date().getTime()
-
 const events = EVENTS.filter(e => new Date(e.Date).getTime() >= now)
 
 function formatEventDate(dateString: string): string {
