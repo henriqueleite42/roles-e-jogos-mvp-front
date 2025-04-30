@@ -1,14 +1,21 @@
 [
 	{
-		"Game": {
-			"Id": 18756,
-			"Name": "Cthulhu: Death May Die",
-			"IconUrl": "https://storage.googleapis.com/ludopedia-capas/18756_t.jpg",
-			"LudopediaUrl": "https://ludopedia.com.br/jogo/cthulhu-death-may-die",
-			"MinAmountOfPlayers": 1,
-			"MaxAmountOfPlayers": 5,
-			"Kind": "GAME"
-		},
+		"Id": 1,
+		"Name": "Cthulhu: Death May Die",
+		"Description": "Dia de matar o Xuxuzão na Muito!",
+		"ImageUrl": "https://storage.googleapis.com/ludopedia-capas/18756_t.jpg",
+		"AvailableSpots": 5,
+		"Games": [
+			{
+				"Id": 18756,
+				"Name": "Cthulhu: Death May Die",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/18756_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/cthulhu-death-may-die",
+				"MinAmountOfPlayers": 1,
+				"MaxAmountOfPlayers": 5,
+				"Kind": "GAME"
+			}
+		],
 		"Location": {
 			"Name": "Muito Colecionaveis",
 			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148",

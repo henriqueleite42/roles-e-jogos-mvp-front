@@ -3,7 +3,7 @@
 import { BottomNavbar } from "@/components/bottom-navbar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { CalendarClock, MapPin, Users } from 'lucide-react'
+import { CalendarClock, MapPin, Users, Info } from 'lucide-react'
 import Image from "next/image"
 
 import EVENTS from "../../get-data/events.json"
@@ -33,44 +33,68 @@ export default function Events() {
 			<h1 className="text-3xl font-bold mb-6">Rolês & Jogos</h1>
 
 			{events.map((event) => (
-				<Card className="overflow-hidden hover:shadow-md transition-shadow">
+				<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow">
 					<CardContent className="p-0">
 						<div className="flex flex-col">
-							{/* Game and Image Section */}
+							{/* Event Header Section */}
 							<div className="flex flex-row">
 								<div className="flex-1 p-4 md:p-6">
-									<h2 className="text-xl md:text-2xl font-bold">{event.Game.Name}</h2>
-									<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
-										<Badge variant="outline" className="mr-2 mb-1">
-											{event.Game.MinAmountOfPlayers === event.Game.MaxAmountOfPlayers
-												? `${event.Game.MinAmountOfPlayers} jogadores`
-												: `${event.Game.MinAmountOfPlayers}-${event.Game.MaxAmountOfPlayers} jogadores`}
-										</Badge>
-										<a
-											href={event.Game.LudopediaUrl}
-											target="_blank"
-											rel="noopener noreferrer"
-											className="text-sm text-blue-600 hover:underline"
-										>
-											Ver na Ludopedia
-										</a>
-									</div>
+									<h2 className="text-xl md:text-2xl font-bold">{event.Name}</h2>
+									<p className="text-muted-foreground mt-1">{event.Description}</p>
 
-									{/* Date display */}
-									<div className="flex items-center mt-2 text-sm">
+									<div className="flex items-center mt-3 text-sm">
 										<CalendarClock className="h-4 w-4 mr-2 text-muted-foreground" />
 										<span>{formatEventDate(event.Date)}</span>
 									</div>
+
+									<div className="flex items-center mt-2 text-sm">
+										<Info className="h-4 w-4 mr-2 text-muted-foreground" />
+										<span>{event.AvailableSpots - event.Confirmations.length > 0 ? `${event.AvailableSpots - event.Confirmations.length} vagas disponíveis` : "Evento lotado"}</span>
+									</div>
 								</div>
 								<div className="w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative">
-									<Image
-										src={event.Game.IconUrl || "/placeholder.svg"}
-										alt={event.Game.Name}
-										fill
-										className="object-cover"
-									/>
+									<Image src={event.ImageUrl || "/placeholder.svg"} alt={event.Name} fill className="object-cover" />
 								</div>
 							</div>
+
+							{/* Games Section */}
+							{event.Games.length > 0 && (
+								<div className="border-t border-gray-100 p-4 md:p-6">
+									<h3 className="font-medium mb-3">Jogos</h3>
+									<div className="space-y-3">
+										{event.Games.map((game) => (
+											<div key={game.Id} className="flex items-start gap-3">
+												<div className="w-10 h-10 relative flex-shrink-0">
+													<Image
+														src={game.IconUrl || "/placeholder.svg"}
+														alt={game.Name}
+														fill
+														className="object-cover rounded"
+													/>
+												</div>
+												<div>
+													<div className="font-medium">{game.Name}</div>
+													<div className="flex items-center mt-1">
+														<Badge variant="outline" className="text-xs">
+															{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
+																? `${game.MinAmountOfPlayers} jogadores`
+																: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
+														</Badge>
+														<a
+															href={game.LudopediaUrl}
+															target="_blank"
+															rel="noopener noreferrer"
+															className="text-xs text-blue-600 hover:underline ml-2"
+														>
+															Ver na Ludopedia
+														</a>
+													</div>
+												</div>
+											</div>
+										))}
+									</div>
+								</div>
+							)}
 
 							{/* Location Section */}
 							<div className="border-t border-gray-100 p-4 md:p-6 bg-gray-50">
@@ -86,7 +110,7 @@ export default function Events() {
 								<div className="flex items-center mt-4">
 									<Users className="h-5 w-5 mr-2 text-muted-foreground" />
 									<span className="text-sm font-medium mr-2">
-										Confirmados ({event.Confirmations.length}/{event.Game.MaxAmountOfPlayers}):
+										Confirmados ({event.Confirmations.length}/{event.AvailableSpots}):
 									</span>
 									<div className="flex">
 										{event.Confirmations.length > 0 ? (
@@ -127,4 +151,3 @@ export default function Events() {
 		</main>
 	)
 }
-
