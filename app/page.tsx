@@ -11,6 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { BottomNavbar } from "@/components/bottom-navbar"
+
 import ITEMS from "../get-data/games.json"
 
 // Sample data for our items
@@ -47,10 +49,6 @@ export default function Home() {
 	// Filter items based on all criteria
 	const filteredItems = useMemo(() => {
 		return items.filter((item) => {
-			if (activeView === "MAP") {
-				return true
-			}
-
 			// Filter by kind
 			const kind = item.Game.Kind === activeView
 			if (!kind) {
@@ -175,9 +173,6 @@ export default function Home() {
 					</TabsTrigger>
 					<TabsTrigger value="RPG" onClick={() => setActiveView("RPG")}>
 						RPGs
-					</TabsTrigger>
-					<TabsTrigger value="MAP" onClick={() => setActiveView("MAP")}>
-						Mapa
 					</TabsTrigger>
 				</TabsList>
 
@@ -311,19 +306,9 @@ export default function Home() {
 							</div>
 						)}
 					</TabsContent>)}
-
-				{activeView === "MAP" && (<TabsContent value="MAP" className="mt-4">
-					<div className="rounded-lg overflow-hidden border">
-						<iframe
-							src="https://www.google.com/maps/d/u/0/embed?mid=1TdBj-p79GEwf-pMyPUEzDQsuuZb1ryU&ehbc=2E312F&noprof=1"
-							width="100%"
-							height="480"
-							title="Mapa de jogos"
-							className="border-0"
-						></iframe>
-					</div>
-				</TabsContent>)}
 			</Tabs>
+
+			<BottomNavbar />
 		</main>
 	)
 }
