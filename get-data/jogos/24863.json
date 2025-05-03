@@ -1,9 +1,9 @@
 {
-  "Id": 24863,
-  "Name": "Alien - O Jogo de RPG",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/24863_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/alien-the-roleplaying-game",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 10,
-  "Kind": "GAME"
+	"Id": 24863,
+	"Name": "Alien - O Jogo de RPG",
+	"IconUrl": "https://storage.googleapis.com/ludopedia-capas/24863_t.jpg",
+	"LudopediaUrl": "https://ludopedia.com.br/jogo/alien-the-roleplaying-game",
+	"MinAmountOfPlayers": 2,
+	"MaxAmountOfPlayers": 10,
+	"Kind": "RPG"
 }

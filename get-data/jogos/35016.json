@@ -1,9 +1,9 @@
 {
-  "Id": 35016,
-  "Name": "Dark Souls: The Roleplaying Game",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/35016_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/dark-souls-the-roleplaying-game",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 10,
-  "Kind": "GAME"
+	"Id": 35016,
+	"Name": "Dark Souls: The Roleplaying Game",
+	"IconUrl": "https://storage.googleapis.com/ludopedia-capas/35016_t.jpg",
+	"LudopediaUrl": "https://ludopedia.com.br/jogo/dark-souls-the-roleplaying-game",
+	"MinAmountOfPlayers": 2,
+	"MaxAmountOfPlayers": 10,
+	"Kind": "RPG"
 }

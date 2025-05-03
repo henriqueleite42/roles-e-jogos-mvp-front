@@ -214,6 +214,12 @@ async function bootstrap() {
 		games[game.Id].Game = game
 	}
 
+	for (const gameId in games) {
+		if (!games[gameId].Owners || games[gameId].Owners.length === 0) {
+			delete games[gameId]
+		}
+	}
+
 	console.log("successfully built data");
 
 	writeFileSync(join(__dirname, `games.json`), JSON.stringify(games, null, 2))
