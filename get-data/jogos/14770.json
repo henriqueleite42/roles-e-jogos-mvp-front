@@ -1,0 +1,9 @@
+{
+  "Id": 14770,
+  "Name": "Startups",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/14770_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/startups",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 7,
+  "Kind": "GAME"
+}

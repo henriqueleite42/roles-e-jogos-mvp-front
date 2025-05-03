@@ -1,0 +1,9 @@
+{
+  "Id": 1741,
+  "Name": "Munchkin: Cthulhu",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/1741_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/munchkin-cthulhu",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

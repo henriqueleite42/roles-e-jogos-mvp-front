@@ -27,11 +27,11 @@ const users = {
 		Handle: "Gi Veiga",
 		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 	},
-	"296463": {
-		AccountId: 296463,
-		Handle: "lfernandomoda",
-		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
-	},
+	// "296463": {
+	// 	AccountId: 296463,
+	// 	Handle: "lfernandomoda",
+	// 	AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_296463_1743085079.jpg"
+	// },
 	"121554": {
 		AccountId: 121554,
 		Handle: "Guig",
@@ -51,6 +51,16 @@ const users = {
 		AccountId: 134076,
 		Handle: "LuizNier",
 		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_134076_1703527145.jpg"
+	},
+	"209306": {
+		AccountId: 209306,
+		Handle: "pcsr42",
+		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_209306_1671769270.jpg"
+	},
+	"105932": {
+		AccountId: 105932,
+		Handle: "r0dr1600",
+		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_105932_1736287047.jpeg"
 	},
 }
 

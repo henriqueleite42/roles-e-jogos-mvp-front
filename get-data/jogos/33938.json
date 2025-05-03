@@ -1,0 +1,9 @@
+{
+  "Id": 33938,
+  "Name": "Marvel Zombies",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/33938_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/marvel-zombies-a-zombicide-game",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

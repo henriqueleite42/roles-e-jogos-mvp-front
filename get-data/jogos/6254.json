@@ -1,0 +1,9 @@
+{
+  "Id": 6254,
+  "Name": "Pokémon, O Mestre dos Treinadores",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/6254_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/pokemon-master-trainer",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

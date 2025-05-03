@@ -1,0 +1,9 @@
+{
+  "Id": 7832,
+  "Name": "Deep Sea Adventure",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/7832_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/deep-sea-adventure",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

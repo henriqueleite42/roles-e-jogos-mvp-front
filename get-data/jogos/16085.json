@@ -1,0 +1,9 @@
+{
+  "Id": 16085,
+  "Name": "Teotihuacan: City of Gods",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/16085_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/teotihuacan-city-of-gods",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

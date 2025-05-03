@@ -1,0 +1,9 @@
+{
+  "Id": 26015,
+  "Name": "New York Zoo",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/26015_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/new-york-zoo",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

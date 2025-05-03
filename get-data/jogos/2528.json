@@ -1,0 +1,9 @@
+{
+  "Id": 2528,
+  "Name": "Sushi Go!",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/2528_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/sushi-go",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

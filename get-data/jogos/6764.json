@@ -1,0 +1,9 @@
+{
+  "Id": 6764,
+  "Name": "Scythe",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/6764_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/scythe",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

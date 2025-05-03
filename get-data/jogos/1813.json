@@ -1,0 +1,9 @@
+{
+  "Id": 1813,
+  "Name": "No Thanks!",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/1813_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/no-thanks",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 7,
+  "Kind": "GAME"
+}
