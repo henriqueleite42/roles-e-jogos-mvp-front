@@ -8,7 +8,15 @@ import Image from "next/image"
 
 import EVENTS from "../../get-data/events.json"
 const now = new Date().getTime()
-const events = EVENTS.filter(e => new Date(e.Date).getTime() >= now)
+const events = EVENTS
+	.filter(e => new Date(e.Date).getTime() >= now)
+	.sort((a, b) => {
+		if (new Date(a.Date).getTime() > new Date(b.Date).getTime()) {
+			return 1
+		} else {
+			return -1
+		}
+	})
 
 function formatEventDate(dateString: string): string {
 	const date = new Date(dateString)
@@ -27,11 +35,11 @@ function formatEventDate(dateString: string): string {
 
 export default function Events() {
 	return (
-		<main className="container mx-auto py-8 px-4">
+		<main className="container mx-auto py-8 px-4 mb-10">
 			<h1 className="text-3xl font-bold mb-6">Rolês & Jogos</h1>
 
 			{events.map((event) => (
-				<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow">
+				<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow mb-3">
 					<CardContent className="p-0">
 						<div className="flex flex-col">
 							{/* Event Header Section */}
