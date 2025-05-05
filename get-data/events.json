@@ -1,5 +1,41 @@
 [
 	{
+		"Id": 4,
+		"Name": "Cthulhu: Death May Die",
+		"Description": "Dia de matar o Xuxuzão na Muito!",
+		"ImageUrl": "https://storage.googleapis.com/ludopedia-capas/18756_t.jpg",
+		"AvailableSpots": 5,
+		"Games": [
+			{
+				"Id": 18756,
+				"Name": "Cthulhu: Death May Die",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/18756_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/cthulhu-death-may-die",
+				"MinAmountOfPlayers": 1,
+				"MaxAmountOfPlayers": 5,
+				"Kind": "GAME"
+			}
+		],
+		"Location": {
+			"Name": "Muito Colecionaveis",
+			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148",
+			"ImageUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIADgAOAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAABgEFAgMEB//EAC4QAAEDAwMCBQIHAQAAAAAAAAEAAgMEESEFEjFBUQYTImGBBzIVI0JScaHRFP/EABkBAAMBAQEAAAAAAAAAAAAAAAACAwEFBP/EAB8RAAMBAAICAwEAAAAAAAAAAAABEQIDMRIhE0FRBP/aAAwDAQACEQMRAD8A8pkO51w0D2CxGStz4ixxabG3ULMRHaLAZxc8LtpU6ess1NtwB8raxt8kYQxtiW9eysYqF5YC2N1iOvdPnNEhXSxWYHtx0JHZc9rcpikoHQUxMotvHVUlRH6jtOBhG8w2M50IspUwLBsW8jaPhdRia2LY82JF7Jp+mmmafqGuz02owCanNDM4g5Lfty3sRfBTJp/g+i06l1WTVZIKuZ1DM/TyAHAxNbfzvYm7QO2UuuRZcLvlxmp9nmtJRjzNxcCDxhNtBpjaljZGktiby0nr1TTJotHH9RGQMoacUBpzIYxGNg/KObcc2yuud9NpejaVLDSU7pJ4Dv3Qhwd9uT7ps/0KJJdkNbrXiuxJ1uMSxNjIDtpz/CU9TpBG70AgDpbhel/U6RtHIKOipaSGNwad8cQY8G5/UOhsvPtUpoaeQsjc50rJNkrON2bfHz/qPnWkvQLkSXtFEYMk2whOHjSOgh1SI6ZDAIn0kItE0AbtoLjjrc590LUqqejOctUrNBr5dOmfPRTvhc9hic5pFy13I/pWn4zO0O8mpfHenNMQTe8R5ZngJSppi2Iju7jsthqSAMgkHghVqnRFaX2Osfi7URp//BJXyGnDNm3H2/tvzb2QzxBK+KKGaoe+GFrhEHEegHokOSU3vfldDZH+UHgODeL9Loz4/gVJ1Iv9X1eq1KR1TW1Tp3OFrnoOgVeJzKAJpnyMaPTd1wPZVPmYIG52e6zgebWzbqLrEs3oG056GXUa+bUPLfUyedKI2tDzYENaMDHZCXpakN9I6+6E1Q65ElEVzXFvC2EnbcqEKSImLi3vdSJ5AwM3naDe10IWUCA7FiVIktwhCKBiXkqUIRTT/9k="
+		},
+		"Date": "2025-05-06T22:00:00Z",
+		"Confirmations": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			},
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			}
+		]
+	},
+	{
 		"Id": 3,
 		"Name": "Domingão de Bolos & Jogos",
 		"Description": "Aniversário do Henrique com bolo de Cenoura e Prestigio, além de muitos jogos",
