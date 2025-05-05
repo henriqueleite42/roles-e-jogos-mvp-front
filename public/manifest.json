@@ -30,7 +30,7 @@
 	],
 	"theme_color": "#000000",
 	"background_color": "#ffffff",
-	"start_url": "/jogos",
+	"start_url": "/home",
 	"display": "fullscreen",
 	"orientation": "portrait"
 }

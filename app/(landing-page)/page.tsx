@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Dice5, Users, Calendar, ChevronRight, Dice6, Puzzle, VenetianMask } from "lucide-react"
 
-import EVENTS from "../get-data/events.json"
+import EVENTS from "../../get-data/events.json"
 const now = new Date().getTime()
 const events = EVENTS.filter(e => new Date(e.Date).getTime() >= now).splice(0, 3)
 
@@ -25,21 +25,24 @@ function formatEventDate(dateString: string): string {
 export default function LandingPage() {
 	return (
 		<div className="flex min-h-screen flex-col">
+			<header className="p-4 border-b bg-gradient-to-r from-orange-500 to-orange-400">
+				<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
+			</header>
+
 			<main className="flex-1">
 				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-orange-50 to-background">
 					<div className="container px-4 md:px-6">
 						<div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
 							<div className="flex flex-col justify-center space-y-4">
 								<div className="space-y-2">
-									<h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">Rolês & Jogos</h1>
 									<p className="max-w-[600px] text-gray-500 md:text-xl">
 										Um grupo de amigos que se reune pra jogar jogos de tabuleiro!
 									</p>
 								</div>
 								<div className="flex flex-col gap-2 min-[400px]:flex-row">
-									<Link href="/jogos">
+									<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
 										<Button className="bg-orange-500 hover:bg-orange-600">
-											Veja os jogos da nossa comunidade
+											Faça parte de nossa comunidade
 											<ChevronRight className="ml-2 h-4 w-4" />
 										</Button>
 									</Link>
@@ -184,7 +187,7 @@ export default function LandingPage() {
 								<div className="flex items-center space-x-4">
 									<Users className="h-12 w-12 text-orange-500" />
 									<div>
-										<h3 className="text-xl font-bold">+25 Membros</h3>
+										<h3 className="text-xl font-bold">+35 Membros</h3>
 										<p className="text-sm text-gray-500">Faça parte da nossa comunidade</p>
 									</div>
 								</div>
@@ -193,26 +196,21 @@ export default function LandingPage() {
 					</div>
 				</section>
 
-				{/* <section className="w-full py-12 md:py-24 lg:py-32 bg-orange-500 text-white">
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-orange-500 text-white">
 					<div className="container px-4 md:px-6 text-center">
 						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">Vem jogar com a gente!</h2>
 						<p className="mx-auto max-w-[700px] text-orange-50 md:text-xl/relaxed mb-8">
 							Todos são bem vindos na nossa comunidade. Junte-se a nós para momentos de diversão e novas amizades.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Link href="#jogos">
+							<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
 								<Button className="bg-white text-orange-500 hover:bg-orange-50">
-									Veja os jogos da nossa comunidade
-								</Button>
-							</Link>
-							<Link href="#">
-								<Button variant="outline" className="border-white text-white hover:bg-orange-600">
-									Veja as próximas mesas marcadas
+									Vem jogar com a gente!
 								</Button>
 							</Link>
 						</div>
 					</div>
-				</section> */}
+				</section>
 			</main>
 			{/* <footer className="border-t bg-background">
 				<div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 md:py-12">

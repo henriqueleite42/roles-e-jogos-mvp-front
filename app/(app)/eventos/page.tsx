@@ -1,12 +1,11 @@
 "use client"
 
-import { BottomNavbar } from "@/components/bottom-navbar"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import { CalendarClock, MapPin, Users, Info } from 'lucide-react'
 import Image from "next/image"
 
-import EVENTS from "../../get-data/events.json"
+import EVENTS from "../../../get-data/events.json"
 const now = new Date().getTime()
 const events = EVENTS
 	.filter(e => new Date(e.Date).getTime() >= now)
@@ -35,9 +34,7 @@ function formatEventDate(dateString: string): string {
 
 export default function Events() {
 	return (
-		<main className="container mx-auto py-8 px-4 mb-10">
-			<h1 className="text-3xl font-bold mb-6">Rolês & Jogos</h1>
-
+		<main className="flex-1 container mx-auto py-8 px-4 mb-10">
 			{events.map((event) => (
 				<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow mb-3">
 					<CardContent className="p-0">
@@ -152,8 +149,6 @@ export default function Events() {
 					<p className="text-muted-foreground">Nenhum evento encontrado.</p>
 				</div>
 			)}
-
-			<BottomNavbar />
 		</main>
 	)
 }

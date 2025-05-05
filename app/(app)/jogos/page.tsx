@@ -11,9 +11,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { BottomNavbar } from "@/components/bottom-navbar"
 
-import ITEMS from "../../get-data/games.json"
+import ITEMS from "../../../get-data/games.json"
 
 // Sample data for our items
 const items = Object.values(ITEMS).sort((a, b) => {
@@ -88,8 +87,6 @@ export default function Home() {
 
 	return (
 		<main className="container mx-auto py-8 px-4">
-			<h1 className="text-3xl font-bold mb-6">Rolês & Jogos</h1>
-
 			<div className="flex flex-col md:flex-row gap-4 mb-8">
 				<div className="relative flex-grow">
 					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
@@ -307,8 +304,6 @@ export default function Home() {
 						)}
 					</TabsContent>)}
 			</Tabs>
-
-			<BottomNavbar />
 		</main>
 	)
 }
