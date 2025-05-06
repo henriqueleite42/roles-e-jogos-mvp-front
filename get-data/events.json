@@ -1,5 +1,82 @@
 [
 	{
+		"Id": 5,
+		"Name": "Quarta de Festa",
+		"Description": "Bora jogar muitos Party Games!",
+		"ImageUrl": "https://images.tcdn.com.br/img/img_prod/558884/kit_cidades_sombrias_tortuga_salem_deadwood_e_bristol_4_jogos_de_tabuleiro_galapagos_888875409_1_5996315a2afce99fba109d633dc26621.jpg",
+		"AvailableSpots": 100,
+		"Games": [
+			{
+				"Id": 7438,
+				"Name": "Cidades Sombrias: Salem 1692",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/7438_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/salem-1692",
+				"MinAmountOfPlayers": 4,
+				"MaxAmountOfPlayers": 12,
+				"Kind": "GAME"
+			},
+			{
+				"Id": 25067,
+				"Name": "Cidades Sombrias: Bristol 1350",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/25067_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/bristol-1350",
+				"MinAmountOfPlayers": 1,
+				"MaxAmountOfPlayers": 9,
+				"Kind": "GAME"
+			},
+			{
+				"Id": 12662,
+				"Name": "Cidades Sombrias: Tortuga 1667",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/12662_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/tortuga-1667",
+				"MinAmountOfPlayers": 2,
+				"MaxAmountOfPlayers": 9,
+				"Kind": "GAME"
+			},
+			{
+				"Id": 32897,
+				"Name": "Scout",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/32897_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/scout",
+				"MinAmountOfPlayers": 2,
+				"MaxAmountOfPlayers": 5,
+				"Kind": "GAME"
+			},
+			{
+				"Id": 66639,
+				"Name": "Flip 7",
+				"IconUrl": "https://ludopedia.com.br/images/jogos/capas/66639_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/flip-7",
+				"MinAmountOfPlayers": 3,
+				"MaxAmountOfPlayers": 99,
+				"Kind": "GAME"
+			}
+		],
+		"Location": {
+			"Name": "Muito Colecionaveis",
+			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148",
+			"ImageUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIADgAOAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAABgEFAgMEB//EAC4QAAEDAwMCBQIHAQAAAAAAAAEAAgMEESEFEjFBUQYTImGBBzIVI0JScaHRFP/EABkBAAMBAQEAAAAAAAAAAAAAAAACAwEFBP/EAB8RAAMBAAICAwEAAAAAAAAAAAABEQIDMRIhE0FRBP/aAAwDAQACEQMRAD8A8pkO51w0D2CxGStz4ixxabG3ULMRHaLAZxc8LtpU6ess1NtwB8raxt8kYQxtiW9eysYqF5YC2N1iOvdPnNEhXSxWYHtx0JHZc9rcpikoHQUxMotvHVUlRH6jtOBhG8w2M50IspUwLBsW8jaPhdRia2LY82JF7Jp+mmmafqGuz02owCanNDM4g5Lfty3sRfBTJp/g+i06l1WTVZIKuZ1DM/TyAHAxNbfzvYm7QO2UuuRZcLvlxmp9nmtJRjzNxcCDxhNtBpjaljZGktiby0nr1TTJotHH9RGQMoacUBpzIYxGNg/KObcc2yuud9NpejaVLDSU7pJ4Dv3Qhwd9uT7ps/0KJJdkNbrXiuxJ1uMSxNjIDtpz/CU9TpBG70AgDpbhel/U6RtHIKOipaSGNwad8cQY8G5/UOhsvPtUpoaeQsjc50rJNkrON2bfHz/qPnWkvQLkSXtFEYMk2whOHjSOgh1SI6ZDAIn0kItE0AbtoLjjrc590LUqqejOctUrNBr5dOmfPRTvhc9hic5pFy13I/pWn4zO0O8mpfHenNMQTe8R5ZngJSppi2Iju7jsthqSAMgkHghVqnRFaX2Osfi7URp//BJXyGnDNm3H2/tvzb2QzxBK+KKGaoe+GFrhEHEegHokOSU3vfldDZH+UHgODeL9Loz4/gVJ1Iv9X1eq1KR1TW1Tp3OFrnoOgVeJzKAJpnyMaPTd1wPZVPmYIG52e6zgebWzbqLrEs3oG056GXUa+bUPLfUyedKI2tDzYENaMDHZCXpakN9I6+6E1Q65ElEVzXFvC2EnbcqEKSImLi3vdSJ5AwM3naDe10IWUCA7FiVIktwhCKBiXkqUIRTT/9k="
+		},
+		"Date": "2025-05-07T22:00:00Z",
+		"Confirmations": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			},
+			{
+				"AccountId": 68006,
+				"Handle": "Gi Veiga",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+			},
+			{
+				"AccountId": 295469,
+				"Handle": "Ciskow",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+			}
+		]
+	},
+	{
 		"Id": 4,
 		"Name": "Cthulhu: Death May Die",
 		"Description": "Dia de matar o Xuxuzão na Muito!",
@@ -27,11 +104,6 @@
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
-				"AccountId": 68006,
-				"Handle": "Gi Veiga",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
 			}
 		]
 	},
@@ -71,6 +143,33 @@
 				"MinAmountOfPlayers": 2,
 				"MaxAmountOfPlayers": 4,
 				"Kind": "GAME"
+			},
+			{
+				"Id": 36097,
+				"Name": "Evergreen",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/36097_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/evergreen",
+				"MinAmountOfPlayers": 1,
+				"MaxAmountOfPlayers": 4,
+				"Kind": "GAME"
+			},
+			{
+				"Id": 18189,
+				"Name": "Hellboy: The Board Game",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/18189_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/hellboy-the-board-game",
+				"MinAmountOfPlayers": 1,
+				"MaxAmountOfPlayers": 4,
+				"Kind": "GAME"
+			},
+			{
+				"Id": 30935,
+				"Name": "Hippocrates",
+				"IconUrl": "https://storage.googleapis.com/ludopedia-capas/30935_t.jpg",
+				"LudopediaUrl": "https://ludopedia.com.br/jogo/hippocrates",
+				"MinAmountOfPlayers": 1,
+				"MaxAmountOfPlayers": 4,
+				"Kind": "GAME"
 			}
 		],
 		"Location": {
@@ -104,8 +203,8 @@
 			}
 		],
 		"Location": {
-			"Name": "Muito Colecionaveis",
-			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148"
+			"Name": "Casa do Henrique",
+			"Address": "Rua Coronel Rodovalho 98, Apto 23"
 		},
 		"Date": "2025-05-09T22:00:00Z",
 		"Confirmations": [
@@ -113,11 +212,6 @@
 				"AccountId": 292342,
 				"Handle": "henriqueleite42",
 				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
-			},
-			{
-				"AccountId": 134076,
-				"Handle": "LuizNier",
-				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_134076_1703527145.jpg"
 			}
 		]
 	},

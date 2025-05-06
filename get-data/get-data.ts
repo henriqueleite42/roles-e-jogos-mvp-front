@@ -211,6 +211,10 @@ async function bootstrap() {
 
 	const knowGames = Object.values(knowGamesById)
 	for (const game of knowGames) {
+		if (!games[game.Id]) {
+			continue
+		}
+
 		games[game.Id].Game = game
 	}
 
