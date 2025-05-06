@@ -1,5 +1,35 @@
 [
 	{
+		"Id": 6,
+		"Name": "Dia das Mães com Jogos",
+		"Description": "Bora jogar em todo feriado que der!",
+		"ImageUrl": "https://i1.wp.com/mensagensdeamorcomimagens.com.br/wp-content/uploads/2019/04/feliz-dia-das-maes.png?fit=1080%2C1080&ssl=1",
+		"AvailableSpots": 11,
+		"Games": [],
+		"Location": {
+			"Name": "Casa do Henrique",
+			"Address": "Rua Coronel Rodovalho 98, Apto 23"
+		},
+		"Date": "2025-05-11T16:00:00Z",
+		"Confirmations": [
+			{
+				"AccountId": 292342,
+				"Handle": "henriqueleite42",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+			},
+			{
+				"AccountId": 312126,
+				"Handle": "Dominguesjosue",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
+			},
+			{
+				"AccountId": 121554,
+				"Handle": "Guig",
+				"AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
+			}
+		]
+	},
+	{
 		"Id": 5,
 		"Name": "Quarta de Festa",
 		"Description": "Bora jogar muitos Party Games!",
@@ -54,8 +84,7 @@
 		],
 		"Location": {
 			"Name": "Muito Colecionaveis",
-			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148",
-			"ImageUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIADgAOAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAABgEFAgMEB//EAC4QAAEDAwMCBQIHAQAAAAAAAAEAAgMEESEFEjFBUQYTImGBBzIVI0JScaHRFP/EABkBAAMBAQEAAAAAAAAAAAAAAAACAwEFBP/EAB8RAAMBAAICAwEAAAAAAAAAAAABEQIDMRIhE0FRBP/aAAwDAQACEQMRAD8A8pkO51w0D2CxGStz4ixxabG3ULMRHaLAZxc8LtpU6ess1NtwB8raxt8kYQxtiW9eysYqF5YC2N1iOvdPnNEhXSxWYHtx0JHZc9rcpikoHQUxMotvHVUlRH6jtOBhG8w2M50IspUwLBsW8jaPhdRia2LY82JF7Jp+mmmafqGuz02owCanNDM4g5Lfty3sRfBTJp/g+i06l1WTVZIKuZ1DM/TyAHAxNbfzvYm7QO2UuuRZcLvlxmp9nmtJRjzNxcCDxhNtBpjaljZGktiby0nr1TTJotHH9RGQMoacUBpzIYxGNg/KObcc2yuud9NpejaVLDSU7pJ4Dv3Qhwd9uT7ps/0KJJdkNbrXiuxJ1uMSxNjIDtpz/CU9TpBG70AgDpbhel/U6RtHIKOipaSGNwad8cQY8G5/UOhsvPtUpoaeQsjc50rJNkrON2bfHz/qPnWkvQLkSXtFEYMk2whOHjSOgh1SI6ZDAIn0kItE0AbtoLjjrc590LUqqejOctUrNBr5dOmfPRTvhc9hic5pFy13I/pWn4zO0O8mpfHenNMQTe8R5ZngJSppi2Iju7jsthqSAMgkHghVqnRFaX2Osfi7URp//BJXyGnDNm3H2/tvzb2QzxBK+KKGaoe+GFrhEHEegHokOSU3vfldDZH+UHgODeL9Loz4/gVJ1Iv9X1eq1KR1TW1Tp3OFrnoOgVeJzKAJpnyMaPTd1wPZVPmYIG52e6zgebWzbqLrEs3oG056GXUa+bUPLfUyedKI2tDzYENaMDHZCXpakN9I6+6E1Q65ElEVzXFvC2EnbcqEKSImLi3vdSJ5AwM3naDe10IWUCA7FiVIktwhCKBiXkqUIRTT/9k="
+			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148"
 		},
 		"Date": "2025-05-07T22:00:00Z",
 		"Confirmations": [
@@ -95,8 +124,7 @@
 		],
 		"Location": {
 			"Name": "Muito Colecionaveis",
-			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148",
-			"ImageUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIADgAOAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAABgEFAgMEB//EAC4QAAEDAwMCBQIHAQAAAAAAAAEAAgMEESEFEjFBUQYTImGBBzIVI0JScaHRFP/EABkBAAMBAQEAAAAAAAAAAAAAAAACAwEFBP/EAB8RAAMBAAICAwEAAAAAAAAAAAABEQIDMRIhE0FRBP/aAAwDAQACEQMRAD8A8pkO51w0D2CxGStz4ixxabG3ULMRHaLAZxc8LtpU6ess1NtwB8raxt8kYQxtiW9eysYqF5YC2N1iOvdPnNEhXSxWYHtx0JHZc9rcpikoHQUxMotvHVUlRH6jtOBhG8w2M50IspUwLBsW8jaPhdRia2LY82JF7Jp+mmmafqGuz02owCanNDM4g5Lfty3sRfBTJp/g+i06l1WTVZIKuZ1DM/TyAHAxNbfzvYm7QO2UuuRZcLvlxmp9nmtJRjzNxcCDxhNtBpjaljZGktiby0nr1TTJotHH9RGQMoacUBpzIYxGNg/KObcc2yuud9NpejaVLDSU7pJ4Dv3Qhwd9uT7ps/0KJJdkNbrXiuxJ1uMSxNjIDtpz/CU9TpBG70AgDpbhel/U6RtHIKOipaSGNwad8cQY8G5/UOhsvPtUpoaeQsjc50rJNkrON2bfHz/qPnWkvQLkSXtFEYMk2whOHjSOgh1SI6ZDAIn0kItE0AbtoLjjrc590LUqqejOctUrNBr5dOmfPRTvhc9hic5pFy13I/pWn4zO0O8mpfHenNMQTe8R5ZngJSppi2Iju7jsthqSAMgkHghVqnRFaX2Osfi7URp//BJXyGnDNm3H2/tvzb2QzxBK+KKGaoe+GFrhEHEegHokOSU3vfldDZH+UHgODeL9Loz4/gVJ1Iv9X1eq1KR1TW1Tp3OFrnoOgVeJzKAJpnyMaPTd1wPZVPmYIG52e6zgebWzbqLrEs3oG056GXUa+bUPLfUyedKI2tDzYENaMDHZCXpakN9I6+6E1Q65ElEVzXFvC2EnbcqEKSImLi3vdSJ5AwM3naDe10IWUCA7FiVIktwhCKBiXkqUIRTT/9k="
+			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148"
 		},
 		"Date": "2025-05-06T22:00:00Z",
 		"Confirmations": [
@@ -234,8 +262,7 @@
 		],
 		"Location": {
 			"Name": "Muito Colecionaveis",
-			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148",
-			"ImageUrl": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIADgAOAMBIgACEQEDEQH/xAAbAAACAgMBAAAAAAAAAAAAAAAABgEFAgMEB//EAC4QAAEDAwMCBQIHAQAAAAAAAAEAAgMEESEFEjFBUQYTImGBBzIVI0JScaHRFP/EABkBAAMBAQEAAAAAAAAAAAAAAAACAwEFBP/EAB8RAAMBAAICAwEAAAAAAAAAAAABEQIDMRIhE0FRBP/aAAwDAQACEQMRAD8A8pkO51w0D2CxGStz4ixxabG3ULMRHaLAZxc8LtpU6ess1NtwB8raxt8kYQxtiW9eysYqF5YC2N1iOvdPnNEhXSxWYHtx0JHZc9rcpikoHQUxMotvHVUlRH6jtOBhG8w2M50IspUwLBsW8jaPhdRia2LY82JF7Jp+mmmafqGuz02owCanNDM4g5Lfty3sRfBTJp/g+i06l1WTVZIKuZ1DM/TyAHAxNbfzvYm7QO2UuuRZcLvlxmp9nmtJRjzNxcCDxhNtBpjaljZGktiby0nr1TTJotHH9RGQMoacUBpzIYxGNg/KObcc2yuud9NpejaVLDSU7pJ4Dv3Qhwd9uT7ps/0KJJdkNbrXiuxJ1uMSxNjIDtpz/CU9TpBG70AgDpbhel/U6RtHIKOipaSGNwad8cQY8G5/UOhsvPtUpoaeQsjc50rJNkrON2bfHz/qPnWkvQLkSXtFEYMk2whOHjSOgh1SI6ZDAIn0kItE0AbtoLjjrc590LUqqejOctUrNBr5dOmfPRTvhc9hic5pFy13I/pWn4zO0O8mpfHenNMQTe8R5ZngJSppi2Iju7jsthqSAMgkHghVqnRFaX2Osfi7URp//BJXyGnDNm3H2/tvzb2QzxBK+KKGaoe+GFrhEHEegHokOSU3vfldDZH+UHgODeL9Loz4/gVJ1Iv9X1eq1KR1TW1Tp3OFrnoOgVeJzKAJpnyMaPTd1wPZVPmYIG52e6zgebWzbqLrEs3oG056GXUa+bUPLfUyedKI2tDzYENaMDHZCXpakN9I6+6E1Q65ElEVzXFvC2EnbcqEKSImLi3vdSJ5AwM3naDe10IWUCA7FiVIktwhCKBiXkqUIRTT/9k="
+			"Address": "Av. Brasil, 1456 - Jardim Guanabara, Campinas - SP, 13073-148"
 		},
 		"Date": "2025-05-02T22:00:00Z",
 		"Confirmations": [

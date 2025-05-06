@@ -1,0 +1,9 @@
+{
+  "Id": 24625,
+  "Name": "Bandida",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/24625_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/bandida",
+  "MinAmountOfPlayers": 1,
+  "MaxAmountOfPlayers": 4,
+  "Kind": "GAME"
+}

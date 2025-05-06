@@ -682,6 +682,11 @@
         "AccountId": 292342,
         "Handle": "henriqueleite42",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      },
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
       }
     ]
   },
@@ -1704,6 +1709,24 @@
       }
     ]
   },
+  "11460": {
+    "Game": {
+      "Id": 11460,
+      "Name": "Port Royal: A Caminho!",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/11460_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/port-royal-unterwegs",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 4,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
+      }
+    ]
+  },
   "11466": {
     "Game": {
       "Id": 11466,
@@ -2250,6 +2273,29 @@
         "AccountId": 292342,
         "Handle": "henriqueleite42",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      },
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
+      }
+    ]
+  },
+  "17320": {
+    "Game": {
+      "Id": 17320,
+      "Name": "Herdeiros do Khan",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/17320_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/herdeiros-do-khan",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
       }
     ]
   },
@@ -2638,6 +2684,11 @@
         "AccountId": 292342,
         "Handle": "henriqueleite42",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      },
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
       }
     ]
   },
@@ -3251,6 +3302,24 @@
         "AccountId": 68006,
         "Handle": "Gi Veiga",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+      }
+    ]
+  },
+  "24625": {
+    "Game": {
+      "Id": 24625,
+      "Name": "Bandida",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/24625_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/bandida",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 4,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
       }
     ]
   },
@@ -4557,6 +4626,24 @@
       }
     ]
   },
+  "36045": {
+    "Game": {
+      "Id": 36045,
+      "Name": "Knock, Knock! Dungeon!",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/36045_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/knock-knock-dungeon",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 6,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
+      }
+    ]
+  },
   "36097": {
     "Game": {
       "Id": 36097,
@@ -5300,6 +5387,24 @@
         "AccountId": 199395,
         "Handle": "leopg",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_199395_1743049682.jpg"
+      }
+    ]
+  },
+  "60250": {
+    "Game": {
+      "Id": 60250,
+      "Name": "Glifos",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/60250_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/glifos",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 312126,
+        "Handle": "Dominguesjosue",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
       }
     ]
   },
