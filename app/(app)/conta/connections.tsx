@@ -3,42 +3,26 @@ import { Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
-import { GoogleIcon } from "@/components/icons/google"
-import { LudopediaIcon } from "@/components/icons/ludopedia"
 import Link from "next/link"
+import { Connection } from "@/types/api"
+import { connectionsIcons, toPascalCase } from "./utils"
 
-const connectionsIcons = {
-	"GOOGLE": {
-		icon: GoogleIcon,
-		color: "bg-google"
-	},
-	"LUDOPEDIA": {
-		icon: LudopediaIcon,
-		color: "bg-ludopedia"
-	}
+interface Props {
+	connections: Array<Connection>
 }
 
 const availableProviders = [
 	{
 		Provider: "GOOGLE",
-		Url: process.env.GOOGLE_REDIRECT_URI!
+		Url: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI!
 	},
 	{
 		Provider: "LUDOPEDIA",
-		Url: process.env.LUDOPEDIA_REDIRECT_URI!
+		Url: process.env.NEXT_PUBLIC_LUDOPEDIA_REDIRECT_URI!
 	},
 ]
 
-function toPascalCase(str: string) {
-	const lower = str.toLowerCase();
-	return lower.charAt(0).toUpperCase() + lower.slice(1);
-}
-
-export function Connections() {
-	const connections = [
-		{ ExternalId: "1", ExternalHandle: "foobar", Provider: "GOOGLE" },
-	]
-
+export function Connections({ connections }: Props) {
 	return (
 		<section className="mb-8">
 			<div className="flex justify-between items-center mb-4">
