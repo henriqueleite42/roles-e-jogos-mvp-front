@@ -3,6 +3,7 @@ import { Calendar, Dice6, Home, Plus, User } from 'lucide-react'
 import Link from "next/link"
 
 import '../globals.css'
+import QueryProvider from '@/components/query-provider'
 
 export const metadata: Metadata = {
 	title: 'Rolês & Jogos',
@@ -53,7 +54,7 @@ export default function RootLayout({
 					<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
 				</header>
 
-				{children}
+				<QueryProvider>{children}</QueryProvider>
 
 				<nav className="border-t bg-white py-2 px-4 sticky bottom-0 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
 					<div className="flex items-center justify-between max-w-md mx-auto">

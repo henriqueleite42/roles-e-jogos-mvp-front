@@ -7,7 +7,7 @@ import SignInPage from './unlogged-view';
 export default async function ContaPage() {
 	const cookieStore = await cookies();
 
-	if (!cookieStore.get("rolesejogos-session")) {
+	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
 		return <SignInPage />
 	}
 
@@ -16,7 +16,7 @@ export default async function ContaPage() {
 		headers: {
 			Cookie: cookieStore.toString()
 		},
-		next: { revalidate: 1 },
+		cache: 'no-store',
 	}).catch(() => ({
 		ok: false
 	} as Response));

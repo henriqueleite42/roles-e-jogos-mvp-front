@@ -1,9 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
+import { redirect } from 'next/navigation';
 import { Button } from "@/components/ui/button"
-import { Dice5, Users, Calendar, ChevronRight, Dice6, Puzzle, VenetianMask } from "lucide-react"
+import { Users, Calendar, ChevronRight, Dice6, Puzzle, VenetianMask } from "lucide-react"
 
 import EVENTS from "../../get-data/events.json"
+import { cookies } from "next/headers"
 const now = new Date().getTime()
 const events = EVENTS.filter(e => new Date(e.Date).getTime() >= now).splice(0, 3)
 
@@ -22,7 +24,13 @@ function formatEventDate(dateString: string): string {
 	return `${day}/${month}/${year} às ${hours}:${minutes}`
 }
 
-export default function LandingPage() {
+export default async function LandingPage() {
+	const cookieStore = await cookies();
+
+	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+		redirect("/jogos")
+	}
+
 	return (
 		<div className="flex min-h-screen flex-col">
 			<header className="p-4 border-b bg-gradient-to-r from-orange-500 to-orange-400">
