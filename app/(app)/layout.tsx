@@ -49,8 +49,8 @@ export default function RootLayout({
 					content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
 				/>
 			</head>
-			<body className="flex flex-col min-h-screen bg-gradient-to-b from-orange-50 to-white">
-				<header className="p-4 border-b bg-gradient-to-r from-orange-500 to-orange-400">
+			<body className="flex flex-col min-h-screen bg-gradient-to-b from-red-50 to-white">
+				<header className="p-4 border-b bg-gradient-to-r from-primary to-red-800">
 					<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
 				</header>
 
@@ -58,29 +58,29 @@ export default function RootLayout({
 
 				<nav className="border-t bg-white py-2 px-4 sticky bottom-0 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
 					<div className="flex items-center justify-between max-w-md mx-auto">
-						<Link href="/home" className="flex flex-col items-center p-2 text-orange-800">
+						<Link href="/home" className="flex flex-col items-center p-2 text-red-950">
 							<Home className="h-6 w-6" />
 							<span className="text-xs mt-1">Home</span>
 						</Link>
 
-						<Link href="/jogos" className="flex flex-col items-center p-2 text-orange-800">
+						<Link href="/jogos" className="flex flex-col items-center p-2 text-red-950">
 							<Dice6 className="h-6 w-6" />
 							<span className="text-xs mt-1">Jogos</span>
 						</Link>
 
 						<Link href="/adicionar-partida" className="flex flex-col items-center p-2 relative">
-							<div className="absolute -top-5 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 p-3 shadow-lg">
+							<div className="absolute -top-5 rounded-full bg-gradient-to-r from-primary to-red-800 p-3 shadow-lg">
 								<Plus className="h-6 w-6 text-white" />
 							</div>
-							<span className="text-xs mt-7 font-medium text-orange-500">Adicionar Partida</span>
+							<span className="text-xs mt-7 font-medium text-primary">Adicionar Partida</span>
 						</Link>
 
-						<Link href="/eventos" className="flex flex-col items-center p-2 text-orange-800">
+						<Link href="/eventos" className="flex flex-col items-center p-2 text-red-950">
 							<Calendar className="h-6 w-6" />
 							<span className="text-xs mt-1">Eventos</span>
 						</Link>
 
-						<Link href="/conta" className="flex flex-col items-center p-2 text-orange-800">
+						<Link href="/conta" className="flex flex-col items-center p-2 text-red-950">
 							<User className="h-6 w-6" />
 							<span className="text-xs mt-1">Conta</span>
 						</Link>

@@ -13,11 +13,11 @@ interface Props {
 
 export function LoggedView({ profile }: Props) {
 	return (
-		<div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-50 to-white">
+		<div className="flex flex-col min-h-screen bg-gradient-to-b from-red-50 to-white">
 			<main className="flex-1 p-4 max-w-md mx-auto w-full">
 				<section className="mb-8">
 					<Card className="overflow-hidden">
-						<div className="bg-gradient-to-r from-orange-400 to-orange-500 h-24 relative"></div>
+						<div className="bg-gradient-to-r from-red-800 to-primary h-24 relative"></div>
 
 						<CardContent className="pt-0 relative -mt-12">
 							<AvatarComponent username={profile.Handle} profileImageUrl={profile.AvatarUrl} />
