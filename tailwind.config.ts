@@ -28,8 +28,8 @@ const config = {
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
 				primary: {
-					DEFAULT: "#f97316", // orange-500
-					foreground: "#ffffff",
+					DEFAULT: "#b73d2f",
+					foreground: "#f2ebdf",
 				},
 				secondary: {
 					DEFAULT: "hsl(var(--secondary))",

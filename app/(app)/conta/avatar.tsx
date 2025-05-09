@@ -53,7 +53,7 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 						{profileImage ? (
 							<AvatarImage src={profileImage || "/placeholder.svg"} alt={username} />
 						) : (
-							<AvatarFallback className="bg-orange-100 text-orange-500 text-2xl">
+							<AvatarFallback className="bg-red-100 text-primary text-2xl">
 								{username.substring(0, 2).toUpperCase()}
 							</AvatarFallback>
 						)}
@@ -61,7 +61,7 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 
 					{/* <Button
 						size="icon"
-						className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-orange-500 hover:bg-orange-600"
+						className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-primary hover:bg-red-950"
 						onClick={triggerFileInput}
 						disabled={isUploading}
 					>

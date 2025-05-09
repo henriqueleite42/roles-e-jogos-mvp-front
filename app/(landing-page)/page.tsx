@@ -2,7 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { redirect } from 'next/navigation';
 import { Button } from "@/components/ui/button"
-import { Users, Calendar, ChevronRight, Dice6, Puzzle, VenetianMask } from "lucide-react"
+import { Users, Calendar, ChevronRight, Puzzle, VenetianMask, Dice5 } from "lucide-react"
 
 import EVENTS from "../../get-data/events.json"
 import { cookies } from "next/headers"
@@ -33,12 +33,12 @@ export default async function LandingPage() {
 
 	return (
 		<div className="flex min-h-screen flex-col">
-			<header className="p-4 border-b bg-gradient-to-r from-orange-500 to-orange-400">
+			<header className="p-4 border-b bg-gradient-to-r from-primary to-red-800">
 				<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
 			</header>
 
 			<main className="flex-1">
-				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-orange-50 to-background">
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-red-50 to-background">
 					<div className="container px-4 md:px-6">
 						<div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
 							<div className="flex flex-col justify-center space-y-4">
@@ -49,7 +49,7 @@ export default async function LandingPage() {
 								</div>
 								<div className="flex flex-col gap-2 min-[400px]:flex-row">
 									<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
-										<Button className="bg-orange-500 hover:bg-orange-600">
+										<Button className="bg-primary hover:bg-red-800">
 											Faça parte de nossa comunidade
 											<ChevronRight className="ml-2 h-4 w-4" />
 										</Button>
@@ -74,7 +74,7 @@ export default async function LandingPage() {
 					<div className="container px-4 md:px-6">
 						<div className="flex flex-col items-center justify-center space-y-4 text-center">
 							<div className="space-y-2">
-								<div className="inline-block rounded-lg bg-orange-100 px-3 py-1 text-sm text-orange-700">
+								<div className="inline-block rounded-lg bg-red-700 px-3 py-1 text-sm text-red-50">
 									Nossa Coleção
 								</div>
 								<h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Jogos da Comunidade</h2>
@@ -87,8 +87,8 @@ export default async function LandingPage() {
 							<div
 								className="flex flex-col items-center space-y-4 rounded-lg border p-4 shadow-sm transition-all hover:shadow-md"
 							>
-								<div className="p-2 rounded-full bg-orange-100">
-									<VenetianMask className="h-10 w-10 text-orange-500" />
+								<div className="p-2 rounded-full bg-red-50">
+									<VenetianMask className="h-10 w-10 text-primary" />
 								</div>
 								<h3 className="text-xl font-bold">Bandido</h3>
 								<p className="text-sm text-gray-500 text-center">
@@ -98,8 +98,8 @@ export default async function LandingPage() {
 							<div
 								className="flex flex-col items-center space-y-4 rounded-lg border p-4 shadow-sm transition-all hover:shadow-md"
 							>
-								<div className="p-2 rounded-full bg-orange-100">
-									<Dice6 className="h-10 w-10 text-orange-500" />
+								<div className="p-2 rounded-full bg-red-50">
+									<Dice5 className="h-10 w-10 text-primary" />
 								</div>
 								<h3 className="text-xl font-bold">Catan</h3>
 								<p className="text-sm text-gray-500 text-center">
@@ -109,8 +109,8 @@ export default async function LandingPage() {
 							<div
 								className="flex flex-col items-center space-y-4 rounded-lg border p-4 shadow-sm transition-all hover:shadow-md"
 							>
-								<div className="p-2 rounded-full bg-orange-100">
-									<Puzzle className="h-10 w-10 text-orange-500" />
+								<div className="p-2 rounded-full bg-red-50">
+									<Puzzle className="h-10 w-10 text-primary" />
 								</div>
 								<h3 className="text-xl font-bold">Death May Die</h3>
 								<p className="text-sm text-gray-500 text-center">
@@ -120,7 +120,7 @@ export default async function LandingPage() {
 						</div>
 						<div className="flex justify-center">
 							<Link href="/jogos">
-								<Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-50">
+								<Button variant="outline" className="border-primary text-primary hover:bg-red-50 hover:text-primary">
 									Ver todos os jogos
 									<ChevronRight className="ml-2 h-4 w-4" />
 								</Button>
@@ -129,11 +129,11 @@ export default async function LandingPage() {
 					</div>
 				</section>
 
-				<section className="w-full py-12 md:py-24 lg:py-32 bg-orange-50">
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-red-50">
 					<div className="container px-4 md:px-6">
 						<div className="flex flex-col items-center justify-center space-y-4 text-center">
 							<div className="space-y-2">
-								<div className="inline-block rounded-lg bg-orange-100 px-3 py-1 text-sm text-orange-700">
+								<div className="inline-block rounded-lg bg-red-700 px-3 py-1 text-sm text-red-50">
 									Próximos Eventos
 								</div>
 								<h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Mesas Marcadas</h2>
@@ -146,19 +146,19 @@ export default async function LandingPage() {
 							{events.map((event) => (
 								<div key={event.Id} className="flex flex-col space-y-3 rounded-lg border bg-white p-6 shadow-sm">
 									<div className="flex items-center space-x-3">
-										<Calendar className="h-5 w-5 text-orange-500" />
+										<Calendar className="h-5 w-5 text-primary" />
 										<h3 className="text-xl font-bold">{event.Name}</h3>
 									</div>
 									<p className="text-sm text-gray-500">Data: {formatEventDate(event.Date)}</p>
 									<p className="text-sm text-gray-500">Local: {event.Location.Name}</p>
 									<p className="text-sm text-gray-500">Jogos previstos: {event.Games.map(g => g.Name).join(", ")}</p>
-									{/* <Button className="mt-2 bg-orange-500 hover:bg-orange-600">Confirmar presença</Button> */}
+									{/* <Button className="mt-2 bg-primary hover:bg-red-600">Confirmar presença</Button> */}
 								</div>
 							))}
 						</div>
 						<div className="flex justify-center">
 							<Link href="/eventos">
-								<Button variant="outline" className="border-orange-500 text-orange-500 hover:bg-orange-50">
+								<Button variant="outline" className="border-primary text-primary hover:bg-red-50 hover:text-primary">
 									Veja as próximas mesas marcadas
 									<ChevronRight className="ml-2 h-4 w-4" />
 								</Button>
@@ -179,7 +179,7 @@ export default async function LandingPage() {
 							/>
 							<div className="flex flex-col justify-center space-y-4">
 								<div className="space-y-2">
-									<div className="inline-block rounded-lg bg-orange-100 px-3 py-1 text-sm text-orange-700">
+									<div className="inline-block rounded-lg bg-red-700 px-3 py-1 text-sm text-red-50">
 										Nossa Comunidade
 									</div>
 									<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Sobre Nós</h2>
@@ -193,7 +193,7 @@ export default async function LandingPage() {
 									</p>
 								</div>
 								<div className="flex items-center space-x-4">
-									<Users className="h-12 w-12 text-orange-500" />
+									<Users className="h-12 w-12 text-primary" />
 									<div>
 										<h3 className="text-xl font-bold">+35 Membros</h3>
 										<p className="text-sm text-gray-500">Faça parte da nossa comunidade</p>
@@ -204,15 +204,15 @@ export default async function LandingPage() {
 					</div>
 				</section>
 
-				<section className="w-full py-12 md:py-24 lg:py-32 bg-orange-500 text-white">
+				<section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-white">
 					<div className="container px-4 md:px-6 text-center">
 						<h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-6">Vem jogar com a gente!</h2>
-						<p className="mx-auto max-w-[700px] text-orange-50 md:text-xl/relaxed mb-8">
+						<p className="mx-auto max-w-[700px] text-red-50 md:text-xl/relaxed mb-8">
 							Todos são bem vindos na nossa comunidade. Junte-se a nós para momentos de diversão e novas amizades.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
-								<Button className="bg-white text-orange-500 hover:bg-orange-50">
+								<Button className="bg-white text-primary hover:bg-red-50">
 									Vem jogar com a gente!
 								</Button>
 							</Link>
@@ -220,11 +220,12 @@ export default async function LandingPage() {
 					</div>
 				</section>
 			</main>
-			{/* <footer className="border-t bg-background">
+
+			<footer className="border-t bg-background">
 				<div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 md:py-12">
 					<div className="flex flex-col gap-2 md:gap-4 md:flex-1">
 						<div className="flex items-center gap-2">
-							<Dice5 className="h-6 w-6 text-orange-500" />
+							<Dice5 className="h-6 w-6 text-primary" />
 							<span className="text-lg font-bold">Rolês & Jogos</span>
 						</div>
 						<p className="text-sm text-gray-500">Um grupo de amigos que se reune pra jogar jogos de tabuleiro!</p>
@@ -234,58 +235,53 @@ export default async function LandingPage() {
 							<h4 className="text-sm font-medium">Links</h4>
 							<ul className="space-y-2 text-sm">
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="/home" className="transition-colors hover:text-primary">
 										Início
 									</Link>
 								</li>
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="/jogos" className="transition-colors hover:text-primary">
 										Jogos
 									</Link>
 								</li>
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="/eventos" className="transition-colors hover:text-primary">
 										Mesas
 									</Link>
 								</li>
 							</ul>
 						</div>
-						<div className="space-y-2">
+						{/* <div className="space-y-2">
 							<h4 className="text-sm font-medium">Comunidade</h4>
 							<ul className="space-y-2 text-sm">
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="#" className="transition-colors hover:text-primary">
 										Sobre
 									</Link>
 								</li>
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="#" className="transition-colors hover:text-primary">
 										Membros
 									</Link>
 								</li>
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="#" className="transition-colors hover:text-primary">
 										Contato
 									</Link>
 								</li>
 							</ul>
-						</div>
+						</div> */}
 						<div className="space-y-2">
 							<h4 className="text-sm font-medium">Redes Sociais</h4>
 							<ul className="space-y-2 text-sm">
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="https://www.instagram.com/rolesejogos/" className="transition-colors hover:text-primary">
 										Instagram
 									</Link>
 								</li>
 								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
+									<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE" className="transition-colors hover:text-primary">
 										WhatsApp
-									</Link>
-								</li>
-								<li>
-									<Link href="#" className="transition-colors hover:text-orange-500">
-										Discord
 									</Link>
 								</li>
 							</ul>
@@ -299,7 +295,7 @@ export default async function LandingPage() {
 						</p>
 					</div>
 				</div>
-			</footer> */}
+			</footer>
 		</div>
 	)
 }

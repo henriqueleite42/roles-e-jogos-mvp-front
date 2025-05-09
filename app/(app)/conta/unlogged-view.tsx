@@ -18,7 +18,7 @@ export default function SignInPage() {
 	]
 
 	return (
-		<div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-50 to-white" >
+		<div className="flex flex-col min-h-screen bg-gradient-to-b from-red-50 to-white" >
 			<main className="flex-1 flex flex-col items-center justify-center p-4" >
 				<Card className="w-full max-w-md" >
 					<CardHeader className="text-center" >
