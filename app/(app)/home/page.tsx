@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Dice6, Calendar, MapPin, Users, Camera } from "lucide-react"
+import { Dice6, Calendar, MapPin, Camera, MessageCircle } from "lucide-react"
 
 export default function HomePage() {
 	return (
@@ -70,7 +70,7 @@ export default function HomePage() {
 
 					<div className="relative flex aspect-square flex-col items-center justify-center p-4">
 						<div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-green-400 to-green-600 p-3 shadow-md transition-transform duration-300 group-hover:scale-110">
-							<Users className="h-8 w-8 text-white" />
+							<MessageCircle className="h-8 w-8 text-white" />
 						</div>
 						<div className="text-xl font-bold text-green-600">Comunidade</div>
 						<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300 group-hover:w-3/4"></div>
