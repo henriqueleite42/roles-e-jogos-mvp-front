@@ -192,6 +192,9 @@ importers:
       typescript:
         specifier: ^5
         version: 5.8.3
+      xid:
+        specifier: ^0.0.2
+        version: 0.0.2
 
 packages:
 
@@ -1982,6 +1985,9 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
+  base32.js@0.0.1:
+    resolution: {integrity: sha512-EGHIRiegFa62/SsA1J+Xs2tIzludPdzM064N9wjbiEgHnGnJ1V0WEpA4pEwCYT5nDvZk3ubf0shqaCS7k6xeUQ==}
+
   big.js@5.2.2:
     resolution: {integrity: sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==}
 
@@ -3723,6 +3729,9 @@ packages:
 
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
+
+  xid@0.0.2:
+    resolution: {integrity: sha512-YsMJw72aVTj5nU/FNmIfygM1TCmJqOT/3A4iqjfSA6cvqKDVWyT4eNSWHJ2AY6XoONAg0qdkcsaQGbpwKzMr/w==}
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -5647,6 +5656,8 @@ snapshots:
       - supports-color
 
   balanced-match@1.0.2: {}
+
+  base32.js@0.0.1: {}
 
   big.js@5.2.2: {}
 
@@ -7642,6 +7653,10 @@ snapshots:
       strip-ansi: 7.1.0
 
   wrappy@1.0.2: {}
+
+  xid@0.0.2:
+    dependencies:
+      base32.js: 0.0.1
 
   yallist@3.1.1: {}
 
