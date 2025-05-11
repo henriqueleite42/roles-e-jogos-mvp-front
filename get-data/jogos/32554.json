@@ -1,0 +1,9 @@
+{
+  "Id": 32554,
+  "Name": "Ramen Fury",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/32554_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/ramen-fury",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

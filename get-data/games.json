@@ -3468,6 +3468,24 @@
       }
     ]
   },
+  "25567": {
+    "Game": {
+      "Id": 25567,
+      "Name": "Colt Super Express",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/25567_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/colt-super-express",
+      "MinAmountOfPlayers": 3,
+      "MaxAmountOfPlayers": 7,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      }
+    ]
+  },
   "25840": {
     "Game": {
       "Id": 25840,
@@ -4282,6 +4300,24 @@
       }
     ]
   },
+  "32554": {
+    "Game": {
+      "Id": 32554,
+      "Name": "Ramen Fury",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/32554_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/ramen-fury",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 295469,
+        "Handle": "Ciskow",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+      }
+    ]
+  },
   "32625": {
     "Game": {
       "Id": 32625,
@@ -4623,6 +4659,24 @@
         "AccountId": 295469,
         "Handle": "Ciskow",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+      }
+    ]
+  },
+  "36012": {
+    "Game": {
+      "Id": 36012,
+      "Name": "Akropolis",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/36012_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/akropolis",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 4,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
       }
     ]
   },
@@ -5234,6 +5288,24 @@
       "LudopediaUrl": "https://ludopedia.com.br/jogo/chule",
       "MinAmountOfPlayers": 2,
       "MaxAmountOfPlayers": 6,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      }
+    ]
+  },
+  "54146": {
+    "Game": {
+      "Id": 54146,
+      "Name": "Marajoara",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/54146_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/marajoara",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 4,
       "Kind": "GAME"
     },
     "Owners": [
