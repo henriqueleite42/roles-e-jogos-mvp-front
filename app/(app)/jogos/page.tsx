@@ -1,88 +1,161 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useRef, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { Search, Users, Filter } from "lucide-react"
+import { Search, Users, Filter, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
+import { useInfiniteQuery } from "@tanstack/react-query"
 
-import ITEMS from "../../../get-data/games.json"
-
-// Sample data for our items
-const items = Object.values(ITEMS).sort((a, b) => {
-	if (a.Game.Name > b.Game.Name) {
-		return 1
-	} else {
-		return -1
+interface GameCollection {
+	Game: {
+		IconUrl?: string
+		Id: number
+		LudopediaUrl?: string
+		MaxAmountOfPlayers: number
+		MinAmountOfPlayers: number
+		Name: string
 	}
-})
+	Owners: Array<{
+		AccountId: number
+		AvatarUrl?: string
+		Handle: string
+	}>
+}
 
-const ownersSet = {} as { [accountId: number]: any }
-items.forEach((item) => {
-	item.Owners.forEach((owner) => {
-		if (!ownersSet[owner.AccountId]) {
-			ownersSet[owner.AccountId] = owner
-		}
-	})
-})
-const uniqueOwners = Object.values(ownersSet).sort((a, b) => {
-	if (a.Handle > b.Handle) {
-		return 1
-	} else {
-		return -1
+interface Response {
+	Data: Array<GameCollection>
+	Pagination: {
+		Current?: string
+		Limit: number
+		Next?: string
 	}
-})
+}
 
-export default function Home() {
+const ITEMS_PER_PAGE = 5
+
+export default function GamesPage() {
+	const [searchInput, setSearchInput] = useState('')
 	const [searchQuery, setSearchQuery] = useState("")
-	const [activeView, setActiveView] = useState("GAME")
+	const [kind, setKind] = useState("GAME")
 	const [selectedOwner, setSelectedOwner] = useState("all")
 	const [maxPlayers, setMaxPlayers] = useState("0")
 
-	// Filter items based on all criteria
-	const filteredItems = useMemo(() => {
-		return items.filter((item) => {
-			// Filter by kind
-			const kind = item.Game.Kind === activeView
-			if (!kind) {
-				return false
+	// Use TanStack Query for data fetching with infinite scroll
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } = useInfiniteQuery<Response, any>({
+		queryKey: ["games", kind, searchQuery, maxPlayers],
+		queryFn: async ({ pageParam = null }) => {
+			const queryObj: Record<string, string> = {
+				kind: kind,
+				limit: String(ITEMS_PER_PAGE),
 			}
 
-			// Filter by minimum players
-			const playerMatch = maxPlayers === "0" || Number.parseInt(maxPlayers, 10) <= item.Game.MaxAmountOfPlayers
-			if (!playerMatch) {
-				return false
+			if (pageParam) {
+				queryObj.after = String(pageParam)
+			}
+			if (searchQuery) {
+				queryObj.gameName = searchQuery
+			}
+			if (maxPlayers != "0") {
+				queryObj.maxAmountOfPlayers = maxPlayers
 			}
 
-			// Filter by name
-			const nameMatch = searchQuery === "" || item.Game.Name.toLowerCase().includes(searchQuery.toLowerCase())
-			if (!nameMatch) {
-				return false
+			const query = new URLSearchParams(queryObj)
+
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collection/collective?${query.toString()}`, {
+				credentials: "include"
+			})
+
+			if (!response.ok) {
+				throw new Error(`Erro ao pegar dados da API: ${response.status}`)
 			}
 
-			// Filter by owner
-			const ownerMatch =
-				selectedOwner === "all" || item.Owners.some((owner) => owner.AccountId.toString() === selectedOwner)
-			if (!ownerMatch) {
-				return false
-			}
+			return response.json()
+		},
+		getNextPageParam: (lastPage) => {
+			// Return undefined if there are no more pages or if nextCursor is not provided
+			return lastPage.Pagination.Next || undefined
+		},
+		initialPageParam: null,
+	})
 
-			return true
-		})
-	}, [searchQuery, selectedOwner, maxPlayers, activeView])
+	// Process all items from all pages
+	const allItems = useMemo(() => {
+		if (!data) return []
 
+		// Flatten the pages array and extract items from each page
+		return data.pages.flatMap((page) => page.Data || [])
+	}, [data])
+
+	// Observer for infinite scroll
+	const observerTarget = useRef<HTMLDivElement | null>(null)
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		if (!hasNextPage || !observerTarget.current || isFetchingNextPage) return
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					fetchNextPage()
+				}
+			},
+			{ threshold: 0.5 },
+		)
+
+		observer.observe(observerTarget.current)
+
+		return () => {
+			observer.disconnect()
+		}
+	}, [hasNextPage, isFetchingNextPage])
+
+	// Debounce: update `searchTerm` 500ms after user stops typing
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			setSearchQuery(searchInput)
+		}, 500)
+
+		return () => clearTimeout(timeout)
+	}, [searchInput])
 
 	// Reset all filters
 	const resetFilters = () => {
 		setSearchQuery("")
 		setSelectedOwner("all")
 		setMaxPlayers("0")
+	}
+
+	// Loading state
+	if (status === "pending") {
+		return (
+			<div className="container mx-auto py-8 px-4 flex flex-col items-center justify-center min-h-[60vh]">
+				<Loader2 className="h-12 w-12 animate-spin text-orange-500 mb-4" />
+				<p className="text-lg text-muted-foreground">Carregando jogos...</p>
+			</div>
+		)
+	}
+
+	// Error state
+	if (status === "error") {
+		return (
+			<div className="container mx-auto py-8 px-4">
+				<Alert variant="destructive" className="mb-6">
+					<AlertCircle className="h-4 w-4" />
+					<AlertDescription>
+						Erro ao carregar jogos: {error.message}. Por favor, tente novamente mais tarde.
+					</AlertDescription>
+				</Alert>
+				<Button onClick={() => window.location.reload()}>Tentar novamente</Button>
+			</div>
+		)
 	}
 
 	return (
@@ -94,8 +167,8 @@ export default function Home() {
 						type="text"
 						placeholder="Pesquisar jogos..."
 						className="pl-10"
-						value={searchQuery}
-						onChange={(e) => setSearchQuery(e.target.value)}
+						value={searchInput}
+						onChange={(e) => setSearchInput(e.target.value)}
 					/>
 				</div>
 
@@ -118,7 +191,7 @@ export default function Home() {
 								<p className="text-sm text-muted-foreground">Ajuste os filtros para encontrar jogos específicos.</p>
 							</div>
 							<div className="grid gap-2">
-								<div className="grid gap-1">
+								{/* <div className="grid gap-1">
 									<Label htmlFor="owner">Proprietário</Label>
 									<Select value={selectedOwner} onValueChange={setSelectedOwner}>
 										<SelectTrigger id="owner">
@@ -131,6 +204,18 @@ export default function Home() {
 													{owner.Handle}
 												</SelectItem>
 											))}
+										</SelectContent>
+									</Select>
+								</div> */}
+								<div className="grid gap-1">
+									<Label htmlFor="kind">Tipo</Label>
+									<Select value={kind} onValueChange={setKind}>
+										<SelectTrigger id="kind">
+											<SelectValue placeholder="Jogos" />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="GAME">Jogos</SelectItem>
+											<SelectItem value="RPG">RPGs</SelectItem>
 										</SelectContent>
 									</Select>
 								</div>
@@ -159,151 +244,83 @@ export default function Home() {
 				</Popover>
 			</div>
 
-			<div className="pb-5">
-				<b>{filteredItems.length} jogos encontrados</b>
-			</div>
+			{/* <div className="pb-5">
+				<b>{allItems.length} itens encontrados</b>
+			</div> */}
 
-			<Tabs defaultValue="GAME" className="mb-8">
-				<TabsList>
-					<TabsTrigger value="GAME" onClick={() => setActiveView("GAME")}>
-						Jogos
-					</TabsTrigger>
-					<TabsTrigger value="RPG" onClick={() => setActiveView("RPG")}>
-						RPGs
-					</TabsTrigger>
-				</TabsList>
-
-				{activeView === "GAME" && (
-					<TabsContent value="GAME" className="space-y-4 mt-4">
-						{filteredItems.length > 0 ? (
-							filteredItems.map((item) => (
-								<Card key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
-									<CardContent className="p-0">
-										<div className="flex flex-row">
-											<div className="flex-1 p-4 md:p-6">
-												<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
-												<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
-													<Badge variant="outline" className="mr-2 mb-1">
-														{item.Game.MinAmountOfPlayers === item.Game.MaxAmountOfPlayers
-															? `${item.Game.MinAmountOfPlayers} jogadores`
-															: `${item.Game.MinAmountOfPlayers}-${item.Game.MaxAmountOfPlayers} jogadores`}
-													</Badge>
-													<a
-														href={item.Game.LudopediaUrl}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="text-sm text-blue-600 hover:underline"
-													>
-														Ver na Ludopedia
-													</a>
-												</div>
-												<div className="flex items-center">
-													<Users className="h-4 w-4 mr-2 text-muted-foreground" />
-													<div className="flex">
-														{item.Owners.map((person, index) => (
-															<div key={index} className="relative group -ml-2 first:ml-0">
-																<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
-																	<Image
-																		src={person.AvatarUrl || "/placeholder.svg"}
-																		alt={person.Handle || `Usuário ${person.AccountId}`}
-																		width={40}
-																		height={40}
-																		className="w-full h-full object-cover object-center"
-																	/>
-																</div>
-																<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
-																	{person.Handle || `ID: ${person.AccountId}`}
-																</div>
-															</div>
-														))}
+			{allItems.length > 0 ? (
+				<div className="space-y-4 mt-4">
+					{allItems.map((item) => (
+						<Card key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
+							<CardContent className="p-0">
+								<div className="flex flex-row">
+									<div className="flex-1 p-4 md:p-6">
+										<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
+										<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
+											<Badge variant="outline" className="mr-2 mb-1">
+												{item.Game.MinAmountOfPlayers === item.Game.MaxAmountOfPlayers
+													? `${item.Game.MinAmountOfPlayers} jogadores`
+													: `${item.Game.MinAmountOfPlayers}-${item.Game.MaxAmountOfPlayers} jogadores`}
+											</Badge>
+											<a
+												href={item.Game.LudopediaUrl}
+												target="_blank"
+												rel="noopener noreferrer"
+												className="text-sm text-blue-600 hover:underline"
+											>
+												Ver na Ludopedia
+											</a>
+										</div>
+										<div className="flex items-center">
+											<Users className="h-4 w-4 mr-2 text-muted-foreground" />
+											<div className="flex">
+												{item.Owners.map((person) => (
+													<div key={person.AccountId} className="relative group -ml-2 first:ml-0">
+														<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
+															<Image
+																src={person.AvatarUrl || "/placeholder.svg"}
+																alt={person.Handle || `Usuário ${person.AccountId}`}
+																width={40}
+																height={40}
+																className="w-full h-full object-cover object-center"
+															/>
+														</div>
+														<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+															{person.Handle || `ID: ${person.AccountId}`}
+														</div>
 													</div>
-												</div>
-											</div>
-											<div className="w-[100px] h-[100px] md:w-[200px] md:h-[200px] relative">
-												<Image
-													src={item.Game.IconUrl || "/placeholder.svg"}
-													alt={item.Game.Name}
-													fill
-													className="object-cover"
-												/>
+												))}
 											</div>
 										</div>
-									</CardContent>
-								</Card>
-							))
-						) : (
-							<div className="text-center py-10">
-								<p className="text-muted-foreground">Nenhum jogo encontrado.</p>
+									</div>
+									<div className="w-[100px] h-[100px] md:w-[200px] md:h-[200px] relative">
+										<Image
+											src={item.Game.IconUrl || "/placeholder.svg"}
+											alt={item.Game.Name}
+											fill
+											className="object-cover"
+										/>
+									</div>
+								</div>
+							</CardContent>
+						</Card>
+					))}
+
+					{/* Infinite scroll observer element */}
+					<div ref={observerTarget} className="w-full py-4 flex justify-center">
+						{isFetchingNextPage && (
+							<div className="flex items-center gap-2">
+								<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+								<span className="text-sm text-muted-foreground">Carregando mais jogos...</span>
 							</div>
 						)}
-					</TabsContent>)}
-
-
-				{activeView === "RPG" && (
-					<TabsContent value="RPG" className="space-y-4 mt-4">
-						{filteredItems.length > 0 ? (
-							filteredItems.map((item) => (
-								<Card key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
-									<CardContent className="p-0">
-										<div className="flex flex-row">
-											<div className="flex-1 p-4 md:p-6">
-												<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
-												<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
-													<Badge variant="outline" className="mr-2 mb-1">
-														{item.Game.MinAmountOfPlayers === item.Game.MaxAmountOfPlayers
-															? `${item.Game.MinAmountOfPlayers} jogadores`
-															: `${item.Game.MinAmountOfPlayers}-${item.Game.MaxAmountOfPlayers} jogadores`}
-													</Badge>
-													<a
-														href={item.Game.LudopediaUrl}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="text-sm text-blue-600 hover:underline"
-													>
-														Ver na Ludopedia
-													</a>
-												</div>
-												<div className="flex items-center">
-													<Users className="h-4 w-4 mr-2 text-muted-foreground" />
-													<div className="flex">
-														{item.Owners.map((person, index) => (
-															<div key={index} className="relative group -ml-2 first:ml-0">
-																<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
-																	<Image
-																		src={person.AvatarUrl || "/placeholder.svg"}
-																		alt={person.Handle || `Usuário ${person.AccountId}`}
-																		width={40}
-																		height={40}
-																		className="w-full h-full object-cover object-center"
-																	/>
-																</div>
-																<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
-																	{person.Handle || `ID: ${person.AccountId}`}
-																</div>
-															</div>
-														))}
-													</div>
-												</div>
-											</div>
-											<div className="w-[100px] h-[100px] md:w-[200px] md:h-[200px] relative">
-												<Image
-													src={item.Game.IconUrl || "/placeholder.svg"}
-													alt={item.Game.Name}
-													fill
-													className="object-cover"
-												/>
-											</div>
-										</div>
-									</CardContent>
-								</Card>
-							))
-						) : (
-							<div className="text-center py-10">
-								<p className="text-muted-foreground">Nenhum rpg encontrado.</p>
-							</div>
-						)}
-					</TabsContent>)}
-			</Tabs>
+					</div>
+				</div>
+			) : (
+				<div className="text-center py-10">
+					<p className="text-muted-foreground">Nenhum item encontrado.</p>
+				</div>
+			)}
 		</main>
 	)
 }
