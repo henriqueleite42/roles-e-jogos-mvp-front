@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
-import { Search, Users, Filter, Loader2 } from "lucide-react"
+import { Search, Users, Filter, Loader2, X, Check } from "lucide-react"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -12,7 +12,15 @@ import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
+import { useDebounce } from "@/hooks/use-debounce"
+
+interface Owner {
+	AccountId: number
+	AvatarUrl?: string
+	Handle: string
+}
 
 interface GameCollection {
 	Game: {
@@ -23,14 +31,10 @@ interface GameCollection {
 		MinAmountOfPlayers: number
 		Name: string
 	}
-	Owners: Array<{
-		AccountId: number
-		AvatarUrl?: string
-		Handle: string
-	}>
+	Owners: Array<Owner>
 }
 
-interface Response {
+interface ResponseGames {
 	Data: Array<GameCollection>
 	Pagination: {
 		Current?: string
@@ -45,12 +49,17 @@ export default function GamesPage() {
 	const [searchInput, setSearchInput] = useState('')
 	const [searchQuery, setSearchQuery] = useState("")
 	const [kind, setKind] = useState("GAME")
-	const [selectedOwner, setSelectedOwner] = useState("all")
 	const [maxPlayers, setMaxPlayers] = useState("0")
+	const [ownerSearchQuery, setOwnerSearchQuery] = useState("")
+	const [selectedOwnerDetails, setSelectedOwnerDetails] = useState<Owner | null>(null)
+	const [isOwnerSearchOpen, setIsOwnerSearchOpen] = useState(false)
+
+	// Debounce the owner search query to avoid excessive API calls
+	const debouncedOwnerSearch = useDebounce(ownerSearchQuery, 300)
 
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } = useInfiniteQuery<Response, any>({
-		queryKey: ["games", kind, searchQuery, maxPlayers],
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } = useInfiniteQuery<ResponseGames>({
+		queryKey: ["games", kind, searchQuery, maxPlayers, selectedOwnerDetails],
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {
 				kind: kind,
@@ -65,6 +74,9 @@ export default function GamesPage() {
 			}
 			if (maxPlayers != "0") {
 				queryObj.maxAmountOfPlayers = maxPlayers
+			}
+			if (selectedOwnerDetails) {
+				queryObj.accountId = String(selectedOwnerDetails.AccountId)
 			}
 
 			const query = new URLSearchParams(queryObj)
@@ -93,6 +105,35 @@ export default function GamesPage() {
 		// Flatten the pages array and extract items from each page
 		return data.pages.flatMap((page) => page.Data || [])
 	}, [data])
+
+	// Fetch owners based on search query
+	const {
+		data: ownerSearchResults,
+		isLoading: isSearchingOwners,
+	} = useQuery<Array<Owner>>({
+		queryKey: ["ownerSearch", debouncedOwnerSearch],
+		queryFn: async () => {
+			if (!debouncedOwnerSearch || debouncedOwnerSearch.trim().length < 2) return []
+
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/list/by-handle?handle=${encodeURIComponent(debouncedOwnerSearch)}`)
+
+			if (!response.ok) {
+				throw new Error(`Owner search failed with status ${response.status}`)
+			}
+
+			return response.json().then(r => r.Data)
+		},
+		enabled: debouncedOwnerSearch.length >= 2,
+		staleTime: 1000 * 60 * 5, // 5 minutes
+	})
+
+	// Count active filters
+	const activeFilterCount = useMemo(() => {
+		let count = 0
+		if (maxPlayers !== "0") count++
+		if (selectedOwnerDetails) count++
+		return count
+	}, [maxPlayers, selectedOwnerDetails])
 
 	// Observer for infinite scroll
 	const observerTarget = useRef<HTMLDivElement | null>(null)
@@ -129,8 +170,22 @@ export default function GamesPage() {
 	// Reset all filters
 	const resetFilters = () => {
 		setSearchQuery("")
-		setSelectedOwner("all")
 		setMaxPlayers("0")
+		clearOwnerSelection()
+	}
+
+	// Handle owner selection
+	const handleOwnerSelect = (owner: Owner) => {
+		setSelectedOwnerDetails(owner)
+		setOwnerSearchQuery("")
+		setIsOwnerSearchOpen(false)
+	}
+
+	// Clear owner selection
+	const clearOwnerSelection = () => {
+		setOwnerSearchQuery("")
+		setSelectedOwnerDetails(null)
+		setIsOwnerSearchOpen(false)
 	}
 
 	// Loading state
@@ -167,8 +222,8 @@ export default function GamesPage() {
 						type="text"
 						placeholder="Pesquisar jogos..."
 						className="pl-10"
-						value={searchInput}
-						onChange={(e) => setSearchInput(e.target.value)}
+						value={searchQuery}
+						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
 				</div>
 
@@ -177,9 +232,9 @@ export default function GamesPage() {
 						<Button variant="outline" className="gap-2">
 							<Filter className="h-4 w-4" />
 							Filtros
-							{(selectedOwner !== "all" || maxPlayers !== "0") && (
+							{activeFilterCount > 0 && (
 								<Badge variant="secondary" className="ml-1 rounded-full h-5 w-5 p-0 flex items-center justify-center">
-									{(selectedOwner !== "all" ? 1 : 0) + (maxPlayers !== "0" ? 1 : 0)}
+									{activeFilterCount}
 								</Badge>
 							)}
 						</Button>
@@ -191,34 +246,88 @@ export default function GamesPage() {
 								<p className="text-sm text-muted-foreground">Ajuste os filtros para encontrar jogos específicos.</p>
 							</div>
 							<div className="grid gap-2">
-								{/* <div className="grid gap-1">
-									<Label htmlFor="owner">Proprietário</Label>
-									<Select value={selectedOwner} onValueChange={setSelectedOwner}>
-										<SelectTrigger id="owner">
-											<SelectValue placeholder="Todos os proprietários" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="all">Todos os proprietários</SelectItem>
-											{uniqueOwners.map((owner) => (
-												<SelectItem key={owner.AccountId} value={owner.AccountId.toString()}>
-													{owner.Handle}
-												</SelectItem>
-											))}
-										</SelectContent>
-									</Select>
-								</div> */}
+								{/* Owner search with API integration */}
 								<div className="grid gap-1">
-									<Label htmlFor="kind">Tipo</Label>
-									<Select value={kind} onValueChange={setKind}>
-										<SelectTrigger id="kind">
-											<SelectValue placeholder="Jogos" />
-										</SelectTrigger>
-										<SelectContent>
-											<SelectItem value="GAME">Jogos</SelectItem>
-											<SelectItem value="RPG">RPGs</SelectItem>
-										</SelectContent>
-									</Select>
+									<Label htmlFor="ownerSearch">Proprietário</Label>
+
+									{selectedOwnerDetails ? (
+										<div className="flex items-center justify-between border rounded-md p-2">
+											<div className="flex items-center gap-2">
+												<div className="rounded-full border w-8 h-8 overflow-hidden">
+													<Image
+														src={selectedOwnerDetails.AvatarUrl || "/placeholder.svg"}
+														alt={selectedOwnerDetails.Handle}
+														width={32}
+														height={32}
+														className="w-full h-full object-cover"
+													/>
+												</div>
+												<span>{selectedOwnerDetails.Handle}</span>
+											</div>
+											<Button variant="ghost" size="sm" onClick={clearOwnerSelection} className="h-8 w-8 p-0">
+												<X className="h-4 w-4" />
+											</Button>
+										</div>
+									) : (
+										<Popover open={isOwnerSearchOpen} onOpenChange={setIsOwnerSearchOpen}>
+											<PopoverTrigger asChild>
+												<Button variant="outline" role="combobox" className="justify-between w-full">
+													Buscar proprietário
+													<Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+												</Button>
+											</PopoverTrigger>
+											<PopoverContent className="w-full p-0" align="start">
+												<Command>
+													<CommandInput
+														placeholder="Digite o nome do usuário..."
+														value={ownerSearchQuery}
+														onValueChange={setOwnerSearchQuery}
+													/>
+													<CommandList>
+														{isSearchingOwners && (
+															<div className="flex items-center justify-center py-6">
+																<Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+															</div>
+														)}
+
+														{!isSearchingOwners && ownerSearchQuery.length < 2 && (
+															<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
+														)}
+
+														{!isSearchingOwners && ownerSearchQuery.length >= 2 && ownerSearchResults?.length === 0 && (
+															<CommandEmpty>Nenhum usuário encontrado</CommandEmpty>
+														)}
+
+														{(ownerSearchResults && ownerSearchResults.length > 0) && (
+															<CommandGroup>
+																{ownerSearchResults.map((owner) => (
+																	<CommandItem
+																		key={owner.AccountId}
+																		value={owner.Handle}
+																		onSelect={() => handleOwnerSelect(owner)}
+																		className="flex items-center gap-2"
+																	>
+																		<div className="rounded-full border w-6 h-6 overflow-hidden">
+																			<Image
+																				src={owner.AvatarUrl || "/placeholder.svg"}
+																				alt={owner.Handle}
+																				width={24}
+																				height={24}
+																				className="w-full h-full object-cover"
+																			/>
+																		</div>
+																		<span>{owner.Handle}</span>
+																	</CommandItem>
+																))}
+															</CommandGroup>
+														)}
+													</CommandList>
+												</Command>
+											</PopoverContent>
+										</Popover>
+									)}
 								</div>
+
 								<div className="grid gap-1">
 									<Label htmlFor="maxPlayers">Máximo de jogadores</Label>
 									<Select value={maxPlayers} onValueChange={setMaxPlayers}>
@@ -235,6 +344,16 @@ export default function GamesPage() {
 										</SelectContent>
 									</Select>
 								</div>
+
+								{/* Active filters summary */}
+								{activeFilterCount > 0 && (
+									<div className="mt-2 text-sm text-muted-foreground">
+										<p>
+											{activeFilterCount} {activeFilterCount === 1 ? "filtro ativo" : "filtros ativos"}
+										</p>
+									</div>
+								)}
+
 								<Button variant="outline" onClick={resetFilters} className="mt-2">
 									Limpar filtros
 								</Button>
