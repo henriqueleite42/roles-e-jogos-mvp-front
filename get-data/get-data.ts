@@ -67,6 +67,11 @@ const users = {
 		Handle: "Dominguesjosue",
 		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
 	},
+	"241196": {
+		AccountId: 241196,
+		Handle: "LuizFC",
+		AvatarUrl: "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+	},
 }
 
 interface Owner {

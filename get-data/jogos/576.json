@@ -1,0 +1,9 @@
+{
+  "Id": 576,
+  "Name": "War: O Jogo da Estratégia",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/576_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/war",
+  "MinAmountOfPlayers": 3,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}

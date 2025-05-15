@@ -1,0 +1,9 @@
+{
+  "Id": 60440,
+  "Name": "Courtisans",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/60440_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/courtisans",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

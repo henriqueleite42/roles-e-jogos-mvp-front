@@ -1,0 +1,9 @@
+{
+  "Id": 12159,
+  "Name": "5-Minute Dungeon",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/12159_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/5-minute-dungeon",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 5,
+  "Kind": "GAME"
+}

@@ -149,6 +149,11 @@
     },
     "Owners": [
       {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      },
+      {
         "AccountId": 289094,
         "Handle": "freymonkal",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_289094_1734978033.png"
@@ -343,6 +348,11 @@
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_209306_1671769270.jpg"
       },
       {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      },
+      {
         "AccountId": 267985,
         "Handle": "denysmorais1",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_267985_1736510027.jpg"
@@ -382,6 +392,42 @@
         "AccountId": 68006,
         "Handle": "Gi Veiga",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+      }
+    ]
+  },
+  "576": {
+    "Game": {
+      "Id": 576,
+      "Name": "War: O Jogo da Estratégia",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/576_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/war",
+      "MinAmountOfPlayers": 3,
+      "MaxAmountOfPlayers": 6,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      }
+    ]
+  },
+  "580": {
+    "Game": {
+      "Id": 580,
+      "Name": "Jogo da Vida",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/580_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/the-game-of-life",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 6,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
       }
     ]
   },
@@ -936,6 +982,11 @@
       "Kind": "GAME"
     },
     "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      },
       {
         "AccountId": 289094,
         "Handle": "freymonkal",
@@ -1583,6 +1634,24 @@
       }
     ]
   },
+  "10148": {
+    "Game": {
+      "Id": 10148,
+      "Name": "Spyfall 2",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/10148_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/spyfall-2",
+      "MinAmountOfPlayers": 3,
+      "MaxAmountOfPlayers": 12,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      }
+    ]
+  },
   "10167": {
     "Game": {
       "Id": 10167,
@@ -1851,6 +1920,24 @@
         "AccountId": 68006,
         "Handle": "Gi Veiga",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+      }
+    ]
+  },
+  "12159": {
+    "Game": {
+      "Id": 12159,
+      "Name": "5-Minute Dungeon",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/12159_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/5-minute-dungeon",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 121554,
+        "Handle": "Guig",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
       }
     ]
   },
@@ -2206,6 +2293,24 @@
       }
     ]
   },
+  "16390": {
+    "Game": {
+      "Id": 16390,
+      "Name": "Exploding Kittens: Para a Galera",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/16390_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/exploding-kittens-party-pack",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 10,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      }
+    ]
+  },
   "16788": {
     "Game": {
       "Id": 16788,
@@ -2479,6 +2584,24 @@
       }
     ]
   },
+  "18670": {
+    "Game": {
+      "Id": 18670,
+      "Name": "Super Brejas - O Jogo da Cerveja",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/18670_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/super-brejas-o-jogo-da-cerveja",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 6,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      }
+    ]
+  },
   "18839": {
     "Game": {
       "Id": 18839,
@@ -2494,6 +2617,24 @@
         "AccountId": 68006,
         "Handle": "Gi Veiga",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+      }
+    ]
+  },
+  "18858": {
+    "Game": {
+      "Id": 18858,
+      "Name": "Shadows: Amsterdam",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/18858_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/shadows-amsterdam",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 8,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
       }
     ]
   },
@@ -3468,6 +3609,24 @@
       }
     ]
   },
+  "25567": {
+    "Game": {
+      "Id": 25567,
+      "Name": "Colt Super Express",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/25567_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/colt-super-express",
+      "MinAmountOfPlayers": 3,
+      "MaxAmountOfPlayers": 7,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      }
+    ]
+  },
   "25840": {
     "Game": {
       "Id": 25840,
@@ -4282,6 +4441,24 @@
       }
     ]
   },
+  "32554": {
+    "Game": {
+      "Id": 32554,
+      "Name": "Ramen Fury",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/32554_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/ramen-fury",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 295469,
+        "Handle": "Ciskow",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+      }
+    ]
+  },
   "32625": {
     "Game": {
       "Id": 32625,
@@ -4410,6 +4587,11 @@
         "AccountId": 105932,
         "Handle": "r0dr1600",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_105932_1736287047.jpeg"
+      },
+      {
+        "AccountId": 121554,
+        "Handle": "Guig",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
       },
       {
         "AccountId": 289094,
@@ -4623,6 +4805,24 @@
         "AccountId": 295469,
         "Handle": "Ciskow",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
+      }
+    ]
+  },
+  "36012": {
+    "Game": {
+      "Id": 36012,
+      "Name": "Akropolis",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/36012_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/akropolis",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 4,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
       }
     ]
   },
@@ -4854,6 +5054,24 @@
       }
     ]
   },
+  "37333": {
+    "Game": {
+      "Id": 37333,
+      "Name": "Exploding Kittens: Zombie Kittens",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/37333_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/zombie-kittens",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      }
+    ]
+  },
   "37857": {
     "Game": {
       "Id": 37857,
@@ -5052,6 +5270,11 @@
     },
     "Owners": [
       {
+        "AccountId": 241196,
+        "Handle": "LuizFC",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_241196_1697567120.jpg"
+      },
+      {
         "AccountId": 295469,
         "Handle": "Ciskow",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_295469_1738464470.png"
@@ -5119,6 +5342,11 @@
         "AccountId": 68006,
         "Handle": "Gi Veiga",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_68006_1680660551.jpg"
+      },
+      {
+        "AccountId": 121554,
+        "Handle": "Guig",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
       },
       {
         "AccountId": 289094,
@@ -5241,6 +5469,42 @@
         "AccountId": 292342,
         "Handle": "henriqueleite42",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      }
+    ]
+  },
+  "54146": {
+    "Game": {
+      "Id": 54146,
+      "Name": "Marajoara",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/54146_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/marajoara",
+      "MinAmountOfPlayers": 1,
+      "MaxAmountOfPlayers": 4,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 292342,
+        "Handle": "henriqueleite42",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_292342_1735170383.jpg"
+      }
+    ]
+  },
+  "54801": {
+    "Game": {
+      "Id": 54801,
+      "Name": "Nana",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/54801_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/nana",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 121554,
+        "Handle": "Guig",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
       }
     ]
   },
@@ -5405,6 +5669,24 @@
         "AccountId": 312126,
         "Handle": "Dominguesjosue",
         "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_312126_1746494430.png"
+      }
+    ]
+  },
+  "60440": {
+    "Game": {
+      "Id": 60440,
+      "Name": "Courtisans",
+      "IconUrl": "https://storage.googleapis.com/ludopedia-capas/60440_t.jpg",
+      "LudopediaUrl": "https://ludopedia.com.br/jogo/courtisans",
+      "MinAmountOfPlayers": 2,
+      "MaxAmountOfPlayers": 5,
+      "Kind": "GAME"
+    },
+    "Owners": [
+      {
+        "AccountId": 121554,
+        "Handle": "Guig",
+        "AvatarUrl": "https://ludopedia.com.br/uploads/avatar/avatar_121554_1587335026.jpg"
       }
     ]
   },

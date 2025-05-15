@@ -1,0 +1,9 @@
+{
+  "Id": 580,
+  "Name": "Jogo da Vida",
+  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/580_t.jpg",
+  "LudopediaUrl": "https://ludopedia.com.br/jogo/the-game-of-life",
+  "MinAmountOfPlayers": 2,
+  "MaxAmountOfPlayers": 6,
+  "Kind": "GAME"
+}
