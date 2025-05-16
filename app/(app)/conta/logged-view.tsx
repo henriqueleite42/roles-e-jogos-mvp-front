@@ -17,7 +17,7 @@ export function LoggedView({ profile }: Props) {
 			<main className="flex-1 p-4 max-w-md mx-auto w-full">
 				<section className="mb-8">
 					<Card className="overflow-hidden">
-						<div className="bg-gradient-to-r from-red-800 to-primary h-24 relative"></div>
+						<div className="bg-gradient-to-r from-primary to-primary-foreground h-24 relative"></div>
 
 						<CardContent className="pt-0 relative -mt-12">
 							<AvatarComponent username={profile.Handle} profileImageUrl={profile.AvatarUrl} />

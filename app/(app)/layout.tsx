@@ -50,7 +50,7 @@ export default function RootLayout({
 				/>
 			</head>
 			<body className="flex flex-col min-h-screen bg-gradient-to-b from-red-50 to-white">
-				<header className="p-4 border-b bg-gradient-to-r from-primary to-red-800">
+				<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
 					<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
 				</header>
 
@@ -69,7 +69,7 @@ export default function RootLayout({
 						</Link>
 
 						<Link href="/adicionar-partida" className="flex flex-col items-center p-2 relative">
-							<div className="absolute -top-5 rounded-full bg-gradient-to-r from-primary to-red-800 p-3 shadow-lg">
+							<div className="absolute -top-5 rounded-full bg-gradient-to-r from-primary to-primary-foreground p-3 shadow-lg">
 								<Plus className="h-6 w-6 text-white" />
 							</div>
 							<span className="text-xs mt-7 font-medium text-primary">Adicionar Partida</span>

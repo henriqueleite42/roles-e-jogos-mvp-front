@@ -33,7 +33,7 @@ export default async function LandingPage() {
 
 	return (
 		<div className="flex min-h-screen flex-col">
-			<header className="p-4 border-b bg-gradient-to-r from-primary to-red-800">
+			<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
 				<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
 			</header>
 
@@ -49,7 +49,7 @@ export default async function LandingPage() {
 								</div>
 								<div className="flex flex-col gap-2 min-[400px]:flex-row">
 									<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
-										<Button className="bg-primary hover:bg-red-800">
+										<Button className="bg-primary hover:bg-primary-foreground">
 											Faça parte de nossa comunidade
 											<ChevronRight className="ml-2 h-4 w-4" />
 										</Button>
