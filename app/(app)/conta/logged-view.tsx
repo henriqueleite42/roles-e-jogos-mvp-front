@@ -1,11 +1,10 @@
-import { LogOut } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Connections } from "./connections"
 import { Username } from "./username"
 import { AvatarComponent } from "./avatar"
 import { Profile } from "@/types/api"
+import { Logout } from "./logout"
 
 interface Props {
 	profile: Profile
@@ -33,9 +32,7 @@ export function LoggedView({ profile }: Props) {
 
 				<Connections connections={profile.Connections} />
 
-				<Button variant="outline" className="w-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600">
-					<LogOut className="h-4 w-4 mr-2" /> Sair da conta
-				</Button>
+				<Logout />
 			</main>
 
 		</div >

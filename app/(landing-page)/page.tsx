@@ -48,7 +48,7 @@ export default async function LandingPage() {
 									</p>
 								</div>
 								<div className="flex flex-col gap-2 min-[400px]:flex-row">
-									<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
+									<Link href="/whatsapp">
 										<Button className="bg-primary hover:bg-primary-foreground">
 											Faça parte de nossa comunidade
 											<ChevronRight className="ml-2 h-4 w-4" />
@@ -211,7 +211,7 @@ export default async function LandingPage() {
 							Todos são bem vindos na nossa comunidade. Junte-se a nós para momentos de diversão e novas amizades.
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
-							<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE">
+							<Link href="/whatsapp">
 								<Button className="bg-white text-primary hover:bg-red-50">
 									Vem jogar com a gente!
 								</Button>
@@ -275,13 +275,18 @@ export default async function LandingPage() {
 							<h4 className="text-sm font-medium">Redes Sociais</h4>
 							<ul className="space-y-2 text-sm">
 								<li>
-									<Link href="https://www.instagram.com/rolesejogos/" className="transition-colors hover:text-primary">
+									<Link href="/instagram" className="transition-colors hover:text-primary">
 										Instagram
 									</Link>
 								</li>
 								<li>
-									<Link href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE" className="transition-colors hover:text-primary">
+									<Link href="/whatsapp" className="transition-colors hover:text-primary">
 										WhatsApp
+									</Link>
+								</li>
+								<li>
+									<Link href="/tiktok" className="transition-colors hover:text-primary">
+										TikTok
 									</Link>
 								</li>
 							</ul>

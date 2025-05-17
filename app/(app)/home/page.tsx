@@ -61,7 +61,7 @@ export default function HomePage() {
 
 				{/* Comunidade Card */}
 				<Link
-					href="https://chat.whatsapp.com/DBjhCiDQst79Kmpbk9JJmE"
+					href="/whatsapp"
 					className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 				>
 					<div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-green-600/20 opacity-50"></div>
