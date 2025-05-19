@@ -177,11 +177,11 @@ export default function RootLayout({
 							<span className="text-xs mt-1">Jogos</span>
 						</Link>
 
-						<Link href="/adicionar-partida" className="flex flex-col items-center p-2 relative">
+						<Link href="/eventos/criar" className="flex flex-col items-center p-2 relative">
 							<div className="absolute -top-5 rounded-full bg-gradient-to-r from-primary to-primary-foreground p-3 shadow-lg">
 								<Plus className="h-6 w-6 text-white" />
 							</div>
-							<span className="text-xs mt-7 font-medium text-primary">Adicionar Partida</span>
+							<span className="text-xs mt-7 font-medium text-primary">Criar evento</span>
 						</Link>
 
 						<Link href="/eventos" className="flex flex-col items-center p-2 text-red-950">

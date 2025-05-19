@@ -171,6 +171,17 @@ export default function Events() {
 		// If the event is full and user is not already going, disable the button
 		const isDisabled = isFull && userAttendance?.Status !== "GOING"
 
+		if (isFull) {
+			return (
+				<>
+					<Info className="h-4 w-4 mr-2 text-muted-foreground" />
+					<span className="text-red-600 font-medium">
+						Evento lotado
+					</span>
+				</>
+			)
+		}
+
 		if (userAttendance) {
 			// User has already set an attendance status
 			const config = attendanceConfig[userAttendance?.Status]
@@ -187,22 +198,24 @@ export default function Events() {
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						{Object.entries(attendanceConfig).map(([status, config]) => (
-							<DropdownMenuItem
-								key={status}
-								onClick={() => updateAttendance(event.Id, status as AttendanceStatus)}
-								disabled={status === "GOING" && isDisabled}
-								className={cn(
-									"gap-2",
-									status === userAttendance?.Status ? "font-medium" : "",
-									status === userAttendance?.Status ? config.color : "",
-								)}
-							>
-								<config.icon className="h-4 w-4" />
-								{config.label}
-								{status === userAttendance?.Status && <Check className="h-4 w-4 ml-auto" />}
-							</DropdownMenuItem>
-						))}
+						{Object.entries(attendanceConfig)
+							.filter(([status]) => status != userAttendance?.Status)
+							.map(([status, config]) => (
+								<DropdownMenuItem
+									key={status}
+									onClick={() => updateAttendance(event.Id, status as AttendanceStatus)}
+									disabled={status === "GOING" && isDisabled}
+									className={cn(
+										"gap-2",
+										status === userAttendance?.Status ? "font-medium" : "",
+										status === userAttendance?.Status ? config.color : "",
+									)}
+								>
+									<config.icon className="h-4 w-4" />
+									{config.label}
+									{status === userAttendance?.Status && <Check className="h-4 w-4 ml-auto" />}
+								</DropdownMenuItem>
+							))}
 						{/* <DropdownMenuItem onClick={() => updateAttendance(event.Id, null)} className="gap-2 text-gray-600">
 							<X className="h-4 w-4" />
 							Remover resposta
@@ -228,6 +241,7 @@ export default function Events() {
 						variant="outline"
 						size="sm"
 						className="gap-1 border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100"
+						disabled={isDisabled}
 						onClick={() => updateAttendance(event.Id, "MAYBE")}
 					>
 						<HelpCircle className="h-4 w-4" />
@@ -237,6 +251,7 @@ export default function Events() {
 						variant="outline"
 						size="sm"
 						className="gap-1 border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
+						disabled={isDisabled}
 						onClick={() => updateAttendance(event.Id, "NOT_GOING")}
 					>
 						<X className="h-4 w-4" />
