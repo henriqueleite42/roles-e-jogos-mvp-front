@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -23,8 +23,9 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { useDebounce } from "@/hooks/use-debounce"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query"
 import { ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
+import { useToast } from "@/hooks/use-toast"
 
 // Form schema with validation
 const formSchema = z.object({
@@ -34,29 +35,29 @@ const formSchema = z.object({
 	Description: z.string().min(10, {
 		message: "A descrição deve ter pelo menos 10 caracteres.",
 	}),
-	StartDate: z.date({
+	StartDate: z.coerce.date({
 		required_error: "A data de início é obrigatória.",
 	}),
-	EndDate: z.date().optional(),
+	EndDate: z.coerce.date().optional().nullable(),
 	Capacity: z.coerce
 		.number()
 		.int()
 		.min(1, {
 			message: "Se especificada, a capacidade deve ser de pelo menos 1 pessoa.",
 		})
-		.optional(),
+		.optional().nullable(),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
 			Name: z.string(),
 			Address: z.string(),
-			IconUrl: z.string().optional(),
+			IconUrl: z.string().optional().nullable(),
 			Kind: z.string(),
-			CreatedBy: z.coerce.number().int(),
-			CreatedAt: z.date(),
+			CreatedBy: z.number().int(),
+			CreatedAt: z.coerce.date(),
 		},
 		{
-			required_error: "Selecione um local para o evento.",
+			required_error: "Selecione um local para o evento."
 		},
 	),
 	Games: z
@@ -65,27 +66,48 @@ const formSchema = z.object({
 				Id: z.coerce.number().int(),
 				Name: z.string(),
 				Description: z.string(),
-				IconUrl: z.string().optional(),
+				IconUrl: z.string().optional().nullable(),
 				Kind: z.string(),
-				LudopediaId: z.coerce.number().int().optional(),
-				LudopediaUrl: z.string().optional(),
+				LudopediaId: z.coerce.number().int().optional().nullable(),
+				LudopediaUrl: z.string().optional().nullable(),
 				MinAmountOfPlayers: z.coerce.number().int(),
 				MaxAmountOfPlayers: z.coerce.number().int(),
 				AverageDuration: z.coerce.number().int(),
 				MinAge: z.coerce.number().int(),
-				CreatedAt: z.date(),
+				CreatedAt: z.coerce.date(),
 			}),
 		)
-		.optional()
-		.default([]),
+		.min(1, "O evento deve ter pelo menos 1 jogo.")
+		.default([])
+}).refine((data) => {
+	if (!data.EndDate) return true
+	if (!data.StartDate) return false
+
+	const startDate = new Date(data.StartDate).getTime()
+	const endDate = new Date(data.EndDate).getTime()
+
+	return endDate > startDate
+}, {
+	message: "Data de término precisa ser depois da data de início.",
+	path: ["EndDate"]
+}).refine((data) => {
+	if (!data.StartDate) return false
+
+	const startDate = new Date(data.StartDate).getTime()
+	const now = new Date().getTime()
+
+	return startDate > now
+}, {
+	message: "Data de início precisa ser no futuro.",
+	path: ["StartDate"]
 })
 
 type FormValues = z.infer<typeof formSchema>
 
 export default function CreateEventPage() {
+	const { toast } = useToast()
 	const router = useRouter()
 
-	const [isSubmitting, setIsSubmitting] = useState(false)
 	const [imagePreview, setImagePreview] = useState<string | null>(null)
 
 	const [locationQuery, setLocationQuery] = useState("")
@@ -101,7 +123,7 @@ export default function CreateEventPage() {
 	const { data: locationsQuery, isLoading: isSearchingLocations } = useInfiniteQuery<ResponseSearchLocations>({
 		queryKey: ["search-locations", debouncedLocationQuery],
 		queryFn: async () => {
-			if (!debouncedLocationQuery) {
+			if (debouncedLocationQuery.length < 3) {
 				return {
 					page: {
 						Data: []
@@ -142,7 +164,7 @@ export default function CreateEventPage() {
 	const { data: gamesQuery, isLoading: isSearchingGames } = useInfiniteQuery<ResponseSearchGames>({
 		queryKey: ["search-games", debouncedGameQuery],
 		queryFn: async () => {
-			if (!debouncedGameQuery) {
+			if (debouncedGameQuery.length < 3) {
 				return {
 					page: {
 						Data: []
@@ -178,6 +200,47 @@ export default function CreateEventPage() {
 		// Flatten the pages array and extract items from each page
 		return gamesQuery.pages.flatMap((page) => page.Data || [])
 	}, [gamesQuery])
+
+	const mutation = useMutation({
+		mutationFn: async (body: FormValues) => {
+			const gamesIds = body.Games.map(g => g.Id)
+
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/event', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					Name: body.Name,
+					Description: body.Description,
+					Icon: body.Games.length >= 1 ? ({
+						UseGameIconGameId: body.Games[0].Id
+					}) : undefined,
+					StartDate: body.StartDate.toISOString(),
+					EndDate: body.EndDate?.toISOString(),
+					Capacity: body.Capacity,
+					LocationId: body.Location.Id,
+					GamesList: gamesIds
+				}),
+				credentials: 'include',
+			});
+
+			if (!res.ok) {
+				const error = await res.text()
+				console.error(error);
+				throw new Error(error)
+			}
+
+		},
+		onSuccess: () => {
+			router.push("/eventos")
+		},
+		onError: (err) => {
+			toast({
+				title: "Erro ao criar evento!",
+				description: err.message,
+				className: "bg-red-400"
+			})
+		}
+	});
 
 	// Initialize form
 	const form = useForm<FormValues>({
@@ -227,23 +290,7 @@ export default function CreateEventPage() {
 
 	// Handle form submission
 	const onSubmit = async (values: FormValues) => {
-		setIsSubmitting(true)
-
-		try {
-			// Here you would normally send the data to your API
-			console.log("Form values:", values)
-			console.log("Image:", imagePreview)
-
-			// Simulate API call
-			await new Promise((resolve) => setTimeout(resolve, 1500))
-
-			// Redirect to events page after successful submission
-			router.push("/eventos")
-		} catch (error) {
-			console.error("Error submitting form:", error)
-		} finally {
-			setIsSubmitting(false)
-		}
+		mutation.mutate(values)
 	}
 
 	return (
@@ -299,6 +346,7 @@ export default function CreateEventPage() {
 										variant="outline"
 										onClick={() => document.getElementById("event-image")?.click()}
 										className="gap-2"
+										disabled
 									>
 										<ImageIcon className="h-4 w-4" />
 										Escolher Imagem
@@ -311,7 +359,8 @@ export default function CreateEventPage() {
 										onChange={handleImageUpload}
 									/>
 									<span className="text-sm text-muted-foreground">
-										{imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"}
+										{/* {imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"} */}
+										Por enquanto, ainda não é possivel fazer upload de imagens. Usaremos a imagem de capa do primeiro jogo adicionado.
 									</span>
 								</div>
 
@@ -369,6 +418,7 @@ export default function CreateEventPage() {
 														onSelect={field.onChange}
 														initialFocus
 														locale={ptBR}
+														fromDate={new Date()}
 													/>
 												</PopoverContent>
 											</Popover>
@@ -378,11 +428,25 @@ export default function CreateEventPage() {
 													type="time"
 													className="w-full"
 													onChange={(e) => {
-														const [hours, minutes] = e.target.value.split(":").map(Number)
-														const date = field.value || new Date()
-														date.setHours(hours, minutes)
-														field.onChange(date)
+														if (!e.target.value) return;
+
+														const [hours, minutes] = e.target.value.split(":").map(Number);
+														const baseDate = field.value || form.getValues().StartDate || new Date();
+
+														const newDate = new Date(baseDate); // clone to avoid mutation
+														newDate.setHours(hours, minutes);
+														newDate.setSeconds(0);
+														newDate.setMilliseconds(0);
+
+														field.onChange(newDate);
+
+														// Revalidates EndDate, necessary for the refine
+														form.trigger("EndDate");
 													}}
+													lang="pt-BR"
+													step="60"
+													min="00:00"
+													max="23:59"
 													value={field.value ? format(field.value, "HH:mm") : ""}
 												/>
 											</div>
@@ -426,6 +490,7 @@ export default function CreateEventPage() {
 														onSelect={field.onChange}
 														initialFocus
 														locale={ptBR}
+														fromDate={new Date()}
 													/>
 												</PopoverContent>
 											</Popover>
@@ -435,14 +500,26 @@ export default function CreateEventPage() {
 													type="time"
 													className="w-full"
 													onChange={(e) => {
-														if (!e.target.value) return
+														if (!e.target.value) return;
 
-														const [hours, minutes] = e.target.value.split(":").map(Number)
-														// Use the selected date or default to the start date or today
-														const date = field.value || form.getValues().StartDate || new Date()
-														date.setHours(hours, minutes)
-														field.onChange(date)
+														const [hours, minutes] = e.target.value.split(":").map(Number);
+														const baseDate = field.value || form.getValues().EndDate || new Date();
+
+														const newDate = new Date(baseDate); // clone to avoid mutation
+														newDate.setHours(hours, minutes);
+														newDate.setSeconds(0);
+														newDate.setMilliseconds(0);
+
+														field.onChange(newDate);
+
+														// Revalidates StartDate, necessary for the refine
+														form.trigger("StartDate");
+														form.trigger("EndDate");
 													}}
+													lang="pt-BR"
+													step="60"
+													min="00:00"
+													max="23:59"
 													value={field.value ? format(field.value, "HH:mm") : ""}
 												/>
 											</div>
@@ -465,7 +542,6 @@ export default function CreateEventPage() {
 										<FormControl>
 											<Input
 												type="number"
-												min="1"
 												{...field}
 												value={field.value || ""}
 												onChange={(e) => {
@@ -529,11 +605,11 @@ export default function CreateEventPage() {
 															</div>
 														)}
 
-														{!isSearchingLocations && locationQuery.length < 2 && (
-															<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
+														{!isSearchingLocations && locationQuery.length < 3 && (
+															<CommandEmpty>Digite pelo menos 3 caracteres para buscar</CommandEmpty>
 														)}
 
-														{!isSearchingLocations && locationQuery.length >= 2 && locations.length === 0 && (
+														{!isSearchingLocations && locationQuery.length >= 3 && locations.length === 0 && (
 															<CommandEmpty>Nenhum local encontrado</CommandEmpty>
 														)}
 
@@ -590,11 +666,11 @@ export default function CreateEventPage() {
 														</div>
 													)}
 
-													{!isSearchingGames && gameQuery.length < 2 && (
-														<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
+													{!isSearchingGames && gameQuery.length < 3 && (
+														<CommandEmpty>Digite pelo menos 3 caracteres para buscar</CommandEmpty>
 													)}
 
-													{!isSearchingGames && gameQuery.length >= 2 && games.length === 0 && (
+													{!isSearchingGames && gameQuery.length >= 3 && games.length === 0 && (
 														<CommandEmpty>Nenhum jogo encontrado</CommandEmpty>
 													)}
 
@@ -715,8 +791,8 @@ export default function CreateEventPage() {
 								<Button type="button" variant="outline" asChild>
 									<Link href="/eventos">Cancelar</Link>
 								</Button>
-								<Button type="submit" disabled={isSubmitting} className="text-white">
-									{isSubmitting ? (
+								<Button type="submit" disabled={mutation.isPending} className="text-white">
+									{mutation.isPending ? (
 										<>
 											<Loader2 className="mr-2 h-4 w-4 animate-spin" />
 											Criando...

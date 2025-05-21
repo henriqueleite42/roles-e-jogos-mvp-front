@@ -4,6 +4,7 @@ import Link from "next/link"
 
 import '../globals.css'
 import { Providers } from '../providers'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
@@ -29,7 +30,7 @@ export default function RootLayout({
 				<meta name="msapplication-tap-highlight" content="no" />
 				<meta name="theme-color" content="#b73d2f" />
 
-				<link rel="icon" href="/favicon.ico" sizes="any" />
+				<link rel="icon" href="/icons/favicon.ico" sizes="any" />
 
 				<link rel="icon" type="image/png" sizes="71x71" href="/icons/windows11/SmallTile.scale-100.png" />
 				<link rel="icon" type="image/png" sizes="89x89" href="/icons/windows11/SmallTile.scale-125.png" />
@@ -144,7 +145,7 @@ export default function RootLayout({
 				<link rel="icon" type="image/png" sizes="512x512" href="/icons/ios/512.png" />
 				<link rel="icon" type="image/png" sizes="1024x1024" href="/icons/ios/1024.png" />
 				<link rel="manifest" href="/manifest.json" />
-				<link rel="shortcut icon" href="/favicon.ico" />
+				<link rel="shortcut icon" href="/icons/favicon.ico" />
 				<meta property="og:type" content="website" />
 
 				<meta property="og:title" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
@@ -195,6 +196,8 @@ export default function RootLayout({
 						</Link>
 					</div>
 				</nav>
+
+				<Toaster />
 			</body>
 		</html>
 	)

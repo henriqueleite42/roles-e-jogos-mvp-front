@@ -69,7 +69,7 @@ export default function GamesPage() {
 			if (pageParam) {
 				queryObj.after = String(pageParam)
 			}
-			if (searchQuery) {
+			if (searchQuery.length >= 3) {
 				queryObj.gameName = searchQuery
 			}
 			if (maxPlayers != "0") {
@@ -290,11 +290,11 @@ export default function GamesPage() {
 															</div>
 														)}
 
-														{!isSearchingOwners && ownerSearchQuery.length < 2 && (
-															<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
+														{!isSearchingOwners && ownerSearchQuery.length < 3 && (
+															<CommandEmpty>Digite pelo menos 3 caracteres para buscar</CommandEmpty>
 														)}
 
-														{!isSearchingOwners && ownerSearchQuery.length >= 2 && ownerSearchResults?.length === 0 && (
+														{!isSearchingOwners && ownerSearchQuery.length >= 3 && ownerSearchResults?.length === 0 && (
 															<CommandEmpty>Nenhum usuário encontrado</CommandEmpty>
 														)}
 

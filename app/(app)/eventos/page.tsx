@@ -4,13 +4,15 @@ import { useMemo } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { CalendarClock, MapPin, Users, Info, Check, X, HelpCircle, ThumbsUp, ThumbsDown, Calendar } from "lucide-react"
+import { CalendarClock, MapPin, Users, Info, Check, X, HelpCircle, ThumbsUp, ThumbsDown, Calendar, CircleArrowRight } from "lucide-react"
 import Image from "next/image"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
 import { Event, EventAttendanceStatus, Profile } from "@/types/api"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
+import { toast } from "@/hooks/use-toast"
 
 // Attendance status types
 type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
@@ -72,7 +74,22 @@ function formatEventDate(dateString: string): string {
 	return `${day}/${month}/${year} às ${hours}:${minutes}`
 }
 
+function getAvailableSpots(event: Event) {
+	const confirmations = event.Attendances.filter(a => a.Status === "GOING").length
+	const availableSpots = event.Capacity ?
+		event.Capacity - confirmations
+		: -1
+	const isFull = availableSpots <= 0
+
+	return {
+		confirmations,
+		availableSpots,
+		isFull,
+	}
+}
+
 export default function Events() {
+	const router = useRouter()
 	const queryClient = useQueryClient()
 
 	const account = useQuery<Profile>({
@@ -164,23 +181,26 @@ export default function Events() {
 
 	// Function to get attendance button based on current status
 	const getAttendanceButton = (event: Event) => {
+		if (!account.data?.AccountId) {
+			return (
+				<Button
+					variant="outline"
+					size="sm"
+					className="gap-1 border-gray-200 bg-gray-50 text-gray-600 hover:bg-gray-100"
+					onClick={() => router.push("/conta")}
+				>
+					<CircleArrowRight />
+					Faca login para poder participar
+				</Button>
+			)
+		}
+
 		const userAttendance = event.Attendances.find(a => a.AccountId === account.data?.AccountId)
 		const availableSpots = event.Capacity ? event.Capacity - event.Attendances.length : -1
 		const isFull = availableSpots <= 0
 
 		// If the event is full and user is not already going, disable the button
-		const isDisabled = isFull && userAttendance?.Status !== "GOING"
-
-		if (isFull) {
-			return (
-				<>
-					<Info className="h-4 w-4 mr-2 text-muted-foreground" />
-					<span className="text-red-600 font-medium">
-						Evento lotado
-					</span>
-				</>
-			)
-		}
+		const isDisabled = (isFull && event.Capacity && userAttendance?.Status !== "GOING") as boolean
 
 		if (userAttendance) {
 			// User has already set an attendance status
@@ -223,50 +243,86 @@ export default function Events() {
 					</DropdownMenuContent>
 				</DropdownMenu>
 			)
-		} else {
-			// User hasn't set an attendance status yet
+		}
+
+		if (isFull && event.Capacity) {
 			return (
-				<div className="flex gap-2">
-					<Button
-						variant="outline"
-						size="sm"
-						className="gap-1 border-green-200 bg-green-50 text-green-600 hover:bg-green-100"
-						onClick={() => updateAttendance(event.Id, "GOING")}
-						disabled={isDisabled}
-					>
-						<Check className="h-4 w-4" />
-						Vou
-					</Button>
-					<Button
-						variant="outline"
-						size="sm"
-						className="gap-1 border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100"
-						disabled={isDisabled}
-						onClick={() => updateAttendance(event.Id, "MAYBE")}
-					>
-						<HelpCircle className="h-4 w-4" />
-						Talvez
-					</Button>
-					<Button
-						variant="outline"
-						size="sm"
-						className="gap-1 border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
-						disabled={isDisabled}
-						onClick={() => updateAttendance(event.Id, "NOT_GOING")}
-					>
-						<X className="h-4 w-4" />
-						Não vou
-					</Button>
-				</div>
+				<>
+					<Info className="h-4 w-4 mr-2 text-muted-foreground" />
+					<span className="text-red-600 font-medium">
+						Evento lotado
+					</span>
+				</>
 			)
 		}
+
+		// User hasn't set an attendance status yet
+		return (
+			<div className="flex gap-2">
+				<Button
+					variant="outline"
+					size="sm"
+					className="gap-1 border-green-200 bg-green-50 text-green-600 hover:bg-green-100"
+					onClick={() => updateAttendance(event.Id, "GOING")}
+					disabled={isDisabled}
+				>
+					<Check className="h-4 w-4" />
+					Vou
+				</Button>
+				<Button
+					variant="outline"
+					size="sm"
+					className="gap-1 border-amber-200 bg-amber-50 text-amber-600 hover:bg-amber-100"
+					disabled={isDisabled}
+					onClick={() => updateAttendance(event.Id, "MAYBE")}
+				>
+					<HelpCircle className="h-4 w-4" />
+					Talvez
+				</Button>
+				<Button
+					variant="outline"
+					size="sm"
+					className="gap-1 border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
+					disabled={isDisabled}
+					onClick={() => updateAttendance(event.Id, "NOT_GOING")}
+				>
+					<X className="h-4 w-4" />
+					Não vou
+				</Button>
+			</div>
+		)
+	}
+
+	const getAvailableCapacity = (event: Event) => {
+		const { availableSpots, isFull } = getAvailableSpots(event)
+
+		if (!event.Capacity) {
+			return (
+				<span className="text-green-600 font-medium">
+					Sem limite de vagas!
+				</span>
+			)
+		}
+
+		if (isFull) {
+			return (
+				<span className="text-red-600 font-medium">
+					Evento lotado
+				</span>
+			)
+		}
+
+		return (
+			<span className="text-yellow-600 font-medium">
+				{`${availableSpots} vagas disponíveis`}
+			</span>
+		)
 	}
 
 	return (
 		<main className="flex-1 container mx-auto py-8 px-4 mb-10">
 			{allEvents.map((event) => {
-				const availableSpots = event.Capacity ? event.Capacity - event.Attendances.length : -1
-				const isFull = availableSpots <= 0
+				const { confirmations } = getAvailableSpots(event)
 				const userAttendance = account.data?.AccountId
 					? event.Attendances.find(a => a.AccountId === account.data?.AccountId)
 					: undefined
@@ -293,13 +349,9 @@ export default function Events() {
 
 										<div className="flex items-center mt-2 text-sm">
 											<Info className="h-4 w-4 mr-2 text-muted-foreground" />
-											<span className={cn(isFull && !isUserConfirmed ? "text-red-600 font-medium" : "")}>
-												{(event.Capacity === undefined || event.Capacity === null) ? "Sem limite de vagas!" : (
-													availableSpots > 0
-														? `${availableSpots} vagas disponíveis`
-														: "Evento lotado"
-												)}
-											</span>
+											{
+												getAvailableCapacity(event)
+											}
 										</div>
 									</div>
 									<div className="w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative">
@@ -360,7 +412,13 @@ export default function Events() {
 									<div className="flex items-center mt-4">
 										<Users className="h-5 w-5 mr-2 text-muted-foreground" />
 										<span className="text-sm font-medium mr-2">
-											Confirmados ({event.Attendances.length}/{event.Capacity}):
+											{
+												event.Capacity ? (
+													<>{`Confirmados (${confirmations}/${event.Capacity}):`}</>
+												) : (
+													<>{`Confirmados (${confirmations}):`}</>
+												)
+											}
 										</span>
 										<div className="flex">
 											{event.Attendances.length > 0 ? (
@@ -387,11 +445,9 @@ export default function Events() {
 									</div>
 								</div>
 
-								{account.data?.AccountId && (
-									<div className="flex justify-center items-start p-4 md:p-6">
-										{getAttendanceButton(event)}
-									</div>
-								)}
+								<div className="flex justify-center items-start p-4 md:p-6">
+									{getAttendanceButton(event)}
+								</div>
 							</div>
 						</CardContent>
 					</Card>
