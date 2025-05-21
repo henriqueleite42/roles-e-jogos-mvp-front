@@ -3,9 +3,9 @@ import Image from "next/image"
 import { redirect } from 'next/navigation';
 import { Button } from "@/components/ui/button"
 import { Users, Calendar, ChevronRight, Puzzle, VenetianMask, Dice5 } from "lucide-react"
+import { cookies } from "next/headers"
 
 import EVENTS from "../../get-data/events.json"
-import { cookies } from "next/headers"
 const now = new Date().getTime()
 const events = EVENTS.filter(e => new Date(e.Date).getTime() >= now).splice(0, 3)
 
