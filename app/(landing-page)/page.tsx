@@ -34,7 +34,7 @@ export default async function LandingPage() {
 	return (
 		<div className="flex min-h-screen flex-col">
 			<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
-				<h1 className="text-2xl font-bold text-center text-white">Rolês & Jogos</h1>
+				<h1 className="text-2xl font-bold text-center text-white">{process.env.NEXT_PUBLIC_WEBSITE_NAME}</h1>
 			</header>
 
 			<main className="flex-1">
@@ -49,7 +49,7 @@ export default async function LandingPage() {
 								</div>
 								<div className="flex flex-col gap-2 min-[400px]:flex-row">
 									<Link href="/whatsapp">
-										<Button className="bg-primary hover:bg-primary-foreground">
+										<Button className="bg-primary hover:bg-primary-foreground text-white">
 											Faça parte de nossa comunidade
 											<ChevronRight className="ml-2 h-4 w-4" />
 										</Button>
@@ -195,8 +195,8 @@ export default async function LandingPage() {
 								<div className="flex items-center space-x-4">
 									<Users className="h-12 w-12 text-primary" />
 									<div>
-										<h3 className="text-xl font-bold">+35 Membros</h3>
-										<p className="text-sm text-gray-500">Faça parte da nossa comunidade</p>
+										<h3 className="text-xl font-bold">40+ Membros</h3>
+										<p className="text-sm text-gray-500">Comunidade que cresce a cada dia</p>
 									</div>
 								</div>
 							</div>
@@ -213,7 +213,7 @@ export default async function LandingPage() {
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Link href="/whatsapp">
 								<Button className="bg-white text-primary hover:bg-red-50">
-									Vem jogar com a gente!
+									Faça parte de nossa comunidade
 								</Button>
 							</Link>
 						</div>
@@ -226,7 +226,7 @@ export default async function LandingPage() {
 					<div className="flex flex-col gap-2 md:gap-4 md:flex-1">
 						<div className="flex items-center gap-2">
 							<Dice5 className="h-6 w-6 text-primary" />
-							<span className="text-lg font-bold">Rolês & Jogos</span>
+							<span className="text-lg font-bold">{process.env.NEXT_PUBLIC_WEBSITE_NAME}</span>
 						</div>
 						<p className="text-sm text-gray-500">Um grupo de amigos que se reune pra jogar jogos de tabuleiro!</p>
 					</div>
@@ -296,7 +296,7 @@ export default async function LandingPage() {
 				<div className="border-t py-6 md:py-8">
 					<div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
 						<p className="text-center text-sm text-gray-500 md:text-left">
-							© {new Date().getFullYear()} Rolês & Jogos. Todos os direitos reservados.
+							© {new Date().getFullYear()} {process.env.NEXT_PUBLIC_WEBSITE_NAME}. Todos os direitos reservados.
 						</p>
 					</div>
 				</div>

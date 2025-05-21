@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import '../globals.css'
 
 export const metadata: Metadata = {
-	title: 'Rolês & Jogos',
+	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
 	description: 'Faça amigos e jogue jogos',
 }
 
@@ -14,10 +14,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<head>
-				<meta name="application-name" content="Rolês & Jogos" />
+				<meta name="application-name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
 				<meta name="apple-mobile-web-app-status-bar-style" content="default" />
-				<meta name="apple-mobile-web-app-title" content="Rolês & Jogos" />
+				<meta name="apple-mobile-web-app-title" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
 				<meta name="description" content="Faça amigos e jogue jogos" />
 				<meta name="format-detection" content="telephone=no" />
 				<meta name="mobile-web-app-capable" content="yes" />
@@ -144,9 +144,9 @@ export default function RootLayout({
 				<meta property="og:type" content="website" />
 
 				<link rel="canonical" href="https://rolesejogos.com.br" />
-				<meta property="og:title" content="Rolês & Jogos" />
+				<meta property="og:title" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
 				<meta property="og:description" content="Faça amigos e jogue jogos" />
-				<meta property="og:site_name" content="Rolês & Jogos" />
+				<meta property="og:site_name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
 				<meta property="og:url" content="https://rolesejogos.com.br" />
 				<meta property="og:image" content="https://rolesejogos.com.br/icons/favicon.ico" />
 

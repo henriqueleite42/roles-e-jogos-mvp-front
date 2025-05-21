@@ -4,6 +4,23 @@ export type GameKind = "GAME" | "RPG"
 
 export type EventAttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE"
 
+export type LocationKind = "BUSINESS" | "PERSONAL"
+
+export interface GameData {
+	Id: number;
+	Name: string;
+	Description: string;
+	IconUrl?: string;
+	Kind: GameKind;
+	LudopediaId?: number;
+	LudopediaUrl?: string;
+	MinAmountOfPlayers: number;
+	MaxAmountOfPlayers: number;
+	AverageDuration: number;
+	MinAge: number;
+	CreatedAt: Date;
+}
+
 export interface Connection {
 	ExternalHandle?: string;
 	ExternalId: string;
@@ -30,7 +47,7 @@ export interface EventGame {
 	MinAge: number
 }
 
-export interface EventAtendance {
+export interface EventAttendance {
 	AccountId: number
 	Handle: string
 	AvatarUrl?: string
@@ -53,5 +70,23 @@ export interface Event {
 		IconUrl?: string
 	}
 	Games: Array<EventGame>
-	Attendances: Array<EventAtendance>
+	Attendances: Array<EventAttendance>
+}
+
+export interface LocationData {
+	Id: number
+	Name: string
+	Address: string
+	IconUrl?: string
+	Kind: LocationKind
+	CreatedBy: number
+	CreatedAt: Date
+}
+
+export interface ResponseSearchLocations {
+	Data: Array<LocationData>
+}
+
+export interface ResponseSearchGames {
+	Data: Array<GameData>
 }
