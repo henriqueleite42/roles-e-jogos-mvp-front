@@ -61,7 +61,7 @@ export default function LocationsPage() {
 				query.set("after", pageParam as string)
 			}
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/location?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -88,7 +88,7 @@ export default function LocationsPage() {
 
 	const mutation = useMutation({
 		mutationFn: async (body: LocationFormValues) => {
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/location', {
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/locations', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({

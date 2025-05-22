@@ -40,7 +40,7 @@ export function Username({ username }: Props) {
 
 	const mutation = useMutation({
 		mutationFn: async (body: UpdateUsernameInput) => {
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profile/handle', {
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/handle', {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(body),

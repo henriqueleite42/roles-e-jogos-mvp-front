@@ -137,7 +137,7 @@ export function FormCreateEvent() {
 				query: debouncedLocationQuery
 			})
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/location/search?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/search?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -178,7 +178,7 @@ export function FormCreateEvent() {
 				query: debouncedGameQuery
 			})
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collection/personal/search?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/games/search?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -207,7 +207,7 @@ export function FormCreateEvent() {
 		mutationFn: async (body: FormValues) => {
 			const gamesIds = body.Games.map(g => g.Id)
 
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/event', {
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({

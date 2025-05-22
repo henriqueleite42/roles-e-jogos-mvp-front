@@ -65,7 +65,7 @@ export function Connections({ connections }: Props) {
 				provider: expandedConnection.Provider
 			})
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collection/import/status?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/import/status?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -82,7 +82,7 @@ export function Connections({ connections }: Props) {
 		isPending: isRequestImportCollectionFromLudopediaPending,
 	} = useMutation({
 		mutationFn: async (externalId: string) => {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collection/import/ludopedia`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/import/ludopedia`, {
 				method: "PUT",
 				body: JSON.stringify({
 					ExternalId: externalId

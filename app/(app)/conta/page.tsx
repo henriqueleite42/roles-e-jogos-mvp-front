@@ -11,7 +11,7 @@ export default async function ContaPage() {
 		return <SignInPage />
 	}
 
-	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profile/me', {
+	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
 		method: 'GET',
 		headers: {
 			Cookie: cookieStore.toString()

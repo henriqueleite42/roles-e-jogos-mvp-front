@@ -81,7 +81,7 @@ export default function GamesPage() {
 
 			const query = new URLSearchParams(queryObj)
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collection/collective?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/collective?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -115,7 +115,7 @@ export default function GamesPage() {
 		queryFn: async () => {
 			if (!debouncedOwnerSearch || debouncedOwnerSearch.trim().length < 2) return []
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profile/list/by-handle?handle=${encodeURIComponent(debouncedOwnerSearch)}`)
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/list/by-handle?handle=${encodeURIComponent(debouncedOwnerSearch)}`)
 
 			if (!response.ok) {
 				throw new Error(`Owner search failed with status ${response.status}`)

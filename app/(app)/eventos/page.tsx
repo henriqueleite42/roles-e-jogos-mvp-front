@@ -97,7 +97,7 @@ export default function Events() {
 	const account = useQuery<Profile>({
 		queryKey: ["profile"],
 		queryFn: async () => {
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profile/me', {
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
 				method: 'GET',
 				cache: 'no-store',
 				credentials: "include"
@@ -126,7 +126,7 @@ export default function Events() {
 
 			const query = new URLSearchParams(queryObj)
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/next?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/next?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -153,7 +153,7 @@ export default function Events() {
 
 	const mutation = useMutation({
 		mutationFn: async (body: ConfirmAttendanceInput) => {
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/event/attendance', {
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events/attendance', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(body),
