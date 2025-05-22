@@ -44,6 +44,10 @@ const locationFormSchema = z.object({
 
 type LocationFormValues = z.infer<typeof locationFormSchema>
 
+// export const metadata = {
+// 	title: "Locais",
+// 	description: "Veja seus locais cadastrados",
+// }
 
 export default function LocationsPage() {
 	const queryClient = useQueryClient()

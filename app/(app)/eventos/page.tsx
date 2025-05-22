@@ -12,7 +12,6 @@ import { cn } from "@/lib/utils"
 import { Event, EventAttendanceStatus, Profile } from "@/types/api"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-import { toast } from "@/hooks/use-toast"
 
 // Attendance status types
 type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
@@ -89,6 +88,11 @@ function getAvailableSpots(event: Event) {
 		isFull,
 	}
 }
+
+// export const metadata = {
+// 	title: "Eventos",
+// 	description: "Veja os proximos eventos da comunidade!",
+// }
 
 export default function Events() {
 	const router = useRouter()

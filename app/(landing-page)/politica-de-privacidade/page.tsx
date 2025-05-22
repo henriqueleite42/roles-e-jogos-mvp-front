@@ -1,3 +1,8 @@
+export const metadata = {
+	title: "Política de Privacidade",
+	description: "Conheça as Política de Privacidade da nossa comunidade",
+}
+
 export default function PoliticaDePrivacidade() {
 	return (
 		<div>

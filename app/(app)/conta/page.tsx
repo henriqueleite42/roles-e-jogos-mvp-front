@@ -4,6 +4,11 @@ import { Profile } from "@/types/api"
 import { LoggedView } from './logged-view';
 import SignInPage from './unlogged-view';
 
+export const metadata = {
+	title: "Conta",
+	description: "Acesse sua conta",
+}
+
 export default async function ContaPage() {
 	const cookieStore = await cookies();
 

@@ -45,6 +45,11 @@ interface ResponseGames {
 
 const ITEMS_PER_PAGE = 5
 
+// export const metadata = {
+// 	title: "Jogos",
+// 	description: "Veja os jogos de toda a comunidade!",
+// }
+
 export default function GamesPage() {
 	const [searchInput, setSearchInput] = useState('')
 	const [searchQuery, setSearchQuery] = useState("")

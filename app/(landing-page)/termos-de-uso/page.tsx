@@ -1,3 +1,8 @@
+export const metadata = {
+	title: "Termos de Uso",
+	description: "Conheça os Termos de Uso da nossa comunidade",
+}
+
 export default function TermosDeUso() {
 	return (
 		<>
