@@ -27,7 +27,7 @@ function formatEventDate(dateString: string): string {
 export default async function LandingPage() {
 	const cookieStore = await cookies();
 
-	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
 		redirect("/jogos")
 	}
 
