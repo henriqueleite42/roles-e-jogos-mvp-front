@@ -41,9 +41,9 @@ export default function HomePage() {
 					</div>
 				</Link>
 
-				{/* Mapa Card */}
+				{/* Locais Card */}
 				<Link
-					href="/mapa"
+					href="/locais"
 					className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 				>
 					<div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-amber-600/20 opacity-50"></div>
@@ -54,7 +54,7 @@ export default function HomePage() {
 						<div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-600 p-3 shadow-md transition-transform duration-300 group-hover:scale-110">
 							<MapPin className="h-8 w-8 text-white" />
 						</div>
-						<div className="text-xl font-bold text-amber-600">Mapa</div>
+						<div className="text-xl font-bold text-amber-600">Locais</div>
 						<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 transition-all duration-300 group-hover:w-3/4"></div>
 					</div>
 				</Link>

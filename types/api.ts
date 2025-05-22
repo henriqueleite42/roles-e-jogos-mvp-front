@@ -6,6 +6,12 @@ export type EventAttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE"
 
 export type LocationKind = "BUSINESS" | "PERSONAL"
 
+export interface PaginationString {
+	Current?: string
+	Next?: string
+	Limit: number
+}
+
 export interface GameData {
 	Id: number;
 	Name: string;
@@ -89,4 +95,9 @@ export interface ResponseSearchLocations {
 
 export interface ResponseSearchGames {
 	Data: Array<GameData>
+}
+
+export interface ResponseListLocations {
+	Data: Array<LocationData>
+	Pagination: PaginationString
 }

@@ -75,14 +75,16 @@ function formatEventDate(dateString: string): string {
 }
 
 function getAvailableSpots(event: Event) {
-	const confirmations = event.Attendances.filter(a => a.Status === "GOING").length
+	const confirmations = event.Attendances.filter(a => a.Status === "GOING")
+	const confirmationsCount = confirmations.length
 	const availableSpots = event.Capacity ?
-		event.Capacity - confirmations
+		event.Capacity - confirmationsCount
 		: -1
 	const isFull = availableSpots <= 0
 
 	return {
 		confirmations,
+		confirmationsCount,
 		availableSpots,
 		isFull,
 	}
@@ -196,8 +198,7 @@ export default function Events() {
 		}
 
 		const userAttendance = event.Attendances.find(a => a.AccountId === account.data?.AccountId)
-		const availableSpots = event.Capacity ? event.Capacity - event.Attendances.length : -1
-		const isFull = availableSpots <= 0
+		const { isFull } = getAvailableSpots(event)
 
 		// If the event is full and user is not already going, disable the button
 		const isDisabled = (isFull && event.Capacity && userAttendance?.Status !== "GOING") as boolean
@@ -322,7 +323,7 @@ export default function Events() {
 	return (
 		<main className="flex-1 container mx-auto py-8 px-4 mb-10">
 			{allEvents.map((event) => {
-				const { confirmations } = getAvailableSpots(event)
+				const { confirmations, confirmationsCount } = getAvailableSpots(event)
 				const userAttendance = account.data?.AccountId
 					? event.Attendances.find(a => a.AccountId === account.data?.AccountId)
 					: undefined
@@ -414,15 +415,15 @@ export default function Events() {
 										<span className="text-sm font-medium mr-2">
 											{
 												event.Capacity ? (
-													<>{`Confirmados (${confirmations}/${event.Capacity}):`}</>
+													<>{`Confirmados (${confirmationsCount}/${event.Capacity}):`}</>
 												) : (
-													<>{`Confirmados (${confirmations}):`}</>
+													<>{`Confirmados (${confirmationsCount}):`}</>
 												)
 											}
 										</span>
 										<div className="flex">
-											{event.Attendances.length > 0 ? (
-												event.Attendances.map((person, index) => (
+											{confirmations.length > 0 ? (
+												confirmations.map((person, index) => (
 													<div key={index} className="relative group -ml-2 first:ml-0">
 														<div className="rounded-full border-2 border-background w-8 h-8 overflow-hidden">
 															<Image

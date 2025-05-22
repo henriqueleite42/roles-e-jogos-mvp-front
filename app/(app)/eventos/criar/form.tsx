@@ -37,6 +37,8 @@ const formSchema = z.object({
 	}),
 	StartDate: z.coerce.date({
 		required_error: "A data de início é obrigatória.",
+		message: "A data de início é obrigatória.",
+		invalid_type_error: "A data de início é obrigatória.",
 	}),
 	EndDate: z.coerce.date().optional().nullable(),
 	Capacity: z.coerce
@@ -104,8 +106,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
-
-export async function FormCreateEvent() {
+export function FormCreateEvent() {
 	const { toast } = useToast()
 	const router = useRouter()
 
