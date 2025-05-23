@@ -1,42 +1,37 @@
-import { LogOut } from "lucide-react"
+import { cookies } from 'next/headers';
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Connections } from "./connections"
-import { Username } from "./username"
-import { AvatarComponent } from "./avatar"
+import { Profile } from "@/types/api"
+import { LoggedView } from './logged-view';
+import SignInPage from './unlogged-view';
 
-export default function ContaPage() {
-	const username = "JogadorExemplo"
-	const profileImageUrl = undefined
+export const metadata = {
+	title: "Conta",
+	description: "Acesse sua conta",
+}
 
-	return (
-		<div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-50 to-white">
-			<main className="flex-1 p-4 max-w-md mx-auto w-full">
-				<section className="mb-8">
-					<Card className="overflow-hidden">
-						<div className="bg-gradient-to-r from-orange-400 to-orange-500 h-24 relative"></div>
+export default async function ContaPage() {
+	const cookieStore = await cookies();
 
-						<CardContent className="pt-0 relative -mt-12">
-							<AvatarComponent username={username} profileImageUrl={profileImageUrl} />
+	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+		return <SignInPage />
+	}
 
-							<Username username={username} />
+	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
+		method: 'GET',
+		headers: {
+			Cookie: cookieStore.toString()
+		},
+		cache: 'no-store',
+	}).catch(() => ({
+		ok: false
+	} as Response));
 
-							{/* <Badge variant="outline" className="bg-orange-100 text-orange-700 hover:bg-orange-100">
-								Jogador
-							</Badge> */}
-						</CardContent>
-					</Card>
-				</section>
-
-				<Connections />
-
-				<Button variant="outline" className="w-full border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600">
-					<LogOut className="h-4 w-4 mr-2" /> Sair da conta
-				</Button>
-			</main>
-
-		</div >
-	)
+	if (res.ok) {
+		const profile: Profile = await res.json();
+		return (
+			<LoggedView profile={profile} />
+		)
+	} else {
+		return <SignInPage />
+	}
 }

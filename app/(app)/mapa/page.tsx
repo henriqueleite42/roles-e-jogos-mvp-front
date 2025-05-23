@@ -1,4 +1,7 @@
-"use client"
+export const metadata = {
+	title: "Mapa",
+	description: "Encontre pessoas proximas a voce para combinar caronas e mesas!",
+}
 
 export default function Map() {
 	return (

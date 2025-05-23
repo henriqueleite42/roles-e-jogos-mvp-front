@@ -1,9 +1,0 @@
-{
-  "Id": 334,
-  "Name": "Munchkin",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/334_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/munchkin",
-  "MinAmountOfPlayers": 3,
-  "MaxAmountOfPlayers": 6,
-  "Kind": "GAME"
-}

@@ -1,9 +1,0 @@
-{
-  "Id": 8147,
-  "Name": "Código Secreto",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/8147_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/codenames",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 8,
-  "Kind": "GAME"
-}

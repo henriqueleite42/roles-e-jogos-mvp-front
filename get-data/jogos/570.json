@@ -1,9 +1,0 @@
-{
-  "Id": 570,
-  "Name": "Hanabi",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/570_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/hanabi",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 5,
-  "Kind": "GAME"
-}

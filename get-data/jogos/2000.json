@@ -1,9 +1,0 @@
-{
-  "Id": 2000,
-  "Name": "Monopoly: City",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/2000_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/monopoly-city",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 6,
-  "Kind": "GAME"
-}

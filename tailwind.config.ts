@@ -25,11 +25,11 @@ const config = {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",
-				background: "hsl(var(--background))",
+				background: "#f2ebdf",
 				foreground: "hsl(var(--foreground))",
 				primary: {
-					DEFAULT: "#f97316", // orange-500
-					foreground: "#ffffff",
+					DEFAULT: "#b73d2f",
+					foreground: "#c45249",
 				},
 				secondary: {
 					DEFAULT: "hsl(var(--secondary))",

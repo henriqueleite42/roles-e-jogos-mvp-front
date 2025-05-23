@@ -1,9 +1,0 @@
-{
-  "Id": 15,
-  "Name": "Bang!",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/15_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/bang",
-  "MinAmountOfPlayers": 4,
-  "MaxAmountOfPlayers": 7,
-  "Kind": "GAME"
-}

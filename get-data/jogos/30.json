@@ -1,9 +1,0 @@
-{
-  "Id": 30,
-  "Name": "Elder Sign",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/30_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/elder-sign",
-  "MinAmountOfPlayers": 1,
-  "MaxAmountOfPlayers": 8,
-  "Kind": "GAME"
-}

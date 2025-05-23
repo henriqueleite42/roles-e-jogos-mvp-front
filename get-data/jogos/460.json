@@ -1,9 +1,0 @@
-{
-  "Id": 460,
-  "Name": "Coup",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/460_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/coup",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 6,
-  "Kind": "GAME"
-}
