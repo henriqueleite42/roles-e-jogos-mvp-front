@@ -22,6 +22,19 @@ function formatEventDate(dateString: string): string {
 	return `${day}/${month}/${year} às ${hours}:${minutes}`
 }
 
+async function getEvents(): Promise<Array<Event>> {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/next?limit=3`, {
+		credentials: "include"
+	})
+
+	if (!response.ok) {
+		console.error(`Erro ao pegar dados da API: ${response.status}`)
+		return []
+	}
+
+	return response.json().then(r => r?.Data || []).catch(() => ([]))
+}
+
 export default async function LandingPage() {
 	const cookieStore = await cookies();
 
@@ -30,25 +43,7 @@ export default async function LandingPage() {
 	}
 
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data: events, } = useQuery<Array<Event>>({
-		queryKey: ["events-lp"],
-		queryFn: async () => {
-			const query = new URLSearchParams({
-				limit: "3"
-			})
-
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/next?${query.toString()}`, {
-				credentials: "include"
-			})
-
-			if (!response.ok) {
-				console.error(`Erro ao pegar dados da API: ${response.status}`)
-				return []
-			}
-
-			return response.json().then(r => r?.Data || []).catch(() => ([]))
-		},
-	})
+	const events = await getEvents()
 
 	return (
 		<div className="flex min-h-screen flex-col">
