@@ -9,21 +9,9 @@ import Image from "next/image"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { cn } from "@/lib/utils"
 
-import { Event, EventAttendanceStatus, Profile } from "@/types/api"
+import { AttendanceStatus, Event, EventAttendanceStatus, Profile, ResponseEvents } from "@/types/api"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
-
-// Attendance status types
-type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
-
-interface ResponseEvents {
-	Data: Array<Event>
-	Pagination: {
-		Current?: string
-		Limit: number
-		Next?: string
-	}
-}
 
 interface ConfirmAttendanceInput {
 	EventId: number

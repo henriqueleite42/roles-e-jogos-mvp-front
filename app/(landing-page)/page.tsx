@@ -4,10 +4,8 @@ import { redirect } from 'next/navigation';
 import { Button } from "@/components/ui/button"
 import { Users, Calendar, ChevronRight, Puzzle, VenetianMask, Dice5 } from "lucide-react"
 import { cookies } from "next/headers"
-
-import EVENTS from "../../get-data/events.json"
-const now = new Date().getTime()
-const events = EVENTS.filter(e => new Date(e.Date).getTime() >= now).splice(0, 3)
+import { useQuery } from "@tanstack/react-query";
+import { Event } from "@/types/api";
 
 function formatEventDate(dateString: string): string {
 	const date = new Date(dateString)
@@ -30,6 +28,27 @@ export default async function LandingPage() {
 	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
 		redirect("/jogos")
 	}
+
+	// Use TanStack Query for data fetching with infinite scroll
+	const { data: events, } = useQuery<Array<Event>>({
+		queryKey: ["events-lp"],
+		queryFn: async () => {
+			const query = new URLSearchParams({
+				limit: "3"
+			})
+
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/next?${query.toString()}`, {
+				credentials: "include"
+			})
+
+			if (!response.ok) {
+				console.error(`Erro ao pegar dados da API: ${response.status}`)
+				return []
+			}
+
+			return response.json().then(r => r?.Data || []).catch(() => ([]))
+		},
+	})
 
 	return (
 		<div className="flex min-h-screen flex-col">
@@ -143,13 +162,13 @@ export default async function LandingPage() {
 							</div>
 						</div>
 						<div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-							{events.map((event) => (
+							{(events || []).map((event) => (
 								<div key={event.Id} className="flex flex-col space-y-3 rounded-lg border bg-white p-6 shadow-sm">
 									<div className="flex items-center space-x-3">
 										<Calendar className="h-5 w-5 text-primary" />
 										<h3 className="text-xl font-bold">{event.Name}</h3>
 									</div>
-									<p className="text-sm text-gray-500">Data: {formatEventDate(event.Date)}</p>
+									<p className="text-sm text-gray-500">Data: {formatEventDate(event.StartDate)}</p>
 									<p className="text-sm text-gray-500">Local: {event.Location.Name}</p>
 									<p className="text-sm text-gray-500">Jogos previstos: {event.Games.map(g => g.Name).join(", ")}</p>
 									{/* <Button className="mt-2 bg-primary hover:bg-red-600">Confirmar presença</Button> */}

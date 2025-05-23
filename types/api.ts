@@ -6,6 +6,18 @@ export type EventAttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE"
 
 export type LocationKind = "BUSINESS" | "PERSONAL"
 
+// Attendance status types
+export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
+
+export interface ResponseEvents {
+	Data: Array<Event>
+	Pagination: {
+		Current?: string
+		Limit: number
+		Next?: string
+	}
+}
+
 export interface PaginationString {
 	Current?: string
 	Next?: string
