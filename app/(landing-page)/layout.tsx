@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import '../globals.css'
+import { Dice5 } from 'lucide-react'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
@@ -155,7 +157,93 @@ export default function RootLayout({
 					content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
 				/>
 			</head>
-			<body>{children}</body>
+			<body>
+
+
+				<div className="flex min-h-screen flex-col">
+					<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
+						<h1 className="text-2xl font-bold text-center text-white">{process.env.NEXT_PUBLIC_WEBSITE_NAME}</h1>
+					</header>
+
+					{children}
+
+					<footer className="border-t bg-background">
+						<div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 md:py-12">
+							<div className="flex flex-col gap-2 md:gap-4 md:flex-1">
+								<div className="flex items-center gap-2">
+									<Dice5 className="h-6 w-6 text-primary" />
+									<span className="text-lg font-bold">{process.env.NEXT_PUBLIC_WEBSITE_NAME}</span>
+								</div>
+								<p className="text-sm text-gray-500">Um grupo de amigos que se reune pra jogar jogos de tabuleiro!</p>
+							</div>
+							<div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:flex-1">
+								<div className="space-y-2">
+									<h4 className="text-sm font-medium">Comunidade</h4>
+									<ul className="space-y-2 text-sm">
+										<li>
+											<Link href="/" className="transition-colors hover:text-primary">
+												Início
+											</Link>
+										</li>
+										<li>
+											<Link href="/jogos" className="transition-colors hover:text-primary">
+												Jogos
+											</Link>
+										</li>
+										<li>
+											<Link href="/eventos" className="transition-colors hover:text-primary">
+												Mesas
+											</Link>
+										</li>
+									</ul>
+								</div>
+								<div className="space-y-2">
+									<h4 className="text-sm font-medium">Links</h4>
+									<ul className="space-y-2 text-sm">
+										<li>
+											<Link href="/termos-de-uso" className="transition-colors hover:text-primary">
+												Termos de uso
+											</Link>
+										</li>
+										<li>
+											<Link href="/politica-de-privacidade" className="transition-colors hover:text-primary">
+												Politica de privacidade
+											</Link>
+										</li>
+									</ul>
+								</div>
+								<div className="space-y-2">
+									<h4 className="text-sm font-medium">Redes Sociais</h4>
+									<ul className="space-y-2 text-sm">
+										<li>
+											<Link href="/instagram" className="transition-colors hover:text-primary">
+												Instagram
+											</Link>
+										</li>
+										<li>
+											<Link href="/whatsapp" className="transition-colors hover:text-primary">
+												WhatsApp
+											</Link>
+										</li>
+										<li>
+											<Link href="/tiktok" className="transition-colors hover:text-primary">
+												TikTok
+											</Link>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div className="border-t py-6 md:py-8">
+							<div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
+								<p className="text-center text-sm text-gray-500 md:text-left">
+									© {new Date().getFullYear()} {process.env.NEXT_PUBLIC_WEBSITE_NAME}. Todos os direitos reservados.
+								</p>
+							</div>
+						</div>
+					</footer>
+				</div>
+			</body>
 		</html>
 	)
 }
