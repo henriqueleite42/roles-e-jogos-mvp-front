@@ -20,7 +20,7 @@ const updateUsernameSchema = z.object({
 		.string()
 		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
 		.max(16, 'Seu username pode ter no maximo 16 caracteres')
-		.regex(/^[a-z0-9]*$/, "Seu username pode conter apenas letras e numeros"),
+		.regex(/^[a-z0-9]*$/, "Seu username pode conter apenas letras minusculas e numeros"),
 });
 type UpdateUsernameInput = z.infer<typeof updateUsernameSchema>;
 
@@ -76,6 +76,10 @@ export function Username({ username }: Props) {
 						placeholder="Novo username"
 						disabled={mutation.isPending}
 						className="max-w-[200px]"
+						onChange={(e) => {
+							const onlyAllowed = e.target.value.replace(/[^a-z0-9]/g, '');
+							setValue('NewHandle', onlyAllowed, { shouldValidate: true });
+						}}
 					/>
 					<Button type='submit' size="icon" variant="ghost" disabled={mutation.isPending}>
 
