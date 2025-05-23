@@ -1,9 +1,0 @@
-{
-  "Id": 60250,
-  "Name": "Glifos",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/60250_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/glifos",
-  "MinAmountOfPlayers": 1,
-  "MaxAmountOfPlayers": 5,
-  "Kind": "GAME"
-}

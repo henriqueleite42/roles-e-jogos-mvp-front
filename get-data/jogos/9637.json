@@ -1,9 +1,0 @@
-{
-  "Id": 9637,
-  "Name": "Skull",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/9637_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/skull",
-  "MinAmountOfPlayers": 3,
-  "MaxAmountOfPlayers": 6,
-  "Kind": "GAME"
-}

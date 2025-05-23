@@ -1,9 +1,0 @@
-{
-  "Id": 37333,
-  "Name": "Exploding Kittens: Zombie Kittens",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/37333_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/zombie-kittens",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 5,
-  "Kind": "GAME"
-}

@@ -1,9 +1,0 @@
-{
-  "Id": 710,
-  "Name": "Magic: The Gathering",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/710_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/magic-the-gathering",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 4,
-  "Kind": "GAME"
-}

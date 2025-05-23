@@ -1,9 +1,0 @@
-{
-  "Id": 16304,
-  "Name": "Claim",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/16304_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/claim",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 2,
-  "Kind": "GAME"
-}

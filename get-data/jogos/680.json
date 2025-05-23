@@ -1,9 +1,0 @@
-{
-  "Id": 680,
-  "Name": "Wizard",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/680_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/wizard",
-  "MinAmountOfPlayers": 3,
-  "MaxAmountOfPlayers": 6,
-  "Kind": "GAME"
-}

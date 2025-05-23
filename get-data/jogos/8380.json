@@ -1,9 +1,0 @@
-{
-  "Id": 8380,
-  "Name": "Potion Explosion",
-  "IconUrl": "https://storage.googleapis.com/ludopedia-capas/8380_t.jpg",
-  "LudopediaUrl": "https://ludopedia.com.br/jogo/potion-explosion",
-  "MinAmountOfPlayers": 2,
-  "MaxAmountOfPlayers": 4,
-  "Kind": "GAME"
-}
