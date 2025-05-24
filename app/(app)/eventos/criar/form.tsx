@@ -375,7 +375,6 @@ export function FormCreateEvent() {
 										variant="outline"
 										onClick={() => document.getElementById("event-image")?.click()}
 										className="gap-2"
-										disabled
 									>
 										<ImageIcon className="h-4 w-4" />
 										Escolher Imagem
