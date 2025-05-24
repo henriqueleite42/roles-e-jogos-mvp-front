@@ -9,6 +9,8 @@ export type LocationKind = "BUSINESS" | "PERSONAL"
 // Attendance status types
 export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
 
+export type UploadKind = "AVATAR_IMG"
+
 export interface ResponseEvents {
 	Data: Array<Event>
 	Pagination: {
@@ -112,4 +114,17 @@ export interface ResponseSearchGames {
 export interface ResponseListLocations {
 	Data: Array<LocationData>
 	Pagination: PaginationString
+}
+
+export interface RequestUploadUrlInput {
+	Kind: UploadKind;
+	Ext: string
+}
+
+export interface UploadUrl {
+	Method: string
+	Headers?: string // JSON string
+	Values?: string // JSON string
+	Url: string
+	FilePath: string
 }

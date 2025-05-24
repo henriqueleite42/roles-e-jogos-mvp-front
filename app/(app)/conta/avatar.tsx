@@ -7,15 +7,20 @@ import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import ImageCropper from "./image-cropper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useMutation } from "@tanstack/react-query"
+import { UploadUrl } from "@/types/api"
 
 interface Props {
 	profileImageUrl?: string
 	username: string
 }
 
+interface Body {
+	croppedImage: Blob
+	fileName: string
+}
+
 export function AvatarComponent({ profileImageUrl, username }: Props) {
-	const [profileImage, setProfileImage] = useState<string | undefined>(profileImageUrl)
-	const [isUploading, setIsUploading] = useState(false)
 	const [showCropper, setShowCropper] = useState(false)
 	const [imageFile, setImageFile] = useState<File | null>(null)
 
@@ -34,15 +39,81 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 		}
 	}
 
-	const handleCroppedImage = (croppedImage: string) => {
-		setProfileImage(croppedImage)
-		setShowCropper(false)
-		setIsUploading(true)
+	const {
+		mutate: uploadImg,
+		isPending: isUploadingImg,
+	} = useMutation({
+		mutationFn: async ({ croppedImage, fileName }: Body) => {
+			const ext = fileName.split(".").pop()
 
-		// Simulate upload delay
-		setTimeout(() => {
-			setIsUploading(false)
-		}, 1500)
+			const responseReqUrl = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/uploads/request`, {
+				method: "POST",
+				body: JSON.stringify({
+					Kind: "AVATAR_IMG",
+					Ext: ext,
+				}),
+				headers: { 'Content-Type': 'application/json' },
+				credentials: "include"
+			})
+
+			if (!responseReqUrl.ok) {
+				console.error(await responseReqUrl.text())
+				throw new Error(`Fail to request upload ${responseReqUrl.status}`)
+			}
+
+			const res = await responseReqUrl.json() as UploadUrl
+
+			var headers: HeadersInit | undefined
+			const body = new FormData()
+
+			if (res.Headers) {
+				headers = JSON.parse(res.Headers)
+			}
+			if (res.Values) {
+				const entries = Object.entries(JSON.parse(res.Values))
+				entries.forEach(([key, value]) => {
+					body.append(key, value as string)
+				})
+			}
+
+			body.append("file", croppedImage)
+
+			const responseUpload = await fetch(res.Url, {
+				method: res.Method,
+				body: body,
+				headers: headers
+			})
+
+			if (!responseUpload.ok) {
+				console.error(await responseUpload.text())
+				throw new Error(`Fail to upload img ${responseUpload.status}`)
+			}
+
+			const responseUpdateProfile = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/me`, {
+				method: "PUT",
+				body: JSON.stringify({
+					AvatarPath: res.FilePath,
+				}),
+				headers: { 'Content-Type': 'application/json' },
+				credentials: "include"
+			})
+
+			if (!responseUpdateProfile.ok) {
+				console.error(await responseUpdateProfile.text())
+				throw new Error(`Fail to update profile ${responseUpdateProfile.status}`)
+			}
+		},
+		onSuccess: () => {
+			window.location.reload()
+			setShowCropper(false)
+		},
+		onError: (error) => {
+			console.error('Error uploading or updating profile img:', error)
+		},
+	})
+
+	const onCancelCrop = () => {
+		setShowCropper(false)
 	}
 
 	return (
@@ -50,8 +121,8 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 			<div className="flex justify-between items-end mb-4">
 				<div className="relative">
 					<Avatar className="h-24 w-24 border-4 border-white shadow-md">
-						{profileImage ? (
-							<AvatarImage src={profileImage || "/placeholder.svg"} alt={username} />
+						{profileImageUrl ? (
+							<AvatarImage src={profileImageUrl || "/placeholder.svg"} alt={username} />
 						) : (
 							<AvatarFallback className="bg-red-100 text-primary text-2xl">
 								{username.substring(0, 2).toUpperCase()}
@@ -59,24 +130,24 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 						)}
 					</Avatar>
 
-					{/* <Button
+					<Button
 						size="icon"
 						className="absolute bottom-0 right-0 h-8 w-8 rounded-full bg-primary hover:bg-red-950"
 						onClick={triggerFileInput}
-						disabled={isUploading}
+						disabled={isUploadingImg}
 					>
-						{isUploading ? (
+						{isUploadingImg ? (
 							<Loader2 className="h-4 w-4 animate-spin text-white" />
 						) : (
 							<Camera className="h-4 w-4 text-white" />
 						)}
-					</Button> */}
+					</Button>
 
 					<input
 						type="file"
 						ref={fileInputRef}
 						className="hidden"
-						accept="image/*"
+						accept=".png,.jpg,.jpeg,.webp"
 						onChange={handleFileChange}
 					/>
 				</div>
@@ -88,7 +159,7 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 						<DialogTitle>Ajustar imagem</DialogTitle>
 						<DialogDescription>Arraste para ajustar e recortar sua foto de perfil.</DialogDescription>
 					</DialogHeader>
-					{imageFile && <ImageCropper imageFile={imageFile} onCropComplete={handleCroppedImage} />}
+					{imageFile && <ImageCropper imageFile={imageFile} onCropComplete={uploadImg} onCancelCrop={onCancelCrop} />}
 				</DialogContent>
 			</Dialog>
 		</>
