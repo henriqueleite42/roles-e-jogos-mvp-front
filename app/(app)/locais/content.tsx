@@ -101,9 +101,7 @@ export function LocationsPageContent() {
 					Kind: "LOCATION_ICON"
 				})
 
-				icon = {
-					CustomIconPath: FilePath
-				}
+				icon = FilePath
 			}
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/locations', {
