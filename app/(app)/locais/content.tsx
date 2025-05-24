@@ -35,8 +35,8 @@ const locationFormSchema = z.object({
 	name: z.string().min(3, {
 		message: "O nome do local deve ter pelo menos 3 caracteres.",
 	}),
-	address: z.string().min(5, {
-		message: "O endereço deve ter pelo menos 5 caracteres.",
+	address: z.string().min(10, {
+		message: "O endereço deve ter pelo menos 10 caracteres.",
 	}),
 	kind: z.enum(["BUSINESS", "PERSONAL"], {
 		required_error: "Selecione o tipo de local.",
