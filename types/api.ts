@@ -9,7 +9,7 @@ export type LocationKind = "BUSINESS" | "PERSONAL"
 // Attendance status types
 export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
 
-export type UploadKind = "AVATAR_IMG"
+export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON"
 
 export interface ResponseEvents {
 	Data: Array<Event>

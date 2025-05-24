@@ -26,6 +26,7 @@ import Image from "next/image"
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query"
 import { ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
 import { useToast } from "@/hooks/use-toast"
+import { uploadImage } from "@/lib/api/upload-image"
 
 // Form schema with validation
 const formSchema = z.object({
@@ -106,10 +107,15 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>
 
+interface MutationParams extends FormValues {
+	EventImage: File | null
+}
+
 export function FormCreateEvent() {
 	const { toast } = useToast()
 	const router = useRouter()
 
+	const [eventImage, setEventImage] = useState<File | null>(null)
 	const [imagePreview, setImagePreview] = useState<string | null>(null)
 
 	const [locationQuery, setLocationQuery] = useState("")
@@ -204,7 +210,25 @@ export function FormCreateEvent() {
 	}, [gamesQuery])
 
 	const mutation = useMutation({
-		mutationFn: async (body: FormValues) => {
+		mutationFn: async (body: MutationParams) => {
+			var icon: any = undefined
+
+			if (body.EventImage !== null) {
+				const { FilePath } = await uploadImage({
+					FileName: body.EventImage?.name,
+					ImageBlob: body.EventImage,
+					Kind: "EVENT_ICON"
+				})
+
+				icon = {
+					CustomIconPath: FilePath
+				}
+			} else if (body.Games.length >= 1) {
+				icon = {
+					UseGameIconGameId: body.Games[0].Id
+				}
+			}
+
 			const gamesIds = body.Games.map(g => g.Id)
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {
@@ -213,9 +237,7 @@ export function FormCreateEvent() {
 				body: JSON.stringify({
 					Name: body.Name,
 					Description: body.Description,
-					Icon: body.Games.length >= 1 ? ({
-						UseGameIconGameId: body.Games[0].Id
-					}) : undefined,
+					Icon: icon,
 					StartDate: body.StartDate.toISOString(),
 					EndDate: body.EndDate?.toISOString(),
 					Capacity: body.Capacity,
@@ -260,6 +282,7 @@ export function FormCreateEvent() {
 		if (file) {
 			const reader = new FileReader()
 			reader.onloadend = () => {
+				setEventImage(file)
 				setImagePreview(reader.result as string)
 			}
 			reader.readAsDataURL(file)
@@ -268,6 +291,7 @@ export function FormCreateEvent() {
 
 	// Clear image preview
 	const clearImagePreview = () => {
+		setEventImage(null)
 		setImagePreview(null)
 		// Also clear the file input
 		const fileInput = document.getElementById("event-image") as HTMLInputElement
@@ -292,7 +316,10 @@ export function FormCreateEvent() {
 
 	// Handle form submission
 	const onSubmit = async (values: FormValues) => {
-		mutation.mutate(values)
+		mutation.mutate({
+			...values,
+			EventImage: eventImage
+		})
 	}
 
 	return (
@@ -348,7 +375,6 @@ export function FormCreateEvent() {
 										variant="outline"
 										onClick={() => document.getElementById("event-image")?.click()}
 										className="gap-2"
-										disabled
 									>
 										<ImageIcon className="h-4 w-4" />
 										Escolher Imagem
@@ -356,13 +382,12 @@ export function FormCreateEvent() {
 									<Input
 										id="event-image"
 										type="file"
-										accept="image/*"
+										accept=".png,.jpg,.jpeg,.webp"
 										className="hidden"
 										onChange={handleImageUpload}
 									/>
 									<span className="text-sm text-muted-foreground">
-										{/* {imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"} */}
-										Por enquanto, ainda não é possivel fazer upload de imagens. Usaremos a imagem de capa do primeiro jogo adicionado.
+										{imagePreview ? "Imagem selecionada" : "Caso nenhuma imagem seja selecionada, a imagem de capa do primeiro jogo será usada. Caso o evento não tenha imagem e nem jogos, ele ficará sem imagens."}
 									</span>
 								</div>
 

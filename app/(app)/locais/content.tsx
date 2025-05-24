@@ -28,14 +28,15 @@ import { cn } from "@/lib/utils"
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { ResponseListLocations } from "@/types/api"
 import Link from "next/link"
+import { uploadImage } from "@/lib/api/upload-image"
 
 // Form schema with validation
 const locationFormSchema = z.object({
 	name: z.string().min(3, {
 		message: "O nome do local deve ter pelo menos 3 caracteres.",
 	}),
-	address: z.string().min(5, {
-		message: "O endereço deve ter pelo menos 5 caracteres.",
+	address: z.string().min(10, {
+		message: "O endereço deve ter pelo menos 10 caracteres.",
 	}),
 	kind: z.enum(["BUSINESS", "PERSONAL"], {
 		required_error: "Selecione o tipo de local.",
@@ -44,14 +45,14 @@ const locationFormSchema = z.object({
 
 type LocationFormValues = z.infer<typeof locationFormSchema>
 
-// export const metadata = {
-// 	title: "Locais",
-// 	description: "Veja seus locais cadastrados",
-// }
+interface MutationParams extends LocationFormValues {
+	LocationImage: File | null
+}
 
 export function LocationsPageContent() {
 	const queryClient = useQueryClient()
 
+	const [eventImage, setEventImage] = useState<File | null>(null)
 	const [imagePreview, setImagePreview] = useState<string | null>(null)
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -91,7 +92,18 @@ export function LocationsPageContent() {
 	}, [data])
 
 	const mutation = useMutation({
-		mutationFn: async (body: LocationFormValues) => {
+		mutationFn: async (body: MutationParams) => {
+			var icon: any = undefined
+			if (body.LocationImage !== null) {
+				const { FilePath } = await uploadImage({
+					FileName: body.LocationImage?.name,
+					ImageBlob: body.LocationImage,
+					Kind: "LOCATION_ICON"
+				})
+
+				icon = FilePath
+			}
+
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/locations', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -99,6 +111,7 @@ export function LocationsPageContent() {
 					Name: body.name,
 					Address: body.address,
 					Kind: body.kind,
+					IconPath: icon,
 				}),
 				credentials: 'include',
 			});
@@ -112,6 +125,7 @@ export function LocationsPageContent() {
 		},
 		onSuccess: () => {
 			form.reset()
+			setEventImage(null)
 			setImagePreview(null)
 			setIsDialogOpen(false)
 			queryClient.invalidateQueries({ queryKey: ["list-locations"] })
@@ -134,6 +148,7 @@ export function LocationsPageContent() {
 		if (file) {
 			const reader = new FileReader()
 			reader.onloadend = () => {
+				setEventImage(file)
 				setImagePreview(reader.result as string)
 			}
 			reader.readAsDataURL(file)
@@ -142,6 +157,7 @@ export function LocationsPageContent() {
 
 	// Clear image preview
 	const clearImagePreview = () => {
+		setEventImage(null)
 		setImagePreview(null)
 		// Also clear the file input
 		const fileInput = document.getElementById("location-image") as HTMLInputElement
@@ -150,7 +166,10 @@ export function LocationsPageContent() {
 
 	// Handle form submission
 	const onSubmit = async (values: LocationFormValues) => {
-		mutation.mutate(values)
+		mutation.mutate({
+			...values,
+			LocationImage: eventImage,
+		})
 	}
 
 	return (
@@ -218,7 +237,6 @@ export function LocationsPageContent() {
 												variant="outline"
 												onClick={() => document.getElementById("location-image")?.click()}
 												className="gap-2"
-												disabled
 											>
 												<ImageIcon className="h-4 w-4" />
 												Escolher Imagem
@@ -231,9 +249,7 @@ export function LocationsPageContent() {
 												onChange={handleImageUpload}
 											/>
 											<span className="text-sm text-muted-foreground">
-												{/* {imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"} */}
-												Por enquanto, ainda não é possivel fazer upload de imagens.
-
+												{imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"}
 											</span>
 										</div>
 
