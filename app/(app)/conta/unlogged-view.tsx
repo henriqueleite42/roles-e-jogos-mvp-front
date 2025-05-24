@@ -46,11 +46,11 @@ export default function SignInPage() {
 					< CardFooter className="flex flex-col space-y-4" >
 						<div className="text-center text-sm text-muted-foreground" >
 							Ao continuar, você concorda com nossos{" "}
-							<Link href="/termos" className="underline underline-offset-4 hover:text-primary" >
+							<Link href="/termos-de-uso" className="underline underline-offset-4 hover:text-primary" >
 								Termos de Serviço
 							</Link>{" "}
 							e{" "}
-							<Link href="/privacidade" className="underline underline-offset-4 hover:text-primary" >
+							<Link href="/politica-de-privacidade" className="underline underline-offset-4 hover:text-primary" >
 								Política de Privacidade
 							</Link>
 							.
