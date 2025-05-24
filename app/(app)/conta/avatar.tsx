@@ -9,6 +9,7 @@ import ImageCropper from "./image-cropper"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useMutation } from "@tanstack/react-query"
 import { UploadUrl } from "@/types/api"
+import { uploadImage } from "@/lib/api/upload-image"
 
 interface Props {
 	profileImageUrl?: string
@@ -44,55 +45,16 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 		isPending: isUploadingImg,
 	} = useMutation({
 		mutationFn: async ({ croppedImage, fileName }: Body) => {
-			const ext = fileName.split(".").pop()
-
-			const responseReqUrl = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/uploads/request`, {
-				method: "POST",
-				body: JSON.stringify({
-					Kind: "AVATAR_IMG",
-					Ext: ext,
-				}),
-				headers: { 'Content-Type': 'application/json' },
-				credentials: "include"
+			const { FilePath } = await uploadImage({
+				FileName: fileName,
+				ImageBlob: croppedImage,
+				Kind: "AVATAR_IMG"
 			})
-
-			if (!responseReqUrl.ok) {
-				console.error(await responseReqUrl.text())
-				throw new Error(`Fail to request upload ${responseReqUrl.status}`)
-			}
-
-			const res = await responseReqUrl.json() as UploadUrl
-
-			var headers: HeadersInit | undefined
-			const body = new FormData()
-
-			if (res.Headers) {
-				headers = JSON.parse(res.Headers)
-			}
-			if (res.Values) {
-				const entries = Object.entries(JSON.parse(res.Values))
-				entries.forEach(([key, value]) => {
-					body.append(key, value as string)
-				})
-			}
-
-			body.append("file", croppedImage)
-
-			const responseUpload = await fetch(res.Url, {
-				method: res.Method,
-				body: body,
-				headers: headers
-			})
-
-			if (!responseUpload.ok) {
-				console.error(await responseUpload.text())
-				throw new Error(`Fail to upload img ${responseUpload.status}`)
-			}
 
 			const responseUpdateProfile = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/me`, {
 				method: "PUT",
 				body: JSON.stringify({
-					AvatarPath: res.FilePath,
+					AvatarPath: FilePath,
 				}),
 				headers: { 'Content-Type': 'application/json' },
 				credentials: "include"
