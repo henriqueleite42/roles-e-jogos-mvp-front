@@ -87,8 +87,6 @@ export default function ImageCropper({ imageFile, onCropComplete, onCancelCrop }
 			completedCrop.height,
 		)
 
-		console.log("type", imageFile.type);
-
 		const blob = await new Promise<Blob>((res, rej) => {
 			canvas.toBlob((blob) => {
 				if (blob) {
