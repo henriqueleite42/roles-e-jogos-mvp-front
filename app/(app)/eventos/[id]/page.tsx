@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Event, Profile } from "@/types/api"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
-import { Calendar, Clock, MapPin, Users } from "lucide-react"
+import { MapPin, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
@@ -9,7 +9,7 @@ import { Attendances } from "./attendances"
 import { getAvailableSpots, getEventDescription } from "./utils"
 import { ShareButton } from "./share"
 import { cookies } from "next/headers"
-import { formatEventDate } from "../utils"
+import { Dates } from "./dates"
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/" + await params.id, {
@@ -116,25 +116,7 @@ export default async function EventPage({ params }: { params: { id: string } }) 
 						<p className="text-lg mb-6 whitespace-pre-line overflow-hidden text-ellipsis break-words">{event.Description}</p>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-							<div className="space-y-3">
-								<div className="flex items-center gap-2">
-									<Calendar className="h-5 w-5 text-muted-foreground" />
-									<div>
-										<p className="font-medium">Início</p>
-										<p className="text-sm text-muted-foreground">{formatEventDate(event.StartDate)}</p>
-									</div>
-								</div>
-
-								{event.EndDate && (
-									<div className="flex items-center gap-2">
-										<Clock className="h-5 w-5 text-muted-foreground" />
-										<div>
-											<p className="font-medium">Término</p>
-											<p className="text-sm text-muted-foreground">{formatEventDate(event.EndDate)}</p>
-										</div>
-									</div>
-								)}
-							</div>
+							<Dates event={event} />
 
 							<div className="space-y-3">
 								<div className="flex items-start gap-2">
