@@ -1,3 +1,5 @@
+"use client"
+
 import { Event } from "@/types/api";
 import { formatEventDate } from "../utils";
 import { Calendar, Clock } from "lucide-react";
