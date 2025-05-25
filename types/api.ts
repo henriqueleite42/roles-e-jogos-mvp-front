@@ -128,3 +128,13 @@ export interface UploadUrl {
 	Url: string
 	FilePath: string
 }
+
+export interface LudopediaGame {
+	LudopediaId: number
+	Name: string
+	IconUrl: string
+}
+
+export interface ResponseSearchLudopediaGames {
+	Data: Array<LudopediaGame>
+}
