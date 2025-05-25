@@ -38,7 +38,7 @@ export default async function LandingPage() {
 	const cookieStore = await cookies();
 
 	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		redirect("/jogos")
+		redirect("/home")
 	}
 
 	// Use TanStack Query for data fetching with infinite scroll
