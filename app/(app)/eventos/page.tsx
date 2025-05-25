@@ -12,6 +12,8 @@ import { cn } from "@/lib/utils"
 import { AttendanceStatus, Event, EventAttendanceStatus, Profile, ResponseEvents } from "@/types/api"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
+import { getEventDescription } from "./[id]/utils"
 
 interface ConfirmAttendanceInput {
 	EventId: number
@@ -324,126 +326,128 @@ export default function Events() {
 				const isUserConfirmed = userAttendance?.Status === "GOING"
 
 				return (
-					<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow mb-3">
-						<CardContent className="p-0">
-							<div className="flex flex-col">
-								{/* Event Header Section */}
-								<div className="flex flex-row">
-									<div className="flex-1 p-4 md:p-6">
-										<div className="flex justify-between items-start">
-											<h2 className="text-xl md:text-2xl font-bold">{event.Name}</h2>
-										</div>
-										<p className="text-muted-foreground mt-1">{event.Description}</p>
+					<Link href={"/eventos/" + event.Id}>
+						<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow mb-3">
+							<CardContent className="p-0">
+								<div className="flex flex-col">
+									{/* Event Header Section */}
+									<div className="flex flex-row">
+										<div className="flex-1 p-4 md:p-6">
+											<div className="flex justify-between items-start">
+												<h2 className="text-xl md:text-2xl font-bold">{event.Name}</h2>
+											</div>
+											<p className="text-muted-foreground mt-1">{getEventDescription(event.Description)}</p>
 
-										<div className="flex items-center mt-3 text-sm">
-											<CalendarClock className="h-4 w-4 mr-2 text-muted-foreground" />
-											<span>{formatEventDate(event.StartDate)}</span>
-										</div>
+											<div className="flex items-center mt-3 text-sm">
+												<CalendarClock className="h-4 w-4 mr-2 text-muted-foreground" />
+												<span>{formatEventDate(event.StartDate)}</span>
+											</div>
 
-										<div className="flex items-center mt-2 text-sm">
-											<Info className="h-4 w-4 mr-2 text-muted-foreground" />
-											{
-												getAvailableCapacity(event)
-											}
+											<div className="flex items-center mt-2 text-sm">
+												<Info className="h-4 w-4 mr-2 text-muted-foreground" />
+												{
+													getAvailableCapacity(event)
+												}
+											</div>
 										</div>
-									</div>
-									<div className="w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative">
-										<Image src={event.IconUrl || "/placeholder.svg"} alt={event.Name} fill className="object-cover" />
-									</div>
-								</div>
-
-								{/* Games Section */}
-								{event.Games.length > 0 && (
-									<div className="border-t border-gray-100 p-4 md:p-6">
-										<h3 className="font-medium mb-3">Jogos</h3>
-										<div className="space-y-3">
-											{event.Games.map((game) => (
-												<div key={game.Id} className="flex items-start gap-3">
-													<div className="w-10 h-10 relative flex-shrink-0">
-														<Image
-															src={game.IconUrl || "/placeholder.svg"}
-															alt={game.Name}
-															fill
-															className="object-cover rounded"
-														/>
-													</div>
-													<div>
-														<div className="font-medium">{game.Name}</div>
-														<div className="flex items-center mt-1">
-															<Badge variant="outline" className="text-xs">
-																{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
-																	? `${game.MinAmountOfPlayers} jogadores`
-																	: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
-															</Badge>
-															<a
-																href={game.LudopediaUrl}
-																target="_blank"
-																rel="noopener noreferrer"
-																className="text-xs text-blue-600 hover:underline ml-2"
-															>
-																Ver na Ludopedia
-															</a>
-														</div>
-													</div>
-												</div>
-											))}
-										</div>
-									</div>
-								)}
-
-								{/* Location Section */}
-								<div className="border-t border-gray-100 p-4 md:p-6 bg-gray-50">
-									<div className="flex items-start gap-3 mb-3">
-										<MapPin className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-										<div>
-											<h3 className="font-medium">{event.Location.Name}</h3>
-											<p className="text-sm text-muted-foreground">{event.Location.Address}</p>
+										<div className="w-[100px] h-[100px] md:w-[150px] md:h-[150px] relative">
+											<Image src={event.IconUrl || "/placeholder.svg"} alt={event.Name} fill className="object-cover" />
 										</div>
 									</div>
 
-									{/* Confirmations Section */}
-									<div className="flex items-center mt-4">
-										<Users className="h-5 w-5 mr-2 text-muted-foreground" />
-										<span className="text-sm font-medium mr-2">
-											{
-												event.Capacity ? (
-													<>{`Confirmados (${confirmationsCount}/${event.Capacity}):`}</>
-												) : (
-													<>{`Confirmados (${confirmationsCount}):`}</>
-												)
-											}
-										</span>
-										<div className="flex">
-											{confirmations.length > 0 ? (
-												confirmations.map((person, index) => (
-													<div key={index} className="relative group -ml-2 first:ml-0">
-														<div className="rounded-full border-2 border-background w-8 h-8 overflow-hidden">
+									{/* Games Section */}
+									{event.Games.length > 0 && (
+										<div className="border-t border-gray-100 p-4 md:p-6">
+											<h3 className="font-medium mb-3">Jogos</h3>
+											<div className="space-y-3">
+												{event.Games.map((game) => (
+													<div key={game.Id} className="flex items-start gap-3">
+														<div className="w-10 h-10 relative flex-shrink-0">
 															<Image
-																src={person.AvatarUrl || "/placeholder.svg"}
-																alt={person.Handle || `Usuário ${person.AccountId}`}
-																width={32}
-																height={32}
-																className="w-full h-full object-cover object-center"
+																src={game.IconUrl || "/placeholder.svg"}
+																alt={game.Name}
+																fill
+																className="object-cover rounded"
 															/>
 														</div>
-														<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
-															{person.Handle || `ID: ${person.AccountId}`}
+														<div>
+															<div className="font-medium">{game.Name}</div>
+															<div className="flex items-center mt-1">
+																<Badge variant="outline" className="text-xs">
+																	{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
+																		? `${game.MinAmountOfPlayers} jogadores`
+																		: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
+																</Badge>
+																<a
+																	href={game.LudopediaUrl}
+																	target="_blank"
+																	rel="noopener noreferrer"
+																	className="text-xs text-blue-600 hover:underline ml-2"
+																>
+																	Ver na Ludopedia
+																</a>
+															</div>
 														</div>
 													</div>
-												))
-											) : !isUserConfirmed ? (
-												<span className="text-sm text-muted-foreground">Nenhuma confirmação ainda</span>
-											) : null}
+												))}
+											</div>
+										</div>
+									)}
+
+									{/* Location Section */}
+									<div className="border-t border-gray-100 p-4 md:p-6 bg-gray-50">
+										<div className="flex items-start gap-3 mb-3">
+											<MapPin className="h-5 w-5 text-muted-foreground mt-0.5 flex-shrink-0" />
+											<div>
+												<h3 className="font-medium">{event.Location.Name}</h3>
+												<p className="text-sm text-muted-foreground">{event.Location.Address}</p>
+											</div>
+										</div>
+
+										{/* Confirmations Section */}
+										<div className="flex items-center mt-4">
+											<Users className="h-5 w-5 mr-2 text-muted-foreground" />
+											<span className="text-sm font-medium mr-2">
+												{
+													event.Capacity ? (
+														<>{`Confirmados (${confirmationsCount}/${event.Capacity}):`}</>
+													) : (
+														<>{`Confirmados (${confirmationsCount}):`}</>
+													)
+												}
+											</span>
+											<div className="flex">
+												{confirmations.length > 0 ? (
+													confirmations.map((person, index) => (
+														<div key={index} className="relative group -ml-2 first:ml-0">
+															<div className="rounded-full border-2 border-background w-8 h-8 overflow-hidden">
+																<Image
+																	src={person.AvatarUrl || "/placeholder.svg"}
+																	alt={person.Handle || `Usuário ${person.AccountId}`}
+																	width={32}
+																	height={32}
+																	className="w-full h-full object-cover object-center"
+																/>
+															</div>
+															<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+																{person.Handle || `ID: ${person.AccountId}`}
+															</div>
+														</div>
+													))
+												) : !isUserConfirmed ? (
+													<span className="text-sm text-muted-foreground">Nenhuma confirmação ainda</span>
+												) : null}
+											</div>
 										</div>
 									</div>
-								</div>
 
-								<div className="flex justify-center items-start p-4 md:p-6">
-									{getAttendanceButton(event)}
+									<div className="flex justify-center items-start p-4 md:p-6">
+										{getAttendanceButton(event)}
+									</div>
 								</div>
-							</div>
-						</CardContent>
-					</Card>
+							</CardContent>
+						</Card>
+					</Link>
 				)
 			})}
 
