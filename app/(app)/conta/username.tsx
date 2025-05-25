@@ -20,8 +20,24 @@ const updateUsernameSchema = z.object({
 		.string()
 		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
 		.max(16, 'Seu username pode ter no maximo 16 caracteres')
-		.regex(/^[a-z0-9]*$/, "Seu username pode conter apenas letras minusculas e numeros"),
-});
+		.regex(/^[a-z0-9_.]*$/, "Seu username pode conter apenas letras minusculas, numeros, _ e ."),
+}).refine((data) => {
+	if (!data.NewHandle) return false
+
+	if (
+		data.NewHandle.startsWith("_") ||
+		data.NewHandle.startsWith(".") ||
+		data.NewHandle.endsWith("_") ||
+		data.NewHandle.endsWith(".")
+	) {
+		return false
+	}
+
+	return true
+}, {
+	message: "Seu username não pode começar ou terminar com _ ou .",
+	path: ["NewHandle"]
+})
 type UpdateUsernameInput = z.infer<typeof updateUsernameSchema>;
 
 export function Username({ username }: Props) {
@@ -77,7 +93,7 @@ export function Username({ username }: Props) {
 						disabled={mutation.isPending}
 						className="max-w-[200px]"
 						onChange={(e) => {
-							const onlyAllowed = e.target.value.replace(/[^a-z0-9]/g, '');
+							const onlyAllowed = e.target.value.replace(/[^a-z0-9_.]/g, '');
 							setValue('NewHandle', onlyAllowed, { shouldValidate: true });
 						}}
 					/>
