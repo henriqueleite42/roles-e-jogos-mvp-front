@@ -9,6 +9,7 @@ import { Attendances } from "./attendances"
 import { getAvailableSpots, getEventDescription } from "./utils"
 import { ShareButton } from "./share"
 import { cookies } from "next/headers"
+import { formatEventDate } from "../utils"
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
 	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/" + await params.id, {
@@ -34,15 +35,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 	}
 }
 
-function formatEventDate(dateString: string): string {
-	const date = new Date(dateString)
-	const day = date.getDate().toString().padStart(2, "0")
-	const month = (date.getMonth() + 1).toString().padStart(2, "0")
-	const year = date.getFullYear()
-	const hours = date.getHours().toString().padStart(2, "0")
-	const minutes = date.getMinutes().toString().padStart(2, "0")
-	return `${day}/${month}/${year} às ${hours}:${minutes}`
-}
 
 const getAvailableCapacity = (event: Event) => {
 	const { availableSpots, isFull } = getAvailableSpots(event)

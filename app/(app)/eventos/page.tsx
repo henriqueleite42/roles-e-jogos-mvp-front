@@ -14,6 +14,7 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { getEventDescription } from "./[id]/utils"
+import { formatEventDate } from "./utils"
 
 interface ConfirmAttendanceInput {
 	EventId: number
@@ -46,21 +47,6 @@ const attendanceConfig = {
 		borderColor: "border-amber-200",
 		hoverColor: "hover:bg-amber-200",
 	},
-}
-
-function formatEventDate(dateString: string): string {
-	const date = new Date(dateString)
-
-	// Format date: DD/MM/YYYY
-	const day = date.getDate().toString().padStart(2, "0")
-	const month = (date.getMonth() + 1).toString().padStart(2, "0")
-	const year = date.getFullYear()
-
-	// Format time: HH:MM
-	const hours = date.getHours().toString().padStart(2, "0")
-	const minutes = date.getMinutes().toString().padStart(2, "0")
-
-	return `${day}/${month}/${year} às ${hours}:${minutes}`
 }
 
 function getAvailableSpots(event: Event) {
