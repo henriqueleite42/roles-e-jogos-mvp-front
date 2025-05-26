@@ -87,17 +87,6 @@ const formSchema = z.object({
 		.min(1, "O evento deve ter pelo menos 1 jogo.")
 		.default([])
 }).refine((data) => {
-	if (!data.EndDate) return true
-	if (!data.StartDate) return false
-
-	const startDate = new Date(data.StartDate).getTime()
-	const endDate = new Date(data.EndDate).getTime()
-
-	return endDate > startDate
-}, {
-	message: "Data de término precisa ser depois da data de início.",
-	path: ["EndDate"]
-}).refine((data) => {
 	if (!data.StartDate) return false
 
 	const startDate = new Date(data.StartDate).getTime()
@@ -107,6 +96,22 @@ const formSchema = z.object({
 }, {
 	message: "Data de início precisa ser no futuro.",
 	path: ["StartDate"]
+}).refine((data) => {
+	return Boolean(data.EndDate)
+}, {
+	message: "Data de término estar preenchida.",
+	path: ["EndDate"]
+}).refine((data) => {
+	if (!data.EndDate) return false
+	if (!data.StartDate) return false
+
+	const startDate = new Date(data.StartDate).getTime()
+	const endDate = new Date(data.EndDate).getTime()
+
+	return endDate > startDate
+}, {
+	message: "Data de término precisa ser depois da data de início.",
+	path: ["EndDate"]
 })
 
 type FormValues = z.infer<typeof formSchema>
