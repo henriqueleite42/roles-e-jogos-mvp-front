@@ -1,13 +1,5 @@
 import { Event, EventAttendance } from "@/types/api"
 
-export function getEventDescription(description: string) {
-	if (description.length > 100) {
-		return description.slice(0, 100) + "..."
-	}
-
-	return description
-}
-
 export function getAvailableSpots(event: Event) {
 	const confirmations = [] as Array<EventAttendance>
 	const maybes = [] as Array<EventAttendance>

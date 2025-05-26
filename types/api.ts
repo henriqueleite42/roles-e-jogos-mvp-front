@@ -79,6 +79,7 @@ export interface Event {
 	OwnerId: number
 	Name: string
 	Description: string
+	Slug: string
 	IconUrl?: string
 	StartDate: string
 	EndDate?: string
