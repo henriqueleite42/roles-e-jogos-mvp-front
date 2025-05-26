@@ -41,7 +41,11 @@ const formSchema = z.object({
 		message: "A data de início é obrigatória.",
 		invalid_type_error: "A data de início é obrigatória.",
 	}),
-	EndDate: z.coerce.date().optional().nullable(),
+	EndDate: z.coerce.date({
+		required_error: "A data de termino é obrigatória.",
+		message: "A data de termino é obrigatória.",
+		invalid_type_error: "A data de termino é obrigatória.",
+	}),
 	Capacity: z.coerce
 		.number()
 		.int()
@@ -489,7 +493,7 @@ export function FormCreateEvent() {
 								name="EndDate"
 								render={({ field }) => (
 									<FormItem className="flex flex-col">
-										<FormLabel>Data e Hora de Término (Opcional)</FormLabel>
+										<FormLabel>Data e Hora de Término</FormLabel>
 										<div className="flex gap-2">
 											<Popover>
 												<PopoverTrigger asChild>
@@ -551,9 +555,6 @@ export function FormCreateEvent() {
 												/>
 											</div>
 										</div>
-										<FormDescription>
-											Se não especificado, o evento será considerado sem horário de término definido.
-										</FormDescription>
 										<FormMessage />
 									</FormItem>
 								)}
