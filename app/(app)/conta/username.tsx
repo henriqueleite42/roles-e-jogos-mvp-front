@@ -1,18 +1,19 @@
-"use client"
+"use client";
 
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from "react"
+import { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { Check, Edit2, Loader2 } from "lucide-react"
+import { Check, Edit2, Loader2 } from "lucide-react";
 import { z } from 'zod';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useForm } from 'react-hook-form';
 
 interface Props {
-	username: string
+	username: string;
 }
 
 const updateUsernameSchema = z.object({
@@ -22,7 +23,7 @@ const updateUsernameSchema = z.object({
 		.max(16, 'Seu username pode ter no maximo 16 caracteres')
 		.regex(/^[a-z0-9_.]*$/, "Seu username pode conter apenas letras minusculas, numeros, _ e ."),
 }).refine((data) => {
-	if (!data.NewHandle) return false
+	if (!data.NewHandle) return false;
 
 	if (
 		data.NewHandle.startsWith("_") ||
@@ -30,29 +31,28 @@ const updateUsernameSchema = z.object({
 		data.NewHandle.endsWith("_") ||
 		data.NewHandle.endsWith(".")
 	) {
-		return false
+		return false;
 	}
 
-	return true
+	return true;
 }, {
 	message: "Seu username não pode começar ou terminar com _ ou .",
 	path: ["NewHandle"]
-})
+});
 type UpdateUsernameInput = z.infer<typeof updateUsernameSchema>;
 
 export function Username({ username }: Props) {
 	const router = useRouter();
 
-	const [isEditingUsername, setIsEditingUsername] = useState(false)
+	const [isEditingUsername, setIsEditingUsername] = useState(false);
 
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-		setValue,
-	} = useForm<UpdateUsernameInput>({
+	// Initialize form
+	const form = useForm<UpdateUsernameInput>({
 		resolver: zodResolver(updateUsernameSchema),
-	});
+		defaultValues: {
+			NewHandle: username,
+		},
+	})
 
 	const mutation = useMutation({
 		mutationFn: async (body: UpdateUsernameInput) => {
@@ -64,18 +64,18 @@ export function Username({ username }: Props) {
 			});
 
 			if (!res.ok) {
-				const error = await res.text()
+				const error = await res.text();
 
 				if (error.includes("conflict")) {
-					throw new Error("Alguém já está usando esse username")
+					throw new Error("Alguém já está usando esse username");
 				}
 
 				console.error(error);
-				throw new Error(error)
+				throw new Error(error);
 			}
 
-			setIsEditingUsername(false)
-			router.refresh()
+			setIsEditingUsername(false);
+			router.refresh();
 		},
 	});
 
@@ -85,36 +85,47 @@ export function Username({ username }: Props) {
 
 	if (isEditingUsername) {
 		return (
-			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="flex items-center gap-2 mb-4">
-					<Input
-						{...register('NewHandle')}
-						placeholder="Novo username"
-						disabled={mutation.isPending}
-						className="max-w-[200px]"
-						onChange={(e) => {
-							const onlyAllowed = e.target.value.replace(/[^a-z0-9_.]/g, '');
-							setValue('NewHandle', onlyAllowed, { shouldValidate: true });
-						}}
-					/>
-					<Button type='submit' size="icon" variant="ghost" disabled={mutation.isPending}>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} >
+					<div className="flex items-start gap-2 mb-4">
+						<FormField
+							control={form.control}
+							name="NewHandle"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel hidden>Novo username</FormLabel>
+									<FormControl>
+										<Input
+											{...field}
+											placeholder="Ex: joaosilva"
+											onChange={(e) => {
+												const onlyAllowed = e.target.value.replace(/[^a-z0-9_.]/g, '');
 
-						{mutation.isPending ? (
-							<Loader2 className="h-4 w-4 animate-spin text-white" />
-						) : (
-							<Check className="h-4 w-4" />
-						)}
-					</Button>
+												field.onChange(onlyAllowed);
+											}}
+										/>
+									</FormControl>
+									<FormDescription>
+										Use apenas <strong>letras minúsculas</strong>, <strong>números</strong>, <strong>_</strong> e <strong>.</strong>
+									</FormDescription>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
 
-				</div>
-
-				{errors.NewHandle && (
-					<p className="text-red-500 text-sm mt-1">{errors.NewHandle.message}</p>
-				)}
-				{mutation.isPending && <p>Atualizando...</p>}
-				{mutation.isError && <p className="text-red-600">{mutation.error.message}</p>}
-			</form>
-		)
+						<Button type='submit' size="icon" variant="ghost" disabled={mutation.isPending}>
+							{mutation.isPending ? (
+								<Loader2 className="h-4 w-4 animate-spin text-white" />
+							) : (
+								<Check className="h-4 w-4" />
+							)}
+						</Button>
+					</div>
+					{mutation.isPending && <p>Atualizando...</p>}
+					{mutation.isError && <p className="text-red-600">{(mutation.error as Error).message}</p>}
+				</form>
+			</Form>
+		);
 	} else {
 		return (
 			<div className="flex items-center gap-2 mb-4">
@@ -124,13 +135,12 @@ export function Username({ username }: Props) {
 					variant="ghost"
 					className="h-8 w-8"
 					onClick={() => {
-						setValue("NewHandle", username)
-						setIsEditingUsername(true)
+						setIsEditingUsername(true);
 					}}
 				>
 					<Edit2 className="h-4 w-4" />
 				</Button>
 			</div>
-		)
+		);
 	}
 }

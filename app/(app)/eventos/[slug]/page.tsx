@@ -6,13 +6,14 @@ import { Metadata } from "next"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Attendances } from "./attendances"
-import { getAvailableSpots, getEventDescription } from "./utils"
+import { getAvailableSpots } from "./utils"
 import { ShareButton } from "./share"
 import { cookies } from "next/headers"
 import { Dates } from "./dates"
+import { getEventDescription } from "../utils"
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/" + await params.id, {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + await params.slug, {
 		method: "GET",
 		credentials: "include"
 	})
@@ -62,10 +63,10 @@ const getAvailableCapacity = (event: Event) => {
 	)
 }
 
-export default async function EventPage({ params }: { params: { id: string } }) {
+export default async function EventPage({ params }: { params: { slug: string } }) {
 	const cookieStore = await cookies();
 
-	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?eventId=" + await params.id, {
+	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + await params.slug, {
 		method: "GET",
 		credentials: "include"
 	})

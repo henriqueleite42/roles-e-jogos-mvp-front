@@ -1,7 +1,8 @@
 {
 	"name": "Rolês & Jogos",
 	"short_name": "Rolês & Jogos",
-	"start_url": "https://rolesejogos.com.br",
+	"start_url": "/home",
+	"scope": "/",
 	"display": "standalone",
 	"description": "Faça amigos e jogue jogos",
 	"lang": " The default language of your application",
@@ -585,6 +586,17 @@
 			"name": "Eventos",
 			"url": "/eventos",
 			"description": "Veja nossos proximos eventos!"
+		}
+	],
+	"url_handlers": [
+		{
+			"origin": "https://rolesejogos.com.br"
+		}
+	],
+	"protocol_handlers": [
+		{
+			"protocol": "web+event",
+			"url": "/eventos/%s"
 		}
 	]
 }

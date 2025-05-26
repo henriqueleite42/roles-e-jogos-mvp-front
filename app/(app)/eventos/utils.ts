@@ -12,3 +12,11 @@ export function formatEventDate(dateString: string): string {
 
 	return `${day}/${month}/${year} às ${hours}:${minutes}`
 }
+
+export function getEventDescription(description: string) {
+	if (description.length > 100) {
+		return description.slice(0, 100) + "..."
+	}
+
+	return description
+}
