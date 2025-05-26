@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { Dice5 } from 'lucide-react'
 import Link from 'next/link'
+import Script from 'next/script'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
@@ -156,6 +157,20 @@ export default function RootLayout({
 					name='viewport'
 					content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
 				/>
+
+				<Script
+					async
+					src={"https://www.googletagmanager.com/gtag/js?id=" + process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}
+					strategy="afterInteractive"
+				/>
+				<Script>
+					{`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
+          `}
+				</Script>
 			</head>
 			<body>
 
