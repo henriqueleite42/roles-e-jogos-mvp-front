@@ -31,7 +31,7 @@ export function LoggedView({ profile }: Props) {
 				</section>
 
 				{
-					profile.Connections.find(c => c.Provider === "LUDOPEDIA") && (
+					!profile.Connections.find(c => c.Provider === "LUDOPEDIA") && (
 						<TipLinkLudopedia />
 					)
 				}

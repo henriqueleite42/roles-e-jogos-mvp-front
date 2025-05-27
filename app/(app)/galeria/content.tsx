@@ -16,7 +16,6 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
@@ -28,6 +27,7 @@ import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { uploadImage } from "@/lib/api/upload-image"
+import { Textarea } from "@/components/ui/textarea"
 
 // Form schema with validation
 const imageFormSchema = z.object({
@@ -128,7 +128,7 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 							Description: body.description,
 							Width: img.width,
 							Height: img.height,
-							IconPath: FilePath,
+							Path: FilePath,
 						}),
 						credentials: 'include',
 					});
@@ -324,7 +324,12 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 												<FormItem>
 													<FormLabel>Descrição</FormLabel>
 													<FormControl>
-														<Input placeholder="Ex: Jogatina de sabadão" {...field} />
+														<Textarea
+															placeholder="Ex: Jogatina de sabadão"
+															className="min-h-[100px]"
+															disabled={mutation.isPending}
+															{...field}
+														/>
 													</FormControl>
 													<FormMessage />
 												</FormItem>
