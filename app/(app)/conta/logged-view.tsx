@@ -1,6 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Connections } from "./connections"
+import { Connections, TipLinkLudopedia } from "./connections"
 import { Username } from "./username"
 import { AvatarComponent } from "./avatar"
 import { Profile } from "@/types/api"
@@ -29,6 +29,12 @@ export function LoggedView({ profile }: Props) {
 						</CardContent>
 					</Card>
 				</section>
+
+				{
+					profile.Connections.find(c => c.Provider === "LUDOPEDIA") && (
+						<TipLinkLudopedia />
+					)
+				}
 
 				<Connections connections={profile.Connections} />
 

@@ -9,7 +9,7 @@ export type LocationKind = "BUSINESS" | "PERSONAL"
 // Attendance status types
 export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
 
-export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON"
+export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON" | "MEDIA_IMAGE"
 
 export interface ResponseEvents {
 	Data: Array<Event>
@@ -23,6 +23,12 @@ export interface ResponseEvents {
 export interface PaginationString {
 	Current?: string
 	Next?: string
+	Limit: number
+}
+
+export interface PaginationId {
+	Current?: number
+	Next?: number
 	Limit: number
 }
 
@@ -45,6 +51,12 @@ export interface Connection {
 	ExternalHandle?: string;
 	ExternalId: string;
 	Provider: Provider;
+}
+
+export interface Auth {
+	AccountId: number;
+	IsAdmin: boolean;
+	Subscription?: string
 }
 
 export interface Profile {
@@ -138,4 +150,39 @@ export interface LudopediaGame {
 
 export interface ResponseSearchLudopediaGames {
 	Data: Array<LudopediaGame>
+}
+
+export interface MediaData {
+	Id: number
+	Description?: string
+	Url: string
+	Width: number
+	Height: number
+	CreatedAt: string
+	Owner: {
+		AccountId: number
+		Handle: string
+		AvatarUrl?: string
+	}
+	Game?: {
+		Id: number
+		Name: string
+		IconUrl?: string
+	}
+	Event?: {
+		Id: number
+		Name: string
+		Slug: string
+		IconUrl?: string
+	}
+	Location?: {
+		Id: number
+		Name: string
+		IconUrl?: string
+	}
+}
+
+export interface ResponseGetGallery {
+	Data: Array<MediaData>
+	Pagination: PaginationId
 }

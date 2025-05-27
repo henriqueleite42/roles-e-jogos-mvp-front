@@ -3,6 +3,7 @@ import '../globals.css'
 import { Dice5 } from 'lucide-react'
 import Link from 'next/link'
 import Script from 'next/script'
+import { GoogleAnalytics } from '@/components/google-analytics'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
@@ -15,7 +16,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
+		<html lang="pt-BR">
 			<head>
 				<meta name="application-name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -158,19 +159,7 @@ export default function RootLayout({
 					content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
 				/>
 
-				<Script
-					async
-					src={"https://www.googletagmanager.com/gtag/js?id=" + process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}
-					strategy="afterInteractive"
-				/>
-				<Script>
-					{`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
-          `}
-				</Script>
+				<GoogleAnalytics />
 			</head>
 			<body>
 

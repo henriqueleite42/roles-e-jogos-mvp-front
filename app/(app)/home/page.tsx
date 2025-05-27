@@ -1,10 +1,10 @@
 import Link from "next/link"
-import { Dice6, Calendar, MapPin, Download, Camera, Video, MessageCircle } from "lucide-react"
+import { Dice6, Calendar, MapPin, Download, Camera, Video, MessageCircle, Image } from "lucide-react"
 
 export default function HomePage() {
 	return (
 		<main className="flex-1 p-4">
-			<div className="grid grid-cols-2 gap-6 max-w-md mx-auto pt-4">
+			<div className="grid grid-cols-2 gap-6 max-w-md mx-auto pt-4 md:grid-cols-4 md:max-w-5xl">
 				{/* Jogos Card */}
 				<Link
 					href="/jogos"
@@ -56,6 +56,24 @@ export default function HomePage() {
 						</div>
 						<div className="text-xl font-bold text-orange-600 text-center">Locais</div>
 						<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-orange-400 to-orange-600 transition-all duration-300 group-hover:w-3/4"></div>
+					</div>
+				</Link>
+
+				{/* Gallery Card */}
+				<Link
+					href="/galeria"
+					className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+				>
+					<div className="absolute inset-0 bg-gradient-to-br from-teal-400/20 to-teal-600/20 opacity-50"></div>
+					<div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-teal-500/10"></div>
+					<div className="absolute -left-4 -bottom-4 h-16 w-16 rounded-full bg-teal-500/20"></div>
+
+					<div className="relative flex aspect-square flex-col items-center justify-center p-4">
+						<div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-teal-400 to-teal-600 p-3 shadow-md transition-transform duration-300 group-hover:scale-110">
+							<Image className="h-8 w-8 text-white" />
+						</div>
+						<div className="text-xl font-bold text-teal-600 text-center">Galeria</div>
+						<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-teal-400 to-teal-600 transition-all duration-300 group-hover:w-3/4"></div>
 					</div>
 				</Link>
 

@@ -51,7 +51,7 @@ export function ImportGamesPage() {
 	const [gameQuery, setGameQuery] = useState("")
 
 
-	const debouncedGameQuery = useDebounce(gameQuery, 300)
+	const debouncedGameQuery = useDebounce(gameQuery)
 
 	// Initialize form with react-hook-form and zod
 	const form = useForm<ImportFormValues>({

@@ -46,6 +46,28 @@ function formatEventDate(dateString: string | Date): string {
 	return `${day}/${month}/${year} às ${hours}:${minutes}`
 }
 
+export function TipLinkLudopedia() {
+	return (
+		<div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+			<h4 className="font-medium text-blue-900 mb-2">💡 Dica:</h4>
+			Conecte sua conta da Ludopedia para importar sua coleção de jogos!
+			<Link href={availableProviders[1].Url} className="grid mt-3">
+				<Button
+					variant="outline"
+					className={`justify-start gap-3 h-14 ${connectionsIcons[availableProviders[1].Provider as keyof typeof connectionsIcons].color}`}
+				>
+					<div className={` p-2 rounded-full`}>
+						{connectionsIcons[availableProviders[1].Provider as keyof typeof connectionsIcons].icon({
+							className: "h-5 w-5"
+						})}
+					</div>
+					<span>Conectar com {toPascalCase(availableProviders[1].Provider)}</span>
+				</Button>
+			</Link>
+		</div>
+	)
+}
+
 export function Connections({ connections }: Props) {
 	const queryClient = useQueryClient()
 

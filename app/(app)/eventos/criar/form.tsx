@@ -133,8 +133,8 @@ export function FormCreateEvent() {
 	const [gameQuery, setGameQuery] = useState("")
 	const [isGamePopoverOpen, setIsGamePopoverOpen] = useState(false)
 
-	const debouncedLocationQuery = useDebounce(locationQuery, 300)
-	const debouncedGameQuery = useDebounce(gameQuery, 300)
+	const debouncedLocationQuery = useDebounce(locationQuery)
+	const debouncedGameQuery = useDebounce(gameQuery)
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data: locationsQuery, isLoading: isSearchingLocations } = useInfiniteQuery<ResponseSearchLocations>({

@@ -592,11 +592,5 @@
 		{
 			"origin": "https://rolesejogos.com.br"
 		}
-	],
-	"protocol_handlers": [
-		{
-			"protocol": "web+event",
-			"url": "/eventos/%s"
-		}
 	]
 }
