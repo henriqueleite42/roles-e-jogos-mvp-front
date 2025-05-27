@@ -51,20 +51,21 @@ const ITEMS_PER_PAGE = 5
 // }
 
 export default function GamesPage() {
-	const [searchInput, setSearchInput] = useState('')
-	const [searchQuery, setSearchQuery] = useState("")
+	const [gameSearchQuery, setSearchQuery] = useState("")
 	const [kind, setKind] = useState("GAME")
 	const [maxPlayers, setMaxPlayers] = useState("0")
 	const [ownerSearchQuery, setOwnerSearchQuery] = useState("")
 	const [selectedOwnerDetails, setSelectedOwnerDetails] = useState<Owner | null>(null)
 	const [isOwnerSearchOpen, setIsOwnerSearchOpen] = useState(false)
 
+	// Debounce the game search query to avoid excessive API calls
+	const debouncedGameSearch = useDebounce(gameSearchQuery)
 	// Debounce the owner search query to avoid excessive API calls
-	const debouncedOwnerSearch = useDebounce(ownerSearchQuery, 300)
+	const debouncedOwnerSearch = useDebounce(ownerSearchQuery)
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error } = useInfiniteQuery<ResponseGames>({
-		queryKey: ["games", kind, searchQuery, maxPlayers, selectedOwnerDetails],
+		queryKey: ["games", kind, debouncedGameSearch, maxPlayers, selectedOwnerDetails],
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {
 				kind: kind,
@@ -74,8 +75,8 @@ export default function GamesPage() {
 			if (pageParam) {
 				queryObj.after = String(pageParam)
 			}
-			if (searchQuery.length >= 3) {
-				queryObj.gameName = searchQuery
+			if (debouncedGameSearch.length >= 3) {
+				queryObj.gameName = debouncedGameSearch
 			}
 			if (maxPlayers != "0") {
 				queryObj.maxAmountOfPlayers = maxPlayers
@@ -120,7 +121,7 @@ export default function GamesPage() {
 		queryFn: async () => {
 			if (!debouncedOwnerSearch || debouncedOwnerSearch.trim().length < 2) return []
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/list/by-handle?handle=${encodeURIComponent(debouncedOwnerSearch)}`)
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/search?query=${encodeURIComponent(debouncedOwnerSearch)}`)
 
 			if (!response.ok) {
 				throw new Error(`Owner search failed with status ${response.status}`)
@@ -128,7 +129,7 @@ export default function GamesPage() {
 
 			return response.json().then(r => r.Data)
 		},
-		enabled: debouncedOwnerSearch.length >= 2,
+		enabled: debouncedOwnerSearch.length >= 3,
 		staleTime: 1000 * 60 * 5, // 5 minutes
 	})
 
@@ -162,15 +163,6 @@ export default function GamesPage() {
 			observer.disconnect()
 		}
 	}, [hasNextPage, isFetchingNextPage])
-
-	// Debounce: update `searchTerm` 500ms after user stops typing
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			setSearchQuery(searchInput)
-		}, 500)
-
-		return () => clearTimeout(timeout)
-	}, [searchInput])
 
 	// Reset all filters
 	const resetFilters = () => {
@@ -219,7 +211,7 @@ export default function GamesPage() {
 	}
 
 	return (
-		<main className="container mx-auto py-8 px-4">
+		<main className="container mx-auto py-8 px-4 min-h-screen">
 			<div className="flex flex-col md:flex-row gap-4 mb-8">
 				<div className="relative flex-grow">
 					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
@@ -227,7 +219,7 @@ export default function GamesPage() {
 						type="text"
 						placeholder="Pesquisar jogos..."
 						className="pl-10"
-						value={searchQuery}
+						value={gameSearchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
 				</div>
@@ -251,6 +243,20 @@ export default function GamesPage() {
 								<p className="text-sm text-muted-foreground">Ajuste os filtros para encontrar jogos específicos.</p>
 							</div>
 							<div className="grid gap-2">
+								{/* Game Kind */}
+								<div className="grid gap-1">
+									<Label htmlFor="kind">Items da lista</Label>
+									<Select value={kind} onValueChange={setKind}>
+										<SelectTrigger id="kind">
+											<SelectValue placeholder="Selecione o tipo de jogo" />
+										</SelectTrigger>
+										<SelectContent>
+											<SelectItem value="GAME">Jogos</SelectItem>
+											<SelectItem value="RPG">RPGs</SelectItem>
+										</SelectContent>
+									</Select>
+								</div>
+
 								{/* Owner search with API integration */}
 								<div className="grid gap-1">
 									<Label htmlFor="ownerSearch">Proprietário</Label>

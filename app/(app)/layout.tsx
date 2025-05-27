@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { Calendar, Dice6, Home, Plus, User } from 'lucide-react'
 import Link from "next/link"
 
 import '../globals.css'
 import { Providers } from '../providers'
 import { Toaster } from '@/components/ui/toaster'
+import { GoogleAnalytics } from '@/components/google-analytics'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
@@ -18,7 +18,7 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
+		<html lang="pt-BR">
 			<head>
 				<meta name="application-name" content={process.env.NEXT_PUBLIC_WEBSITE_NAME} />
 				<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -160,19 +160,7 @@ export default function RootLayout({
 					content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
 				/>
 
-				<Script
-					async
-					src={"https://www.googletagmanager.com/gtag/js?id=" + process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}
-					strategy="afterInteractive"
-				/>
-				<Script>
-					{`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID}');
-          `}
-				</Script>
+				<GoogleAnalytics />
 			</head>
 			<body className="flex flex-col min-h-screen bg-gradient-to-b from-red-50 to-white">
 				<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
