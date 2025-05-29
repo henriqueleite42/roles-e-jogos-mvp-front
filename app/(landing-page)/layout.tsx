@@ -2,12 +2,14 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { Dice5 } from 'lucide-react'
 import Link from 'next/link'
-import Script from 'next/script'
 import { GoogleAnalytics } from '@/components/google-analytics'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
 	description: 'Faça amigos e jogue jogos',
+	openGraph: {
+		images: [process.env.NEXT_PUBLIC_WEBSITE_URL + "/mago.webp"],
+	},
 }
 
 export default function RootLayout({
@@ -165,10 +167,6 @@ export default function RootLayout({
 
 
 				<div className="flex min-h-screen flex-col">
-					<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
-						<h1 className="text-2xl font-bold text-center text-white">{process.env.NEXT_PUBLIC_WEBSITE_NAME}</h1>
-					</header>
-
 					{children}
 
 					<footer className="border-t bg-background">

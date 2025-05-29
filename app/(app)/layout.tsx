@@ -10,6 +10,9 @@ import { GoogleAnalytics } from '@/components/google-analytics'
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
 	description: 'Faça amigos e jogue jogos',
+	openGraph: {
+		images: [process.env.NEXT_PUBLIC_WEBSITE_URL + "/mago.webp"],
+	},
 }
 
 export default function RootLayout({
@@ -163,10 +166,6 @@ export default function RootLayout({
 				<GoogleAnalytics />
 			</head>
 			<body className="flex flex-col min-h-screen bg-gradient-to-b from-red-50 to-white">
-				<header className="p-4 border-b bg-gradient-to-r from-primary to-primary-foreground">
-					<h1 className="text-2xl font-bold text-center text-white">{process.env.NEXT_PUBLIC_WEBSITE_NAME}</h1>
-				</header>
-
 				<Providers>{children}</Providers>
 
 				<nav className="border-t bg-white py-2 px-4 sticky bottom-0 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">

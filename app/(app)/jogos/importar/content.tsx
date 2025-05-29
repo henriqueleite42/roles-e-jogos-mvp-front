@@ -25,6 +25,7 @@ import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { LudopediaGame, ResponseSearchLudopediaGames } from "@/types/api"
+import { Header } from "@/components/header"
 
 // Form schema with validation
 const importFormSchema = z.object({
@@ -160,160 +161,163 @@ export function ImportGamesPage() {
 	}
 
 	return (
-		<main className="flex-1 container mx-auto py-8 px-4">
-			<div className="max-w-2xl mx-auto">
-				<Card>
-					<CardHeader>
-						<CardTitle>Importar jogos</CardTitle>
-						<CardDescription>
-							Importe jogos para nosso banco de dados para que eles fiquem disponiveis para seleção.
-						</CardDescription>
-					</CardHeader>
-					<CardContent className="space-y-6">
-						<div className="flex justify-center">
-							{/* Ludopedia Import */}
-							<Card className="border-2 border-dashed border-muted-foreground/25 hover:border-orange-300 transition-colors">
-								<CardContent className="flex flex-col items-center justify-center p-6 text-center">
-									<div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4">
-										<Download className="h-8 w-8 text-orange-600" />
-									</div>
-									<h3 className="font-semibold text-lg mb-2">Ludopedia</h3>
-									<p className="text-sm text-muted-foreground mb-4">
-										Importe jogos diretamente da  Ludopedia
-									</p>
+		<>
+			<Header title="Importar jogos" displayBackButton />
 
-									<Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
-										<DialogTrigger asChild>
-											<Button className="w-full text-white">Importar da Ludopedia</Button>
-										</DialogTrigger>
-										<DialogContent className="sm:max-w-[425px]">
-											<DialogHeader>
-												<DialogTitle>Importar Jogo da Ludopedia</DialogTitle>
-												<DialogDescription>
-													Busque e selecione o jogo que você deseja importar da Ludopedia.
-												</DialogDescription>
-											</DialogHeader>
+			<main className="flex-1 container mx-auto py-8 px-4">
+				<div className="max-w-2xl mx-auto">
+					<Card>
+						<CardHeader>
+							<CardTitle>Importar jogos</CardTitle>
+							<CardDescription>
+								Importe jogos para nosso banco de dados para que eles fiquem disponiveis para seleção.
+							</CardDescription>
+						</CardHeader>
+						<CardContent className="space-y-6">
+							<div className="flex justify-center">
+								{/* Ludopedia Import */}
+								<Card className="border-2 border-dashed border-muted-foreground/25 hover:border-orange-300 transition-colors">
+									<CardContent className="flex flex-col items-center justify-center p-6 text-center">
+										<div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-4">
+											<Download className="h-8 w-8 text-orange-600" />
+										</div>
+										<h3 className="font-semibold text-lg mb-2">Ludopedia</h3>
+										<p className="text-sm text-muted-foreground mb-4">
+											Importe jogos diretamente da  Ludopedia
+										</p>
 
-											<Form {...form}>
-												<div className="space-y-4">
-													<FormField
-														control={form.control}
-														name="selectedGame"
-														render={({ field }) => (
-															<FormItem className="flex flex-col">
-																<FormLabel>Buscar Jogo</FormLabel>
-																<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-																	<PopoverTrigger asChild>
-																		<FormControl>
-																			<Button
-																				variant="outline"
-																				role="combobox"
-																				className={cn(
-																					"w-full justify-between",
-																					!field.value && "text-muted-foreground",
-																				)}
-																				disabled={mutation.isPending}
-																			>
-																				{field.value ? (
-																					<div className="flex items-center gap-2 text-left">
-																						{field.value.IconUrl && (
-																							<div className="h-5 w-5 relative flex-shrink-0">
-																								<Image
-																									src={field.value.IconUrl || "/placeholder.svg"}
-																									alt={field.value.Name}
-																									fill
-																									className="object-cover rounded"
-																								/>
-																							</div>
-																						)}
-																						<div className="truncate">
-																							<div>{field.value.Name}</div>
-																						</div>
-																					</div>
-																				) : (
-																					<div className="flex items-center gap-2">
-																						<Search className="h-4 w-4" />
-																						<span>Buscar jogo...</span>
-																					</div>
-																				)}
-																			</Button>
-																		</FormControl>
-																	</PopoverTrigger>
-																	<PopoverContent className="w-[400px] p-0" align="start">
-																		<Command>
-																			<CommandInput
-																				placeholder="Digite o nome do jogo..."
-																				value={gameQuery}
-																				onValueChange={handleSearchQueryChange}
-																			/>
-																			<CommandList>
-																				{isSearchingGames && (
-																					<div className="flex items-center justify-center py-6">
-																						<Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-																					</div>
-																				)}
+										<Dialog open={isDialogOpen} onOpenChange={handleDialogOpenChange}>
+											<DialogTrigger asChild>
+												<Button className="w-full text-white">Importar da Ludopedia</Button>
+											</DialogTrigger>
+											<DialogContent className="sm:max-w-[425px]">
+												<DialogHeader>
+													<DialogTitle>Importar Jogo da Ludopedia</DialogTitle>
+													<DialogDescription>
+														Busque e selecione o jogo que você deseja importar da Ludopedia.
+													</DialogDescription>
+												</DialogHeader>
 
-																				{!isSearchingGames && gameQuery.length < 2 && (
-																					<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
-																				)}
-
-																				{!isSearchingGames && gameQuery.length >= 2 && (games?.Data || []).length === 0 && (
-																					<CommandEmpty>Nenhum jogo encontrado</CommandEmpty>
-																				)}
-
-																				{(games?.Data || []).length > 0 && (
-																					<CommandGroup>
-																						{games?.Data.map((game) => (
-																							<CommandItem
-																								key={game.LudopediaId}
-																								value={game.Name}
-																								onSelect={() => handleGameSelect(game)}
-																								className="flex items-center gap-3 p-3"
-																							>
-																								{game.IconUrl && (
-																									<div className="h-10 w-10 relative flex-shrink-0">
-																										<Image
-																											src={game.IconUrl || "/placeholder.svg"}
-																											alt={game.Name}
-																											fill
-																											className="object-cover rounded"
-																										/>
-																									</div>
-																								)}
-																								<div className="flex-1 min-w-0">
-																									<div className="font-medium">{game.Name}</div>
+												<Form {...form}>
+													<div className="space-y-4">
+														<FormField
+															control={form.control}
+															name="selectedGame"
+															render={({ field }) => (
+																<FormItem className="flex flex-col">
+																	<FormLabel>Buscar Jogo</FormLabel>
+																	<Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+																		<PopoverTrigger asChild>
+																			<FormControl>
+																				<Button
+																					variant="outline"
+																					role="combobox"
+																					className={cn(
+																						"w-full justify-between",
+																						!field.value && "text-muted-foreground",
+																					)}
+																					disabled={mutation.isPending}
+																				>
+																					{field.value ? (
+																						<div className="flex items-center gap-2 text-left">
+																							{field.value.IconUrl && (
+																								<div className="h-5 w-5 relative flex-shrink-0">
+																									<Image
+																										src={field.value.IconUrl || "/placeholder.svg"}
+																										alt={field.value.Name}
+																										fill
+																										className="object-cover rounded"
+																									/>
 																								</div>
-																								{field.value?.LudopediaId === game.LudopediaId && (
-																									<Check className="h-4 w-4 text-green-600" />
-																								)}
-																							</CommandItem>
-																						))}
-																					</CommandGroup>
-																				)}
-																			</CommandList>
-																		</Command>
-																	</PopoverContent>
-																</Popover>
-																<FormMessage />
-															</FormItem>
+																							)}
+																							<div className="truncate">
+																								<div>{field.value.Name}</div>
+																							</div>
+																						</div>
+																					) : (
+																						<div className="flex items-center gap-2">
+																							<Search className="h-4 w-4" />
+																							<span>Buscar jogo...</span>
+																						</div>
+																					)}
+																				</Button>
+																			</FormControl>
+																		</PopoverTrigger>
+																		<PopoverContent className="w-[400px] p-0" align="start">
+																			<Command>
+																				<CommandInput
+																					placeholder="Digite o nome do jogo..."
+																					value={gameQuery}
+																					onValueChange={handleSearchQueryChange}
+																				/>
+																				<CommandList>
+																					{isSearchingGames && (
+																						<div className="flex items-center justify-center py-6">
+																							<Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+																						</div>
+																					)}
+
+																					{!isSearchingGames && gameQuery.length < 2 && (
+																						<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
+																					)}
+
+																					{!isSearchingGames && gameQuery.length >= 2 && (games?.Data || []).length === 0 && (
+																						<CommandEmpty>Nenhum jogo encontrado</CommandEmpty>
+																					)}
+
+																					{(games?.Data || []).length > 0 && (
+																						<CommandGroup>
+																							{games?.Data.map((game) => (
+																								<CommandItem
+																									key={game.LudopediaId}
+																									value={game.Name}
+																									onSelect={() => handleGameSelect(game)}
+																									className="flex items-center gap-3 p-3"
+																								>
+																									{game.IconUrl && (
+																										<div className="h-10 w-10 relative flex-shrink-0">
+																											<Image
+																												src={game.IconUrl || "/placeholder.svg"}
+																												alt={game.Name}
+																												fill
+																												className="object-cover rounded"
+																											/>
+																										</div>
+																									)}
+																									<div className="flex-1 min-w-0">
+																										<div className="font-medium">{game.Name}</div>
+																									</div>
+																									{field.value?.LudopediaId === game.LudopediaId && (
+																										<Check className="h-4 w-4 text-green-600" />
+																									)}
+																								</CommandItem>
+																							))}
+																						</CommandGroup>
+																					)}
+																				</CommandList>
+																			</Command>
+																		</PopoverContent>
+																	</Popover>
+																	<FormMessage />
+																</FormItem>
+															)}
+														/>
+
+														{mutation.isPending && (
+															<div className="flex items-center justify-center py-4">
+																<Loader2 className="h-6 w-6 animate-spin text-orange-500 mr-2" />
+																<span className="text-sm text-muted-foreground">Importando jogo...</span>
+															</div>
 														)}
-													/>
+													</div>
+												</Form>
+											</DialogContent>
+										</Dialog>
+									</CardContent>
+								</Card>
 
-													{mutation.isPending && (
-														<div className="flex items-center justify-center py-4">
-															<Loader2 className="h-6 w-6 animate-spin text-orange-500 mr-2" />
-															<span className="text-sm text-muted-foreground">Importando jogo...</span>
-														</div>
-													)}
-												</div>
-											</Form>
-										</DialogContent>
-									</Dialog>
-								</CardContent>
-							</Card>
-
-							{/* Placeholder for future import sources */}
-							{/* <Card className="border-2 border-dashed border-muted-foreground/25 opacity-50">
+								{/* Placeholder for future import sources */}
+								{/* <Card className="border-2 border-dashed border-muted-foreground/25 opacity-50">
 								<CardContent className="flex flex-col items-center justify-center p-6 text-center">
 									<div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
 										<Download className="h-8 w-8 text-gray-400" />
@@ -325,19 +329,22 @@ export function ImportGamesPage() {
 									</Button>
 								</CardContent>
 							</Card> */}
-						</div>
+							</div>
 
-						<div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-							<h4 className="font-medium text-blue-900 mb-2">💡 Dicas para importação:</h4>
-							<ul className="text-sm text-blue-800 space-y-1">
-								<li>• Digite o nome do jogo para ver as opções disponíveis</li>
-								<li>• Selecione o jogo correto da lista de resultados</li>
-								<li>• A importação começará automaticamente após a seleção</li>
-							</ul>
-						</div>
-					</CardContent>
-				</Card>
-			</div>
-		</main>
+							<div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+								<h4 className="font-medium text-blue-900 mb-2">💡 Dicas para importação:</h4>
+								<ul className="text-sm text-blue-800 space-y-1">
+									<li>• <strong>Importar os jogos por aqui não os adiciona a sua coleção. Para isso <Link href="/conta" className="underline">vá aqui</Link>.</strong></li>
+									<li>• Digite o nome do jogo para ver as opções disponíveis</li>
+									<li>• Selecione o jogo correto da lista de resultados</li>
+									<li>• A importação começará automaticamente após a seleção</li>
+								</ul>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
+			</main>
+		</>
+
 	)
 }

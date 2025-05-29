@@ -1,11 +1,18 @@
+import { Header } from "@/components/header"
+
 export const metadata = {
 	title: "Política de Privacidade",
 	description: "Conheça as Política de Privacidade da nossa comunidade",
+	openGraph: {
+		images: [process.env.NEXT_PUBLIC_WEBSITE_URL + "/mago.webp"],
+	},
 }
 
 export default function PoliticaDePrivacidade() {
 	return (
-		<div>
+		<>
+			<Header title="Política de Privacidade" displayBackButton />
+
 			<div className="max-w-4xl mx-auto px-6 py-12">
 				<h1 className="text-4xl font-bold mb-8 text-center text-primary">Política de Privacidade</h1>
 
@@ -87,6 +94,6 @@ export default function PoliticaDePrivacidade() {
 					</p>
 				</section>
 			</div>
-		</div>
+		</>
 	)
 }
