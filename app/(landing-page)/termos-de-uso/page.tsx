@@ -1,11 +1,18 @@
+import { Header } from "@/components/header"
+
 export const metadata = {
 	title: "Termos de Uso",
 	description: "Conheça os Termos de Uso da nossa comunidade",
+	openGraph: {
+		images: [process.env.NEXT_PUBLIC_WEBSITE_URL + "/mago.webp"],
+	},
 }
 
 export default function TermosDeUso() {
 	return (
 		<>
+			<Header title="Termos de Uso" displayBackButton />
+
 			<div className="max-w-4xl mx-auto px-6 py-12">
 				<h1 className="text-4xl font-bold mb-8 text-center text-primary">Termos de Uso</h1>
 

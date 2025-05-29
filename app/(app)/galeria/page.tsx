@@ -1,10 +1,16 @@
 import { cookies } from 'next/headers';
 import GalleryPage from "./content"
-import { Auth } from '@/types/api';
+import { Auth, MediaData } from '@/types/api';
+import { Metadata } from 'next';
 
-export const metadata = {
-	title: "Galeria",
-	description: "As fotos da nossa comunidade",
+export async function generateMetadata(): Promise<Metadata> {
+	return {
+		title: "Galeria",
+		description: 'Veja as fotos da nossa comunidade',
+		openGraph: {
+			images: [process.env.NEXT_PUBLIC_WEBSITE_URL + "/nosso-grupo.jpg"],
+		},
+	}
 }
 
 export default async function Page() {
