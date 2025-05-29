@@ -50,7 +50,7 @@ const attendanceConfig = {
 }
 
 function getAvailableSpots(event: Event) {
-	const confirmations = event.Attendances.filter(a => a.Status === "GOING")
+	const confirmations = event.Attendances?.filter(a => a.Status === "GOING")
 	const confirmationsCount = confirmations.length
 	const availableSpots = event.Capacity ?
 		event.Capacity - confirmationsCount

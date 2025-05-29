@@ -4,189 +4,22 @@ import type React from "react"
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import NextImage from "next/image"
-import { Calendar, X, ChevronLeft, ChevronRight, Gamepad2, MapPin, Users, Loader2, Plus, ImageIcon } from "lucide-react"
+import { Calendar, X, ChevronLeft, ChevronRight, Gamepad2, MapPin, Users, Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { formatEventDate } from "../eventos/utils"
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import { Auth, MediaData, ResponseGetGallery } from "@/types/api"
 import Link from "next/link"
 import { canDo } from "@/lib/can-do-something"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import {
-	Dialog,
-	DialogContent,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { uploadImage } from "@/lib/api/upload-image"
-import { Textarea } from "@/components/ui/textarea"
+
 import { Header } from "@/components/header"
-
-// Form schema with validation
-const imageFormSchema = z.object({
-	description: z.string().max(512).optional(),
-})
-
-type ImageFormValues = z.infer<typeof imageFormSchema>
-
-interface MutationParams extends ImageFormValues {
-	Image: File | null
-}
-
-// Add this custom hook for masonry layout
-const useMasonry = (images: MediaData[], columnWidth = 300) => {
-	const [columns, setColumns] = useState<MediaData[][]>([])
-	const [columnCount, setColumnCount] = useState(1)
-	const containerRef = useRef<HTMLDivElement>(null)
-
-	const calculateColumns = useCallback(() => {
-		if (!containerRef.current) return
-
-		const containerWidth = containerRef.current.offsetWidth
-		const gap = 16 // 1rem gap
-		const newColumnCount = Math.max(1, Math.floor((containerWidth + gap) / (columnWidth + gap)))
-
-		if (newColumnCount !== columnCount) {
-			setColumnCount(newColumnCount)
-		}
-	}, [columnWidth, columnCount])
-
-	useEffect(() => {
-		calculateColumns()
-		window.addEventListener("resize", calculateColumns)
-		return () => window.removeEventListener("resize", calculateColumns)
-	}, [calculateColumns])
-
-	useEffect(() => {
-		if (images.length === 0) return
-
-		// Initialize columns
-		const newColumns: MediaData[][] = Array.from({ length: columnCount }, () => [])
-		const columnHeights = new Array(columnCount).fill(0)
-
-		// Distribute images across columns
-		images.forEach((image) => {
-			// Find the shortest column
-			const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights))
-
-			// Add image to shortest column
-			newColumns[shortestColumnIndex].push(image)
-
-			// Update column height (approximate based on aspect ratio)
-			const aspectRatio = image.Height / image.Width
-			const imageHeight = columnWidth * aspectRatio
-			columnHeights[shortestColumnIndex] += imageHeight + 16 // Add gap
-		})
-
-		setColumns(newColumns)
-	}, [images, columnCount, columnWidth])
-
-	return { columns, containerRef }
-}
+import { useMasonry } from "@/lib/mansory"
 
 // Update the component to use the new masonry layout
 export default function GalleryPage({ auth }: { auth?: Auth }) {
-	const queryClient = useQueryClient()
-
-	const [imageToUpload, setImageToUpload] = useState<File | null>(null)
-	const [imagePreview, setImagePreview] = useState<string | null>(null)
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
-
 	const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
 
-	// Initialize form
-	const form = useForm<ImageFormValues>({
-		resolver: zodResolver(imageFormSchema),
-	})
-
-	const mutation = useMutation({
-		mutationFn: async (body: MutationParams) => {
-			if (!body.Image) {
-				throw new Error("imagem obrigatoria")
-			}
-
-			await new Promise((res, rej) => {
-				const img = new Image()
-				img.onload = async () => {
-					const { FilePath } = await uploadImage({
-						FileName: body.Image!.name,
-						ImageBlob: body.Image!,
-						Kind: "MEDIA_IMAGE"
-					})
-
-					const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/medias', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({
-							Description: body.description,
-							Width: img.width,
-							Height: img.height,
-							Path: FilePath,
-						}),
-						credentials: 'include',
-					});
-
-					if (!response.ok) {
-						const error = await response.text()
-						console.error(error);
-						return rej(error)
-					}
-
-					URL.revokeObjectURL(img.src) // Clean up memory
-
-					return res(undefined)
-				}
-				img.src = URL.createObjectURL(body.Image!)
-			})
-		},
-		onSuccess: () => {
-			form.reset()
-			setImageToUpload(null)
-			setImagePreview(null)
-			setIsDialogOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["list-medias"] })
-		}
-	});
-
-	// Handle image upload
-	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0]
-		if (file) {
-			const reader = new FileReader()
-			reader.onloadend = () => {
-				setImageToUpload(file)
-				setImagePreview(reader.result as string)
-			}
-			reader.readAsDataURL(file)
-		}
-	}
-
-	// Clear image preview
-	const clearImagePreview = () => {
-		setImageToUpload(null)
-		setImagePreview(null)
-		// Also clear the file input
-		const fileInput = document.getElementById("location-image") as HTMLInputElement
-		if (fileInput) fileInput.value = ""
-	}
-
-	// Handle form submission
-	const onSubmit = async (values: ImageFormValues) => {
-		mutation.mutate({
-			...values,
-			Image: imageToUpload,
-		})
-	}
-
-	// Observer for infinite scroll
 	const observerTarget = useRef<HTMLDivElement | null>(null)
 
 	// Use TanStack Query for data fetching with infinite scroll
@@ -305,104 +138,12 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 				<main className="flex-1 container mx-auto pt-4 pb-8 px-4">
 					{canDo(auth) && (
 						<div className="flex md:flex-row justify-around items-start md:items-center gap-4 mb-6">
-							<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-								<DialogTrigger asChild>
-									<Button className="gap-2 text-white">
-										<Plus className="h-4 w-4" />
-										Adicionar imagem
-									</Button>
-								</DialogTrigger>
-								<DialogContent className="sm:max-w-[550px]">
-									<DialogHeader>
-										<DialogTitle>Adicionar nova imagem</DialogTitle>
-									</DialogHeader>
-
-									<Form {...form}>
-										<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-											{/* Description */}
-											<FormField
-												control={form.control}
-												name="description"
-												render={({ field }) => (
-													<FormItem>
-														<FormLabel>Descrição</FormLabel>
-														<FormControl>
-															<Textarea
-																placeholder="Ex: Jogatina de sabadão"
-																className="min-h-[100px]"
-																disabled={mutation.isPending}
-																{...field}
-															/>
-														</FormControl>
-														<FormMessage />
-													</FormItem>
-												)}
-											/>
-
-											{/* Image */}
-											<div className="space-y-2">
-												<Label htmlFor="image-to-upload">Imagem</Label>
-												<div className="flex items-center gap-4">
-													<Button
-														type="button"
-														variant="outline"
-														onClick={() => document.getElementById("image-to-upload")?.click()}
-														className="gap-2"
-													>
-														<ImageIcon className="h-4 w-4" />
-														Escolher Imagem
-													</Button>
-													<Input
-														id="image-to-upload"
-														type="file"
-														accept="image/*"
-														className="hidden"
-														onChange={handleImageUpload}
-													/>
-													<span className="text-sm text-muted-foreground">
-														{imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"}
-													</span>
-												</div>
-
-												{imagePreview && (
-													<div className="relative mt-4 rounded-md overflow-hidden w-full max-w-md">
-														<img
-															src={imagePreview || "/placeholder.svg"}
-															alt="Preview"
-															className="w-full h-auto object-cover max-h-[200px]"
-														/>
-														<Button
-															type="button"
-															variant="destructive"
-															size="icon"
-															className="absolute top-2 right-2 h-8 w-8 rounded-full"
-															onClick={clearImagePreview}
-														>
-															<X className="h-4 w-4" />
-														</Button>
-													</div>
-												)}
-											</div>
-
-											<DialogFooter>
-												<Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
-													Cancelar
-												</Button>
-												<Button type="submit" disabled={mutation.isPending} className="text-white">
-													{mutation.isPending ? (
-														<>
-															<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-															Salvando...
-														</>
-													) : (
-														"Adicionar imagem"
-													)}
-												</Button>
-											</DialogFooter>
-										</form>
-									</Form>
-								</DialogContent>
-							</Dialog>
+							<Link href="/galeria/criar">
+								<Button className="gap-2 text-white">
+									<Plus className="h-4 w-4" />
+									Adicionar imagem
+								</Button>
+							</Link>
 						</div>
 					)}
 
