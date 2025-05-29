@@ -1,10 +1,9 @@
-import { MetadataRoute } from 'next'
 import fs from 'fs'
 import path from 'path'
 
 const APP_DIR = path.join(process.cwd(), 'app')
 
-export function getStaticRoutes(dir = APP_DIR, segments: string[] = []): string[] {
+function getStaticRoutes(dir = APP_DIR, segments: string[] = []): string[] {
 	const entries = fs.readdirSync(dir, { withFileTypes: true })
 	let routes: string[] = []
 
@@ -32,12 +31,13 @@ export function getStaticRoutes(dir = APP_DIR, segments: string[] = []): string[
 	return Array.from(new Set(routes))
 }
 
+const PATHS = getStaticRoutes()
+
 export async function GET() {
-	const paths = getStaticRoutes()
 
 	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${paths
+${PATHS
 			.map(
 				(path) => `
   <url>
