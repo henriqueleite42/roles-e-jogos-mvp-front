@@ -116,12 +116,40 @@ export interface LocationData {
 	CreatedAt: Date
 }
 
+export interface MinimumLocationData {
+	Id: number
+	Name: string
+	IconUrl?: string
+}
+
+export interface MinimumEventDataWithLocation {
+	Id: number
+	IconUrl?: string
+	Slug: string
+	Name: string
+	Location: MinimumLocationData
+}
+
 export interface ResponseSearchLocations {
 	Data: Array<LocationData>
 }
 
 export interface ResponseSearchGames {
 	Data: Array<GameData>
+}
+
+export interface ResponseSearchEvents {
+	Data: Array<MinimumEventDataWithLocation>
+}
+
+export interface MinimumProfileData {
+	AccountId: number
+	Handle: string
+	AvatarUrl?: string
+}
+
+export interface ResponseSearchProfiles {
+	Data: Array<MinimumProfileData>
 }
 
 export interface ResponseListLocations {

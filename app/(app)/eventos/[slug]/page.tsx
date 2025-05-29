@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Event, Profile } from "@/types/api"
+import { Auth, Event, Profile } from "@/types/api"
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 import { MapPin, Users } from "lucide-react"
 import { Metadata } from "next"
@@ -12,6 +12,7 @@ import { cookies } from "next/headers"
 import { Dates } from "./dates"
 import { getEventDescription } from "../utils"
 import { Header } from "@/components/header"
+import { EventImages } from "./images"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + await params.slug, {
@@ -36,7 +37,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 		}) : undefined,
 	}
 }
-
 
 const getAvailableCapacity = (event: Event) => {
 	const { availableSpots, isFull } = getAvailableSpots(event)
@@ -66,6 +66,25 @@ const getAvailableCapacity = (event: Event) => {
 
 export default async function EventPage({ params }: { params: { slug: string } }) {
 	const cookieStore = await cookies();
+
+	var auth: Auth | undefined = undefined
+	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/auth/me', {
+			method: 'GET',
+			headers: {
+				Cookie: cookieStore.toString()
+			},
+			cache: 'no-store',
+		}).catch(() => ({
+			ok: false
+		} as Response));
+
+
+		if (res.ok) {
+			const body = await res.text()
+			auth = JSON.parse(body) as Auth;
+		}
+	}
 
 	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + await params.slug, {
 		method: "GET",
@@ -269,6 +288,8 @@ export default async function EventPage({ params }: { params: { slug: string } }
 							</CardContent>
 						</Card>
 					)}
+
+					<EventImages event={event} auth={auth} />
 
 					{/* Comments Section */}
 					{/* <CommentsSection /> */}

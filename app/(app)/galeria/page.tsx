@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import GalleryPage from "./content"
-import { Auth, MediaData } from '@/types/api';
+import { Auth } from '@/types/api';
 import { Metadata } from 'next';
 
 export async function generateMetadata(): Promise<Metadata> {
