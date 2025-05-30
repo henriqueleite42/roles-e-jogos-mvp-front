@@ -22,7 +22,8 @@ export function EventImages({ event, auth }: Params) {
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, isFetchingNextPage } = useInfiniteQuery<ResponseGetGallery>({
-		queryKey: ["events"],
+		queryKey: ["event-images", event.Id],
+		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {
 				eventId: String(event.Id)
@@ -110,8 +111,8 @@ export function EventImages({ event, auth }: Params) {
 											<NextImage
 												src={image.Url || "/placeholder.svg"}
 												alt={"image"}
-												width={image.Width}
-												height={image.Height}
+												width={image.Width || 300}
+												height={image.Height || 300}
 												className="w-full h-auto object-cover"
 												sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, (max-width: 1280px) 25vw, 20vw"
 											/>
@@ -137,12 +138,12 @@ export function EventImages({ event, auth }: Params) {
 												<div className="flex items-center justify-between">
 													<div className="flex items-center gap-2">
 														<Avatar className="w-6 h-6 border-2 border-white/50">
-															<AvatarImage src={image.Owner?.AvatarUrl || "/placeholder.svg"} alt={image.Owner?.Handle} />
+															<AvatarImage src={image.Owner?.AvatarUrl} width={300} height={300} alt={image.Owner?.Handle} />
 															<AvatarFallback className="text-xs bg-white/20 text-white">
 																{image.Owner?.Handle}
 															</AvatarFallback>
 														</Avatar>
-														<span className="text-white/90 text-xs font-medium">{image.Owner.Handle}</span>
+														<span className="text-white/90 text-xs font-medium">{image.Owner?.Handle}</span>
 													</div>
 													{/* <div className="flex items-center gap-1">
 															<Heart className="h-3 w-3 text-white/90" />

@@ -3,6 +3,7 @@ import '../globals.css'
 import { Dice5 } from 'lucide-react'
 import Link from 'next/link'
 import { GoogleAnalytics } from '@/components/google-analytics'
+import { Providers } from '../providers'
 
 export const metadata: Metadata = {
 	title: process.env.NEXT_PUBLIC_WEBSITE_NAME,
@@ -167,7 +168,7 @@ export default function RootLayout({
 
 
 				<div className="flex min-h-screen flex-col">
-					{children}
+					<Providers>{children}</Providers>
 
 					<footer className="border-t bg-background">
 						<div className="container flex flex-col gap-4 py-10 md:flex-row md:gap-8 md:py-12">

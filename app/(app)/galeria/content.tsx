@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { formatEventDate } from "../eventos/utils"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { Auth, MediaData, ResponseGetGallery } from "@/types/api"
+import { Auth, ResponseGetGallery } from "@/types/api"
 import Link from "next/link"
 import { canDo } from "@/lib/can-do-something"
 
@@ -25,6 +25,7 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<ResponseGetGallery>({
 		queryKey: ["list-medias"],
+		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {}
 

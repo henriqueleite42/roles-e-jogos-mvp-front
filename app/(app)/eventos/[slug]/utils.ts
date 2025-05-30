@@ -1,6 +1,15 @@
 import { Event, EventAttendance } from "@/types/api"
 
 export function getAvailableSpots(event: Event) {
+	if (!event || !event.Attendances) return {
+		confirmations: [],
+		maybes: [],
+		notGoing: [],
+		confirmationsCount: 0,
+		availableSpots: 0,
+		isFull: true,
+	}
+
 	const confirmations = [] as Array<EventAttendance>
 	const maybes = [] as Array<EventAttendance>
 	const notGoing = [] as Array<EventAttendance>

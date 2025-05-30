@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { formatEventDate, getEventDescription } from "./utils"
 import { Header } from "@/components/header"
+import { getAvailableSpots } from "./[slug]/utils"
+import Loading from "@/components/ui/loading"
 
 interface ConfirmAttendanceInput {
 	EventId: number
@@ -49,27 +51,6 @@ const attendanceConfig = {
 	},
 }
 
-function getAvailableSpots(event: Event) {
-	const confirmations = event.Attendances?.filter(a => a.Status === "GOING")
-	const confirmationsCount = confirmations.length
-	const availableSpots = event.Capacity ?
-		event.Capacity - confirmationsCount
-		: -1
-	const isFull = availableSpots <= 0
-
-	return {
-		confirmations,
-		confirmationsCount,
-		availableSpots,
-		isFull,
-	}
-}
-
-// export const metadata = {
-// 	title: "Eventos",
-// 	description: "Veja os proximos eventos da comunidade!",
-// }
-
 export default function Events() {
 	const router = useRouter()
 	const queryClient = useQueryClient()
@@ -97,6 +78,7 @@ export default function Events() {
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data: events, } = useInfiniteQuery<ResponseEvents>({
 		queryKey: ["events"],
+		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {}
 
@@ -408,8 +390,8 @@ export default function Events() {
 											</span>
 											<div className="flex">
 												{confirmations.length > 0 ? (
-													confirmations.map((person, index) => (
-														<div key={index} className="relative group -ml-2 first:ml-0">
+													confirmations.map((person) => (
+														<div key={person.AccountId} className="relative group -ml-2 first:ml-0">
 															<div className="rounded-full border-2 border-background w-8 h-8 overflow-hidden">
 																<Image
 																	src={person.AvatarUrl || "/placeholder.svg"}
