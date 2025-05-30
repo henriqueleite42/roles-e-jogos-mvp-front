@@ -1,44 +1,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Users, Calendar, ChevronRight, Puzzle, VenetianMask, Dice5 } from "lucide-react"
-import { Event } from "@/types/api";
+import { Users, ChevronRight, Puzzle, VenetianMask, Dice5 } from "lucide-react"
 import { Header } from "@/components/header";
-
-function formatEventDate(dateString: string): string {
-	const date = new Date(dateString)
-
-	// Format date: DD/MM/YYYY
-	const day = date.getDate().toString().padStart(2, "0")
-	const month = (date.getMonth() + 1).toString().padStart(2, "0")
-	const year = date.getFullYear()
-
-	// Format time: HH:MM
-	const hours = date.getHours().toString().padStart(2, "0")
-	const minutes = date.getMinutes().toString().padStart(2, "0")
-
-	return `${day}/${month}/${year} às ${hours}:${minutes}`
-}
-
-async function getEvents(): Promise<Array<Event>> {
-	const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/next?limit=3`)
-
-	if (!response.ok) {
-		console.error(`Erro ao pegar dados da API: ${response.status}`)
-		return []
-	}
-
-	const events = await response.json().then(r => r?.Data || []).catch(() => ([]))
-
-	console.log(events);
-
-	return events
-}
+import { Events } from "./events";
 
 export default async function LandingPage() {
-	// Use TanStack Query for data fetching with infinite scroll
-	const events = await getEvents()
-
 	return (
 		<>
 			<Header />
@@ -148,20 +115,7 @@ export default async function LandingPage() {
 								</p>
 							</div>
 						</div>
-						<div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-							{(events || []).map((event) => (
-								<div key={event.Id} className="flex flex-col space-y-3 rounded-lg border bg-white p-6 shadow-sm">
-									<div className="flex items-center space-x-3">
-										<Calendar className="h-5 w-5 text-primary" />
-										<h3 className="text-xl font-bold">{event.Name}</h3>
-									</div>
-									<p className="text-sm text-gray-500">Data: {formatEventDate(event.StartDate)}</p>
-									<p className="text-sm text-gray-500">Local: {event.Location.Name}</p>
-									<p className="text-sm text-gray-500">Jogos previstos: {event.Games.map(g => g.Name).join(", ")}</p>
-									{/* <Button className="mt-2 bg-primary hover:bg-red-600">Confirmar presença</Button> */}
-								</div>
-							))}
-						</div>
+						<Events />
 						<div className="flex justify-center">
 							<Link href="/eventos">
 								<Button variant="outline" className="border-primary text-primary hover:bg-red-50 hover:text-primary">

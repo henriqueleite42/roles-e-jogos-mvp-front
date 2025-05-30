@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Auth, Event, Profile } from "@/types/api"
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar"
 import { MapPin, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
@@ -13,9 +12,13 @@ import { Dates } from "./dates"
 import { getEventDescription } from "../utils"
 import { Header } from "@/components/header"
 import { EventImages } from "./images"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Loading from "@/components/ui/loading"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + await params.slug, {
+	const { slug } = await params
+
+	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + slug, {
 		method: "GET",
 		credentials: "include"
 	})
@@ -65,6 +68,8 @@ const getAvailableCapacity = (event: Event) => {
 }
 
 export default async function EventPage({ params }: { params: { slug: string } }) {
+	const { slug } = await params
+
 	const cookieStore = await cookies();
 
 	var auth: Auth | undefined = undefined
@@ -86,7 +91,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 		}
 	}
 
-	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + await params.slug, {
+	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + slug, {
 		method: "GET",
 		credentials: "include"
 	})
@@ -115,6 +120,16 @@ export default async function EventPage({ params }: { params: { slug: string } }
 		} else {
 			console.error(await resAccount.text())
 		}
+	}
+
+	if (!event) {
+		return <>
+			<Header title="Evento" displayBackButton />
+
+			<main className="flex-1 container mx-auto py-8 px-4 mb-10">
+				<Loading />
+			</main>
+		</>
 	}
 
 	const { confirmations, maybes, notGoing, confirmationsCount } = getAvailableSpots(event)
@@ -171,7 +186,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 					</Card>
 
 					{/* Games Section */}
-					{event.Games.length > 0 && (
+					{event.Games?.length > 0 && (
 						<Card>
 							<CardHeader>
 								<CardTitle>Jogos do Evento</CardTitle>

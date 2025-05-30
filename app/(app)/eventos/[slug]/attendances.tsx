@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { Profile, AttendanceStatus, Event, EventAttendanceStatus } from "@/types/api"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu"
 import { CircleArrowRight, Check, Info, HelpCircle, X, ThumbsDown, ThumbsUp } from "lucide-react"
 import router from "next/router"
 import { getAvailableSpots } from "./utils"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface Params {
 	event: Event
