@@ -24,7 +24,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { useInfiniteQuery, useMutation } from "@tanstack/react-query"
-import { ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
+import { Event, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
 import { useToast } from "@/hooks/use-toast"
 import { uploadImage } from "@/lib/api/upload-image"
 import { Header } from "@/components/header"
@@ -263,9 +263,10 @@ export function FormCreateEvent() {
 				throw new Error(error)
 			}
 
+			return res.json() as Promise<Event>
 		},
-		onSuccess: () => {
-			router.push("/eventos")
+		onSuccess: (data) => {
+			router.push("/eventos/" + data.Slug)
 		},
 		onError: (err) => {
 			toast({

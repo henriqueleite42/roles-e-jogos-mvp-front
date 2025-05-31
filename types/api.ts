@@ -26,6 +26,18 @@ export interface PaginationString {
 	Limit: number
 }
 
+export interface PaginationTimestampId {
+	Current?: {
+		Timestamp: string
+		Id: number
+	}
+	Next?: {
+		Timestamp: string
+		Id: number
+	}
+	Limit: number
+}
+
 export interface PaginationId {
 	Current?: number
 	Next?: number
@@ -36,6 +48,7 @@ export interface GameData {
 	Id: number;
 	Name: string;
 	Description: string;
+	Slug: string;
 	IconUrl?: string;
 	Kind: GameKind;
 	LudopediaId?: number;
@@ -122,11 +135,14 @@ export interface MinimumLocationData {
 	IconUrl?: string
 }
 
-export interface MinimumEventDataWithLocation {
+export interface MinimumEventData {
 	Id: number
 	IconUrl?: string
 	Slug: string
 	Name: string
+}
+
+export interface MinimumEventDataWithLocation extends MinimumEventData {
 	Location: MinimumLocationData
 }
 
@@ -213,4 +229,14 @@ export interface MediaData {
 export interface ResponseGetGallery {
 	Data: Array<MediaData>
 	Pagination: PaginationId
+}
+
+export interface ResponseListGameOwners {
+	Data: Array<MinimumProfileData>
+	Pagination: PaginationString
+}
+
+export interface ResponseListEventsByGame {
+	Data: Array<MinimumEventData>
+	Pagination: PaginationTimestampId
 }

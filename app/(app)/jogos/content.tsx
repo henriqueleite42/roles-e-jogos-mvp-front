@@ -16,6 +16,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Header } from "@/components/header"
+import Link from "next/link"
 
 interface Owner {
 	AccountId: number
@@ -31,6 +32,7 @@ interface GameCollection {
 		MaxAmountOfPlayers: number
 		MinAmountOfPlayers: number
 		Name: string
+		Slug: string
 	}
 	Owners: Array<Owner>
 }
@@ -43,8 +45,6 @@ interface ResponseGames {
 		Next?: string
 	}
 }
-
-const ITEMS_PER_PAGE = 5
 
 // export const metadata = {
 // 	title: "Jogos",
@@ -70,7 +70,6 @@ export default function GamesPage() {
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {
 				kind: kind,
-				limit: String(ITEMS_PER_PAGE),
 			}
 
 			if (pageParam) {
@@ -189,10 +188,14 @@ export default function GamesPage() {
 	// Loading state
 	if (status === "pending") {
 		return (
-			<div className="container mx-auto py-8 px-4 flex flex-col items-center justify-center min-h-[60vh]">
-				<Loader2 className="h-12 w-12 animate-spin text-orange-500 mb-4" />
-				<p className="text-lg text-muted-foreground">Carregando jogos...</p>
-			</div>
+			<>
+				<Header title="Jogos" displayBackButton />
+
+				<div className="container mx-auto py-8 px-4 flex flex-col items-center justify-center min-h-[100vh]">
+					<Loader2 className="h-12 w-12 animate-spin text-orange-500 mb-4" />
+					<p className="text-lg text-muted-foreground">Carregando jogos...</p>
+				</div>
+			</>
 		)
 	}
 
@@ -383,61 +386,55 @@ export default function GamesPage() {
 			</div> */}
 
 				{allItems.length > 0 ? (
-					<div className="space-y-4 mt-4">
+					<div className="space-y-4 mt-4 flex flex-col">
 						{allItems.map((item) => (
-							<Card key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
-								<CardContent className="p-0">
-									<div className="flex flex-row">
-										<div className="flex-1 p-4 md:p-6">
-											<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
-											<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
-												<Badge variant="outline" className="mr-2 mb-1">
-													{item.Game.MinAmountOfPlayers === item.Game.MaxAmountOfPlayers
-														? `${item.Game.MinAmountOfPlayers} jogadores`
-														: `${item.Game.MinAmountOfPlayers}-${item.Game.MaxAmountOfPlayers} jogadores`}
-												</Badge>
-												<a
-													href={item.Game.LudopediaUrl}
-													target="_blank"
-													rel="noopener noreferrer"
-													className="text-sm text-blue-600 hover:underline"
-												>
-													Ver na Ludopedia
-												</a>
-											</div>
-											<div className="flex items-center">
-												<Users className="h-4 w-4 mr-2 text-muted-foreground" />
-												<div className="flex">
-													{item.Owners.map((person) => (
-														<div key={person.AccountId} className="relative group -ml-2 first:ml-0">
-															<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
-																<Image
-																	src={person.AvatarUrl || "/placeholder.svg"}
-																	alt={person.Handle || `Usuário ${person.AccountId}`}
-																	width={40}
-																	height={40}
-																	className="w-full h-full object-cover object-center"
-																/>
+							<Link href={"/jogos/" + item.Game.Slug} key={item.Game.Id} className="overflow-hidden hover:shadow-md transition-shadow">
+								<Card>
+									<CardContent className="p-0">
+										<div className="flex flex-row">
+											<div className="flex-1 p-4 md:p-6">
+												<h2 className="text-xl md:text-2xl font-bold">{item.Game.Name}</h2>
+												<div className="flex flex-wrap items-center mt-2 mb-2 md:mb-4">
+													<Badge variant="outline" className="mr-2 mb-1">
+														{item.Game.MinAmountOfPlayers === item.Game.MaxAmountOfPlayers
+															? `${item.Game.MinAmountOfPlayers} jogadores`
+															: `${item.Game.MinAmountOfPlayers}-${item.Game.MaxAmountOfPlayers} jogadores`}
+													</Badge>
+												</div>
+												<div className="flex items-center">
+													<Users className="h-4 w-4 mr-2 text-muted-foreground" />
+													<div className="flex">
+														{item.Owners.map((person) => (
+															<div key={person.AccountId} className="relative group -ml-2 first:ml-0">
+																<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
+																	<Image
+																		src={person.AvatarUrl || "/placeholder.svg"}
+																		alt={person.Handle || `Usuário ${person.AccountId}`}
+																		width={40}
+																		height={40}
+																		className="w-full h-full object-cover object-center"
+																	/>
+																</div>
+																<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
+																	{person.Handle || `ID: ${person.AccountId}`}
+																</div>
 															</div>
-															<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
-																{person.Handle || `ID: ${person.AccountId}`}
-															</div>
-														</div>
-													))}
+														))}
+													</div>
 												</div>
 											</div>
+											<div className="w-[100px] h-[100px] md:w-[200px] md:h-[200px] relative">
+												<Image
+													src={item.Game.IconUrl || "/placeholder.svg"}
+													alt={item.Game.Name}
+													fill
+													className="object-cover"
+												/>
+											</div>
 										</div>
-										<div className="w-[100px] h-[100px] md:w-[200px] md:h-[200px] relative">
-											<Image
-												src={item.Game.IconUrl || "/placeholder.svg"}
-												alt={item.Game.Name}
-												fill
-												className="object-cover"
-											/>
-										</div>
-									</div>
-								</CardContent>
-							</Card>
+									</CardContent>
+								</Card>
+							</Link>
 						))}
 
 						{/* Infinite scroll observer element */}

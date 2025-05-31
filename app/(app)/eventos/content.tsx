@@ -13,10 +13,11 @@ import { AttendanceStatus, Event, EventAttendanceStatus, Profile, ResponseEvents
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
-import { formatEventDate, getEventDescription } from "./utils"
+import { formatEventDate } from "./utils"
 import { Header } from "@/components/header"
 import { getAvailableSpots } from "./[slug]/utils"
 import Loading from "@/components/ui/loading"
+import { getDescription } from "@/lib/description"
 
 interface ConfirmAttendanceInput {
 	EventId: number
@@ -307,7 +308,7 @@ export default function Events() {
 												<div className="flex justify-between items-start">
 													<h2 className="text-xl md:text-2xl font-bold">{event.Name}</h2>
 												</div>
-												<p className="text-muted-foreground mt-1">{getEventDescription(event.Description)}</p>
+												<p className="text-muted-foreground mt-1">{getDescription(event.Description)}</p>
 
 												<div className="flex items-center mt-3 text-sm">
 													<CalendarClock className="h-4 w-4 mr-2 text-muted-foreground" />
