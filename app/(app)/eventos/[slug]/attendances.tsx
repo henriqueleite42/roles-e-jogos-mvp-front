@@ -6,7 +6,7 @@ import { Profile, AttendanceStatus, Event, EventAttendanceStatus } from "@/types
 import { CircleArrowRight, Check, Info, HelpCircle, X, ThumbsDown, ThumbsUp } from "lucide-react"
 import router from "next/router"
 import { getAvailableSpots } from "./utils"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
 interface Params {
@@ -48,8 +48,6 @@ const attendanceConfig = {
 }
 
 export function Attendances({ event, account }: Params) {
-	const queryClient = useQueryClient()
-
 	const mutation = useMutation({
 		mutationFn: async (body: ConfirmAttendanceInput) => {
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events/attendance', {

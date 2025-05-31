@@ -9,11 +9,11 @@ import { getAvailableSpots } from "./utils"
 import { ShareButton } from "./share"
 import { cookies } from "next/headers"
 import { Dates } from "./dates"
-import { getEventDescription } from "../utils"
 import { Header } from "@/components/header"
 import { EventImages } from "./images"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Loading from "@/components/ui/loading"
+import { getDescription } from "@/lib/description"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
 	return {
 		title: event.Name,
-		description: getEventDescription(event.Description),
+		description: getDescription(event.Description),
 		openGraph: event.IconUrl ? ({
 			images: [event.IconUrl],
 		}) : undefined,
