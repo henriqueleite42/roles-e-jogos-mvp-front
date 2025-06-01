@@ -294,8 +294,6 @@ export function CreateImagePage() {
 				throw new Error("imagem obrigatoria")
 			}
 
-			console.log(body);
-
 			var gameId: number | undefined = undefined
 			var eventId: number | undefined = undefined
 			var locationId: number | undefined = undefined
@@ -328,6 +326,17 @@ export function CreateImagePage() {
 						})
 						filePath = FilePath
 					}
+
+					console.log(JSON.stringify({
+						Description: body.description,
+						Width: img.width,
+						Height: img.height,
+						Path: filePath,
+						EventId: eventId,
+						GameId: gameId,
+						LocationId: locationId,
+						People: peopleIds
+					}));
 
 					const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/medias', {
 						method: 'POST',

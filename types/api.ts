@@ -112,6 +112,7 @@ export interface Event {
 	Location: {
 		Id: number
 		Name: string
+		Slug: string
 		Address: string
 		IconUrl?: string
 	}
