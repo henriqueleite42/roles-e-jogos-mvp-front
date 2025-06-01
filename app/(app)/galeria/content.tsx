@@ -11,13 +11,12 @@ import { formatEventDate } from "../eventos/utils"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { Auth, ResponseGetGallery } from "@/types/api"
 import Link from "next/link"
-import { canDo } from "@/lib/can-do-something"
 
 import { Header } from "@/components/header"
 import { useMasonry } from "@/lib/mansory"
 
 // Update the component to use the new masonry layout
-export default function GalleryPage({ auth }: { auth?: Auth }) {
+export default function GalleryPage() {
 	const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
 
 	const observerTarget = useRef<HTMLDivElement | null>(null)
@@ -137,16 +136,14 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 
 			<div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-50 to-white">
 				<main className="flex-1 container mx-auto pt-4 pb-8 px-4">
-					{canDo(auth) && (
-						<div className="flex md:flex-row justify-around items-start md:items-center gap-4 mb-6">
-							<Link href="/galeria/criar">
-								<Button className="gap-2 text-white">
-									<Plus className="h-4 w-4" />
-									Adicionar imagem
-								</Button>
-							</Link>
-						</div>
-					)}
+					<div className="flex md:flex-row justify-around items-start md:items-center gap-4 mb-6">
+						<Link href="/galeria/criar">
+							<Button className="gap-2 text-white">
+								<Plus className="h-4 w-4" />
+								Adicionar imagem
+							</Button>
+						</Link>
+					</div>
 
 					<div ref={containerRef} className="flex gap-4 items-start">
 						{columns.map((column, columnIndex) => (
@@ -320,7 +317,7 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 
 										{/* Game Information */}
 										{selectedImage.Game && (
-											<div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
+											<Link href={"/jogos/" + selectedImage.Game.Slug} className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
 												<div className="flex items-center gap-2 flex-1">
 													<Gamepad2 className="h-4 w-4 text-green-400 flex-shrink-0" />
 													<div className="flex items-center gap-2 min-w-0">
@@ -339,7 +336,7 @@ export default function GalleryPage({ auth }: { auth?: Auth }) {
 														</div>
 													</div>
 												</div>
-											</div>
+											</Link>
 										)}
 
 										{/* Event Information */}

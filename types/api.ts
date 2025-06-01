@@ -83,6 +83,7 @@ export interface Profile {
 export interface EventGame {
 	Id: number
 	Name: string
+	Slug: string
 	IconUrl?: string
 	Kind: GameKind
 	LudopediaUrl?: string
@@ -212,6 +213,7 @@ export interface MediaData {
 	Game?: {
 		Id: number
 		Name: string
+		Slug: string
 		IconUrl?: string
 	}
 	Event?: {
@@ -223,6 +225,7 @@ export interface MediaData {
 	Location?: {
 		Id: number
 		Name: string
+		Slug: string
 		IconUrl?: string
 	}
 }

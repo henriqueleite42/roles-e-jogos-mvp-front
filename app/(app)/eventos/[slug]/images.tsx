@@ -22,7 +22,7 @@ export const EventImages = ({ event }: Params) => {
 	const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data: images, isPending, fetchNextPage } = useInfiniteQuery<ResponseGetGallery>({
+	const { data: images, isPending } = useInfiniteQuery<ResponseGetGallery>({
 		queryKey: ["list-event-images", event.Id],
 		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async ({ pageParam = null }) => {

@@ -327,17 +327,6 @@ export function CreateImagePage() {
 						filePath = FilePath
 					}
 
-					console.log(JSON.stringify({
-						Description: body.description,
-						Width: img.width,
-						Height: img.height,
-						Path: filePath,
-						EventId: eventId,
-						GameId: gameId,
-						LocationId: locationId,
-						People: peopleIds
-					}));
-
 					const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/medias', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },

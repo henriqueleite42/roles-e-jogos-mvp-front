@@ -14,6 +14,7 @@ import { EventImages } from "./images"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Loading from "@/components/ui/loading"
 import { getDescription } from "@/lib/description"
+import Link from "next/link"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -167,15 +168,15 @@ export default async function EventPage({ params }: { params: { slug: string } }
 					</Card>
 
 					{/* Games Section */}
-					{event.Games?.length > 0 && (
-						<Card>
-							<CardHeader>
-								<CardTitle>Jogos do Evento</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									{event.Games.map((game) => (
-										<div key={game.Id} className="flex items-center gap-3 p-3 border rounded-lg">
+					<Card>
+						<CardHeader>
+							<CardTitle>Jogos do Evento</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								{event.Games.map((game) => (
+									<Link key={game.Id} href={"/jogos/" + game.Slug}>
+										<div className="flex items-center gap-3 p-3 border rounded-lg hover:bg-gray-50  transition-colors">
 											<div className="w-12 h-12 relative flex-shrink-0">
 												<Image
 													src={game.IconUrl || "/placeholder.svg"}
@@ -192,22 +193,14 @@ export default async function EventPage({ params }: { params: { slug: string } }
 															? `${game.MinAmountOfPlayers} jogadores`
 															: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
 													</Badge>
-													<a
-														href={game.LudopediaUrl}
-														target="_blank"
-														rel="noopener noreferrer"
-														className="text-xs text-blue-600 hover:underline"
-													>
-														Ver na Ludopedia
-													</a>
 												</div>
 											</div>
 										</div>
-									))}
-								</div>
-							</CardContent>
-						</Card>
-					)}
+									</Link>
+								))}
+							</div>
+						</CardContent>
+					</Card>
 
 					{/* Confirmations Section */}
 					<Card>
