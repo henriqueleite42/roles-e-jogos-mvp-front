@@ -3,6 +3,14 @@ import path from 'path'
 
 const APP_DIR = path.join(process.cwd(), 'app')
 
+const LAST_UPDATED = new Date()
+
+const ROUTES_TO_EXCLUDE = {
+	"/eventos/criar": true,
+	"/galeria/criar": true,
+	"/jogos/importar": true
+}
+
 function getStaticRoutes(dir = APP_DIR, segments: string[] = []): string[] {
 	const entries = fs.readdirSync(dir, { withFileTypes: true })
 	let routes: string[] = []
@@ -22,8 +30,16 @@ function getStaticRoutes(dir = APP_DIR, segments: string[] = []): string[] {
 		}
 
 		if (entry.name === 'page.tsx' || entry.name === 'page.js') {
-			const fullRoute = '/' + segments.filter(Boolean).join('/')
-			const cleanRoute = fullRoute.replace(/\/index$/, '') || '/'
+			const fullRoute = segments.filter(Boolean).join('/').replace(/\/index$/, '') || ''
+			var cleanRoute = ""
+			if (fullRoute.length > 0) {
+				cleanRoute = '/' + fullRoute
+			}
+
+			if (ROUTES_TO_EXCLUDE[cleanRoute as keyof typeof ROUTES_TO_EXCLUDE]) {
+				continue
+			}
+
 			routes.push(cleanRoute)
 		}
 	}
@@ -42,7 +58,7 @@ ${PATHS
 				(path) => `
   <url>
     <loc>${process.env.NEXT_PUBLIC_WEBSITE_URL}${path}</loc>
-    <lastmod>${new Date().toISOString()}</lastmod>
+    <lastmod>${LAST_UPDATED.toISOString()}</lastmod>
   </url>`
 			)
 			.join('')}

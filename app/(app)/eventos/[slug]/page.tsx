@@ -72,25 +72,6 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 	const cookieStore = await cookies();
 
-	var auth: Auth | undefined = undefined
-	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/auth/me', {
-			method: 'GET',
-			headers: {
-				Cookie: cookieStore.toString()
-			},
-			cache: 'no-store',
-		}).catch(() => ({
-			ok: false
-		} as Response));
-
-
-		if (res.ok) {
-			const body = await res.text()
-			auth = JSON.parse(body) as Auth;
-		}
-	}
-
 	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + slug, {
 		method: "GET",
 		credentials: "include"
@@ -304,7 +285,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 						</Card>
 					)}
 
-					<EventImages event={event} auth={auth} />
+					<EventImages event={event} />
 
 					{/* Comments Section */}
 					{/* <CommentsSection /> */}
