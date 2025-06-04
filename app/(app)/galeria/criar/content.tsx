@@ -13,7 +13,7 @@ import { z } from "zod"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useDebounce } from "@/hooks/use-debounce"
-import { cn } from "@/lib/utils"
+import { cn, formatDayMonthYear } from "@/lib/utils"
 import { GameData, MinimumEventDataWithLocation, ResponseSearchEvents, ResponseSearchGames, ResponseSearchLocations, ResponseSearchProfiles } from "@/types/api"
 import NextImage from "next/image"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -584,7 +584,7 @@ export function CreateImagePage() {
 																	}}
 																>
 																	<div className="flex flex-col">
-																		<div>{event.Name}</div>
+																		<div>{formatDayMonthYear(event.StartDate)} - {event.Name}</div>
 																	</div>
 																</CommandItem>
 															))}

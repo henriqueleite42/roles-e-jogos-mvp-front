@@ -142,6 +142,7 @@ export interface MinimumEventData {
 	IconUrl?: string
 	Slug: string
 	Name: string
+	StartDate: string
 }
 
 export interface MinimumEventDataWithLocation extends MinimumEventData {
@@ -230,6 +231,17 @@ export interface MediaData {
 	}
 }
 
+export interface ExternalLocation {
+	Name: string
+	ZipCode: string
+	State: string
+	City: string
+	Neighborhood: string
+	FullAddress: string
+	Latitude: number
+	Longitude: number
+}
+
 export interface ResponseGetGallery {
 	Data: Array<MediaData>
 	Pagination: PaginationId
@@ -243,4 +255,8 @@ export interface ResponseListGameOwners {
 export interface ResponseListEventsByGame {
 	Data: Array<MinimumEventData>
 	Pagination: PaginationTimestampId
+}
+
+export interface ResponseSearchExternalLocations {
+	Data: Array<ExternalLocation>
 }

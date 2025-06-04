@@ -4,57 +4,17 @@ import type React from "react"
 
 import { useMemo, useState } from "react"
 import Image from "next/image"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Building2, Home, ImageIcon, Loader2, MapPin, Plus, X } from "lucide-react"
+import { MapPin, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query"
+import { useInfiniteQuery } from "@tanstack/react-query"
 import { ResponseListLocations } from "@/types/api"
 import Link from "next/link"
-import { uploadImage } from "@/lib/api/upload-image"
 import { Header } from "@/components/header"
 
-// Form schema with validation
-const locationFormSchema = z.object({
-	name: z.string().min(3, {
-		message: "O nome do local deve ter pelo menos 3 caracteres.",
-	}),
-	address: z.string().min(10, {
-		message: "O endereço deve ter pelo menos 10 caracteres.",
-	}),
-	kind: z.enum(["BUSINESS", "PERSONAL"], {
-		required_error: "Selecione o tipo de local.",
-	}),
-})
-
-type LocationFormValues = z.infer<typeof locationFormSchema>
-
-interface MutationParams extends LocationFormValues {
-	LocationImage: File | null
-}
-
 export function LocationsPageContent() {
-	const queryClient = useQueryClient()
-
-	const [eventImage, setEventImage] = useState<File | null>(null)
-	const [imagePreview, setImagePreview] = useState<string | null>(null)
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
 	// Use TanStack Query for data fetching with infinite scroll
@@ -92,87 +52,6 @@ export function LocationsPageContent() {
 		return data.pages.flatMap((page) => page.Data || [])
 	}, [data])
 
-	const mutation = useMutation({
-		mutationFn: async (body: MutationParams) => {
-			var icon: any = undefined
-			if (body.LocationImage !== null) {
-				const { FilePath } = await uploadImage({
-					FileName: body.LocationImage?.name,
-					ImageBlob: body.LocationImage,
-					Kind: "LOCATION_ICON"
-				})
-
-				icon = FilePath
-			}
-
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/locations', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					Name: body.name,
-					Address: body.address,
-					Kind: body.kind,
-					IconPath: icon,
-				}),
-				credentials: 'include',
-			});
-
-			if (!res.ok) {
-				const error = await res.text()
-				console.error(error);
-				throw new Error(error)
-			}
-
-		},
-		onSuccess: () => {
-			form.reset()
-			setEventImage(null)
-			setImagePreview(null)
-			setIsDialogOpen(false)
-			queryClient.invalidateQueries({ queryKey: ["list-locations"] })
-		}
-	});
-
-	// Initialize form
-	const form = useForm<LocationFormValues>({
-		resolver: zodResolver(locationFormSchema),
-		defaultValues: {
-			name: "",
-			address: "",
-			kind: "BUSINESS",
-		},
-	})
-
-	// Handle image upload
-	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const file = e.target.files?.[0]
-		if (file) {
-			const reader = new FileReader()
-			reader.onloadend = () => {
-				setEventImage(file)
-				setImagePreview(reader.result as string)
-			}
-			reader.readAsDataURL(file)
-		}
-	}
-
-	// Clear image preview
-	const clearImagePreview = () => {
-		setEventImage(null)
-		setImagePreview(null)
-		// Also clear the file input
-		const fileInput = document.getElementById("location-image") as HTMLInputElement
-		if (fileInput) fileInput.value = ""
-	}
-
-	// Handle form submission
-	const onSubmit = async (values: LocationFormValues) => {
-		mutation.mutate({
-			...values,
-			LocationImage: eventImage,
-		})
-	}
-
 	return (
 		<>
 			<Header title="Locais" displayBackButton />
@@ -187,157 +66,12 @@ export function LocationsPageContent() {
 							</Button>
 						</Link>
 
-						<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-							<DialogTrigger asChild>
-								<Button className="gap-2 text-white">
-									<Plus className="h-4 w-4" />
-									Novo Local
-								</Button>
-							</DialogTrigger>
-							<DialogContent className="sm:max-w-[550px]">
-								<DialogHeader>
-									<DialogTitle>Adicionar Novo Local</DialogTitle>
-									<DialogDescription>Preencha os detalhes do local para adicioná-lo à sua lista.</DialogDescription>
-								</DialogHeader>
-
-								<Form {...form}>
-									<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-										{/* Location Name */}
-										<FormField
-											control={form.control}
-											name="name"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>Nome do Local</FormLabel>
-													<FormControl>
-														<Input placeholder="Ex: Luderia Central" {...field} />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-
-										{/* Location Address */}
-										<FormField
-											control={form.control}
-											name="address"
-											render={({ field }) => (
-												<FormItem>
-													<FormLabel>Endereço</FormLabel>
-													<FormControl>
-														<Input placeholder="Ex: Rua das Flores, 123, São Paulo, SP" {...field} />
-													</FormControl>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-
-										{/* Location Image */}
-										<div className="space-y-2">
-											<Label htmlFor="location-image">Imagem do Local</Label>
-											<div className="flex items-center gap-4">
-												<Button
-													type="button"
-													variant="outline"
-													onClick={() => document.getElementById("location-image")?.click()}
-													className="gap-2"
-												>
-													<ImageIcon className="h-4 w-4" />
-													Escolher Imagem
-												</Button>
-												<Input
-													id="location-image"
-													type="file"
-													accept="image/*"
-													className="hidden"
-													onChange={handleImageUpload}
-												/>
-												<span className="text-sm text-muted-foreground">
-													{imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"}
-												</span>
-											</div>
-
-											{imagePreview && (
-												<div className="relative mt-4 rounded-md overflow-hidden w-full max-w-md">
-													<img
-														src={imagePreview || "/placeholder.svg"}
-														alt="Preview"
-														className="w-full h-auto object-cover max-h-[200px]"
-													/>
-													<Button
-														type="button"
-														variant="destructive"
-														size="icon"
-														className="absolute top-2 right-2 h-8 w-8 rounded-full"
-														onClick={clearImagePreview}
-													>
-														<X className="h-4 w-4" />
-													</Button>
-												</div>
-											)}
-										</div>
-
-										{/* Location Kind */}
-										<FormField
-											control={form.control}
-											name="kind"
-											render={({ field }) => (
-												<FormItem className="space-y-3">
-													<FormLabel>Tipo de Local</FormLabel>
-													<FormControl>
-														<RadioGroup
-															onValueChange={field.onChange}
-															defaultValue={field.value}
-															className="flex flex-col space-y-1"
-														>
-															<FormItem className="flex items-center space-x-3 space-y-0">
-																<FormControl>
-																	<RadioGroupItem value="BUSINESS" />
-																</FormControl>
-																<FormLabel className="font-normal flex items-center gap-2">
-																	<Building2 className="h-4 w-4 text-blue-600" />
-																	Comercial
-																</FormLabel>
-															</FormItem>
-															<FormItem className="flex items-center space-x-3 space-y-0">
-																<FormControl>
-																	<RadioGroupItem value="PERSONAL" />
-																</FormControl>
-																<FormLabel className="font-normal flex items-center gap-2">
-																	<Home className="h-4 w-4 text-green-600" />
-																	Pessoal
-																</FormLabel>
-															</FormItem>
-														</RadioGroup>
-													</FormControl>
-													<FormDescription>
-														Locais comerciais são públicos e podem ser adicionados a qualquer evento. Locais pessoais
-														são privados e apenas você pode adicioná-los aos seus eventos.
-													</FormDescription>
-													<FormMessage />
-												</FormItem>
-											)}
-										/>
-
-										<DialogFooter>
-											<Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)}>
-												Cancelar
-											</Button>
-											<Button type="submit" disabled={mutation.isPending} className="text-white">
-												{mutation.isPending ? (
-													<>
-														<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-														Salvando...
-													</>
-												) : (
-													"Salvar Local"
-												)}
-											</Button>
-										</DialogFooter>
-									</form>
-								</Form>
-							</DialogContent>
-						</Dialog>
+						<Link href="/locais/criar" >
+							<Button className="gap-2 text-white">
+								<Plus className="h-8 w-8 text-white" />
+								Cadastrar novo
+							</Button>
+						</Link>
 					</div>
 
 					{locations.length > 0 ? (
