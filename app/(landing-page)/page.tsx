@@ -21,9 +21,9 @@ export default async function LandingPage() {
 									</p>
 								</div>
 								<div className="flex flex-col gap-2 min-[400px]:flex-row">
-									<Link href="/whatsapp">
+									<Link href="/home">
 										<Button className="bg-primary hover:bg-primary-foreground text-white">
-											Faça parte de nossa comunidade
+											Explore nossa comunidade
 											<ChevronRight className="ml-2 h-4 w-4" />
 										</Button>
 									</Link>

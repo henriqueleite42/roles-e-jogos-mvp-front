@@ -269,10 +269,20 @@ export function FormCreateEvent() {
 			router.push("/eventos/" + data.Slug)
 		},
 		onError: (err) => {
+			if (err.message === "file size exceeded") {
+				toast({
+					title: "Erro ao criar evento",
+					description: "Imagem grande de mais, limite de 5 MB",
+					variant: "destructive",
+				})
+				return
+			}
+
+			console.error(err)
 			toast({
-				title: "Erro ao criar evento!",
+				title: "Erro ao criar evento",
 				description: err.message,
-				className: "bg-red-400"
+				variant: "destructive",
 			})
 		}
 	});

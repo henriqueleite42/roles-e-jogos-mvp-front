@@ -20,6 +20,7 @@ import { useRouter, useSearchParams } from "next/navigation"
 import { Header } from "@/components/header"
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useToast } from "@/hooks/use-toast"
 
 // Form schema with validation
 const imageFormSchema = z.object({
@@ -61,6 +62,7 @@ interface MutationParams extends ImageFormValues {
 }
 
 export function CreateImagePage() {
+	const { toast } = useToast()
 	const searchParams = useSearchParams()
 	const router = useRouter()
 
@@ -358,6 +360,23 @@ export function CreateImagePage() {
 		},
 		onSuccess: () => {
 			router.push(redirectTo)
+		},
+		onError: (err) => {
+			if (err.message === "file size exceeded") {
+				toast({
+					title: "Erro ao criar imagem",
+					description: "Imagem grande de mais, limite de 5 MB",
+					variant: "destructive",
+				})
+				return
+			}
+
+			console.error(err)
+			toast({
+				title: "Erro ao criar imagem",
+				description: err.message,
+				variant: "destructive",
+			})
 		}
 	});
 

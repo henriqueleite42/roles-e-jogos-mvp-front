@@ -6,7 +6,13 @@ export interface UploadImageInput {
 	Kind: UploadKind
 }
 
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024                // 5 MB
+
 export async function uploadImage({ FileName, Kind, ImageBlob }: UploadImageInput) {
+	if (ImageBlob.size > MAX_IMAGE_SIZE) {
+		throw new Error("file size exceeded")
+	}
+
 	const ext = FileName.split(".").pop()
 
 	const responseReqUrl = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/uploads/request`, {

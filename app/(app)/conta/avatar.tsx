@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useMutation } from "@tanstack/react-query"
 import { UploadUrl } from "@/types/api"
 import { uploadImage } from "@/lib/api/upload-image"
+import { useToast } from "@/hooks/use-toast"
 
 interface Props {
 	profileImageUrl?: string
@@ -22,6 +23,7 @@ interface Body {
 }
 
 export function AvatarComponent({ profileImageUrl, username }: Props) {
+	const { toast } = useToast()
 	const [showCropper, setShowCropper] = useState(false)
 	const [imageFile, setImageFile] = useState<File | null>(null)
 
@@ -70,7 +72,21 @@ export function AvatarComponent({ profileImageUrl, username }: Props) {
 			setShowCropper(false)
 		},
 		onError: (error) => {
+			if (error.message === "file size exceeded") {
+				toast({
+					title: "Erro ao atualizar imagem de perfil",
+					description: "Imagem grande de mais, limite de 5 MB",
+					variant: "destructive",
+				})
+				return
+			}
+
 			console.error('Error uploading or updating profile img:', error)
+			toast({
+				title: "Erro ao atualizar imagem de perfil",
+				description: error.message,
+				variant: "destructive",
+			})
 		},
 	})
 
