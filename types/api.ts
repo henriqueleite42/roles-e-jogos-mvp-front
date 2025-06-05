@@ -117,8 +117,6 @@ export interface Event {
 		Address: string
 		IconUrl?: string
 	}
-	Games: Array<EventGame>
-	Attendances: Array<EventAttendance>
 }
 
 export interface LocationData {
