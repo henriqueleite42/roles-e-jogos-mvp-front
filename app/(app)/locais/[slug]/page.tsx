@@ -6,7 +6,7 @@ import {
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { LocationData } from "@/types/api"
+import { LocationData, Profile } from "@/types/api"
 import { Header } from "@/components/header"
 import { redirect } from 'next/navigation';
 import { Metadata } from "next"
@@ -14,6 +14,7 @@ import { LocationDetails } from "./details"
 import { LocationAddress } from "./address"
 import { LocationImages } from "./images"
 import { LocationEvents } from "./events"
+import { cookies } from "next/headers"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -39,9 +40,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function LocationDetailsPage({ params }: { params: { slug: string } }) {
+	const cookieStore = await cookies();
 	const { slug } = await params
 
-	const resLocation = await fetch(process.env.NEXT_PUBLIC_API_URL + "/locations?slug=" + slug)
+	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+		redirect('/home')
+	}
+
+	const resLocation = await fetch(process.env.NEXT_PUBLIC_API_URL + "/locations?slug=" + slug, {
+		method: 'GET',
+		headers: {
+			Cookie: cookieStore.toString()
+		},
+	})
 
 	if (!resLocation.ok) {
 		console.error(await resLocation.text())
@@ -51,6 +62,25 @@ export default async function LocationDetailsPage({ params }: { params: { slug: 
 	const location = await resLocation.json() as LocationData
 
 	if (!location) {
+		redirect('/locais')
+	}
+
+	const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
+		method: 'GET',
+		headers: {
+			Cookie: cookieStore.toString()
+		},
+		cache: 'no-store',
+	});
+
+	if (!resAccount.ok) {
+		console.error(await resAccount.text())
+		redirect('/locais')
+	}
+
+	const profile: Profile = await resAccount.json();
+
+	if (location.Kind == "PERSONAL" && location.CreatedBy != profile.AccountId) {
 		redirect('/locais')
 	}
 
