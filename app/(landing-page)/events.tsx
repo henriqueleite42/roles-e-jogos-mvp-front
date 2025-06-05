@@ -38,7 +38,6 @@ export function Events() {
 					</div>
 					<p className="text-sm text-gray-500">Data: {formatEventDate(event.StartDate)}</p>
 					<p className="text-sm text-gray-500">Local: {event.Location.Name}</p>
-					<p className="text-sm text-gray-500">Jogos previstos: {event.Games.map(g => g.Name).join(", ")}</p>
 					{/* <Button className="mt-2 bg-primary hover:bg-red-600">Confirmar presença</Button> */}
 				</div>
 			))}

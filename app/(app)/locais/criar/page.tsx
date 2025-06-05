@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils"
 import { Command, CommandInput, CommandEmpty, CommandGroup, CommandList, CommandItem } from "@/components/ui/command"
 import { ExternalLocation, ResponseSearchExternalLocations } from "@/types/api"
 import { promiseWithTimeout } from "@/lib/promise-with-timeout"
-import { toast } from "@/hooks/use-toast"
+import { useToast } from "@/hooks/use-toast"
 import { Header } from "@/components/header"
 import { useRouter } from "next/navigation"
 
@@ -57,6 +57,7 @@ interface MutationParams extends LocationFormValues {
 }
 
 export default function Page() {
+	const { toast } = useToast()
 	const queryClient = useQueryClient()
 	const router = useRouter()
 
@@ -167,6 +168,23 @@ export default function Page() {
 			setImagePreview(null)
 			queryClient.invalidateQueries({ queryKey: ["list-locations"] })
 			router.push("/locais")
+		},
+		onError: (err) => {
+			if (err.message === "file size exceeded") {
+				toast({
+					title: "Erro ao criar local",
+					description: "Imagem grande de mais, limite de 5 MB",
+					variant: "destructive",
+				})
+				return
+			}
+
+			console.error(err)
+			toast({
+				title: "Erro ao criar local",
+				description: err.message,
+				variant: "destructive",
+			})
 		}
 	});
 
