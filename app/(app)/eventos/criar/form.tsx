@@ -153,7 +153,7 @@ export function FormCreateEvent() {
 				query: debouncedLocationQuery
 			})
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/search?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations/search/visible?${query.toString()}`, {
 				credentials: "include"
 			})
 

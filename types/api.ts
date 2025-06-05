@@ -124,7 +124,14 @@ export interface Event {
 export interface LocationData {
 	Id: number
 	Name: string
+	Slug: string
 	Address: string
+	ZipCode: string
+	City: string;
+	State: string;
+	Neighborhood: string;
+	Latitude: number;
+	Longitude: number;
 	IconUrl?: string
 	Kind: LocationKind
 	CreatedBy: number
@@ -242,6 +249,15 @@ export interface ExternalLocation {
 	Longitude: number
 }
 
+export interface LocationMarker {
+	Id: number
+	Name: string
+	Slug: string
+	Latitude: number
+	Longitude: number
+	Kind: LocationKind
+}
+
 export interface ResponseGetGallery {
 	Data: Array<MediaData>
 	Pagination: PaginationId
@@ -259,4 +275,13 @@ export interface ResponseListEventsByGame {
 
 export interface ResponseSearchExternalLocations {
 	Data: Array<ExternalLocation>
+}
+
+export interface ResponseListLocationsMarkers {
+	Data: Array<LocationMarker>
+}
+
+export interface ResponseGetEvents {
+	Data: Array<MinimumEventData>
+	Pagination: PaginationTimestampId
 }
