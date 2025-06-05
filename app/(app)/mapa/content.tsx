@@ -82,7 +82,6 @@ export function Map() {
 					});
 
 					const listener = markerGoogle.addListener('click', () => {
-						console.log(marker);
 						setSelectedMarker(marker)
 					});
 

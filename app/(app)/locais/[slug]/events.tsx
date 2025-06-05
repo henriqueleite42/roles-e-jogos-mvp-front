@@ -59,7 +59,7 @@ export function LocationEvents({ location }: { location: LocationData }) {
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="space-y-3">
+				<div className="flex flex-col space-y-3">
 					{
 						isPending && (
 							<Loading />
