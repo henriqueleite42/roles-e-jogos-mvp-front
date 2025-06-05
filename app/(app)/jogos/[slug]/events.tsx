@@ -31,7 +31,7 @@ export const GameEvents = ({ game }: Params) => {
 				query.set("afterId", String(pp.AfterId))
 			}
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/games?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/game?${query.toString()}`, {
 				credentials: "include"
 			})
 
