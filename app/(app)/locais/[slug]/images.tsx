@@ -90,34 +90,32 @@ export function LocationImages({ location }: { location: LocationData }) {
 							</Button>
 						</Link>
 					</div>
-					<div className="aspect-video relative rounded-lg overflow-hidden">
-						<Image
-							src={allImages[currentImageIndex]?.Url || "/placeholder.svg"}
-							alt=""
-							fill
-							className="object-cover"
-						/>
-						{allImages.length > 1 && (
-							<>
-								<Button
-									variant="outline"
-									size="icon"
-									className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
-									onClick={prevImage}
-								>
-									<ChevronLeft className="h-4 w-4" />
-								</Button>
-								<Button
-									variant="outline"
-									size="icon"
-									className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
-									onClick={nextImage}
-								>
-									<ChevronRight className="h-4 w-4" />
-								</Button>
-							</>
-						)}
-					</div>
+					{allImages.length > 1 && (
+						<div className="aspect-video relative rounded-lg overflow-hidden">
+							<Image
+								src={allImages[currentImageIndex]?.Url || "/placeholder.svg"}
+								alt=""
+								fill
+								className="object-cover"
+							/>
+							<Button
+								variant="outline"
+								size="icon"
+								className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+								onClick={prevImage}
+							>
+								<ChevronLeft className="h-4 w-4" />
+							</Button>
+							<Button
+								variant="outline"
+								size="icon"
+								className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white"
+								onClick={nextImage}
+							>
+								<ChevronRight className="h-4 w-4" />
+							</Button>
+						</div>
+					)}
 					{
 						isPending && (
 							<Loading />
