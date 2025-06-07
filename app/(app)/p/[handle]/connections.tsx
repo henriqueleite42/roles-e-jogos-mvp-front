@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
 import { Logout } from "./logout"
+import { cn } from "@/lib/utils"
 
 interface Props {
 	auth?: Profile
@@ -209,7 +210,7 @@ export function Connections({ profile }: Props) {
 								onClick={() => toggleConnection(connection)}
 							>
 								<div className="flex items-center gap-3">
-									<div className={`p-2 rounded-full text-white ${connectionsIcons[connection.Provider as keyof typeof connectionsIcons].color}`}>
+									<div className={cn("p-2 rounded-full text-white", connectionsIcons[connection.Provider as keyof typeof connectionsIcons].color)}>
 										{connectionsIcons[connection.Provider as keyof typeof connectionsIcons].icon({
 											className: "h-5 w-5 text-white"
 										})}
