@@ -17,34 +17,7 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { useDebounce } from "@/hooks/use-debounce"
 import { Header } from "@/components/header"
 import Link from "next/link"
-
-interface Owner {
-	AccountId: number
-	AvatarUrl?: string
-	Handle: string
-}
-
-interface GameCollection {
-	Game: {
-		IconUrl?: string
-		Id: number
-		LudopediaUrl?: string
-		MaxAmountOfPlayers: number
-		MinAmountOfPlayers: number
-		Name: string
-		Slug: string
-	}
-	Owners: Array<Owner>
-}
-
-interface ResponseGames {
-	Data: Array<GameCollection>
-	Pagination: {
-		Current?: string
-		Limit: number
-		Next?: string
-	}
-}
+import { Owner, ResponseGames } from "@/types/api"
 
 // export const metadata = {
 // 	title: "Jogos",
@@ -405,7 +378,7 @@ export default function GamesPage() {
 													<Users className="h-4 w-4 mr-2 text-muted-foreground" />
 													<div className="flex">
 														{item.Owners.map((person) => (
-															<div key={person.AccountId} className="relative group -ml-2 first:ml-0">
+															<Link key={person.AccountId} href={"/p/" + person.Handle} className="relative group -ml-2 first:ml-0">
 																<div className="rounded-full border-2 border-background w-10 h-10 overflow-hidden">
 																	<Image
 																		src={person.AvatarUrl || "/placeholder.svg"}
@@ -418,7 +391,7 @@ export default function GamesPage() {
 																<div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none z-10">
 																	{person.Handle || `ID: ${person.AccountId}`}
 																</div>
-															</div>
+															</Link>
 														))}
 													</div>
 												</div>

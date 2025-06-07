@@ -101,7 +101,7 @@ export function Attendances({ event, account }: Params) {
 
 		if (userAttendance) {
 			// User has already set an attendance status
-			const config = attendanceConfig[userAttendance?.Status]
+			const config = attendanceConfig[userAttendance?.Status as keyof typeof attendanceConfig]
 
 			return (
 				<DropdownMenu>

@@ -11,8 +11,3 @@ export const connectionsIcons = {
 		color: "bg-ludopedia hover:bg-ludopedia"
 	}
 }
-
-export function toPascalCase(str: string) {
-	const lower = str.toLowerCase();
-	return lower.charAt(0).toUpperCase() + lower.slice(1);
-}
