@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ArrowLeft, Facebook, Github, Loader2, Mail, Twitter } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { connectionsIcons, toPascalCase } from "./utils"
 import { Header } from "@/components/header"
+import { connectionsIcons } from "@/lib/icons"
+import { toPascalCase } from "@/lib/string"
 
 export default function SignInPage() {
 	const [isLoading, setIsLoading] = useState<string | null>(null)

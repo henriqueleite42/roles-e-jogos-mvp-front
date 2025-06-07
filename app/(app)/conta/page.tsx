@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers';
 
-import { Profile } from "@/types/api"
-import { LoggedView } from './logged-view';
 import SignInPage from './unlogged-view';
+import { redirect } from 'next/navigation';
+import { Profile } from '@/types/api';
 
 export const metadata = {
 	title: "Conta",
@@ -26,12 +26,11 @@ export default async function ContaPage() {
 		ok: false
 	} as Response));
 
-	if (res.ok) {
-		const profile: Profile = await res.json();
-		return (
-			<LoggedView profile={profile} />
-		)
-	} else {
+	if (!res.ok) {
 		return <SignInPage />
 	}
+
+	const profile = await res.json() as Profile
+
+	redirect("/p/" + profile.Handle)
 }

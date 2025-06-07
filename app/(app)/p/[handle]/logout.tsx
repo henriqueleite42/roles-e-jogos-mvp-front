@@ -1,7 +1,7 @@
 "use client"
 
 import { LogOut } from "lucide-react"
-
+import router from "next/router"
 import { Button } from "@/components/ui/button"
 import { useMutation } from "@tanstack/react-query"
 
@@ -18,10 +18,10 @@ export function Logout() {
 			}
 		},
 		onSuccess: () => {
-			window.location.reload()
+			router.push("/conta")
 		},
 		onError: (error) => {
-			console.error('Error requesting import collection:', error)
+			console.error('Error login out:', error)
 		},
 	})
 

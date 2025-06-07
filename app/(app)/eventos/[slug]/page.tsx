@@ -214,13 +214,13 @@ export default async function EventPage({ params }: { params: { slug: string } }
 						<CardContent>
 							<div className="flex flex-wrap gap-2">
 								{confirmations.map((person) => (
-									<div key={person.AccountId} className="flex items-center gap-2 border rounded-full px-3 py-1">
+									<Link key={person.AccountId} href={"/p/" + person.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
 										<Avatar className="w-6 h-6">
 											<AvatarImage src={person.AvatarUrl || "/placeholder.svg"} alt={person.Handle} />
 											<AvatarFallback className="text-xs">{person.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 										</Avatar>
 										<span className="text-sm">{person.Handle}</span>
-									</div>
+									</Link>
 								))}
 
 								{confirmations.length === 0 && (
@@ -242,13 +242,13 @@ export default async function EventPage({ params }: { params: { slug: string } }
 							<CardContent>
 								<div className="flex flex-wrap gap-2">
 									{maybes.map((person) => (
-										<div key={person.AccountId} className="flex items-center gap-2 border rounded-full px-3 py-1">
+										<Link key={person.AccountId} href={"/p/" + person.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
 											<Avatar className="w-6 h-6">
 												<AvatarImage src={person.AvatarUrl || "/placeholder.svg"} alt={person.Handle} />
 												<AvatarFallback className="text-xs">{person.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 											</Avatar>
 											<span className="text-sm">{person.Handle}</span>
-										</div>
+										</Link>
 									))}
 								</div>
 							</CardContent>
@@ -265,13 +265,13 @@ export default async function EventPage({ params }: { params: { slug: string } }
 							<CardContent>
 								<div className="flex flex-wrap gap-2">
 									{notGoing.map((person) => (
-										<div key={person.AccountId} className="flex items-center gap-2 border rounded-full px-3 py-1">
+										<Link key={person.AccountId} href={"/p/" + person.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
 											<Avatar className="w-6 h-6">
 												<AvatarImage src={person.AvatarUrl || "/placeholder.svg"} alt={person.Handle} />
 												<AvatarFallback className="text-xs">{person.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 											</Avatar>
 											<span className="text-sm">{person.Handle}</span>
-										</div>
+										</Link>
 									))}
 								</div>
 							</CardContent>

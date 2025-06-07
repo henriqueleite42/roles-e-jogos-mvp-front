@@ -11,12 +11,14 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from 'react-hook-form';
+import { Profile } from '@/types/api';
 
 interface Props {
-	username: string;
+	auth?: Profile
+	profile: Profile
 }
 
-const updateUsernameSchema = z.object({
+const updateHandleSchema = z.object({
 	NewHandle: z
 		.string()
 		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
@@ -39,23 +41,25 @@ const updateUsernameSchema = z.object({
 	message: "Seu username não pode começar ou terminar com _ ou .",
 	path: ["NewHandle"]
 });
-type UpdateUsernameInput = z.infer<typeof updateUsernameSchema>;
+type UpdateHandleInput = z.infer<typeof updateHandleSchema>;
 
-export function Username({ username }: Props) {
+export function Handle({ profile, auth }: Props) {
 	const router = useRouter();
 
-	const [isEditingUsername, setIsEditingUsername] = useState(false);
+	const [isEditingHandle, setIsEditingHandle] = useState(false);
 
 	// Initialize form
-	const form = useForm<UpdateUsernameInput>({
-		resolver: zodResolver(updateUsernameSchema),
+	const form = useForm<UpdateHandleInput>({
+		resolver: zodResolver(updateHandleSchema),
 		defaultValues: {
-			NewHandle: username,
+			NewHandle: profile.Handle,
 		},
 	})
 
 	const mutation = useMutation({
-		mutationFn: async (body: UpdateUsernameInput) => {
+		mutationFn: async (body: UpdateHandleInput) => {
+			if (body.NewHandle === profile.Handle) return
+
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/handle', {
 				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
@@ -67,23 +71,25 @@ export function Username({ username }: Props) {
 				const error = await res.text();
 
 				if (error.includes("conflict")) {
-					throw new Error("Alguém já está usando esse username");
+					throw new Error("Alguém já está usando esse handle");
 				}
 
 				console.error(error);
 				throw new Error(error);
 			}
 
-			setIsEditingUsername(false);
-			router.refresh();
 		},
+		onSuccess: () => {
+			setIsEditingHandle(false);
+			router.refresh();
+		}
 	});
 
-	const onSubmit = (data: UpdateUsernameInput) => {
+	const onSubmit = (data: UpdateHandleInput) => {
 		mutation.mutate(data);
 	};
 
-	if (isEditingUsername) {
+	if (isEditingHandle) {
 		return (
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} >
@@ -93,7 +99,7 @@ export function Username({ username }: Props) {
 							name="NewHandle"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel hidden>Novo username</FormLabel>
+									<FormLabel hidden>Novo handle</FormLabel>
 									<FormControl>
 										<Input
 											{...field}
@@ -129,17 +135,19 @@ export function Username({ username }: Props) {
 	} else {
 		return (
 			<div className="flex items-center gap-2 mb-4">
-				<h2 className="text-xl font-bold">{username}</h2>
-				<Button
-					size="icon"
-					variant="ghost"
-					className="h-8 w-8"
-					onClick={() => {
-						setIsEditingUsername(true);
-					}}
-				>
-					<Edit2 className="h-4 w-4" />
-				</Button>
+				<p className="text-muted-foreground">@{profile.Handle}</p>
+				{profile.AccountId === auth?.AccountId && (
+					<Button
+						size="icon"
+						variant="ghost"
+						className="h-8 w-8"
+						onClick={() => {
+							setIsEditingHandle(true);
+						}}
+					>
+						<Edit2 className="h-4 w-4" />
+					</Button>
+				)}
 			</div>
 		);
 	}

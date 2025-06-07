@@ -117,6 +117,18 @@ export interface Event {
 		Address: string
 		IconUrl?: string
 	}
+	Attendances: Array<{
+		AccountId: number
+		Status: AttendanceStatus
+	}>
+	Games: Array<{
+		Id: number
+		Name: string
+		Slug: string
+		IconUrl?: string
+		MinAmountOfPlayers: number
+		MaxAmountOfPlayers: number
+	}>
 }
 
 export interface LocationData {
@@ -150,6 +162,13 @@ export interface MinimumEventData {
 	StartDate: string
 }
 
+export interface MinimumEventDataWithAttendance extends MinimumEventData {
+	Attendance: {
+		Status: AttendanceStatus
+	}
+	Location: MinimumLocationData
+}
+
 export interface MinimumEventDataWithLocation extends MinimumEventData {
 	Location: MinimumLocationData
 }
@@ -160,6 +179,11 @@ export interface ResponseSearchLocations {
 
 export interface ResponseSearchGames {
 	Data: Array<GameData>
+}
+
+export interface ResponseSearchPersonalGames {
+	Data: Array<GameData>
+	Pagination: PaginationId
 }
 
 export interface ResponseSearchEvents {
@@ -271,6 +295,11 @@ export interface ResponseListEventsByGame {
 	Pagination: PaginationTimestampId
 }
 
+export interface ResponseListEventsByAccount {
+	Data: Array<MinimumEventDataWithAttendance>
+	Pagination: PaginationTimestampId
+}
+
 export interface ResponseSearchExternalLocations {
 	Data: Array<ExternalLocation>
 }
@@ -282,4 +311,44 @@ export interface ResponseListLocationsMarkers {
 export interface ResponseGetEvents {
 	Data: Array<MinimumEventData>
 	Pagination: PaginationTimestampId
+}
+
+export interface Owner {
+	AccountId: number
+	AvatarUrl?: string
+	Handle: string
+}
+
+export interface GameCollection {
+	Game: {
+		IconUrl?: string
+		Id: number
+		LudopediaUrl?: string
+		MaxAmountOfPlayers: number
+		MinAmountOfPlayers: number
+		Name: string
+		Slug: string
+	}
+	Owners: Array<Owner>
+}
+
+export interface ResponseGames {
+	Data: Array<GameCollection>
+	Pagination: {
+		Current?: string
+		Limit: number
+		Next?: string
+	}
+}
+
+export interface ConnectionData {
+	AccountId: number
+	Provider: Provider
+	ExternalHandle?: string
+	ExternalId: string
+	CreatedAt: string
+}
+
+export interface ResponseListConnections {
+	Data: Array<ConnectionData>
 }
