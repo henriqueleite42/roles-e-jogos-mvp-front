@@ -23,6 +23,7 @@ const config = {
 			colors: {
 				google: "#4285F4",
 				ludopedia: "#ffc90e",
+				discord: "#5865f2",
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",
 				ring: "hsl(var(--ring))",

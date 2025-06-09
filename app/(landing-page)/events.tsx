@@ -2,9 +2,9 @@
 
 import { ResponseEvents } from "@/types/api";
 import { Calendar } from "lucide-react";
-import { formatEventDate } from "../(app)/eventos/utils";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/ui/loading";
+import { formatEventDate } from "@/lib/dates";
 
 export function Events() {
 	const { data, isPending } = useQuery<ResponseEvents>({

@@ -352,3 +352,8 @@ export interface ConnectionData {
 export interface ResponseListConnections {
 	Data: Array<ConnectionData>
 }
+
+export interface ConnectionImportStatus {
+	Status: "COMPLETED" | "FAILED" | "STARTED" | "NOT_YET_IMPORTED"
+	LastImportDate?: string
+}

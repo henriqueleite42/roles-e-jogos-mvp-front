@@ -3,12 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LocationData, ResponseGetEvents } from "@/types/api";
 import { Calendar } from "lucide-react";
-import { formatEventDate } from "../../eventos/utils";
 import Image from "next/image";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import Link from "next/link";
 import Loading from "@/components/ui/loading";
+import { formatEventDate } from "@/lib/dates";
 
 export function LocationEvents({ location }: { location: LocationData }) {
 	// Use TanStack Query for data fetching with infinite scroll

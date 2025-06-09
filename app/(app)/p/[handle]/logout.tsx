@@ -1,11 +1,13 @@
 "use client"
 
 import { LogOut } from "lucide-react"
-import router from "next/router"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { useMutation } from "@tanstack/react-query"
 
 export function Logout() {
+	const router = useRouter()
+
 	const { mutate, isPending } = useMutation({
 		mutationFn: async () => {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {

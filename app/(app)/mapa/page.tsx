@@ -1,5 +1,6 @@
 import { Metadata } from "next"
-import { Map } from "./content"
+import { Header } from "@/components/header"
+import { MapPage } from "./content"
 
 export async function generateMetadata(): Promise<Metadata> {
 	return {
@@ -12,5 +13,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
-	return <Map />
+	return (
+		<>
+			<Header title="Mapa" displayBackButton />
+
+			<main className="overflow-hidden min-h-[84vh]">
+				<MapPage />
+			</main>
+		</>
+	)
 }

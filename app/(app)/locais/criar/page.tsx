@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useDebounce } from "@/hooks/use-debounce"
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
@@ -78,7 +78,7 @@ export default function Page() {
 	}
 
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data: locations, isLoading: isSearchingLocations, error } = useQuery<ResponseSearchExternalLocations>({
+	const { data, isLoading: isSearchingLocations, error } = useQuery<ResponseSearchExternalLocations>({
 		queryKey: ["search-external-locations", debouncedLocationQuery],
 		staleTime: 1000 * 60 * 60, // 60 minutes
 		queryFn: async () => {
@@ -124,6 +124,10 @@ export default function Page() {
 			return response.json()
 		},
 	})
+
+	const locations = useMemo(() => {
+		return data?.Data || []
+	}, [data])
 
 	const mutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
@@ -314,25 +318,20 @@ export default function Page() {
 														<CommandEmpty>Digite pelo menos 3 caracteres para buscar</CommandEmpty>
 													)}
 
-													{!isSearchingLocations && locationQuery.length >= 3 && (locations?.Data || []).length === 0 && (
+													{!isSearchingLocations && locationQuery.length >= 3 && locations.length === 0 && (
 														<CommandEmpty>Nenhum local encontrado</CommandEmpty>
 													)}
 
-													{(locations?.Data || []).length > 0 && (
-														<CommandGroup>
-															{(locations?.Data || []).map((location) => (
-																<CommandItem
-																	key={location.Name}
-																	value={location.Name}
-																	onSelect={() => handleLocationSelect(location)}
-																>
-																	<div className="flex flex-col">
-																		<div>{location.Name}</div>
-																		<div className="text-xs text-muted-foreground">{location.FullAddress}</div>
-																	</div>
-																</CommandItem>
+													{locations.length > 0 && (
+														<div
+															className="overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground">
+															{locations.map((location) => (
+																<div key={location.Name} className="flex flex-col" onClick={() => handleLocationSelect(location)}>
+																	<div>{location.Name}</div>
+																	<div className="text-xs text-muted-foreground">{location.FullAddress}</div>
+																</div>
 															))}
-														</CommandGroup>
+														</div>
 													)}
 												</CommandList>
 											</Command>
