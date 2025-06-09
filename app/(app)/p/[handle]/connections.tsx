@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { Connection, Profile, ResponseListConnections } from "@/types/api"
+import { Connection, ConnectionImportStatus, Profile, ResponseListConnections } from "@/types/api"
 import { useState } from "react"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { connectionsIcons } from "@/lib/icons"
 import { toPascalCase } from "@/lib/string"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -16,20 +16,27 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useToast } from "@/hooks/use-toast"
 import { Logout } from "./logout"
 import { cn } from "@/lib/utils"
+import { formatEventDate } from "@/lib/dates"
 
 interface Props {
 	auth?: Profile
 	profile: Profile
 }
 
-const availableProviders = [
+export const availableProviders = [
 	{
 		Provider: "GOOGLE",
-		Url: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI!
+		UrlCreate: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_CREATE!,
+		UrlLink: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI_LINK!
 	},
 	{
 		Provider: "LUDOPEDIA",
-		Url: process.env.NEXT_PUBLIC_LUDOPEDIA_REDIRECT_URI!
+		UrlLink: process.env.NEXT_PUBLIC_LUDOPEDIA_REDIRECT_URI_LINK!
+	},
+	{
+		Provider: "DISCORD",
+		UrlCreate: process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI_CREATE!,
+		UrlLink: process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI_LINK!
 	},
 ]
 
@@ -38,7 +45,7 @@ export function TipLinkLudopedia() {
 		<div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
 			<h4 className="font-medium text-blue-900 mb-2">💡 Dica:</h4>
 			Conecte sua conta da Ludopedia para importar sua coleção de jogos!
-			<Link href={availableProviders[1].Url} className="grid mt-3">
+			<Link href={availableProviders[1].UrlLink} className="grid mt-3">
 				<Button
 					variant="outline"
 					className={`justify-start gap-3 h-14 ${connectionsIcons[availableProviders[1].Provider as keyof typeof connectionsIcons].color}`}
@@ -57,7 +64,6 @@ export function TipLinkLudopedia() {
 
 export function Connections({ profile }: Props) {
 	const { toast } = useToast()
-	const queryClient = useQueryClient()
 
 	const [expandedConnection, setExpandedConnection] = useState<Connection | undefined>(undefined)
 
@@ -78,8 +84,35 @@ export function Connections({ profile }: Props) {
 	})
 
 	const {
+		data: importStatus,
+		isLoading: isGettingImportStatus,
+	} = useQuery<ConnectionImportStatus>({
+		queryKey: ["connectionImportStatus", expandedConnection],
+		staleTime: 0,   // Always refetch, never consider the data fresh
+		queryFn: async () => {
+			if (!expandedConnection) return {} as ConnectionImportStatus
+
+			const query = new URLSearchParams({
+				externalId: expandedConnection.ExternalId,
+				provider: expandedConnection.Provider
+			})
+
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/import/status?${query.toString()}`, {
+				credentials: "include"
+			})
+
+			if (!response.ok) {
+				throw new Error(`Get connection import status failed with status ${response.status}`)
+			}
+
+			return response.json()
+		},
+	})
+
+	const {
 		mutate: requestImportCollectionFromLudopedia,
-		status, error
+		isPending: isRequestImportCollectionFromLudopediaPending,
+		error
 	} = useMutation({
 		mutationFn: async (externalId: string) => {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/import/ludopedia`, {
@@ -97,7 +130,8 @@ export function Connections({ profile }: Props) {
 		},
 		onSuccess: () => {
 			toast({
-				title: "jogos importados com sucesso!"
+				title: "Seus jogos estão sendo importados!",
+				description: "Dentro de alguns minutos toda sua coleção terá sido importada, por favor aguarde.",
 			})
 		},
 		onError: (error) => {
@@ -109,29 +143,6 @@ export function Connections({ profile }: Props) {
 		if (connection.Provider !== "LUDOPEDIA") return
 
 		setExpandedConnection((curValue) => curValue?.ExternalId === connection?.ExternalId ? undefined : connection)
-	}
-
-	const getImportStatusBadge = () => {
-		if (status === "error") {
-			return (
-				<Badge variant="outline" className="bg-red-50 text-red-600 hover:bg-red-50">
-					Erro: {error.message}
-				</Badge>
-			)
-		}
-		if (status === "pending") {
-			return (
-				<Badge variant="outline" className="bg-yellow-50 text-yellow-600 hover:bg-yellow-50">
-					Em progresso
-				</Badge>
-			)
-		}
-
-		return (
-			<Badge variant="outline" className="bg-green-50 text-green-600 hover:bg-green-50">
-				Sucesso
-			</Badge>
-		)
 	}
 
 	return (
@@ -158,7 +169,7 @@ export function Connections({ profile }: Props) {
 								<div className="grid gap-4 py-4">
 									{
 										availableProviders.map(p => (
-											<Link key={p.Provider} href={p.Url || ""} className="grid">
+											<Link key={p.Provider} href={p.UrlLink} className="grid">
 												<Button
 													variant="outline"
 													className="justify-start gap-3 h-14"
@@ -240,29 +251,40 @@ export function Connections({ profile }: Props) {
 								</div>
 							</div>
 
+
 							{/* Collapsible content */}
 							{connection.Provider == "LUDOPEDIA" && expandedConnection?.ExternalId === connection.ExternalId && (
 								<div className="p-3 border-t bg-gray-50 space-y-3">
-									<div className="flex sm:flex-row sm:items-center justify-between gap-2">
-										<Button
-											variant="outline"
-											size="sm"
-											onClick={() => requestImportCollectionFromLudopedia(connection.ExternalId)}
-											disabled={status == "pending"}
-										>
-											{status == "pending" ? (
-												<>
-													<Loader2 className="h-4 w-4 mr-2 animate-spin" />
-													Importando...
-												</>
-											) : (
-												"Importar coleção"
-											)}
-										</Button>
-										{getImportStatusBadge()}
-									</div>
+									{isGettingImportStatus && (
+										<Loader2 className="h-4 w-4 mr-2 animate-spin" />
+									)}
+									{importStatus && (
+										<>
+											<div className="flex flex-col sm:flex-row sm:items-center items-center gap-2">
+												<Button
+													className="text-white w-full"
+													onClick={() => requestImportCollectionFromLudopedia(connection.ExternalId)}
+													disabled={importStatus.Status == "STARTED"}
+												>
+													{importStatus.Status == "STARTED" || isRequestImportCollectionFromLudopediaPending ? (
+														<>
+															<Loader2 className="h-4 w-4 mr-2 animate-spin" />
+															Importando...
+														</>
+													) : (
+														"Importar coleção"
+													)}
+												</Button>
+												{
+													importStatus.LastImportDate && (
+														<span className="text-sm text-gray-500 text-center">
+															Última importação: {formatEventDate(importStatus.LastImportDate)}
+														</span>
+													)
+												}
+											</div>
 
-									{/* <Button
+											{/* <Button
 											variant="outline"
 											size="sm"
 											className="text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600"
@@ -270,6 +292,8 @@ export function Connections({ profile }: Props) {
 										>
 											Desconectar
 										</Button> */}
+										</>
+									)}
 								</div>
 							)}
 						</div>

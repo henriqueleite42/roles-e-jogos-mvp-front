@@ -5,11 +5,11 @@ import { Calendar, MapPin, Users, Share2, Eye, Copy } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { formatEventDate } from "./utils"
 import { Event, ResponseEvents } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { Header } from "@/components/header"
+import { formatEventDate } from "@/lib/dates"
 
 function formatDateRange(startDate: string, endDate?: string): string {
 	const start = formatEventDate(startDate)

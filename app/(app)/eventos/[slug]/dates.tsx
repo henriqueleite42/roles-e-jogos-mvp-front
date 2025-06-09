@@ -1,12 +1,11 @@
 "use client"
 
+import { formatEventDate } from "@/lib/dates";
 import { Event } from "@/types/api";
-import { formatEventDate } from "../utils";
 import { Calendar, Clock } from "lucide-react";
 
 export function Dates({ event }: { event: Event }) {
 	return (
-
 		<div className="space-y-3">
 			<div className="flex items-center gap-2">
 				<Calendar className="h-5 w-5 text-muted-foreground" />

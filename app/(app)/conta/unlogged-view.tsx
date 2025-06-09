@@ -8,16 +8,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Header } from "@/components/header"
 import { connectionsIcons } from "@/lib/icons"
 import { toPascalCase } from "@/lib/string"
+import { availableProviders } from "../p/[handle]/connections"
 
 export default function SignInPage() {
 	const [isLoading, setIsLoading] = useState<string | null>(null)
-
-	const availableProviders = [
-		{
-			Provider: "GOOGLE",
-			Url: process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI!
-		},
-	]
 
 	return (
 		<>
@@ -32,8 +26,8 @@ export default function SignInPage() {
 						</CardHeader>
 						< CardContent className="space-y-4" >
 							{
-								availableProviders.map((provider) => (
-									<Link key={provider.Provider} href={provider.Url || ""} className="grid">
+								availableProviders.filter(p => p.UrlCreate).map((provider) => (
+									<Link key={provider.Provider} href={provider.UrlCreate!} className="grid">
 										<Button
 											className={`w-full justify-start gap-3 h-14 text-white ${connectionsIcons[provider.Provider as keyof typeof connectionsIcons].color}`}
 											disabled={isLoading !== null}

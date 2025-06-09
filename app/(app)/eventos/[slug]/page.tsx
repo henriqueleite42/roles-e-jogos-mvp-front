@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Auth, Event, Profile } from "@/types/api"
+import { Event, Profile } from "@/types/api"
 import { MapPin, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"

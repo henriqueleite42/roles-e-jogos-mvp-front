@@ -7,13 +7,13 @@ import NextImage from "next/image"
 import { Calendar, X, ChevronLeft, ChevronRight, Gamepad2, MapPin, Users, Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { formatEventDate } from "../eventos/utils"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { Auth, ResponseGetGallery } from "@/types/api"
 import Link from "next/link"
 
 import { Header } from "@/components/header"
 import { useMasonry } from "@/lib/mansory"
+import { formatEventDate } from "@/lib/dates"
 
 // Update the component to use the new masonry layout
 export default function GalleryPage() {

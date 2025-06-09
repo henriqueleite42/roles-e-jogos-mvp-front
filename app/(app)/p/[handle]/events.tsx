@@ -3,7 +3,7 @@
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { formatDateTime } from "@/lib/dates"
+import { formatEventDate } from "@/lib/dates"
 import { Profile, ResponseListEventsByAccount } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { Calendar, Badge, MapPin, Users, Loader2, AlertCircle } from "lucide-react"
@@ -129,7 +129,7 @@ export function ProfileEvents({ profile }: { profile: Profile }) {
 								</div>
 								<div className="flex items-center gap-1 text-sm text-muted-foreground mb-1">
 									<Calendar className="h-3 w-3" />
-									<span>{formatDateTime(event.StartDate)}</span>
+									<span>{formatEventDate(event.StartDate)}</span>
 								</div>
 								<div className="flex items-center gap-4 text-xs text-muted-foreground">
 									<div className="flex items-center gap-1">
