@@ -19,11 +19,6 @@ import { Header } from "@/components/header"
 import Link from "next/link"
 import { Owner, ResponseGames } from "@/types/api"
 
-// export const metadata = {
-// 	title: "Jogos",
-// 	description: "Veja os jogos de toda a comunidade!",
-// }
-
 export default function GamesPage() {
 	const [gameSearchQuery, setSearchQuery] = useState("")
 	const [kind, setKind] = useState("GAME")

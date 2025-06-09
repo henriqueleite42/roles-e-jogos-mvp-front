@@ -2,9 +2,9 @@
 
 import type React from "react"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import Image from "next/image"
-import { MapPin, Plus } from "lucide-react"
+import { Loader2, MapPin, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -15,10 +15,8 @@ import Link from "next/link"
 import { Header } from "@/components/header"
 
 export function LocationsPageContent() {
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
-
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data } = useInfiniteQuery<ResponseListLocations>({
+	const { data, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery<ResponseListLocations>({
 		queryKey: ["list-locations"],
 		queryFn: async ({ pageParam = null }) => {
 			const query = new URLSearchParams()
@@ -51,6 +49,29 @@ export function LocationsPageContent() {
 		// Flatten the pages array and extract items from each page
 		return data.pages.flatMap((page) => page.Data || [])
 	}, [data])
+
+	// Observer for infinite scroll
+	const observerTarget = useRef<HTMLDivElement | null>(null)
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		if (!hasNextPage || !observerTarget.current || isFetchingNextPage) return
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					fetchNextPage()
+				}
+			},
+			{ threshold: 0.5 },
+		)
+
+		observer.observe(observerTarget.current)
+
+		return () => {
+			observer.disconnect()
+		}
+	}, [hasNextPage, isFetchingNextPage])
 
 	return (
 		<>
@@ -117,14 +138,27 @@ export function LocationsPageContent() {
 									</Card>
 								</Link>
 							))}
+
+							{/* Infinite scroll observer element */}
+							<div ref={observerTarget} className="w-full py-4 flex justify-center">
+								{isFetchingNextPage && (
+									<div className="flex items-center gap-2">
+										<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+										<span className="text-sm text-muted-foreground">Carregando mais jogos...</span>
+									</div>
+								)}
+							</div>
 						</div>
 					) : (
 						<div className="text-center py-10">
 							<MapPin className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
 							<p className="text-muted-foreground">Nenhum local encontrado.</p>
-							<Button className="mt-4 text-white" onClick={() => setIsDialogOpen(true)}>
-								Adicionar Local
-							</Button>
+							<Link href="/locais/criar" >
+								<Button className="gap-2 text-white">
+									<Plus className="h-8 w-8 text-white" />
+									Adicionar local
+								</Button>
+							</Link>
 						</div>
 					)}
 				</main>
