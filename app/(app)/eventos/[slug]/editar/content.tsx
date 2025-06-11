@@ -232,7 +232,9 @@ export default function EditEventPage({ event }: { event: Event }) {
 
 	const editEventMutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
-			const reqBody: any = {}
+			const reqBody: any = {
+				EventId: event.Id
+			}
 
 			if (body.Name != event.Name) {
 				reqBody.Name = body.Name
