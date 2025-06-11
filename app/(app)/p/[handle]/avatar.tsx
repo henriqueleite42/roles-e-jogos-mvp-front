@@ -54,7 +54,7 @@ export function AvatarComponent({ profile, auth }: Props) {
 			})
 
 			const responseUpdateProfile = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/me`, {
-				method: "PUT",
+				method: "PATCH",
 				body: JSON.stringify({
 					AvatarPath: FilePath,
 				}),
