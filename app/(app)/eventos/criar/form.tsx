@@ -221,7 +221,7 @@ export function FormCreateEvent() {
 
 	const mutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
-			var icon: any = undefined
+			var icon: string = ""
 
 			if (body.EventImage !== null) {
 				const { FilePath } = await uploadImage({
@@ -230,13 +230,13 @@ export function FormCreateEvent() {
 					Kind: "EVENT_ICON"
 				})
 
-				icon = {
-					CustomIconPath: FilePath
-				}
+				icon = FilePath
 			} else if (body.Games.length >= 1) {
-				icon = {
-					UseGameIconGameId: body.Games[0].Id
-				}
+				icon = body.Games[0].IconUrl || ""
+			}
+
+			if (icon === "") {
+				throw new Error("icon required")
 			}
 
 			const gamesIds = body.Games.map(g => g.Id)
@@ -247,7 +247,7 @@ export function FormCreateEvent() {
 				body: JSON.stringify({
 					Name: body.Name,
 					Description: body.Description,
-					Icon: icon,
+					IconPath: icon,
 					StartDate: body.StartDate.toISOString(),
 					EndDate: body.EndDate?.toISOString(),
 					Capacity: body.Capacity,
@@ -273,6 +273,14 @@ export function FormCreateEvent() {
 				toast({
 					title: "Erro ao criar evento",
 					description: "Imagem grande de mais, limite de 5 MB",
+					variant: "destructive",
+				})
+				return
+			}
+			if (err.message === "icon required") {
+				toast({
+					title: "Erro ao criar evento",
+					description: "O evento precisa ter uma imagem",
 					variant: "destructive",
 				})
 				return
@@ -627,7 +635,7 @@ export function FormCreateEvent() {
 																	<MapPin className="h-4 w-4 flex-shrink-0" />
 																	<div className="truncate">
 																		<div>{field.value.Name}</div>
-																		<div className="text-xs text-muted-foreground truncate">{field.value.Address}</div>
+																		<div className="text-xs text-muted-foreground truncate break-words whitespace-normal">{field.value.Address}</div>
 																	</div>
 																</div>
 															) : (

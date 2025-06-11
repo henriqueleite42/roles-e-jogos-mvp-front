@@ -108,7 +108,7 @@ export interface Event {
 	Slug: string
 	IconUrl?: string
 	StartDate: string
-	EndDate?: string
+	EndDate: string
 	Capacity?: number
 	Location: {
 		Id: number

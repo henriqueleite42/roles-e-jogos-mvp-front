@@ -9,6 +9,12 @@ export interface UploadImageInput {
 const MAX_IMAGE_SIZE = 5 * 1024 * 1024                // 5 MB
 
 export async function uploadImage({ FileName, Kind, ImageBlob }: UploadImageInput) {
+	if (process.env.NODE_ENV === "development") {
+		return {
+			FilePath: "/foo.jpeg"
+		}
+	}
+
 	if (ImageBlob.size > MAX_IMAGE_SIZE) {
 		throw new Error("file size exceeded")
 	}

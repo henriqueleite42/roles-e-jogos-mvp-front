@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Event, Profile } from "@/types/api"
-import { MapPin, Users } from "lucide-react"
+import { MapPin, Pencil, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Loading from "@/components/ui/loading"
 import { getDescription } from "@/lib/description"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -121,6 +122,17 @@ export default async function EventPage({ params }: { params: { slug: string } }
 			<Header title="Evento" displayBackButton />
 
 			<main className="flex-1 container mx-auto py-8 px-4 mb-10">
+				{event.OwnerId === account?.AccountId && (
+					<div className="flex justify-center align-center mb-5">
+						<Button type="button" className="text-white" asChild>
+							<Link href={"/eventos/" + event.Slug + "/editar"}>
+								<Pencil className="h-4 w-4" />
+								Editar evento
+							</Link>
+						</Button>
+					</div>
+				)}
+
 				<div className="max-w-4xl mx-auto space-y-6">
 					{/* Event Header */}
 					<Card className="overflow-hidden">

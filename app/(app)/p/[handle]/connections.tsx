@@ -116,7 +116,7 @@ export function Connections({ profile }: Props) {
 	} = useMutation({
 		mutationFn: async (externalId: string) => {
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/import/ludopedia`, {
-				method: "PUT",
+				method: "POST",
 				body: JSON.stringify({
 					ExternalId: externalId
 				}),
