@@ -279,9 +279,6 @@ export default function EditEventPage({ event }: { event: Event }) {
 				return
 			}
 
-			console.log(reqBody);
-			throw new Error("foo")
-
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {
 				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
@@ -291,6 +288,7 @@ export default function EditEventPage({ event }: { event: Event }) {
 
 			if (!res.ok) {
 				const error = await res.text()
+				console.log(reqBody);
 				console.error(error);
 				throw new Error(error)
 			}
