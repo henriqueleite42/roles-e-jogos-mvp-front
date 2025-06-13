@@ -85,7 +85,6 @@ const formSchema = z.object({
 				CreatedAt: z.coerce.date(),
 			}),
 		)
-		.min(1, "O evento deve ter pelo menos 1 jogo.")
 		.default([])
 }).refine((data) => {
 	if (!data.StartDate) return false
