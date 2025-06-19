@@ -11,6 +11,10 @@ export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
 
 export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON" | "MEDIA_IMAGE"
 
+export type NotificationType = "GAMES_COLLECTION_IMPORT_FINISH" | "MEDIA_MENTION" | "EVENT_CANCELED"
+
+export type CollectionImportStatusEnum = "COMPLETED" | "FAILED" | "STARTED" | "NOT_YET_IMPORTED"
+
 export interface ResponseEvents {
 	Data: Array<Event>
 	Pagination: {
@@ -260,6 +264,13 @@ export interface MediaData {
 	}
 }
 
+export interface MinimumMediaData {
+	Id: number
+	Url: string
+	Width: number
+	Height: number
+}
+
 export interface ExternalLocation {
 	Name: string
 	ZipCode: string
@@ -281,7 +292,7 @@ export interface LocationMarker {
 }
 
 export interface ResponseGetGallery {
-	Data: Array<MediaData>
+	Data: Array<MinimumMediaData>
 	Pagination: PaginationId
 }
 
@@ -354,6 +365,37 @@ export interface ResponseListConnections {
 }
 
 export interface ConnectionImportStatus {
-	Status: "COMPLETED" | "FAILED" | "STARTED" | "NOT_YET_IMPORTED"
+	Status: CollectionImportStatusEnum
 	LastImportDate?: string
+}
+
+export interface NotificationData {
+	Id: number
+	Type: NotificationType
+	Timestamp: string
+	ReadAt?: string
+	ExecutedAt?: string
+	Data: string
+}
+
+export interface NotificationDataGamesCollectionFinish {
+	Status: CollectionImportStatusEnum
+}
+
+export interface NotificationDataMediaMention {
+	MediaId: number
+	Sender: MinimumProfileData
+}
+
+export interface NotificationDataEventCanceled {
+	Event: MinimumEventData
+}
+
+export interface ResponseListLatestNotifications {
+	Data: Array<NotificationData>
+	Pagination: {
+		Current?: number
+		Limit: number
+		Next?: number
+	}
 }

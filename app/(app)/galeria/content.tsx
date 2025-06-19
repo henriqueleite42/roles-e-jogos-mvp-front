@@ -4,22 +4,39 @@ import type React from "react"
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import NextImage from "next/image"
-import { Calendar, X, ChevronLeft, ChevronRight, Gamepad2, MapPin, Users, Loader2, Plus } from "lucide-react"
+import { Calendar, Loader2, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { Auth, ResponseGetGallery } from "@/types/api"
+import { MediaData, ResponseGetGallery } from "@/types/api"
 import Link from "next/link"
 
 import { Header } from "@/components/header"
 import { useMasonry } from "@/lib/mansory"
-import { formatEventDate } from "@/lib/dates"
+import { ImageDetails } from "./details"
+import { useToast } from "@/hooks/use-toast"
+
+interface Params {
+	preSelectedMedia?: MediaData
+}
+
+interface SelectedImage {
+	Index: number
+	Data: MediaData
+}
+
+const mediasData: Array<MediaData> = []
 
 // Update the component to use the new masonry layout
-export default function GalleryPage() {
-	const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
+export default function GalleryPage({ preSelectedMedia }: Params) {
+	const { toast } = useToast()
 
-	const observerTarget = useRef<HTMLDivElement | null>(null)
+	const [isLoadingImageDetails, setIsLoadingImageDetails] = useState(false)
+	const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(
+		preSelectedMedia ? {
+			Index: -1,
+			Data: preSelectedMedia
+		} : null
+	)
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<ResponseGetGallery>({
@@ -34,7 +51,7 @@ export default function GalleryPage() {
 
 			const query = new URLSearchParams(queryObj)
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medias?${query.toString()}`, {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medias/all?${query.toString()}`, {
 				credentials: "include"
 			})
 
@@ -59,54 +76,7 @@ export default function GalleryPage() {
 		return data.pages.flatMap((page) => page.Data || [])
 	}, [data])
 
-	const { columns, containerRef } = useMasonry(allItems)
-
-	// Navigation functions
-	const goToPrevious = useCallback(() => {
-		if (selectedImageIndex !== null && selectedImageIndex > 0) {
-			setSelectedImageIndex(selectedImageIndex - 1)
-		}
-	}, [selectedImageIndex])
-
-	const goToNext = useCallback(() => {
-		if (selectedImageIndex !== null && selectedImageIndex < allItems.length - 1) {
-			setSelectedImageIndex(selectedImageIndex + 1)
-		}
-	}, [selectedImageIndex, allItems.length])
-
-	// Keyboard navigation
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (selectedImageIndex === null) return
-
-			switch (e.key) {
-				case "ArrowLeft":
-					e.preventDefault()
-					goToPrevious()
-					break
-				case "ArrowRight":
-					e.preventDefault()
-					goToNext()
-					break
-				case "Escape":
-					e.preventDefault()
-					setSelectedImageIndex(null)
-					break
-			}
-		}
-
-		if (selectedImageIndex !== null) {
-			document.addEventListener("keydown", handleKeyDown)
-			document.body.style.overflow = "hidden"
-		} else {
-			document.body.style.overflow = "unset"
-		}
-
-		return () => {
-			document.removeEventListener("keydown", handleKeyDown)
-			document.body.style.overflow = "unset"
-		}
-	}, [selectedImageIndex, goToPrevious, goToNext])
+	const observerTarget = useRef<HTMLDivElement | null>(null)
 
 	// Intersection Observer for infinite scroll
 	useEffect(() => {
@@ -128,7 +98,52 @@ export default function GalleryPage() {
 		}
 	}, [hasNextPage, isFetchingNextPage])
 
-	const selectedImage = selectedImageIndex !== null ? allItems[selectedImageIndex] : null
+	// Navigation functions
+	const seeDetails = useCallback(async (mediaIndex: number) => {
+		if (mediasData[mediaIndex]) {
+			setSelectedImage({
+				Index: mediaIndex,
+				Data: mediasData[mediaIndex]
+			})
+			return
+		}
+
+		setIsLoadingImageDetails(true)
+
+		const mediaId = allItems[mediaIndex].Id
+
+		const query = new URLSearchParams({
+			mediaId: String(mediaId)
+		})
+
+		const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/medias?${query.toString()}`, {
+			credentials: "include"
+		})
+
+		if (!response.ok) {
+			toast({
+				title: "Erro ao pegar dados da imagem",
+				description: "Não foi possível pegar dados da imagem.",
+				variant: "destructive",
+			})
+
+			setIsLoadingImageDetails(false)
+
+			return
+		}
+
+		const mediaData = await response.json() as MediaData
+
+		mediasData[mediaIndex] = mediaData
+
+		setSelectedImage({
+			Index: mediaIndex,
+			Data: mediaData
+		})
+		setIsLoadingImageDetails(false)
+	}, [allItems, setSelectedImage, setIsLoadingImageDetails])
+
+	const { columns, containerRef } = useMasonry(allItems)
 
 	return (
 		<>
@@ -152,7 +167,7 @@ export default function GalleryPage() {
 									<div
 										key={image.Id}
 										className="group cursor-pointer"
-										onClick={() => setSelectedImageIndex(idx)}
+										onClick={() => seeDetails(idx)}
 									>
 										<div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 group-hover:scale-[1.02] bg-white">
 											<NextImage
@@ -179,25 +194,6 @@ export default function GalleryPage() {
 												>
 													<Heart className={cn("h-4 w-4", image.isLiked && "fill-current")} />
 												</Button> */}
-
-											<div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-												<h3 className="text-white font-semibold text-sm mb-2 line-clamp-2">{image.Description}</h3>
-												<div className="flex items-center justify-between">
-													<div className="flex items-center gap-2">
-														<Avatar className="w-6 h-6 border-2 border-white/50">
-															<AvatarImage src={image.Owner.AvatarUrl || "/placeholder.svg"} alt={image.Owner.Handle} />
-															<AvatarFallback className="text-xs bg-white/20 text-white">
-																{image.Owner.Handle}
-															</AvatarFallback>
-														</Avatar>
-														<span className="text-white/90 text-xs font-medium">{image.Owner.Handle}</span>
-													</div>
-													{/* <div className="flex items-center gap-1">
-															<Heart className="h-3 w-3 text-white/90" />
-															<span className="text-white/90 text-xs font-medium">{image.likes}</span>
-														</div> */}
-												</div>
-											</div>
 										</div>
 									</div>
 								))}
@@ -233,157 +229,15 @@ export default function GalleryPage() {
 				{/* Full Screen Modal */}
 				{
 					selectedImage && (
-						<div className="fixed inset-0 bg-black/95 z-50 flex items-center flex flex-col lg:flex-row max-w-7xl mx-auto p-4 gap-6 overflow-auto">
-							{/* Close button */}
-							<Button
-								variant="ghost"
-								size="icon"
-								className="absolute top-4 right-4 z-10 text-white hover:bg-white/10"
-								onClick={() => setSelectedImageIndex(null)}
-							>
-								<X className="h-6 w-6" />
-							</Button>
-
-							{/* Main content */}
-							{/* Image */}
-							<div
-								className="relative flex-shrink-0"
-							// onTouchStart={handleTouchStart}
-							// onTouchMove={handleTouchMove}
-							// onTouchEnd={handleTouchEnd}
-							// onClick={() => handleDoubleTap(selectedImage)}
-							>
-								<NextImage
-									src={selectedImage.Url || "/placeholder.svg"}
-									alt="image"
-									width={selectedImage.Width}
-									height={selectedImage.Height}
-									className="max-w-full rounded-lg"
-									priority
-								/>
-							</div>
-
-
-							{/* Navigation buttons */}
-							<div className="flex justify-between w-full">
-								<Button
-									variant="ghost"
-									size="icon"
-									className="z-10 text-white hover:bg-white/10"
-									onClick={goToPrevious}
-									disabled={selectedImageIndex! <= 0}
-								>
-									<ChevronLeft className="h-8 w-8" />
-								</Button>
-
-								<Button
-									variant="ghost"
-									size="icon"
-									className="z-10 text-white hover:bg-white/10"
-									onClick={goToNext}
-									disabled={selectedImageIndex! >= allItems.length - 1}
-								>
-									<ChevronRight className="h-8 w-8" />
-								</Button>
-							</div>
-
-							{/* Image details */}
-							<div className="lg:max-w-md w-full text-white space-y-6">
-								<div>
-									<p className="text-white/80 leading-relaxed">{selectedImage.Description}</p>
-								</div>
-
-								<div className="flex items-center gap-3">
-									<Avatar className="w-10 h-10">
-										<AvatarImage
-											src={selectedImage.Owner.AvatarUrl || "/placeholder.svg"}
-											alt={selectedImage.Owner.Handle}
-										/>
-										<AvatarFallback>{selectedImage.Owner.Handle}</AvatarFallback>
-									</Avatar>
-									<div>
-										<p className="font-medium">{selectedImage.Owner.Handle}</p>
-										<div className="flex items-center gap-2 text-sm text-white/70">
-											<Calendar className="h-3 w-3" />
-											<span>{formatEventDate(selectedImage.CreatedAt)}</span>
-										</div>
-									</div>
-								</div>
-
-								{/* Related Information Section */}
-								{(selectedImage.Game || selectedImage.Event || selectedImage.Location) && (
-									<div className="space-y-3">
-										<h3 className="text-lg font-semibold text-white/90">Informações Relacionadas</h3>
-
-										{/* Game Information */}
-										{selectedImage.Game && (
-											<Link href={"/jogos/" + selectedImage.Game.Slug} className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-												<div className="flex items-center gap-2 flex-1">
-													<Gamepad2 className="h-4 w-4 text-green-400 flex-shrink-0" />
-													<div className="flex items-center gap-2 min-w-0">
-														{selectedImage.Game.IconUrl && (
-															<div className="w-6 h-6 relative flex-shrink-0">
-																<NextImage
-																	src={selectedImage.Game.IconUrl || "/placeholder.svg"}
-																	alt={selectedImage.Game.Name}
-																	fill
-																	className="object-cover rounded"
-																/>
-															</div>
-														)}
-														<div className="min-w-0">
-															<p className="text-sm font-medium text-white truncate">{selectedImage.Game.Name}</p>
-														</div>
-													</div>
-												</div>
-											</Link>
-										)}
-
-										{/* Event Information */}
-										{selectedImage.Event && (
-											<Link href={"/eventos/" + selectedImage.Event.Slug} className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-												<div className="flex items-center gap-2 flex-1">
-													<Users className="h-4 w-4 text-purple-400 flex-shrink-0" />
-													<div className="min-w-0">
-														<p className="text-sm font-medium text-white truncate">{selectedImage.Event.Name}</p>
-													</div>
-												</div>
-											</Link>
-										)}
-
-										{/* Location Information */}
-										{selectedImage.Location && (
-											<div className="flex items-center gap-3 p-3 bg-white/10 rounded-lg backdrop-blur-sm">
-												<div className="flex items-center gap-2 flex-1">
-													<MapPin className="h-4 w-4 text-blue-400 flex-shrink-0" />
-													<div className="min-w-0">
-														<p className="text-sm font-medium text-white truncate">{selectedImage.Location.Name}</p>
-													</div>
-												</div>
-											</div>
-										)}
-									</div>
-								)}
-
-								{/* <div className="flex items-center gap-4">
-								<Button
-									variant="ghost"
-									className={cn(
-										"text-white hover:bg-white/10 gap-2",
-										selectedImage.isLiked && "text-red-400 hover:text-red-300",
-									)}
-									onClick={() => handleLike(selectedImage.Id)}
-								>
-									<Heart className={cn("h-5 w-5", selectedImage.isLiked && "fill-current")} />
-									<span>{selectedImage.likes}</span>
-								</Button>
-							</div> */}
-
-								<div className="text-sm text-white/60">
-									<p className="mt-1">💡 Dica: Use as setas do teclado, deslize ou toque duas vezes para curtir</p>
-								</div>
-							</div>
-						</div>
+						<ImageDetails
+							isLoading={isLoadingImageDetails}
+							image={selectedImage.Data}
+							goToPrevious={() => seeDetails(selectedImage.Index - 1)}
+							canGoToPrevious={selectedImage.Index <= 0}
+							goToNext={() => seeDetails(selectedImage.Index + 1)}
+							canGoToNext={selectedImage.Index! >= allItems.length - 1}
+							close={() => setSelectedImage(null)}
+						/>
 					)
 				}
 			</div >
