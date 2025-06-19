@@ -1,9 +1,9 @@
-import { MediaData } from "@/types/api"
+import { MinimumMediaData } from "@/types/api"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 // Add this custom hook for masonry layout
-export const useMasonry = (images: MediaData[], columnWidth = 300) => {
-	const [columns, setColumns] = useState<MediaData[][]>([])
+export const useMasonry = (images: MinimumMediaData[], columnWidth = 300) => {
+	const [columns, setColumns] = useState<MinimumMediaData[][]>([])
 	const [columnCount, setColumnCount] = useState(1)
 	const containerRef = useRef<HTMLDivElement>(null)
 
@@ -29,7 +29,7 @@ export const useMasonry = (images: MediaData[], columnWidth = 300) => {
 		if (images.length === 0) return
 
 		// Initialize columns
-		const newColumns: MediaData[][] = Array.from({ length: columnCount }, () => [])
+		const newColumns: MinimumMediaData[][] = Array.from({ length: columnCount }, () => [])
 		const columnHeights = new Array(columnCount).fill(0)
 
 		// Distribute images across columns
