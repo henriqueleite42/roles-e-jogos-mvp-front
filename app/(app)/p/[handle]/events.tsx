@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { formatEventDate } from "@/lib/dates"
 import { Profile, ResponseListEventsByAccount } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { Calendar, Badge, MapPin, Users, Loader2, AlertCircle } from "lucide-react"
+import { Calendar, MapPin, Loader2, AlertCircle } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useRef } from "react"
@@ -31,7 +31,8 @@ export function ProfileEvents({ profile }: { profile: Profile }) {
 			}
 
 			if (pageParam) {
-				queryObj.after = String(pageParam)
+				queryObj.afterTimestamp = String((pageParam as any).Timestamp)
+				queryObj.afterId = String((pageParam as any).Id)
 			}
 
 			const query = new URLSearchParams(queryObj)
