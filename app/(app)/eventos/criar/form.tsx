@@ -220,7 +220,14 @@ export function FormCreateEvent() {
 
 	const mutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
-			var icon: string = ""
+			const reqBody = {
+				Name: body.Name,
+				Description: body.Description,
+				StartDate: body.StartDate.toISOString(),
+				EndDate: body.EndDate?.toISOString(),
+				Capacity: body.Capacity,
+				LocationId: body.Location.Id,
+			} as any
 
 			if (body.EventImage !== null) {
 				const { FilePath } = await uploadImage({
@@ -229,30 +236,23 @@ export function FormCreateEvent() {
 					Kind: "EVENT_ICON"
 				})
 
-				icon = FilePath
-			} else if (body.Games.length >= 1) {
-				icon = body.Games[0].IconUrl || ""
+				reqBody.IconPath = FilePath
 			}
 
-			if (icon === "") {
+			if (!reqBody.IconPath && body.Games.length >= 1) {
+				reqBody.IconUrl = body.Games[0].IconUrl || ""
+			}
+
+			if (!reqBody.IconPath && !reqBody.IconUrl) {
 				throw new Error("icon required")
 			}
 
-			const gamesIds = body.Games.map(g => g.Id)
+			reqBody.GamesList = body.Games.map(g => g.Id)
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					Name: body.Name,
-					Description: body.Description,
-					IconPath: icon,
-					StartDate: body.StartDate.toISOString(),
-					EndDate: body.EndDate?.toISOString(),
-					Capacity: body.Capacity,
-					LocationId: body.Location.Id,
-					GamesList: gamesIds
-				}),
+				body: JSON.stringify(reqBody),
 				credentials: 'include',
 			});
 
