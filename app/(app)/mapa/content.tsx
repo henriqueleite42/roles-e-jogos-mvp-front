@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Map } from "./map";
-
-type LocationStatus = "LOADING" | "NOT_SUPPORTED" | "SUCCESS"
+import { useCurLocation } from "@/hooks/use-cur-location";
 
 function Message({ title, description }: { title: string, description: string }) {
 	return (
@@ -15,8 +14,7 @@ function Message({ title, description }: { title: string, description: string })
 }
 
 export function MapPage() {
-	const [status, setStatus] = useState<LocationStatus>("LOADING")
-	const [error, setError] = useState<GeolocationPositionError>()
+	const { status } = useCurLocation()
 
 	useEffect(() => {
 		const script = document.createElement('script');
@@ -26,30 +24,15 @@ export function MapPage() {
 		document.head.appendChild(script);
 	}, []);
 
-	useEffect(() => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				() => {
-					setStatus("SUCCESS")
-				},
-				(error) => {
-					setError(error)
-				}
-			);
-		} else {
-			setStatus("NOT_SUPPORTED")
-		}
-	}, [])
+	// if (error) {
+	// 	return <Message title="Falha ao carregar mapa" description={error.message} />
+	// }
 
-	if (error) {
-		return <Message title="Falha ao carregar mapa" description={error.message} />
-	}
+	// if (status === "NOT_SUPPORTED") {
+	// 	return <Message title="Seu navegador não suporta essa função" description="Recomendamos o uso do Google Chrome" />
+	// }
 
-	if (status === "NOT_SUPPORTED") {
-		return <Message title="Seu navegador não suporta essa função" description="Recomendamos o uso do Google Chrome" />
-	}
-
-	if (status === "LOADING") {
+	if (status === "PENDING") {
 		return <Message title="Precisamos de sua localização" description="Para poder exibir o mapa, precisamos que você aceite a permissão de localização" />
 	}
 
