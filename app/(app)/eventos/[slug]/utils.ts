@@ -1,7 +1,7 @@
-import { Event, EventAttendance } from "@/types/api"
+import { Event, EventAttendanceData } from "@/types/api"
 
-export function getAvailableSpots(event: Event) {
-	if (!event || !event.Attendances) return {
+export function getAvailableSpots(event: Event, attendances: Array<EventAttendanceData>) {
+	if (!event || !attendances) return {
 		confirmations: [],
 		maybes: [],
 		notGoing: [],
@@ -10,11 +10,11 @@ export function getAvailableSpots(event: Event) {
 		isFull: true,
 	}
 
-	const confirmations = [] as Array<EventAttendance>
-	const maybes = [] as Array<EventAttendance>
-	const notGoing = [] as Array<EventAttendance>
+	const confirmations = [] as Array<EventAttendanceData>
+	const maybes = [] as Array<EventAttendanceData>
+	const notGoing = [] as Array<EventAttendanceData>
 
-	for (const attendance of event.Attendances) {
+	for (const attendance of attendances) {
 		if (attendance.Status === "GOING") {
 			confirmations.push(attendance)
 		}
@@ -29,7 +29,7 @@ export function getAvailableSpots(event: Event) {
 	const confirmationsCount = confirmations.length
 	const availableSpots = event.Capacity ?
 		event.Capacity - confirmationsCount
-		: -1
+		: Number.MAX_VALUE
 	const isFull = availableSpots <= 0
 
 	return {

@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Event, Profile } from "@/types/api"
+import { Event, EventAttendanceData, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
 import { MapPin, Pencil, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 	}
 }
 
-const getAvailableCapacity = (event: Event) => {
-	const { availableSpots, isFull } = getAvailableSpots(event)
+const getAvailableCapacity = (event: Event, attendances: Array<EventAttendanceData>) => {
+	const { availableSpots, isFull } = getAvailableSpots(event, attendances)
 
 	if (!event.Capacity) {
 		return (
@@ -86,6 +86,30 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 	const event = await resEvent.json() as Event
 
+	const resEventAttendances = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/attendances?limit=100&eventId=" + event.Id, {
+		method: "GET",
+		credentials: "include"
+	})
+
+	if (!resEventAttendances.ok) {
+		console.error(await resEventAttendances.text())
+		return (<></>)
+	}
+
+	const attendances = await resEventAttendances.json() as ResponseListEventAttendances
+
+	const resEventGames = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/games?limit=100&eventId=" + event.Id, {
+		method: "GET",
+		credentials: "include"
+	})
+
+	if (!resEventGames.ok) {
+		console.error(await resEventGames.text())
+		return (<></>)
+	}
+
+	const games = await resEventGames.json() as ResponseListEventGames
+
 	var account: Profile | null = null
 	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
 		const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
@@ -115,7 +139,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 		</>
 	}
 
-	const { confirmations, maybes, notGoing, confirmationsCount } = getAvailableSpots(event)
+	const { confirmations, maybes, notGoing, confirmationsCount } = getAvailableSpots(event, attendances.Data)
 
 	return (
 		<>
@@ -165,7 +189,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 										<div>
 											<p className="font-medium">Capacidade</p>
 											<p className="text-sm text-muted-foreground">
-												{getAvailableCapacity(event)}
+												{getAvailableCapacity(event, attendances.Data)}
 											</p>
 										</div>
 									</div>
@@ -174,7 +198,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 							</div>
 
 							<div className="mt-4 flex justify-center">
-								<Attendances event={event} account={account} />
+								<Attendances event={event} attendances={attendances.Data} account={account} />
 							</div>
 						</CardContent>
 					</Card>
@@ -186,7 +210,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 						</CardHeader>
 						<CardContent>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{event.Games.map((game) => (
+								{games.Data.map((game) => (
 									<Link key={game.Id} href={"/jogos/" + game.Slug}>
 										<div className="flex items-center gap-3 p-3 border rounded-lg hover:bg-gray-50  transition-colors">
 											<div className="w-12 h-12 relative flex-shrink-0">
@@ -226,12 +250,12 @@ export default async function EventPage({ params }: { params: { slug: string } }
 						<CardContent>
 							<div className="flex flex-wrap gap-2">
 								{confirmations.map((person) => (
-									<Link key={person.AccountId} href={"/p/" + person.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
+									<Link key={person.Profile.AccountId} href={"/p/" + person.Profile.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
 										<Avatar className="w-6 h-6">
-											<AvatarImage src={person.AvatarUrl || "/placeholder.svg"} alt={person.Handle} />
-											<AvatarFallback className="text-xs">{person.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
+											<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
+											<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 										</Avatar>
-										<span className="text-sm">{person.Handle}</span>
+										<span className="text-sm">{person.Profile.Handle}</span>
 									</Link>
 								))}
 
@@ -254,12 +278,12 @@ export default async function EventPage({ params }: { params: { slug: string } }
 							<CardContent>
 								<div className="flex flex-wrap gap-2">
 									{maybes.map((person) => (
-										<Link key={person.AccountId} href={"/p/" + person.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
+										<Link key={person.Profile.AccountId} href={"/p/" + person.Profile.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
 											<Avatar className="w-6 h-6">
-												<AvatarImage src={person.AvatarUrl || "/placeholder.svg"} alt={person.Handle} />
-												<AvatarFallback className="text-xs">{person.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
+												<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
+												<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 											</Avatar>
-											<span className="text-sm">{person.Handle}</span>
+											<span className="text-sm">{person.Profile.Handle}</span>
 										</Link>
 									))}
 								</div>
@@ -277,12 +301,12 @@ export default async function EventPage({ params }: { params: { slug: string } }
 							<CardContent>
 								<div className="flex flex-wrap gap-2">
 									{notGoing.map((person) => (
-										<Link key={person.AccountId} href={"/p/" + person.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
+										<Link key={person.Profile.AccountId} href={"/p/" + person.Profile.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
 											<Avatar className="w-6 h-6">
-												<AvatarImage src={person.AvatarUrl || "/placeholder.svg"} alt={person.Handle} />
-												<AvatarFallback className="text-xs">{person.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
+												<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
+												<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 											</Avatar>
-											<span className="text-sm">{person.Handle}</span>
+											<span className="text-sm">{person.Profile.Handle}</span>
 										</Link>
 									))}
 								</div>

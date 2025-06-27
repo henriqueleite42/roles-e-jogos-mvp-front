@@ -64,6 +64,25 @@ export interface GameData {
 	CreatedAt: Date;
 }
 
+export interface MinimumGameData {
+	Id: number;
+	Name: string;
+	Slug: string;
+	IconUrl?: string;
+	Kind: GameKind;
+	MinAmountOfPlayers: number;
+	MaxAmountOfPlayers: number;
+	AverageDuration: number;
+	MinAge: number;
+}
+
+export interface EventAttendanceData {
+	Id: number
+	Status: EventAttendanceStatus
+	ConfirmedAt: string
+	Profile: MinimumProfileData
+}
+
 export interface Connection {
 	ExternalHandle?: string;
 	ExternalId: string;
@@ -81,7 +100,6 @@ export interface Profile {
 	AvatarUrl?: string;
 	Handle: string;
 	Name?: string;
-	Connections: Array<Connection>
 }
 
 export interface EventGame {
@@ -121,18 +139,6 @@ export interface Event {
 		Address: string
 		IconUrl?: string
 	}
-	Attendances: Array<{
-		AccountId: number
-		Status: AttendanceStatus
-	}>
-	Games: Array<{
-		Id: number
-		Name: string
-		Slug: string
-		IconUrl?: string
-		MinAmountOfPlayers: number
-		MaxAmountOfPlayers: number
-	}>
 }
 
 export interface LocationData {
@@ -298,6 +304,16 @@ export interface ResponseGetGallery {
 
 export interface ResponseListGameOwners {
 	Data: Array<MinimumProfileData>
+	Pagination: PaginationString
+}
+
+export interface ResponseListEventAttendances {
+	Data: Array<EventAttendanceData>
+	Pagination: PaginationString
+}
+
+export interface ResponseListEventGames {
+	Data: Array<MinimumGameData>
 	Pagination: PaginationString
 }
 

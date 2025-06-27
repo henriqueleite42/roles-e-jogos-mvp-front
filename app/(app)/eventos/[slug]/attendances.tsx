@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Profile, AttendanceStatus, Event, EventAttendanceStatus } from "@/types/api"
+import { Profile, AttendanceStatus, Event, EventAttendanceStatus, EventAttendanceData } from "@/types/api"
 import { CircleArrowRight, Check, Info, HelpCircle, X, ThumbsDown, ThumbsUp } from "lucide-react"
 import { getAvailableSpots } from "./utils"
 import { useMutation } from "@tanstack/react-query"
@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation"
 
 interface Params {
 	event: Event
+	attendances: Array<EventAttendanceData>
 	account: Profile | null
 }
 
@@ -47,7 +48,7 @@ const attendanceConfig = {
 	},
 }
 
-export function Attendances({ event, account }: Params) {
+export function Attendances({ event, attendances, account }: Params) {
 	const router = useRouter()
 
 	const mutation = useMutation({
@@ -95,8 +96,8 @@ export function Attendances({ event, account }: Params) {
 			)
 		}
 
-		const userAttendance = event.Attendances.find(a => a.AccountId === account?.AccountId)
-		const { isFull } = getAvailableSpots(event)
+		const userAttendance = attendances.find(a => a.Profile.AccountId === account?.AccountId)
+		const { isFull } = getAvailableSpots(event, attendances)
 
 		// If the event is full and user is not already going, disable the button
 		const isDisabled = (isFull && event.Capacity && userAttendance?.Status !== "GOING") as boolean
@@ -144,7 +145,7 @@ export function Attendances({ event, account }: Params) {
 			)
 		}
 
-		if (isFull && event.Capacity) {
+		if (isFull) {
 			return (
 				<>
 					<Info className="h-4 w-4 mr-2 text-muted-foreground" />
