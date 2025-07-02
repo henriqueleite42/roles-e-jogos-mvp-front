@@ -17,9 +17,15 @@ import { LocationEvents } from "./events"
 import { cookies } from "next/headers"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+	const cookieStore = await cookies();
 	const { slug } = await params
 
-	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/locations?slug=" + slug)
+	const response = await fetch(process.env.NEXT_PUBLIC_API_URL + "/locations?slug=" + slug, {
+		method: 'GET',
+		headers: {
+			Cookie: cookieStore.toString()
+		},
+	})
 
 	if (!response.ok) {
 		return {
