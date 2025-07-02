@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { Map } from "./map";
 import { useCurLocation } from "@/hooks/use-cur-location";
 
@@ -23,14 +23,6 @@ export function MapPage() {
 		script.defer = true;
 		document.head.appendChild(script);
 	}, []);
-
-	// if (error) {
-	// 	return <Message title="Falha ao carregar mapa" description={error.message} />
-	// }
-
-	// if (status === "NOT_SUPPORTED") {
-	// 	return <Message title="Seu navegador não suporta essa função" description="Recomendamos o uso do Google Chrome" />
-	// }
 
 	if (status === "PENDING") {
 		return <Message title="Precisamos de sua localização" description="Para poder exibir o mapa, precisamos que você aceite a permissão de localização" />

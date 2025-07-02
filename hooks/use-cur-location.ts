@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 
-interface LatLong {
+export interface LatLong {
 	Latitude: number
 	Longitude: number
 }
