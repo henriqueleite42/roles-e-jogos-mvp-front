@@ -8,6 +8,7 @@ import { ProfileEvents } from "./events"
 import { ProfileGallery } from "./gallery"
 import { cn } from "@/lib/utils"
 import { Connections } from "./connections"
+import { ProfileAchievements } from "./achievements"
 
 interface Props {
 	auth?: Profile
@@ -44,6 +45,12 @@ const TABS: Array<Tab> = [
 		key: "gallery",
 		description: "Galeria",
 		getComponent: ({ profile }: Props) => (<ProfileGallery profile={profile} />),
+		shouldDisplay: () => true
+	},
+	{
+		key: "achievements",
+		description: "Conquistas",
+		getComponent: ({ profile }: Props) => (<ProfileAchievements profile={profile} />),
 		shouldDisplay: () => true
 	},
 ]

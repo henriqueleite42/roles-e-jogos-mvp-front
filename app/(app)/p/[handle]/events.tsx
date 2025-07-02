@@ -31,8 +31,7 @@ export function ProfileEvents({ profile }: { profile: Profile }) {
 			}
 
 			if (pageParam) {
-				queryObj.afterTimestamp = String((pageParam as any).Timestamp)
-				queryObj.afterId = String((pageParam as any).Id)
+				queryObj.after = String(pageParam)
 			}
 
 			const query = new URLSearchParams(queryObj)

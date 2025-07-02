@@ -16,8 +16,15 @@ const partnerships: Partnership[] = [
 		id: 1,
 		name: "Golgari Adventures",
 		description: "Os maiores influencers de Magic: The Gathering e card games da região.",
-		logoUrl: "/golgari-adventures.jpg",
+		logoUrl: "/partnerships/golgari-adventures.jpg",
 		website: "https://www.instagram.com/golgari.adventures/",
+	},
+	{
+		id: 2,
+		name: "Além do Muro",
+		description: "Um dos maiores produtores de eventos do seu segmento no país",
+		logoUrl: "/partnerships/alem-do-muro.png",
+		website: "https://www.alemdomuro.com.br",
 	},
 ]
 

@@ -34,7 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { Event, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
+import { Event, ResponseListEventAttendances, ResponseListEventGames, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
 import { getAvailableSpots } from "../utils"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
@@ -122,7 +122,7 @@ interface MutationParams extends FormValues {
 	EventImage: File | null
 }
 
-export default function EditEventPage({ event }: { event: Event }) {
+export default function EditEventPage({ event, attendances, games: eventGames }: { event: Event, attendances: ResponseListEventAttendances, games: ResponseListEventGames }) {
 	const params = useParams()
 	const router = useRouter()
 	const { toast } = useToast()
@@ -138,7 +138,7 @@ export default function EditEventPage({ event }: { event: Event }) {
 	const debouncedLocationQuery = useDebounce(locationQuery)
 	const debouncedGameQuery = useDebounce(gameQuery)
 
-	const { confirmationsCount } = getAvailableSpots(event)
+	const { confirmationsCount } = getAvailableSpots(event, attendances.Data)
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data: locationsData, isLoading: isSearchingLocations } = useQuery<ResponseSearchLocations>({
@@ -264,7 +264,7 @@ export default function EditEventPage({ event }: { event: Event }) {
 				reqBody.IconPath = FilePath
 			}
 
-			const currentGamesIds = event.Games.map(g => g.Id)
+			const currentGamesIds = eventGames.Data.map(g => g.Id)
 			const bodyGamesIds = body.Games.map(g => g.Id)
 
 			const gamesToAdd = bodyGamesIds.filter(gId => !currentGamesIds.includes(gId))
@@ -333,7 +333,7 @@ export default function EditEventPage({ event }: { event: Event }) {
 			Description: event.Description,
 			EndDate: new Date(event.EndDate),
 			Location: event.Location,
-			Games: event.Games,
+			Games: eventGames.Data,
 			Name: event.Name,
 			StartDate: new Date(event.StartDate),
 		},
@@ -412,7 +412,7 @@ export default function EditEventPage({ event }: { event: Event }) {
 									<DialogDescription>
 										Tem certeza que deseja cancelar este evento? Esta ação não pode ser desfeita e todos os
 										participantes confirmados serão notificados sobre o cancelamento.
-										{event.Attendances.length > 0 && (
+										{attendances.Data.length > 0 && (
 											<div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm">
 												<strong>{confirmationsCount} participante(s)</strong> confirmado(s) será(ão)
 												notificado(s).

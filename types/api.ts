@@ -15,6 +15,21 @@ export type NotificationType = "GAMES_COLLECTION_IMPORT_FINISH" | "MEDIA_MENTION
 
 export type CollectionImportStatusEnum = "COMPLETED" | "FAILED" | "STARTED" | "NOT_YET_IMPORTED"
 
+export type AchievementId = "CONNECT_LUDOPEDIA"
+	| "CONNECT_DISCORD"
+	| "CREATE_ONE_EVENT"
+	| "CREATE_TEN_EVENTS"
+	| "CREATE_FIFTY_EVENTS"
+	| "CREATE_ONE_HUNDRED_EVENTS"
+	| "ATTEND_ONE_EVENT"
+	| "ATTEND_TEN_EVENTS"
+	| "ATTEND_FIFTY_EVENTS"
+	| "ATTEND_ONE_HUNDRED_EVENTS"
+	| "PERSONAL_COLLECTION_ONE_GAME"
+	| "PERSONAL_COLLECTION_TEN_GAMES"
+	| "PERSONAL_COLLECTION_FIFTY_GAMES"
+	| "PERSONAL_COLLECTION_ONE_HUNDRED_GAMES"
+
 export interface ResponseEvents {
 	Data: Array<Event>
 	Pagination: {
@@ -409,6 +424,26 @@ export interface NotificationDataEventCanceled {
 
 export interface ResponseListLatestNotifications {
 	Data: Array<NotificationData>
+	Pagination: {
+		Current?: number
+		Limit: number
+		Next?: number
+	}
+}
+
+export interface AccountAchievementData {
+	Id: AchievementId
+	IsSecret: boolean
+	Name: string
+	Description: string
+	IconUrl: string
+	RequiredAmount: number
+	Progress?: number
+	AchievedAt?: string
+}
+
+export interface ResponseListAccountAchievements {
+	Data: Array<AccountAchievementData>
 	Pagination: {
 		Current?: number
 		Limit: number
