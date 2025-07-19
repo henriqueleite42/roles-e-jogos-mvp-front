@@ -1,6 +1,6 @@
-import { Event, EventAttendanceData } from "@/types/api"
+import { EventData, EventAttendanceData } from "@/types/api"
 
-export function getAvailableSpots(event: Event, attendances: Array<EventAttendanceData>) {
+export function getAvailableSpots(event: EventData, attendances: Array<EventAttendanceData>) {
 	if (!event || !attendances) return {
 		confirmations: [],
 		maybes: [],

@@ -1,14 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Event, EventAttendanceData, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
-import { MapPin, Pencil, Users } from "lucide-react"
+import { EventData, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
+import { Pencil } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { Attendances } from "./attendances"
 import { getAvailableSpots } from "./utils"
-import { ShareButton } from "./share"
 import { cookies } from "next/headers"
-import { Dates } from "./dates"
 import { Header } from "@/components/header"
 import { EventImages } from "./images"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -16,6 +13,7 @@ import Loading from "@/components/ui/loading"
 import { getDescription } from "@/lib/description"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { EventDetails } from "./details"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -32,7 +30,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 		}
 	}
 
-	const event = await response.json() as Event
+	const event = await response.json() as EventData
 
 	return {
 		title: event.Name,
@@ -41,32 +39,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 			images: [event.IconUrl],
 		}) : undefined,
 	}
-}
-
-const getAvailableCapacity = (event: Event, attendances: Array<EventAttendanceData>) => {
-	const { availableSpots, isFull } = getAvailableSpots(event, attendances)
-
-	if (!event.Capacity) {
-		return (
-			<span className="text-green-600 font-medium">
-				Sem limite de vagas!
-			</span>
-		)
-	}
-
-	if (isFull) {
-		return (
-			<span className="text-red-600 font-medium">
-				Evento lotado
-			</span>
-		)
-	}
-
-	return (
-		<span className="text-yellow-600 font-medium">
-			{`${availableSpots} vagas disponíveis`}
-		</span>
-	)
 }
 
 export default async function EventPage({ params }: { params: { slug: string } }) {
@@ -84,7 +56,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 		return (<></>)
 	}
 
-	const event = await resEvent.json() as Event
+	const event = await resEvent.json() as EventData
 
 	const resEventAttendances = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/attendances?limit=100&eventId=" + event.Id, {
 		method: "GET",
@@ -159,49 +131,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 				<div className="max-w-4xl mx-auto space-y-6">
 					{/* Event Header */}
-					<Card className="overflow-hidden">
-						{event.IconUrl && (
-							<div className="h-64 relative">
-								<Image src={event.IconUrl || "/placeholder.svg"} alt={event.Name} fill className="object-cover" />
-							</div>
-						)}
-						<CardContent className="p-6">
-							<div className="flex justify-between items-start mb-4">
-								<h1 className="text-3xl font-bold">{event.Name}</h1>
-								<ShareButton event={event} />
-							</div>
-							<p className="text-lg mb-6 whitespace-pre-line overflow-hidden text-ellipsis break-words">{event.Description}</p>
-
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								<Dates event={event} />
-
-								<div className="space-y-3">
-									<div className="flex items-start gap-2">
-										<MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
-										<div>
-											<p className="font-medium">{event.Location.Name}</p>
-											<p className="text-sm text-muted-foreground">{event.Location.Address}</p>
-										</div>
-									</div>
-
-									<div className="flex items-center gap-2">
-										<Users className="h-5 w-5 text-muted-foreground" />
-										<div>
-											<p className="font-medium">Capacidade</p>
-											<p className="text-sm text-muted-foreground">
-												{getAvailableCapacity(event, attendances.Data)}
-											</p>
-										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div className="mt-4 flex justify-center">
-								<Attendances event={event} attendances={attendances.Data} account={account} />
-							</div>
-						</CardContent>
-					</Card>
+					<EventDetails event={event} attendances={attendances} account={account} />
 
 					{/* Games Section */}
 					<Card>

@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
-import { Event } from "@/types/api"
+import { EventData } from "@/types/api"
 import { Share2 } from "lucide-react"
 
-const handleShare = async (event: Event) => {
+const handleShare = async (event: EventData) => {
 	const shareData = {
 		title: event.Name,
 		text: `${event.Name} - ${event.Description.substring(0, 100)}...`,
@@ -40,7 +40,7 @@ const handleShare = async (event: Event) => {
 	}
 }
 
-export function ShareButton({ event }: { event: Event }) {
+export function ShareButton({ event }: { event: EventData }) {
 	return (
 		<Button
 			variant="outline"

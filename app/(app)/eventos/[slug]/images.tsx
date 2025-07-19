@@ -9,13 +9,13 @@ import {
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import { Event, ResponseGetGallery } from "@/types/api"
+import { EventData, ResponseGetGallery } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import Loading from "@/components/ui/loading"
 import Link from "next/link"
 
 interface Params {
-	event: Event
+	event: EventData
 }
 
 export const EventImages = ({ event }: Params) => {

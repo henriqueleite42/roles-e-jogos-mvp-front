@@ -34,7 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { Event, ResponseListEventAttendances, ResponseListEventGames, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
+import { EventData, ResponseListEventAttendances, ResponseListEventGames, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
 import { getAvailableSpots } from "../utils"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
@@ -122,7 +122,7 @@ interface MutationParams extends FormValues {
 	EventImage: File | null
 }
 
-export default function EditEventPage({ event, attendances, games: eventGames }: { event: Event, attendances: ResponseListEventAttendances, games: ResponseListEventGames }) {
+export default function EditEventPage({ event, attendances, games: eventGames }: { event: EventData, attendances: ResponseListEventAttendances, games: ResponseListEventGames }) {
 	const params = useParams()
 	const router = useRouter()
 	const { toast } = useToast()

@@ -1,10 +1,10 @@
 "use client"
 
 import { formatEventDate } from "@/lib/dates";
-import { Event } from "@/types/api";
+import { EventData } from "@/types/api";
 import { Calendar, Clock } from "lucide-react";
 
-export function Dates({ event }: { event: Event }) {
+export function Dates({ event }: { event: EventData }) {
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center gap-2">

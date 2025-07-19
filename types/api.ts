@@ -30,8 +30,17 @@ export type AchievementId = "CONNECT_LUDOPEDIA"
 	| "PERSONAL_COLLECTION_FIFTY_GAMES"
 	| "PERSONAL_COLLECTION_ONE_HUNDRED_GAMES"
 
+export interface ResponseGetNextEvents {
+	Data: Array<MinimumEventDataWithLocation>
+	Pagination: {
+		Current?: string
+		Limit: number
+		Next?: string
+	}
+}
+
 export interface ResponseEvents {
-	Data: Array<Event>
+	Data: Array<EventData>
 	Pagination: {
 		Current?: string
 		Limit: number
@@ -137,7 +146,7 @@ export interface EventAttendance {
 	Status: EventAttendanceStatus
 }
 
-export interface Event {
+export interface EventData {
 	Id: number
 	OwnerId: number
 	Name: string
@@ -147,6 +156,7 @@ export interface Event {
 	StartDate: string
 	EndDate: string
 	Capacity?: number
+	ExternalUrl?: string
 	Location: {
 		Id: number
 		Name: string

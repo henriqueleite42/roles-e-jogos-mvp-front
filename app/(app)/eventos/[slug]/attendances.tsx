@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Profile, AttendanceStatus, Event, EventAttendanceStatus, EventAttendanceData } from "@/types/api"
+import { Profile, AttendanceStatus, EventData, EventAttendanceStatus, EventAttendanceData } from "@/types/api"
 import { CircleArrowRight, Check, Info, HelpCircle, X, ThumbsDown, ThumbsUp } from "lucide-react"
 import { getAvailableSpots } from "./utils"
 import { useMutation } from "@tanstack/react-query"
@@ -10,7 +10,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useRouter } from "next/navigation"
 
 interface Params {
-	event: Event
+	event: EventData
 	attendances: Array<EventAttendanceData>
 	account: Profile | null
 }
@@ -81,7 +81,7 @@ export function Attendances({ event, attendances, account }: Params) {
 	}
 
 	// Function to get attendance button based on current status
-	const getAttendanceButton = (event: Event, account: Profile | null) => {
+	const getAttendanceButton = (event: EventData, account: Profile | null) => {
 		if (!account?.AccountId) {
 			return (
 				<Button
