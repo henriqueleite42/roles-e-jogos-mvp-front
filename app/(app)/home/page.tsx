@@ -121,8 +121,10 @@ export default function HomePage() {
 				<div className="mt-6 grid grid-cols-3 gap-6 max-w-md mx-auto pt-4 md:grid-cols-4 md:max-w-5xl">
 
 					{/* Whatsapp Card */}
-					<Link
+					<a
 						href="/whatsapp"
+						target="_blank"
+						rel="noopener noreferrer"
 						className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 					>
 						<div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-green-600/20 opacity-50"></div>
@@ -136,11 +138,13 @@ export default function HomePage() {
 							<div className="text-xl font-bold text-green-600 text-center">Whatsapp</div>
 							<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-300 group-hover:w-3/4"></div>
 						</div>
-					</Link>
+					</a>
 
 					{/* Instagram Card */}
-					<Link
+					<a
 						href="/instagram"
+						target="_blank"
+						rel="noopener noreferrer"
 						className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 					>
 						<div className="absolute inset-0 bg-gradient-to-br from-pink-400/20 to-pink-600/20 opacity-50"></div>
@@ -154,11 +158,13 @@ export default function HomePage() {
 							<div className="text-xl font-bold text-pink-600 text-center">Instagram</div>
 							<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-pink-400 to-pink-600 transition-all duration-300 group-hover:w-3/4"></div>
 						</div>
-					</Link>
+					</a>
 
 					{/* TikTok Card */}
-					<Link
+					<a
 						href="/tiktok"
+						target="_blank"
+						rel="noopener noreferrer"
 						className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 					>
 						<div className="absolute inset-0 bg-gradient-to-br from-zinc-400/20 to-zinc-600/20 opacity-50"></div>
@@ -172,7 +178,7 @@ export default function HomePage() {
 							<div className="text-xl font-bold text-zinc-600 text-center">TikTok</div>
 							<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-zinc-400 to-zinc-600 transition-all duration-300 group-hover:w-3/4"></div>
 						</div>
-					</Link>
+					</a>
 				</div>
 			</main>
 		</>
