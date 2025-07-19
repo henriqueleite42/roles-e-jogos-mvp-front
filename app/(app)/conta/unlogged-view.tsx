@@ -27,7 +27,7 @@ export default function SignInPage() {
 						< CardContent className="space-y-4" >
 							{
 								availableProviders.filter(p => p.UrlCreate).map((provider) => (
-									<Link key={provider.Provider} href={provider.UrlCreate!} className="grid">
+									<a key={provider.Provider} href={provider.UrlCreate!} className="grid" rel="noopener noreferrer">
 										<Button
 											className={`w-full justify-start gap-3 h-14 text-white ${connectionsIcons[provider.Provider as keyof typeof connectionsIcons].color}`}
 											disabled={isLoading !== null}
@@ -39,7 +39,7 @@ export default function SignInPage() {
 											})}
 											<span>Continuar com {toPascalCase(provider.Provider)}</span>
 										</Button>
-									</Link>
+									</a>
 								))}
 						</CardContent>
 						< CardFooter className="flex flex-col space-y-4" >

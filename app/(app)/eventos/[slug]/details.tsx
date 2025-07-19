@@ -10,7 +10,6 @@ import { Attendances } from "./attendances"
 import { getAvailableSpots } from "./utils"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 interface Params {
 	account: Profile | null
@@ -111,10 +110,10 @@ export const EventDetails = ({ event, attendances, account }: Params) => {
 							className="p-3 w-15 bg-primary text-white"
 							title="Comprar ingressos"
 						>
-							<Link href={event.ExternalUrl} className="gap-1 w-full">
+							<a href={event.ExternalUrl} target="_blank" rel="noopener noreferrer" className="gap-1 w-full">
 								<SquareArrowOutUpRight className="h-4 w-4" />
 								Comprar ingressos
-							</Link>
+							</a>
 						</Button>
 					</div>
 				) : (
