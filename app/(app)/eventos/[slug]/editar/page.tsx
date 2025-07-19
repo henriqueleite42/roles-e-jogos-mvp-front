@@ -1,4 +1,4 @@
-import { Event, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
+import { EventData, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
 import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { redirect } from "next/navigation";
@@ -40,7 +40,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		redirect("/eventos")
 	}
 
-	const event = await resEvent.json() as Event
+	const event = await resEvent.json() as EventData
 
 	if (!event) {
 		redirect("/eventos")

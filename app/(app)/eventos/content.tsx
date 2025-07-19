@@ -1,11 +1,11 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, MapPin, Users, Share2, Eye, Copy } from "lucide-react"
+import { Calendar, MapPin, Users, Share2, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
-import { Event, ResponseEvents } from "@/types/api"
+import { EventData, ResponseEvents } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { Header } from "@/components/header"
@@ -70,7 +70,7 @@ export default function Events() {
 		return events.pages.flatMap((page) => page.Data || [])
 	}, [events])
 
-	const handleShare = async (event: Event) => {
+	const handleShare = async (event: EventData) => {
 		const shareData = {
 			title: event.Name,
 			text: `${event.Name} - ${event.Description.substring(0, 100)}...`,
@@ -95,22 +95,6 @@ export default function Events() {
 					variant: "destructive",
 				})
 			}
-		}
-	}
-
-	const copyAddress = async (event: Event) => {
-		try {
-			await navigator.clipboard.writeText(event.Location.Address)
-			toast({
-				title: "Endereço copiado",
-				description: "O endereço foi copiado para a área de transferência.",
-			})
-		} catch (error) {
-			toast({
-				title: "Erro ao copiar",
-				description: "Não foi possível copiar o endereço.",
-				variant: "destructive",
-			})
 		}
 	}
 
@@ -154,10 +138,10 @@ export default function Events() {
 												<span>{formatDateRange(event.StartDate, event.EndDate)}</span>
 											</div>
 
-											{/* Location Address */}
-											<div className="flex items-start gap-2 text-sm" onClick={() => copyAddress(event)}>
+											{/* Location Name */}
+											<div className="flex items-start gap-2 text-sm">
 												<MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-												<span className="text-muted-foreground">{event.Location.Address}</span>
+												<span className="text-muted-foreground">{event.Location.Name}</span>
 											</div>
 
 											{/* Capacity */}
