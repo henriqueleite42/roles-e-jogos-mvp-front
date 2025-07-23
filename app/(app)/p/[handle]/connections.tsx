@@ -94,7 +94,7 @@ export function Connections({ profile }: Props) {
 
 			const query = new URLSearchParams({
 				externalId: expandedConnection.ExternalId,
-				provider: expandedConnection.Provider
+				source: expandedConnection.Provider
 			})
 
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/collections/import/status?${query.toString()}`, {
