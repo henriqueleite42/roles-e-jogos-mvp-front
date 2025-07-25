@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Dice6, Calendar, MapPin, Download, Camera, Video, MessageCircle, Image, UserRound } from "lucide-react"
+import { Calendar, MapPin, Download, Camera, Video, MessageCircle, Image, UserRound, Users } from "lucide-react"
 import { Header } from "@/components/header"
 
 export default function HomePage() {
@@ -7,11 +7,11 @@ export default function HomePage() {
 		<>
 			<Header />
 
-			<main className="flex-1 p-4">
-				<div className="grid grid-cols-3 gap-6 max-w-md mx-auto pt-4 md:grid-cols-4 md:max-w-5xl">
-					{/* Jogos Card */}
+			<main className="flex-1 p-3">
+				<div className="grid grid-cols-2 gap-3 max-w-md mx-auto pt-2 md:grid-cols-4 md:max-w-5xl">
+					{/* Communities Card */}
 					<Link
-						href="/jogos"
+						href="/comunidades"
 						className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
 					>
 						<div className="absolute inset-0 bg-gradient-to-br from-sky-400/20 to-sky-600/20 opacity-50"></div>
@@ -20,9 +20,9 @@ export default function HomePage() {
 
 						<div className="relative flex aspect-square flex-col items-center justify-center p-4">
 							<div className="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-sky-400 to-sky-600 p-3 shadow-md transition-transform duration-300 group-hover:scale-110">
-								<Dice6 className="h-8 w-8 text-white" />
+								<Users className="h-8 w-8 text-white" />
 							</div>
-							<div className="text-xl font-bold text-sky-600 text-center">Jogos</div>
+							<div className="text-xl font-bold text-sky-600 text-center">Comunidades</div>
 							<div className="absolute bottom-0 h-1 w-1/2 rounded-full bg-gradient-to-r from-sky-400 to-sky-600 transition-all duration-300 group-hover:w-3/4"></div>
 						</div>
 					</Link>
@@ -99,6 +99,7 @@ export default function HomePage() {
 						</div>
 					</Link>
 
+
 					{/* Partners Card */}
 					<Link
 						href="/parceiros"
@@ -118,7 +119,7 @@ export default function HomePage() {
 					</Link>
 				</div>
 
-				<div className="mt-6 grid grid-cols-3 gap-6 max-w-md mx-auto pt-4 md:grid-cols-4 md:max-w-5xl">
+				<div className="mt-4 grid grid-cols-3 gap-6 max-w-md mx-auto pt-4 md:grid-cols-4 md:max-w-5xl">
 
 					{/* Whatsapp Card */}
 					<a

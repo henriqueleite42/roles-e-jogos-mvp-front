@@ -9,7 +9,7 @@ export type LocationKind = "BUSINESS" | "PERSONAL"
 // Attendance status types
 export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
 
-export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON" | "MEDIA_IMAGE"
+export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON" | "MEDIA_IMAGE" | "COMMUNITY_AVATAR_IMG"
 
 export type NotificationType = "GAMES_COLLECTION_IMPORT_FINISH" | "MEDIA_MENTION" | "EVENT_CANCELED"
 
@@ -29,6 +29,8 @@ export type AchievementId = "CONNECT_LUDOPEDIA"
 	| "PERSONAL_COLLECTION_TEN_GAMES"
 	| "PERSONAL_COLLECTION_FIFTY_GAMES"
 	| "PERSONAL_COLLECTION_ONE_HUNDRED_GAMES"
+
+export type CommunityAffiliationType = "PUBLIC" | "INVITE_ONLY"
 
 export interface ResponseGetNextEvents {
 	Data: Array<MinimumEventDataWithLocation>
@@ -313,6 +315,46 @@ export interface ExternalLocation {
 	Longitude: number
 }
 
+export interface CommunityData {
+	AffiliationType: CommunityAffiliationType,
+	AvatarUrl?: string,
+	CreatedAt: string,
+	Handle: string,
+	Id: number,
+	Name: string
+	Description: string
+	MemberCount: number,
+	Location: {
+		IconUrl?: string
+		Id: number
+		Name: string
+		Slug: string
+		City: string
+		State: string
+	}
+}
+
+export interface MinimumCommunityData {
+	Id: number,
+	Handle: string,
+	Name: string
+	AvatarUrl?: string,
+	AffiliationType: CommunityAffiliationType,
+	MemberCount: number,
+	CreatedAt: string,
+}
+
+export interface CommunityMemberData {
+	Profile: MinimumProfileData
+	Role: {
+		Id: number
+		Name: string
+		Permission: string
+	}
+	IsOwner: boolean
+	MemberSince: string
+}
+
 export interface LocationMarker {
 	Id: number
 	Name: string
@@ -458,5 +500,23 @@ export interface ResponseListAccountAchievements {
 		Current?: number
 		Limit: number
 		Next?: number
+	}
+}
+
+export interface ResponseListCommunities {
+	Data: Array<CommunityData>
+	Pagination: {
+		Current?: number
+		Limit: number
+		Next?: number
+	}
+}
+
+export interface ResponseListCommunityMembers {
+	Data: Array<CommunityMemberData>
+	Pagination: {
+		Current?: string
+		Limit: number
+		Next?: string
 	}
 }
