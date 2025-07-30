@@ -6,11 +6,11 @@ import { useState } from "react"
 import { useParams, useRouter } from "next/navigation"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Trash2, AlertTriangle, Triangle } from "lucide-react"
+import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Trash2, AlertTriangle, Triangle, GamepadIcon, Clock, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -34,10 +34,12 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { EventData, ResponseListEventAttendances, ResponseListEventGames, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
+import { EventData, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseSearchGames, ResponseSearchLocations, MinimumGameData } from "@/types/api"
 import { getAvailableSpots } from "../utils"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
+
+const DEFAULT_MATCH_ID = "CREATED_NOW"
 
 // Form schema with validation (same as create event)
 const formSchema = z.object({
@@ -47,15 +49,11 @@ const formSchema = z.object({
 	Description: z.string().min(10, {
 		message: "A descrição deve ter pelo menos 10 caracteres.",
 	}),
-	StartDate: z.coerce.date({
+	StartDate: z.date({
 		required_error: "A data de início é obrigatória.",
-		message: "A data de início é obrigatória.",
-		invalid_type_error: "A data de início é obrigatória.",
 	}),
-	EndDate: z.coerce.date({
+	EndDate: z.date({
 		required_error: "A data de termino é obrigatória.",
-		message: "A data de termino é obrigatória.",
-		invalid_type_error: "A data de termino é obrigatória.",
 	}),
 	Capacity: z.coerce
 		.number()
@@ -63,30 +61,41 @@ const formSchema = z.object({
 		.min(1, {
 			message: "Se especificada, a capacidade deve ser de pelo menos 1 pessoa.",
 		})
-		.optional().nullable(),
+		.optional(),
+	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional(),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
 			Name: z.string(),
-			Slug: z.string(),
 			Address: z.string(),
 			IconUrl: z.string().optional().nullable(),
+			Kind: z.string(),
+			CreatedBy: z.number().int(),
+			CreatedAt: z.coerce.date(),
 		},
 		{
-			required_error: "Selecione um local para o evento."
+			required_error: "Selecione um local para o evento.",
 		},
 	),
-	Games: z
+	PlannedMatches: z
 		.array(
 			z.object({
-				Id: z.coerce.number().int(),
+				Id: z.string(),
+				GameId: z.number().int(),
 				Name: z.string(),
-				Slug: z.string(),
-				IconUrl: z.string().optional().nullable(),
-				MinAmountOfPlayers: z.coerce.number().int(),
-				MaxAmountOfPlayers: z.coerce.number().int(),
+				IconUrl: z.string().optional(),
+				Description: z.string(),
+				MaxAmountOfPlayers: z.coerce.number().int().min(1, "Deve ter pelo menos 1 jogador."),
+				StartDate: z.date({
+					required_error: "A data de início da partida é obrigatória.",
+				}),
+				EndDate: z.date({
+					required_error: "A data de término da partida é obrigatória.",
+				}),
+				Price: z.coerce.number().min(100, "O preço deve ser maior ou igual a R$ 1,00.").optional(),
 			}),
 		)
+		.optional()
 		.default([]),
 }).refine((data) => {
 	if (!data.StartDate) return false
@@ -122,8 +131,7 @@ interface MutationParams extends FormValues {
 	EventImage: File | null
 }
 
-export default function EditEventPage({ event, attendances, games: eventGames }: { event: EventData, attendances: ResponseListEventAttendances, games: ResponseListEventGames }) {
-	const params = useParams()
+export default function EditEventPage({ event, attendances, plannedMatches }: { event: EventData, attendances: ResponseListEventTicketBuyers, plannedMatches: ResponseListEventPlannedMatches }) {
 	const router = useRouter()
 	const { toast } = useToast()
 
@@ -263,22 +271,77 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 
 				reqBody.IconPath = FilePath
 			}
-
-			const currentGamesIds = eventGames.Data.map(g => g.Id)
-			const bodyGamesIds = body.Games.map(g => g.Id)
-
-			const gamesToAdd = bodyGamesIds.filter(gId => !currentGamesIds.includes(gId))
-			const gamesToRemove = currentGamesIds.filter(gId => !bodyGamesIds.includes(gId))
-
-			if (gamesToAdd.length > 0) {
-				reqBody.GamesToAdd = gamesToAdd
+			if (!reqBody.IconPath && body.PlannedMatches.length >= 1) {
+				reqBody.IconUrl = body.PlannedMatches[0].IconUrl || ""
 			}
-			if (gamesToRemove.length > 0) {
-				reqBody.GamesToRemove = gamesToRemove
+			if (!reqBody.IconPath && !reqBody.IconUrl) {
+				throw new Error("icon required")
 			}
 
-			if (Object.keys(reqBody).length === 0) {
-				return
+			const bodyPlannedMatches = {} as Record<string, true>
+			for (const match of body.PlannedMatches) {
+				bodyPlannedMatches[match.Id] = true
+			}
+
+			const existentMatchesIds = {} as Record<string, true>
+			for (const match of plannedMatches.Data) {
+				const id = String(match.Id)
+				if (bodyPlannedMatches[id]) {
+					existentMatchesIds[id] = true
+				} else {
+					if (!reqBody.MatchesToDelete) {
+						reqBody.MatchesToDelete = []
+					}
+
+					reqBody.MatchesToDelete.push(match.Id)
+				}
+			}
+
+			for (const match of body.PlannedMatches) {
+				if (existentMatchesIds[String(match.Id)]) {
+					if (!reqBody.MatchesToCreate) {
+						reqBody.MatchesToCreate = []
+					}
+
+					const plannedMatchToCreate = {
+						GameId: match.GameId,
+						Name: match.Name,
+						Description: match.Description,
+						MaxAmountOfPlayers: match.MaxAmountOfPlayers,
+						Price: match.Price
+					} as any
+
+					if (body.StartDate) {
+						plannedMatchToCreate.StartDate = body.StartDate.toISOString().replace('.000', '')
+					}
+					if (body.EndDate) {
+						plannedMatchToCreate.EndDate = body.EndDate.toISOString().replace('.000', '')
+					}
+
+					reqBody.MatchesToCreate.push(plannedMatchToCreate)
+				} else {
+					if (!reqBody.MatchesToEdit) {
+						reqBody.MatchesToEdit = []
+					}
+
+					const plannedMatchToEdit = {
+						Id: parseInt(match.Id, 10),
+						GameId: match.GameId,
+						Name: match.Name,
+						Description: match.Description,
+						MaxAmountOfPlayers: match.MaxAmountOfPlayers,
+						Price: match.Price
+					} as any
+
+					if (body.StartDate) {
+						plannedMatchToEdit.StartDate = body.StartDate.toISOString().replace('.000', '')
+					}
+					if (body.EndDate) {
+						plannedMatchToEdit.EndDate = body.EndDate.toISOString().replace('.000', '')
+					}
+
+					reqBody.MatchesToEdit.push(plannedMatchToEdit)
+				}
 			}
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {
@@ -333,10 +396,26 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 			Description: event.Description,
 			EndDate: new Date(event.EndDate),
 			Location: event.Location,
-			Games: eventGames.Data,
 			Name: event.Name,
 			StartDate: new Date(event.StartDate),
+			PlannedMatches: plannedMatches.Data.map(i => ({
+				Id: String(i.Id),
+				Description: i.Description,
+				EndDate: new Date(i.EndDate),
+				GameId: i.GameId,
+				IconUrl: i.GameIconUrl,
+				MaxAmountOfPlayers: i.MaxAmountOfPlayers,
+				Name: i.Name,
+				Price: i.Price,
+				StartDate: new Date(i.StartDate),
+			}))
 		},
+	})
+
+	// Field array for planned matches
+	const { fields, append, remove } = useFieldArray({
+		control: form.control,
+		name: "PlannedMatches",
 	})
 
 	// Handle image upload
@@ -374,6 +453,29 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 		if (!isGamePopoverOpen) {
 			setIsGamePopoverOpen(true)
 		}
+	}
+
+	// Add new planned match
+	const addPlannedMatch = (game: MinimumGameData) => {
+		const eventStartDate = form.getValues().StartDate
+		const matchStartDate = eventStartDate || new Date()
+		const matchEndDate = new Date(matchStartDate.getTime() + 2 * 60 * 60 * 1000) // 2 hours later
+
+		append({
+			// Matches that are not registered in the database receive this ID, since
+			// we do not use this to do anything, we use the ORIGINAL ID of matches in the
+			// database to edit or delete then
+			Id: DEFAULT_MATCH_ID,
+			GameId: game.Id,
+			Name: game.Name,
+			IconUrl: game.IconUrl,
+			Description: "",
+			MaxAmountOfPlayers: game.MaxAmountOfPlayers,
+			StartDate: matchStartDate,
+			EndDate: matchEndDate,
+		})
+		setGameQuery("")
+		setIsGamePopoverOpen(false)
 	}
 
 	// Handle form submission
@@ -444,330 +546,376 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 				</CardHeader>
 				<CardContent>
 					<Form {...form}>
-						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-							{/* Event Name */}
-							<FormField
-								control={form.control}
-								name="Name"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Nome do Evento</FormLabel>
-										<FormControl>
-											<Input placeholder="Ex: Noite de Jogos de Tabuleiro" {...field} />
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+						<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+							{/* Event Basic Information */}
+							<div className="space-y-6">
+								<h3 className="text-lg font-semibold">Informações Básicas</h3>
 
-							{/* Event Description */}
-							<FormField
-								control={form.control}
-								name="Description"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Descrição</FormLabel>
-										<FormControl>
-											<Textarea
-												placeholder="Descreva o seu evento, jogos que serão jogados, etc."
-												className="min-h-[120px]"
-												{...field}
-											/>
-										</FormControl>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+								{/* Event Name */}
+								<FormField
+									control={form.control}
+									name="Name"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Nome do Evento</FormLabel>
+											<FormControl>
+												<Input placeholder="Ex: Noite de Jogos de Tabuleiro" {...field} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 
-							{/* Event Image */}
-							<div className="space-y-2">
-								<Label htmlFor="event-image">Imagem do Evento</Label>
-								<div className="flex items-center gap-4">
-									<Button
-										type="button"
-										variant="outline"
-										onClick={() => document.getElementById("event-image")?.click()}
-										className="gap-2"
-									>
-										<ImageIcon className="h-4 w-4" />
-										Alterar Imagem
-									</Button>
-									<Input
-										id="event-image"
-										type="file"
-										accept="image/*"
-										className="hidden"
-										onChange={handleImageUpload}
-									/>
-									<span className="text-sm text-muted-foreground">
-										{imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"}
-									</span>
-								</div>
+								{/* Event Description */}
+								<FormField
+									control={form.control}
+									name="Description"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Descrição</FormLabel>
+											<FormControl>
+												<Textarea
+													placeholder="Descreva o seu evento, jogos que serão jogados, etc."
+													className="min-h-[120px]"
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 
-								{imagePreview && (
-									<div className="relative mt-4 rounded-md overflow-hidden w-full max-w-md">
-										<img
-											src={imagePreview || "/placeholder.svg"}
-											alt="Preview"
-											className="w-full h-auto object-cover max-h-[200px]"
-										/>
+
+								{/* Event Price */}
+								{/* <FormField
+										control={form.control}
+										name="Price"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Preço (R$)</FormLabel>
+												<FormControl>
+													<div className="relative">
+														<DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+														<Input
+															type="number"
+															min="0"
+															step="0.01"
+															className="pl-10"
+															placeholder="0.00"
+															{...field}
+															value={field.value || ""}
+															onChange={(e) => {
+																const value = e.target.value === "" ? undefined : Number(e.target.value)
+																field.onChange(value)
+															}}
+														/>
+													</div>
+												</FormControl>
+												<FormDescription>Deixe em branco se for gratuito</FormDescription>
+												<FormMessage />
+											</FormItem>
+										)}
+									/> */}
+
+								{/* Event Image */}
+								<div className="space-y-2">
+									<Label htmlFor="event-image">Imagem do Evento</Label>
+									<div className="flex items-center gap-4">
 										<Button
 											type="button"
-											variant="destructive"
-											size="icon"
-											className="absolute top-2 right-2 h-8 w-8 rounded-full"
-											onClick={clearImagePreview}
+											variant="outline"
+											onClick={() => document.getElementById("event-image")?.click()}
+											className="gap-2"
 										>
-											<X className="h-4 w-4" />
+											<ImageIcon className="h-4 w-4" />
+											Escolher Imagem
 										</Button>
+										<Input
+											id="event-image"
+											type="file"
+											accept="image/*"
+											className="hidden"
+											onChange={handleImageUpload}
+										/>
+										<span className="text-sm text-muted-foreground">
+											{imagePreview ? "Imagem selecionada" : "Nenhuma imagem selecionada"}
+										</span>
 									</div>
-								)}
+
+									{imagePreview && (
+										<div className="relative mt-4 rounded-md overflow-hidden w-full max-w-md">
+											<img
+												src={imagePreview || "/placeholder.svg"}
+												alt="Preview"
+												className="w-full h-auto object-cover max-h-[200px]"
+											/>
+											<Button
+												type="button"
+												variant="destructive"
+												size="icon"
+												className="absolute top-2 right-2 h-8 w-8 rounded-full"
+												onClick={clearImagePreview}
+											>
+												<X className="h-4 w-4" />
+											</Button>
+										</div>
+									)}
+								</div>
 							</div>
 
-							{/* Start Date and Time */}
-							<FormField
-								control={form.control}
-								name="StartDate"
-								render={({ field }) => (
-									<FormItem className="flex flex-col">
-										<FormLabel>Data e Hora de Início</FormLabel>
-										<div className="flex gap-2">
-											<Popover>
-												<PopoverTrigger asChild>
-													<FormControl>
-														<Button
-															variant={"outline"}
-															className={cn(
-																"w-full pl-3 text-left font-normal",
-																!field.value && "text-muted-foreground",
-															)}
-														>
-															<Calendar className="mr-2 h-4 w-4" />
-															{field.value ? (
-																format(field.value, "PPP", { locale: ptBR })
-															) : (
-																<span>Selecione uma data</span>
-															)}
-														</Button>
-													</FormControl>
-												</PopoverTrigger>
-												<PopoverContent className="w-auto p-0" align="start">
-													<CalendarComponent
-														mode="single"
-														selected={field.value}
-														onSelect={field.onChange}
-														initialFocus
-														locale={ptBR}
-													/>
-												</PopoverContent>
-											</Popover>
+							{/* Event Timing */}
+							<div className="space-y-6">
+								<h3 className="text-lg font-semibold">Data e Horário</h3>
 
-											<div className="flex-1">
-												<Input
-													type="time"
-													className="w-full"
-													onChange={(e) => {
-														const [hours, minutes] = e.target.value.split(":").map(Number)
-														const date = field.value || new Date()
-														date.setHours(hours, minutes)
-														field.onChange(date)
-													}}
-													value={field.value ? format(field.value, "HH:mm") : ""}
-												/>
-											</div>
-										</div>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+									{/* Start Date and Time */}
+									<FormField
+										control={form.control}
+										name="StartDate"
+										render={({ field }) => (
+											<FormItem className="flex flex-col">
+												<FormLabel>Data e Hora de Início</FormLabel>
+												<div className="flex gap-2">
+													<Popover>
+														<PopoverTrigger asChild>
+															<FormControl>
+																<Button
+																	variant={"outline"}
+																	className={cn(
+																		"w-full pl-3 text-left font-normal",
+																		!field.value && "text-muted-foreground",
+																	)}
+																>
+																	<Calendar className="mr-2 h-4 w-4" />
+																	{field.value ? (
+																		format(field.value, "PPP", { locale: ptBR })
+																	) : (
+																		<span>Selecione uma data</span>
+																	)}
+																</Button>
+															</FormControl>
+														</PopoverTrigger>
+														<PopoverContent className="w-auto p-0" align="start">
+															<CalendarComponent
+																mode="single"
+																selected={field.value}
+																onSelect={field.onChange}
+																initialFocus
+																locale={ptBR}
+															/>
+														</PopoverContent>
+													</Popover>
 
-							{/* End Date and Time (Optional) */}
-							<FormField
-								control={form.control}
-								name="EndDate"
-								render={({ field }) => (
-									<FormItem className="flex flex-col">
-										<FormLabel>Data e Hora de Término (Opcional)</FormLabel>
-										<div className="flex gap-2">
-											<Popover>
-												<PopoverTrigger asChild>
-													<FormControl>
-														<Button
-															variant={"outline"}
-															className={cn(
-																"w-full pl-3 text-left font-normal",
-																!field.value && "text-muted-foreground",
-															)}
-														>
-															<Calendar className="mr-2 h-4 w-4" />
-															{field.value ? (
-																format(field.value, "PPP", { locale: ptBR })
-															) : (
-																<span>Selecione uma data</span>
-															)}
-														</Button>
-													</FormControl>
-												</PopoverTrigger>
-												<PopoverContent className="w-auto p-0" align="start">
-													<CalendarComponent
-														mode="single"
-														selected={field.value || undefined}
-														onSelect={field.onChange}
-														initialFocus
-														locale={ptBR}
-													/>
-												</PopoverContent>
-											</Popover>
-
-											<div className="flex-1">
-												<Input
-													type="time"
-													className="w-full"
-													onChange={(e) => {
-														if (!e.target.value) return
-
-														const [hours, minutes] = e.target.value.split(":").map(Number)
-														const date = field.value || form.getValues().StartDate || new Date()
-														date.setHours(hours, minutes)
-														field.onChange(date)
-													}}
-													value={field.value ? format(field.value, "HH:mm") : ""}
-												/>
-											</div>
-										</div>
-										<FormDescription>
-											Se não especificado, o evento será considerado sem horário de término definido.
-										</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							{/* Capacity */}
-							<FormField
-								control={form.control}
-								name="Capacity"
-								render={({ field }) => (
-									<FormItem>
-										<FormLabel>Capacidade</FormLabel>
-										<FormControl>
-											<Input
-												type="number"
-												min="1"
-												{...field}
-												value={field.value || ""}
-												onChange={(e) => {
-													const value = e.target.value === "" ? undefined : Number.parseInt(e.target.value, 10)
-													field.onChange(value)
-												}}
-											/>
-										</FormControl>
-										<FormDescription>
-											Número máximo de participantes que podem confirmar presença. Deixe em branco para capacidade
-											ilimitada.
-											{confirmationsCount > 0 && (
-												<div className="mt-1 text-amber-600">
-													<strong>Atenção:</strong> {confirmationsCount} pessoa(s) já confirmaram
-													presença.
+													<div className="flex-1">
+														<Input
+															type="time"
+															className="w-full"
+															onChange={(e) => {
+																const [hours, minutes] = e.target.value.split(":").map(Number)
+																const date = field.value || new Date()
+																date.setHours(hours, minutes)
+																field.onChange(date)
+															}}
+															value={field.value ? format(field.value, "HH:mm") : ""}
+														/>
+													</div>
 												</div>
-											)}
-										</FormDescription>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
 
-							{/* Location */}
-							<FormField
-								control={form.control}
-								name="Location"
-								render={({ field }) => (
-									<FormItem className="flex flex-col">
-										<FormLabel>Local</FormLabel>
-										<Popover open={isLocationPopoverOpen} onOpenChange={setIsLocationPopoverOpen}>
-											<PopoverTrigger asChild>
-												<FormControl>
-													<Button
-														variant="outline"
-														role="combobox"
-														className={cn("w-full justify-between", !field.value && "text-muted-foreground")}
-													>
-														{field.value ? (
-															<div className="flex items-center gap-2 text-left">
-																<MapPin className="h-4 w-4 flex-shrink-0" />
-																<div className="truncate">
-																	<div>{field.value.Name}</div>
-																	<div className="text-xs text-muted-foreground truncate break-words whitespace-normal">{field.value.Address}</div>
-																</div>
-															</div>
-														) : (
-															<div className="flex items-center gap-2">
-																<Search className="h-4 w-4" />
-																<span>Buscar local...</span>
-															</div>
-														)}
-													</Button>
-												</FormControl>
-											</PopoverTrigger>
-											<PopoverContent className="w-[300px] p-0" align="start">
-												<Command>
-													<CommandInput
-														placeholder="Buscar por nome ou endereço..."
-														value={locationQuery}
-														onValueChange={handleLocationQueryChange}
-													/>
-													<CommandList>
-														{isSearchingLocations && (
-															<div className="flex items-center justify-center py-6">
-																<Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-															</div>
-														)}
+									{/* End Date and Time (Optional) */}
+									<FormField
+										control={form.control}
+										name="EndDate"
+										render={({ field }) => (
+											<FormItem className="flex flex-col">
+												<FormLabel>Data e Hora de Término</FormLabel>
+												<div className="flex gap-2">
+													<Popover>
+														<PopoverTrigger asChild>
+															<FormControl>
+																<Button
+																	variant={"outline"}
+																	className={cn(
+																		"w-full pl-3 text-left font-normal",
+																		!field.value && "text-muted-foreground",
+																	)}
+																>
+																	<Calendar className="mr-2 h-4 w-4" />
+																	{field.value ? (
+																		format(field.value, "PPP", { locale: ptBR })
+																	) : (
+																		<span>Selecione uma data</span>
+																	)}
+																</Button>
+															</FormControl>
+														</PopoverTrigger>
+														<PopoverContent className="w-auto p-0" align="start">
+															<CalendarComponent
+																mode="single"
+																selected={field.value || undefined}
+																onSelect={field.onChange}
+																initialFocus
+																locale={ptBR}
+															/>
+														</PopoverContent>
+													</Popover>
 
-														{!isSearchingLocations && locationQuery.length < 2 && (
-															<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
-														)}
+													<div className="flex-1">
+														<Input
+															type="time"
+															className="w-full"
+															onChange={(e) => {
+																if (!e.target.value) return
 
-														{!isSearchingLocations && locationQuery.length >= 2 && locations.length === 0 && (
-															<CommandEmpty>Nenhum local encontrado</CommandEmpty>
-														)}
+																const [hours, minutes] = e.target.value.split(":").map(Number)
+																const date = field.value || form.getValues().StartDate || new Date()
+																date.setHours(hours, minutes)
+																field.onChange(date)
+															}}
+															value={field.value ? format(field.value, "HH:mm") : ""}
+														/>
+													</div>
+												</div>
+												<FormDescription>
+													Se não especificado, o evento será considerado sem horário de término definido.
+												</FormDescription>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+							</div>
 
-														{locations.length > 0 && (
-															<CommandGroup>
-																{locations.map((location) => (
-																	<CommandItem
-																		key={location.Id}
-																		value={location.Name}
-																		onSelect={() => {
-																			form.setValue("Location", location, { shouldValidate: true })
-																			setIsLocationPopoverOpen(false)
-																		}}
-																	>
-																		<div className="flex flex-col">
-																			<div>{location.Name}</div>
-																			<div className="text-xs text-muted-foreground">{location.Address}</div>
+							{/* Capacity and Location */}
+							<div className="space-y-6">
+								<h3 className="text-lg font-semibold">Local e Capacidade</h3>
+
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+									{/* Location */}
+									<FormField
+										control={form.control}
+										name="Location"
+										render={({ field }) => (
+											<FormItem className="flex flex-col">
+												<FormLabel>Local</FormLabel>
+												<Popover open={isLocationPopoverOpen} onOpenChange={setIsLocationPopoverOpen}>
+													<PopoverTrigger asChild>
+														<FormControl>
+															<Button
+																variant="outline"
+																role="combobox"
+																className={cn("w-full justify-between", !field.value && "text-muted-foreground")}
+															>
+																{field.value ? (
+																	<div className="flex items-center gap-2 text-left">
+																		<MapPin className="h-4 w-4 flex-shrink-0" />
+																		<div className="truncate">
+																			<div>{field.value.Name}</div>
+																			<div className="text-xs text-muted-foreground truncate break-words whitespace-normal">
+																				{field.value.Address}
+																			</div>
 																		</div>
-																	</CommandItem>
-																))}
-															</CommandGroup>
-														)}
-													</CommandList>
-												</Command>
-											</PopoverContent>
-										</Popover>
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+																	</div>
+																) : (
+																	<div className="flex items-center gap-2">
+																		<Search className="h-4 w-4" />
+																		<span>Buscar local...</span>
+																	</div>
+																)}
+															</Button>
+														</FormControl>
+													</PopoverTrigger>
+													<PopoverContent className="w-[300px] p-0" align="start">
+														<Command>
+															<CommandInput
+																placeholder="Buscar por nome ou endereço..."
+																value={locationQuery}
+																onValueChange={handleLocationQueryChange}
+															/>
+															<CommandList>
+																{isSearchingLocations && (
+																	<div className="flex items-center justify-center py-6">
+																		<Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+																	</div>
+																)}
 
-							{/* Games Section */}
-							<div className="space-y-4">
+																{!isSearchingLocations && locationQuery.length < 2 && (
+																	<CommandEmpty>Digite pelo menos 2 caracteres para buscar</CommandEmpty>
+																)}
+
+																{!isSearchingLocations && locationQuery.length >= 2 && locations.length === 0 && (
+																	<CommandEmpty>Nenhum local encontrado</CommandEmpty>
+																)}
+
+																{locations.length > 0 && (
+																	<CommandGroup>
+																		{locations.map((location) => (
+																			<CommandItem
+																				key={location.Id}
+																				value={location.Name}
+																				onSelect={() => {
+																					form.setValue("Location", location, { shouldValidate: true })
+																					setIsLocationPopoverOpen(false)
+																				}}
+																			>
+																				<div className="flex flex-col">
+																					<div>{location.Name}</div>
+																					<div className="text-xs text-muted-foreground">{location.Address}</div>
+																				</div>
+																			</CommandItem>
+																		))}
+																	</CommandGroup>
+																)}
+															</CommandList>
+														</Command>
+													</PopoverContent>
+												</Popover>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+
+									{/* Capacity */}
+									<FormField
+										control={form.control}
+										name="Capacity"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Capacidade</FormLabel>
+												<FormControl>
+													<Input
+														type="number"
+														min="1"
+														{...field}
+														value={field.value || ""}
+														onChange={(e) => {
+															const value = e.target.value === "" ? undefined : Number.parseInt(e.target.value, 10)
+															field.onChange(value)
+														}}
+													/>
+												</FormControl>
+												<FormDescription>
+													Número máximo de participantes. Deixe em branco para capacidade ilimitada.
+												</FormDescription>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								</div>
+							</div>
+
+							{/* Planned Matches Section */}
+							<div className="space-y-6">
 								<div className="flex items-center justify-between">
-									<Label>Jogos do Evento</Label>
+									<h3 className="text-lg font-semibold">Partidas Planejadas</h3>
 									<Popover open={isGamePopoverOpen} onOpenChange={setIsGamePopoverOpen}>
 										<PopoverTrigger asChild>
-											<Button variant="outline" size="sm" className="h-8 gap-1">
-												<Plus className="h-3.5 w-3.5" />
-												Adicionar Jogo
+											<Button variant="outline" size="sm" className="gap-2 bg-transparent">
+												<Plus className="h-4 w-4" />
+												Adicionar Partida
 											</Button>
 										</PopoverTrigger>
 										<PopoverContent className="w-[300px] p-0" align="end">
@@ -794,47 +942,33 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 
 													{games.length > 0 && (
 														<CommandGroup>
-															{games.map((game) => {
-																const isSelected = form.getValues().Games?.some((g) => g.Id === game.Id)
-
-																return (
-																	<CommandItem
-																		key={game.Id}
-																		value={game.Name}
-																		disabled={isSelected}
-																		onSelect={() => {
-																			if (!isSelected) {
-																				const currentGames = form.getValues().Games || []
-																				form.setValue("Games", [...currentGames, game], { shouldValidate: true })
-																				setGameQuery("")
-																			}
-																		}}
-																		className={cn(
-																			"flex items-center gap-2",
-																			isSelected && "opacity-50 cursor-not-allowed",
-																		)}
-																	>
-																		{game.IconUrl && (
-																			<div className="h-6 w-6 relative flex-shrink-0">
-																				<Image
-																					src={game.IconUrl || "/placeholder.svg"}
-																					alt={game.Name}
-																					fill
-																					className="object-cover rounded"
-																				/>
-																			</div>
-																		)}
-																		<span>{game.Name}</span>
-																		{game.MinAmountOfPlayers && game.MaxAmountOfPlayers && (
-																			<span className="text-xs text-muted-foreground ml-auto">
-																				{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
-																					? `${game.MinAmountOfPlayers} jogadores`
-																					: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
-																			</span>
-																		)}
-																	</CommandItem>
-																)
-															})}
+															{games.map((game) => (
+																<CommandItem
+																	key={game.Id}
+																	value={game.Name}
+																	onSelect={() => addPlannedMatch(game)}
+																	className="flex items-center gap-2"
+																>
+																	{game.IconUrl && (
+																		<div className="h-6 w-6 relative flex-shrink-0">
+																			<Image
+																				src={game.IconUrl || "/placeholder.svg"}
+																				alt={game.Name}
+																				fill
+																				className="object-cover rounded"
+																			/>
+																		</div>
+																	)}
+																	<span>{game.Name}</span>
+																	{game.MinAmountOfPlayers && game.MaxAmountOfPlayers && (
+																		<span className="text-xs text-muted-foreground ml-auto">
+																			{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
+																				? `${game.MinAmountOfPlayers} jogadores`
+																				: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
+																		</span>
+																	)}
+																</CommandItem>
+															))}
 														</CommandGroup>
 													)}
 												</CommandList>
@@ -843,68 +977,259 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 									</Popover>
 								</div>
 
-								<FormField
-									control={form.control}
-									name="Games"
-									render={({ field }) => (
-										<FormItem>
-											<div className="space-y-2">
-												{field.value && field.value.length > 0 ? (
-													<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-														{field.value.map((game, index) => (
-															<div
-																key={game.Id}
-																className="flex items-center gap-2 border rounded-md p-2 bg-muted/20"
-															>
-																{game.IconUrl && (
-																	<div className="h-8 w-8 relative flex-shrink-0">
-																		<Image
-																			src={game.IconUrl || "/placeholder.svg"}
-																			alt={game.Name}
-																			fill
-																			className="object-cover rounded"
+								{fields.length > 0 ? (
+									<div className="space-y-4">
+										{fields.map((field, index) => (
+											<Card key={field.id} className="p-4">
+												<div className="flex items-start justify-between mb-4">
+													<div className="flex items-center gap-3">
+														{form.watch(`PlannedMatches.${index}.IconUrl`) && (
+															<div className="h-10 w-10 relative flex-shrink-0">
+																<Image
+																	src={
+																		form.watch(`PlannedMatches.${index}.IconUrl`) ||
+																		"/placeholder.svg"
+																	}
+																	alt={form.watch(`PlannedMatches.${index}.Name`)}
+																	fill
+																	className="object-cover rounded"
+																/>
+															</div>
+														)}
+														<div>
+															<h4 className="font-medium">{form.watch(`PlannedMatches.${index}.Name`)}</h4>
+															<p className="text-sm text-muted-foreground">Partida {index + 1}</p>
+														</div>
+													</div>
+													<Button
+														type="button"
+														variant="ghost"
+														size="icon"
+														onClick={() => remove(index)}
+														className="h-8 w-8 rounded-full"
+													>
+														<X className="h-4 w-4" />
+													</Button>
+												</div>
+
+												<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+													{/* Match Name */}
+													<FormField
+														control={form.control}
+														name={`PlannedMatches.${index}.Name`}
+														render={({ field }) => (
+															<FormItem>
+																<FormLabel>Nome da Partida</FormLabel>
+																<FormControl>
+																	<Input placeholder="Ex: Jaipur customizado" {...field} />
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
+
+													{/* Match Description */}
+													<div className="md:col-span-2">
+														<FormField
+															control={form.control}
+															name={`PlannedMatches.${index}.Description`}
+															render={({ field }) => (
+																<FormItem>
+																	<FormLabel>Descrição da Partida</FormLabel>
+																	<FormControl>
+																		<Textarea
+																			placeholder="Descreva esta partida específica..."
+																			className="min-h-[80px]"
+																			{...field}
+																		/>
+																	</FormControl>
+																	<FormMessage />
+																</FormItem>
+															)}
+														/>
+													</div>
+
+													{/* Max Players */}
+													<FormField
+														control={form.control}
+														name={`PlannedMatches.${index}.MaxAmountOfPlayers`}
+														render={({ field }) => (
+															<FormItem>
+																<FormLabel>Máximo de Jogadores</FormLabel>
+																<FormControl>
+																	<div className="relative">
+																		<Users className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+																		<Input
+																			type="number"
+																			min="1"
+																			className="pl-10"
+																			{...field}
+																			onChange={(e) => field.onChange(Number(e.target.value))}
 																		/>
 																	</div>
-																)}
-																<div className="flex-1 min-w-0">
-																	<p className="font-medium truncate">{game.Name}</p>
-																	{game.MinAmountOfPlayers && game.MaxAmountOfPlayers && (
-																		<p className="text-xs text-muted-foreground">
-																			{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
-																				? `${game.MinAmountOfPlayers} jogadores`
-																				: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
-																		</p>
-																	)}
+																</FormControl>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
+
+													{/* Price */}
+													{/* <FormField
+															control={form.control}
+															name={`PlannedMatches.${index}.Price`}
+															render={({ field }) => (
+																<FormItem>
+																	<FormLabel>Preço (R$)</FormLabel>
+																	<FormControl>
+																		<div className="relative">
+																			<DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+																			<Input
+																				type="number"
+																				min="0"
+																				step="0.01"
+																				className="pl-10"
+																				placeholder="0.00"
+																				{...field}
+																				value={field.value || ""}
+																				onChange={(e) => {
+																					const value = e.target.value === "" ? undefined : Number(e.target.value)
+																					field.onChange(value)
+																				}}
+																			/>
+																		</div>
+																	</FormControl>
+																	<FormDescription>Deixe em branco se for gratuito</FormDescription>
+																	<FormMessage />
+																</FormItem>
+															)}
+														/> */}
+
+													{/* Start Date and Time */}
+													<FormField
+														control={form.control}
+														name={`PlannedMatches.${index}.StartDate`}
+														render={({ field }) => (
+															<FormItem className="flex flex-col">
+																<FormLabel>Início da Partida</FormLabel>
+																<div className="flex gap-2">
+																	<Popover>
+																		<PopoverTrigger asChild>
+																			<FormControl>
+																				<Button
+																					variant={"outline"}
+																					className={cn(
+																						"w-full pl-3 text-left font-normal",
+																						!field.value && "text-muted-foreground",
+																					)}
+																				>
+																					<Clock className="mr-2 h-4 w-4" />
+																					{field.value ? (
+																						format(field.value, "dd/MM", { locale: ptBR })
+																					) : (
+																						<span>Data</span>
+																					)}
+																				</Button>
+																			</FormControl>
+																		</PopoverTrigger>
+																		<PopoverContent className="w-auto p-0" align="start">
+																			<CalendarComponent
+																				mode="single"
+																				selected={field.value}
+																				onSelect={field.onChange}
+																				initialFocus
+																				locale={ptBR}
+																			/>
+																		</PopoverContent>
+																	</Popover>
+
+																	<div className="flex-1">
+																		<Input
+																			type="time"
+																			className="w-full"
+																			onChange={(e) => {
+																				const [hours, minutes] = e.target.value.split(":").map(Number)
+																				const date = field.value || new Date()
+																				date.setHours(hours, minutes)
+																				field.onChange(date)
+																			}}
+																			value={field.value ? format(field.value, "HH:mm") : ""}
+																		/>
+																	</div>
 																</div>
-																<Button
-																	type="button"
-																	variant="ghost"
-																	size="icon"
-																	className="h-8 w-8 rounded-full"
-																	onClick={() => {
-																		const newGames = [...field.value]
-																		newGames.splice(index, 1)
-																		form.setValue("Games", newGames)
-																	}}
-																>
-																	<X className="h-4 w-4" />
-																</Button>
-															</div>
-														))}
-													</div>
-												) : (
-													<div className="text-center py-6 border rounded-md bg-muted/20">
-														<p className="text-sm text-muted-foreground">
-															Nenhum jogo adicionado. Clique em "Adicionar Jogo" para incluir jogos ao evento.
-														</p>
-													</div>
-												)}
-											</div>
-											<FormDescription>Adicione os jogos que serão jogados durante o evento.</FormDescription>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
+
+													{/* End Date and Time */}
+													<FormField
+														control={form.control}
+														name={`PlannedMatches.${index}.EndDate`}
+														render={({ field }) => (
+															<FormItem className="flex flex-col">
+																<FormLabel>Fim da Partida</FormLabel>
+																<div className="flex gap-2">
+																	<Popover>
+																		<PopoverTrigger asChild>
+																			<FormControl>
+																				<Button
+																					variant={"outline"}
+																					className={cn(
+																						"w-full pl-3 text-left font-normal",
+																						!field.value && "text-muted-foreground",
+																					)}
+																				>
+																					<Clock className="mr-2 h-4 w-4" />
+																					{field.value ? (
+																						format(field.value, "dd/MM", { locale: ptBR })
+																					) : (
+																						<span>Data</span>
+																					)}
+																				</Button>
+																			</FormControl>
+																		</PopoverTrigger>
+																		<PopoverContent className="w-auto p-0" align="start">
+																			<CalendarComponent
+																				mode="single"
+																				selected={field.value}
+																				onSelect={field.onChange}
+																				initialFocus
+																				locale={ptBR}
+																			/>
+																		</PopoverContent>
+																	</Popover>
+
+																	<div className="flex-1">
+																		<Input
+																			type="time"
+																			className="w-full"
+																			onChange={(e) => {
+																				const [hours, minutes] = e.target.value.split(":").map(Number)
+																				const date = field.value || new Date()
+																				date.setHours(hours, minutes)
+																				field.onChange(date)
+																			}}
+																			value={field.value ? format(field.value, "HH:mm") : ""}
+																		/>
+																	</div>
+																</div>
+																<FormMessage />
+															</FormItem>
+														)}
+													/>
+												</div>
+											</Card>
+										))}
+									</div>
+								) : (
+									<div className="text-center py-8 border rounded-md bg-muted/20">
+										<GamepadIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+										<p className="text-sm text-muted-foreground">
+											Nenhuma partida planejada ainda. Clique em "Adicionar Partida" para incluir jogos específicos ao
+											evento.
+										</p>
+									</div>
+								)}
 							</div>
 
 							<div className="flex justify-end gap-4 pt-4">
@@ -915,10 +1240,10 @@ export default function EditEventPage({ event, attendances, games: eventGames }:
 									{editEventMutation.isPending ? (
 										<>
 											<Loader2 className="mr-2 h-4 w-4 animate-spin" />
-											Salvando...
+											Editando...
 										</>
 									) : (
-										"Salvar Alterações"
+										"Editar Evento"
 									)}
 								</Button>
 							</div>

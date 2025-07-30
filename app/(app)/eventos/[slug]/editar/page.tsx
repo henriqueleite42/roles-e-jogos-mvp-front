@@ -1,4 +1,4 @@
-import { EventData, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
+import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches } from "@/types/api"
 import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { redirect } from "next/navigation";
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		return (<></>)
 	}
 
-	const attendances = await resEventAttendances.json() as ResponseListEventAttendances
+	const attendances = await resEventAttendances.json() as ResponseListEventTicketBuyers
 
 	const resEventGames = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/games?limit=100&eventId=" + event.Id, {
 		method: "GET",
@@ -72,13 +72,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		return (<></>)
 	}
 
-	const games = await resEventGames.json() as ResponseListEventGames
+	const games = await resEventGames.json() as ResponseListEventPlannedMatches
 
 	return (
 		<>
 			<Header title="Evento" displayBackButton />
 
-			<EditEventPage event={event} attendances={attendances} games={games} />
+			<EditEventPage event={event} attendances={attendances} plannedMatches={games} />
 		</>
 	)
 }

@@ -2,12 +2,7 @@ export type Provider = "GOOGLE" | "LUDOPEDIA"
 
 export type GameKind = "GAME" | "RPG"
 
-export type EventAttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE"
-
 export type LocationKind = "BUSINESS" | "PERSONAL"
-
-// Attendance status types
-export type AttendanceStatus = "GOING" | "NOT_GOING" | "MAYBE" | null
 
 export type UploadKind = "AVATAR_IMG" | "EVENT_ICON" | "LOCATION_ICON" | "MEDIA_IMAGE" | "COMMUNITY_AVATAR_IMG"
 
@@ -102,13 +97,6 @@ export interface MinimumGameData {
 	MinAge: number;
 }
 
-export interface EventAttendanceData {
-	Id: number
-	Status: EventAttendanceStatus
-	ConfirmedAt: string
-	Profile: MinimumProfileData
-}
-
 export interface Connection {
 	ExternalHandle?: string;
 	ExternalId: string;
@@ -141,13 +129,6 @@ export interface EventGame {
 	MinAge: number
 }
 
-export interface EventAttendance {
-	AccountId: number
-	Handle: string
-	AvatarUrl?: string
-	Status: EventAttendanceStatus
-}
-
 export interface EventData {
 	Id: number
 	OwnerId: number
@@ -159,6 +140,7 @@ export interface EventData {
 	EndDate: string
 	Capacity?: number
 	ExternalUrl?: string
+	Price?: number
 	Location: {
 		Id: number
 		Name: string
@@ -166,6 +148,18 @@ export interface EventData {
 		Address: string
 		IconUrl?: string
 	}
+	Organizer: MinimumProfileData
+}
+
+export interface EventPlannedMatch {
+	Id: number
+	GameIconUrl?: string
+	Name: string
+	Description: string
+	MaxAmountOfPlayers: number
+	StartDate: string
+	EndDate: string
+	Price?: number
 }
 
 export interface LocationData {
@@ -199,13 +193,6 @@ export interface MinimumEventData {
 	StartDate: string
 }
 
-export interface MinimumEventDataWithAttendance extends MinimumEventData {
-	Attendance: {
-		Status: AttendanceStatus
-	}
-	Location: MinimumLocationData
-}
-
 export interface MinimumEventDataWithLocation extends MinimumEventData {
 	Location: MinimumLocationData
 }
@@ -215,7 +202,7 @@ export interface ResponseSearchLocations {
 }
 
 export interface ResponseSearchGames {
-	Data: Array<GameData>
+	Data: Array<MinimumGameData>
 }
 
 export interface ResponseSearchPersonalGames {
@@ -374,13 +361,30 @@ export interface ResponseListGameOwners {
 	Pagination: PaginationString
 }
 
-export interface ResponseListEventAttendances {
-	Data: Array<EventAttendanceData>
+export interface EventTicketBuyer {
+	Profile: MinimumProfileData
+	AmountOfTickets: number
+}
+
+export interface ResponseListEventTicketBuyers {
+	Data: Array<EventTicketBuyer>
 	Pagination: PaginationString
 }
 
-export interface ResponseListEventGames {
-	Data: Array<MinimumGameData>
+export interface EventPlannedMatch {
+	Id: number
+	GameId: number
+	GameIconUrl?: string
+	Name: string
+	Description: string
+	MaxAmountOfPlayers: number
+	StartDate: string
+	EndDate: string
+	Price?: number
+}
+
+export interface ResponseListEventPlannedMatches {
+	Data: Array<EventPlannedMatch>
 	Pagination: PaginationString
 }
 
@@ -390,7 +394,7 @@ export interface ResponseListEventsByGame {
 }
 
 export interface ResponseListEventsByAccount {
-	Data: Array<MinimumEventDataWithAttendance>
+	Data: Array<MinimumEventData>
 	Pagination: PaginationTimestampId
 }
 
