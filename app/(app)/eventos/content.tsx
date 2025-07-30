@@ -40,7 +40,8 @@ export default function Events() {
 			const queryObj: Record<string, string> = {}
 
 			if (pageParam) {
-				queryObj.after = String(pageParam)
+				queryObj.afterTimestamp = String((pageParam as any).Timestamp)
+				queryObj.afterId = String((pageParam as any).Id)
 			}
 
 			const query = new URLSearchParams(queryObj)
