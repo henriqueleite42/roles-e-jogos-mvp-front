@@ -144,7 +144,7 @@ export function LocationsPageContent() {
 								{isFetchingNextPage && (
 									<div className="flex items-center gap-2">
 										<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
-										<span className="text-sm text-muted-foreground">Carregando mais jogos...</span>
+										<span className="text-sm text-muted-foreground">Carregando mais locais...</span>
 									</div>
 								)}
 							</div>

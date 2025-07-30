@@ -1,13 +1,13 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, MapPin, Users, Share2, Eye } from "lucide-react"
+import { Calendar, MapPin, Users, Share2, Eye, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
 import { EventData, ResponseEvents } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Header } from "@/components/header"
 import { formatEventDate } from "@/lib/dates"
 
@@ -33,7 +33,7 @@ export default function Events() {
 	const { toast } = useToast()
 
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data: events, } = useInfiniteQuery<ResponseEvents>({
+	const { data: events, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery<ResponseEvents>({
 		queryKey: ["events"],
 		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async ({ pageParam = null }) => {
@@ -98,92 +98,129 @@ export default function Events() {
 		}
 	}
 
+	// Observer for infinite scroll
+	const observerTarget = useRef<HTMLDivElement | null>(null)
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		if (!hasNextPage || !observerTarget.current || isFetchingNextPage) return
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					fetchNextPage()
+				}
+			},
+			{ threshold: 0.5 },
+		)
+
+		observer.observe(observerTarget.current)
+
+		return () => {
+			observer.disconnect()
+		}
+	}, [hasNextPage, isFetchingNextPage])
+
 	return (
 		<>
 			<Header title="Eventos" displayBackButton />
 
 			<main className="flex-1 container mx-auto py-8 px-4 mb-10">
-				<div className="space-y-6">
-					{allEvents.map((event) => (
-						<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow">
-							<CardContent className="p-0">
-								<div className="flex flex-col">
-									{/* Header Section */}
-									<div className="flex gap-4 p-4">
-										{/* Event Image */}
-										<div className="w-24 h-24 sm:w-32 sm:h-32 relative flex-shrink-0 rounded-lg overflow-hidden">
-											<Image src={event.IconUrl || "/placeholder.svg"} alt={event.Name} fill className="object-cover" />
-										</div>
-
-										{/* Event Info */}
-										<div className="flex-1 min-w-0">
-											<h2 className="text-xl font-bold mb-1 line-clamp-2">{event.Name}</h2>
-											<div className="flex items-center gap-1 text-muted-foreground mb-2">
-												<MapPin className="h-4 w-4 flex-shrink-0" />
-												<span className="text-sm truncate">{event.Location.Name}</span>
-											</div>
-										</div>
-									</div>
-
-									{/* Content Section */}
-									<div className="px-4 pb-4 space-y-4">
-										{/* Description */}
-										<p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">{event.Description}</p>
-
-										{/* Event Details */}
-										<div className="space-y-2">
-											{/* Date and Time */}
-											<div className="flex items-center gap-2 text-sm">
-												<Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-												<span>{formatDateRange(event.StartDate, event.EndDate)}</span>
-											</div>
-
-											{/* Location Name */}
-											<div className="flex items-start gap-2 text-sm">
-												<MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-												<span className="text-muted-foreground">{event.Location.Name}</span>
-											</div>
-
-											{/* Capacity */}
-											{event.Capacity && (
-												<div className="flex items-center gap-2 text-sm">
-													<Users className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-													<span className="text-muted-foreground">Capacidade: {event.Capacity} pessoas</span>
+				{allEvents.length > 0 && (
+					<>
+						<div className="space-y-6">
+							{allEvents.map((event) => (
+								<Card key={event.Id} className="overflow-hidden hover:shadow-md transition-shadow">
+									<CardContent className="p-0">
+										<div className="flex flex-col">
+											{/* Header Section */}
+											<div className="flex gap-4 p-4">
+												{/* Event Image */}
+												<div className="w-24 h-24 sm:w-32 sm:h-32 relative flex-shrink-0 rounded-lg overflow-hidden">
+													<Image src={event.IconUrl || "/placeholder.svg"} alt={event.Name} fill className="object-cover" />
 												</div>
-											)}
-											{!event.Capacity && (
-												<div className="flex items-center gap-2 text-sm">
-													<Users className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-													<span className="text-muted-foreground">Sem limite de vagas!</span>
+
+												{/* Event Info */}
+												<div className="flex-1 min-w-0">
+													<h2 className="text-xl font-bold mb-1 line-clamp-2">{event.Name}</h2>
+													<div className="flex items-center gap-1 text-muted-foreground mb-2">
+														<MapPin className="h-4 w-4 flex-shrink-0" />
+														<span className="text-sm truncate">{event.Location.Name}</span>
+													</div>
 												</div>
-											)}
-										</div>
+											</div>
 
-										{/* Action Buttons */}
-										<div className="flex gap-2 pt-2">
-											<Button asChild className="flex-1 text-white">
-												<Link href={`/eventos/${event.Slug}`} className="gap-2">
-													<Eye className="h-4 w-4" />
-													Ver mais
-												</Link>
-											</Button>
-											<Button variant="outline" size="icon" onClick={() => handleShare(event)} className="flex-shrink-0">
-												<Share2 className="h-4 w-4" />
-											</Button>
-										</div>
-									</div>
-								</div>
-							</CardContent>
-						</Card>
-					))}
+											{/* Content Section */}
+											<div className="px-4 pb-4 space-y-4">
+												{/* Description */}
+												<p className="text-muted-foreground text-sm leading-relaxed line-clamp-3">{event.Description}</p>
 
-					{allEvents.length === 0 && (
-						<div className="text-center py-10">
-							<Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-							<p className="text-muted-foreground">Nenhum evento encontrado.</p>
+												{/* Event Details */}
+												<div className="space-y-2">
+													{/* Date and Time */}
+													<div className="flex items-center gap-2 text-sm">
+														<Calendar className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+														<span>{formatDateRange(event.StartDate, event.EndDate)}</span>
+													</div>
+
+													{/* Location Name */}
+													<div className="flex items-start gap-2 text-sm">
+														<MapPin className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+														<span className="text-muted-foreground">{event.Location.Name}</span>
+													</div>
+
+													{/* Capacity */}
+													{event.Capacity && (
+														<div className="flex items-center gap-2 text-sm">
+															<Users className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+															<span className="text-muted-foreground">Capacidade: {event.Capacity} pessoas</span>
+														</div>
+													)}
+													{!event.Capacity && (
+														<div className="flex items-center gap-2 text-sm">
+															<Users className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+															<span className="text-muted-foreground">Sem limite de vagas!</span>
+														</div>
+													)}
+												</div>
+
+												{/* Action Buttons */}
+												<div className="flex gap-2 pt-2">
+													<Button asChild className="flex-1 text-white">
+														<Link href={`/eventos/${event.Slug}`} className="gap-2">
+															<Eye className="h-4 w-4" />
+															Ver mais
+														</Link>
+													</Button>
+													<Button variant="outline" size="icon" onClick={() => handleShare(event)} className="flex-shrink-0">
+														<Share2 className="h-4 w-4" />
+													</Button>
+												</div>
+											</div>
+										</div>
+									</CardContent>
+								</Card>
+							))}
 						</div>
-					)}
-				</div>
+
+						{/* Infinite scroll observer element */}
+						<div ref={observerTarget} className="w-full py-4 flex justify-center">
+							{isFetchingNextPage && (
+								<div className="flex items-center gap-2">
+									<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+									<span className="text-sm text-muted-foreground">Carregando mais eventos...</span>
+								</div>
+							)}
+						</div>
+					</>
+				)}
+
+				{allEvents.length === 0 && (
+					<div className="text-center py-10">
+						<Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+						<p className="text-muted-foreground">Nenhum evento encontrado.</p>
+					</div>
+				)}
 			</main>
 		</>
 	)
