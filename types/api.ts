@@ -10,6 +10,8 @@ export type NotificationType = "GAMES_COLLECTION_IMPORT_FINISH" | "MEDIA_MENTION
 
 export type CollectionImportStatusEnum = "COMPLETED" | "FAILED" | "STARTED" | "NOT_YET_IMPORTED"
 
+export type EventType = "FREE" | "PAID_ON_SITE" | "BUY_ON_THIRD_PARTY"
+
 export type AchievementId = "CONNECT_LUDOPEDIA"
 	| "CONNECT_DISCORD"
 	| "CREATE_ONE_EVENT"
@@ -133,6 +135,7 @@ export interface EventData {
 	Id: number
 	Name: string
 	Description: string
+	Type: EventType
 	Slug: string
 	IconUrl?: string
 	StartDate: string

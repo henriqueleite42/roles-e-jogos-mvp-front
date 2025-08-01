@@ -10,7 +10,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Trash2, Triangle, GamepadIcon, Clock, Users } from "lucide-react"
+import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Trash2, Triangle, GamepadIcon, Clock, Users, DollarSign, Home, SquareArrowOutUpRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -37,6 +37,7 @@ import Image from "next/image"
 import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch } from "@/types/api"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 const DEFAULT_MATCH_ID = "CREATED_NOW"
 
@@ -47,6 +48,9 @@ const formSchema = z.object({
 	}),
 	Description: z.string().min(10, {
 		message: "A descrição deve ter pelo menos 10 caracteres.",
+	}),
+	Type: z.enum(["FREE", "PAID_ON_SITE", "BUY_ON_THIRD_PARTY"], {
+		required_error: "Selecione o tipo de evento.",
 	}),
 	StartDate: z.date({
 		required_error: "A data de início é obrigatória.",
@@ -63,6 +67,7 @@ const formSchema = z.object({
 		.optional()
 		.nullable(),
 	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
+	ExternalUrl: z.string().url().optional().nullable(),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
@@ -240,12 +245,21 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 		mutationFn: async (body: MutationParams) => {
 			const reqBody: any = {
 				EventId: event.Id,
+				Type: body.Type,
 				StartDate: body.StartDate.toISOString().replace('.000', ''),
 				EndDate: body.EndDate.toISOString().replace('.000', ''),
 				Name: body.Name,
 				Description: body.Description,
 				Capacity: body.Capacity,
 				LocationId: body.Location.Id,
+			}
+
+			if (body.Type !== "FREE" && body.Price) {
+				reqBody.Price = body.Price * 100
+			}
+
+			if (body.Type === "BUY_ON_THIRD_PARTY") {
+				reqBody.ExternalUrl = body.ExternalUrl
 			}
 
 			if (body.EventImage !== null) {
@@ -386,11 +400,14 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 	const form = useForm<FormValues>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			Type: event.Type,
 			Capacity: event.Capacity,
 			Description: event.Description,
 			EndDate: new Date(event.EndDate),
 			Location: event.Location,
 			Name: event.Name,
+			Price: event.Price ? event.Price / 100 : undefined,
+			ExternalUrl: event.ExternalUrl,
 			StartDate: new Date(event.StartDate),
 			PlannedMatches: plannedMatches.map(i => {
 				const pm = {
@@ -485,6 +502,8 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 		})
 	}
 
+	console.log(form.formState.errors);
+
 	return (
 		<main className="flex-1 container mx-auto py-8 px-4 mb-16">
 			<Card className="max-w-2xl mx-auto">
@@ -550,6 +569,57 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 							<div className="space-y-6">
 								<h3 className="text-lg font-semibold">Informações Básicas</h3>
 
+								{/* Event Type */}
+								<FormField
+									control={form.control}
+									name="Type"
+									render={({ field }) => (
+										<FormItem className="space-y-3">
+											<FormLabel>Tipo de Evento</FormLabel>
+											<FormControl>
+												<RadioGroup
+													onValueChange={field.onChange}
+													defaultValue={field.value}
+													className="flex flex-col space-y-1"
+												>
+													<FormItem className="flex items-center space-x-3 space-y-0">
+														<FormControl>
+															<RadioGroupItem value="FREE" />
+														</FormControl>
+														<FormLabel className="font-normal flex items-center gap-2">
+															<DollarSign className="h-4 w-4 text-blue-600" />
+															Gratuito
+														</FormLabel>
+													</FormItem>
+													<FormItem className="flex items-center space-x-3 space-y-0">
+														<FormControl>
+															<RadioGroupItem value="PAID_ON_SITE" />
+														</FormControl>
+														<FormLabel className="font-normal flex items-center gap-2">
+															<Home className="h-4 w-4 text-green-600" />
+															Pago no local
+														</FormLabel>
+													</FormItem>
+													<FormItem className="flex items-center space-x-3 space-y-0">
+														<FormControl>
+															<RadioGroupItem value="BUY_ON_THIRD_PARTY" />
+														</FormControl>
+														<FormLabel className="font-normal flex items-center gap-2">
+															<SquareArrowOutUpRight className="h-4 w-4 text-red-600" />
+															Comprado em plataforma externa
+														</FormLabel>
+													</FormItem>
+												</RadioGroup>
+											</FormControl>
+											{/* <FormDescription>
+													Locais comerciais são públicos e podem ser adicionados a qualquer evento. Locais pessoais
+													são privados e apenas você pode adicioná-los aos seus eventos.
+												</FormDescription> */}
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
 								{/* Event Name */}
 								<FormField
 									control={form.control}
@@ -584,9 +654,9 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 									)}
 								/>
 
-
 								{/* Event Price */}
-								{/* <FormField
+								{form.watch("Type") !== "FREE" && (
+									<FormField
 										control={form.control}
 										name="Price"
 										render={({ field }) => (
@@ -604,8 +674,23 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 															{...field}
 															value={field.value || ""}
 															onChange={(e) => {
-																const value = e.target.value === "" ? undefined : Number(e.target.value)
-																field.onChange(value)
+																let value = e.target.value;
+
+																// Remove any characters that aren't digits or dot
+																value = value.replace(/[^0-9.]/g, '');
+
+																// Limit to one dot
+																const parts = value.split('.');
+																if (parts.length > 2) {
+																	value = parts[0] + '.' + parts[1];
+																}
+
+																// Limit to 2 decimal places
+																if (parts[1]?.length > 2) {
+																	value = parts[0] + '.' + parts[1].substring(0, 2);
+																}
+
+																field.onChange(parseFloat(value))
 															}}
 														/>
 													</div>
@@ -614,7 +699,25 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 												<FormMessage />
 											</FormItem>
 										)}
-									/> */}
+									/>
+								)}
+
+								{/* Event ExternalUrl */}
+								{form.watch("Type") === "BUY_ON_THIRD_PARTY" && (
+									<FormField
+										control={form.control}
+										name="ExternalUrl"
+										render={({ field }) => (
+											<FormItem>
+												<FormLabel>Url de compra</FormLabel>
+												<FormControl>
+													<Input placeholder="Ex: https://rolesejogos.com.br/eventos/evento-top" {...field} value={field.value || undefined} />
+												</FormControl>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								)}
 
 								{/* Event Image */}
 								<div className="space-y-2">
