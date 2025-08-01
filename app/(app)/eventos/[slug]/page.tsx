@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { EventData, Profile, ResponseListEventAttendances, ResponseListEventGames } from "@/types/api"
-import { Pencil } from "lucide-react"
+import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches } from "@/types/api"
+import { Calendar, Clock, DollarSign, GamepadIcon, Pencil, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
@@ -14,6 +14,9 @@ import { getDescription } from "@/lib/description"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { EventDetails } from "./details"
+import { formatEventDate } from "@/lib/dates"
+import { formatDisplayPrice } from "@/lib/price"
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -41,6 +44,20 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 	}
 }
 
+function formatDuration(startDate: string, endDate: string): string {
+	const start = new Date(startDate)
+	const end = new Date(endDate)
+	const diffInMinutes = Math.floor((end.getTime() - start.getTime()) / (1000 * 60))
+
+	if (diffInMinutes < 60) {
+		return `${diffInMinutes}min`
+	} else {
+		const hours = Math.floor(diffInMinutes / 60)
+		const minutes = diffInMinutes % 60
+		return minutes > 0 ? `${hours}h ${minutes}min` : `${hours}h`
+	}
+}
+
 export default async function EventPage({ params }: { params: { slug: string } }) {
 	const { slug } = await params
 
@@ -53,34 +70,42 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 	if (!resEvent.ok) {
 		console.error(await resEvent.text())
-		return (<></>)
+		redirect("/eventos")
 	}
 
 	const event = await resEvent.json() as EventData
 
-	const resEventAttendances = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/attendances?limit=100&eventId=" + event.Id, {
+	// Ticket Buyers
+
+	const resEventTicketBuyers = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/tickets/buyers?limit=100&eventId=" + event.Id, {
 		method: "GET",
 		credentials: "include"
 	})
 
-	if (!resEventAttendances.ok) {
-		console.error(await resEventAttendances.text())
+	if (!resEventTicketBuyers.ok) {
+		console.error(await resEventTicketBuyers.text())
 		return (<></>)
 	}
 
-	const attendances = await resEventAttendances.json() as ResponseListEventAttendances
+	const ticketBuyersRes = await resEventTicketBuyers.json() as ResponseListEventTicketBuyers
+	const ticketBuyers = ticketBuyersRes.Data
 
-	const resEventGames = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/games?limit=100&eventId=" + event.Id, {
+	// Planned Matches
+
+	const resEventPlannedMatches = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/planned-matches?limit=100&eventId=" + event.Id, {
 		method: "GET",
 		credentials: "include"
 	})
 
-	if (!resEventGames.ok) {
-		console.error(await resEventGames.text())
+	if (!resEventPlannedMatches.ok) {
+		console.error(await resEventPlannedMatches.text())
 		return (<></>)
 	}
 
-	const games = await resEventGames.json() as ResponseListEventGames
+	const plannedMatchesRes = await resEventPlannedMatches.json() as ResponseListEventPlannedMatches
+	const plannedMatches = plannedMatchesRes.Data
+
+	// Account
 
 	var account: Profile | null = null
 	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
@@ -111,14 +136,17 @@ export default async function EventPage({ params }: { params: { slug: string } }
 		</>
 	}
 
-	const { confirmations, maybes, notGoing, confirmationsCount } = getAvailableSpots(event, attendances.Data)
+	const {
+		availableSpots,
+		isFull
+	} = getAvailableSpots(event, ticketBuyers)
 
 	return (
 		<>
 			<Header title="Evento" displayBackButton />
 
-			<main className="flex-1 container mx-auto py-8 px-4 mb-10">
-				{event.OwnerId === account?.AccountId && (
+			<main className="flex-1 container mx-auto p-2 mb-10">
+				{event.Organizer.AccountId === account?.AccountId && (
 					<div className="flex justify-center align-center mb-5">
 						<Button type="button" className="text-white" asChild>
 							<Link href={"/eventos/" + event.Slug + "/editar"}>
@@ -129,120 +157,102 @@ export default async function EventPage({ params }: { params: { slug: string } }
 					</div>
 				)}
 
-				<div className="max-w-4xl mx-auto space-y-6">
+				<div className="max-w-4xl mx-auto space-y-4">
 					{/* Event Header */}
-					<EventDetails event={event} attendances={attendances} account={account} />
+					<EventDetails event={event} account={account} availableSpots={availableSpots} isFull={isFull} />
 
-					{/* Games Section */}
-					<Card>
-						<CardHeader>
-							<CardTitle>Jogos do Evento</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{games.Data.map((game) => (
-									<Link key={game.Id} href={"/jogos/" + game.Slug}>
-										<div className="flex items-center gap-3 p-3 border rounded-lg hover:bg-gray-50  transition-colors">
-											<div className="w-12 h-12 relative flex-shrink-0">
+					{/* Planned Matches Section */}
+					{plannedMatches.length > 0 && (
+						<Card>
+							<CardHeader>
+								<CardTitle className="flex items-center gap-2">
+									<GamepadIcon className="h-5 w-5" />
+									Partidas Planejadas ({plannedMatches.length})
+								</CardTitle>
+							</CardHeader>
+							<CardContent>
+								<div className="space-y-4">
+									{plannedMatches.map((match) => (
+										<div key={match.Id} className="flex items-start gap-4 p-4 border rounded-lg">
+											<div className="w-16 h-16 relative flex-shrink-0">
 												<Image
-													src={game.IconUrl || "/placeholder.svg"}
-													alt={game.Name}
+													src={match.GameIconUrl || "/placeholder.svg"}
+													alt={match.Name}
 													fill
 													className="object-cover rounded"
 												/>
 											</div>
 											<div className="flex-1">
-												<h3 className="font-medium">{game.Name}</h3>
-												<div className="flex items-center gap-2 mt-1">
-													<Badge variant="outline" className="text-xs">
-														{game.MinAmountOfPlayers === game.MaxAmountOfPlayers
-															? `${game.MinAmountOfPlayers} jogadores`
-															: `${game.MinAmountOfPlayers}-${game.MaxAmountOfPlayers} jogadores`}
-													</Badge>
+												<div className="flex items-start justify-between mb-2">
+													<h3 className="font-semibold text-lg">{match.Name}</h3>
+													<div className="flex items-center gap-2">
+														{match.Price && (
+															<Badge variant="outline" className="gap-1">
+																<DollarSign className="h-3 w-3" />
+																{formatDisplayPrice(match.Price)}
+															</Badge>
+														)}
+														<Badge variant="secondary" className="gap-1">
+															<Users className="h-3 w-3" />
+															{
+																match.MaxAmountOfPlayers === 1 ?
+																	"Até 1 jogador" :
+																	`Até ${match.MaxAmountOfPlayers} jogadores`
+															}
+														</Badge>
+													</div>
+												</div>
+												<p className="text-muted-foreground mb-3">{match.Description}</p>
+												<div className="flex items-center gap-4 text-sm text-muted-foreground">
+													<div className="flex items-center gap-1">
+														<Calendar className="h-4 w-4" />
+														{formatEventDate(match.StartDate)}
+													</div>
+													<div className="flex items-center gap-1">
+														<Clock className="h-4 w-4" />
+														{formatDuration(match.StartDate, match.EndDate)}
+													</div>
 												</div>
 											</div>
 										</div>
-									</Link>
-								))}
-							</div>
-						</CardContent>
-					</Card>
+									))}
+								</div>
+							</CardContent>
+						</Card>
+					)}
 
 					{/* Confirmations Section */}
 					<Card>
 						<CardHeader>
 							<CardTitle>
-								Confirmados (
-								{confirmationsCount}
-								{event.Capacity && `/${event.Capacity}`})
+								Participantes Confirmados
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
 							<div className="flex flex-wrap gap-2">
-								{confirmations.map((person) => (
-									<Link key={person.Profile.AccountId} href={"/p/" + person.Profile.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
+								{ticketBuyers.map((person) => (
+									<div key={person.Profile.AccountId} className="flex items-center gap-2 border rounded-full px-3 py-1">
 										<Avatar className="w-6 h-6">
 											<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
 											<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
 										</Avatar>
 										<span className="text-sm">{person.Profile.Handle}</span>
-									</Link>
+										{
+											person.AmountOfTickets > 1 && (
+												<Badge variant="secondary" className="text-xs ml-1">
+													x{person.AmountOfTickets}
+												</Badge>
+											)
+										}
+									</div>
 								))}
 
-								{confirmations.length === 0 && (
+								{ticketBuyers.length === 0 && (
 									<p className="text-sm text-muted-foreground">Nenhuma confirmação ainda</p>
 								)}
 							</div>
 						</CardContent>
 					</Card>
-
-
-					{/* Maybe Section */}
-					{maybes.length > 0 && (
-						<Card>
-							<CardHeader>
-								<CardTitle>
-									Talvez
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<div className="flex flex-wrap gap-2">
-									{maybes.map((person) => (
-										<Link key={person.Profile.AccountId} href={"/p/" + person.Profile.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
-											<Avatar className="w-6 h-6">
-												<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
-												<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
-											</Avatar>
-											<span className="text-sm">{person.Profile.Handle}</span>
-										</Link>
-									))}
-								</div>
-							</CardContent>
-						</Card>
-					)}
-
-					{notGoing.length > 0 && (
-						<Card>
-							<CardHeader>
-								<CardTitle>
-									Não vão
-								</CardTitle>
-							</CardHeader>
-							<CardContent>
-								<div className="flex flex-wrap gap-2">
-									{notGoing.map((person) => (
-										<Link key={person.Profile.AccountId} href={"/p/" + person.Profile.Handle} className="flex items-center gap-2 border rounded-full px-3 py-1">
-											<Avatar className="w-6 h-6">
-												<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
-												<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
-											</Avatar>
-											<span className="text-sm">{person.Profile.Handle}</span>
-										</Link>
-									))}
-								</div>
-							</CardContent>
-						</Card>
-					)}
 
 					<EventImages event={event} />
 
