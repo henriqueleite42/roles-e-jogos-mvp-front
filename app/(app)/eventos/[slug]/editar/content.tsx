@@ -271,15 +271,14 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 
 				reqBody.IconPath = FilePath
 			}
-			if (!reqBody.IconPath && body.PlannedMatches.length >= 1) {
+			if (!reqBody.IconPath && !reqBody.IconUrl && event.IconUrl) {
+				reqBody.IconUrl = event.IconUrl
+			}
+			if (!reqBody.IconPath && !reqBody.IconUrl && body.PlannedMatches.length >= 1) {
 				reqBody.IconUrl = body.PlannedMatches[0].IconUrl || ""
 			}
 			if (!reqBody.IconPath && !reqBody.IconUrl) {
-				if (event.IconUrl) {
-					reqBody.IconUrl = event.IconUrl
-				} else {
-					throw new Error("icon required")
-				}
+				throw new Error("icon required")
 			}
 
 			const bodyPlannedMatches = {} as Record<string, true>
@@ -501,8 +500,6 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 			EventImage: eventImage
 		})
 	}
-
-	console.log(form.formState.errors);
 
 	return (
 		<main className="flex-1 container mx-auto py-8 px-4 mb-16">
