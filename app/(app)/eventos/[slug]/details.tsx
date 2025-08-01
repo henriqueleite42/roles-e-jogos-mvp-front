@@ -123,7 +123,7 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 					<ShareButton event={event} />
 				</div>
 			</div>
-			<p className="text-muted-foreground text-lg mb-6">{event.Description}</p>
+			<p className="text-lg mb-6 whitespace-pre-line overflow-hidden text-ellipsis break-words">{event.Description}</p>
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div className="space-y-3">
