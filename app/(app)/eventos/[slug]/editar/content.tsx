@@ -84,12 +84,8 @@ const formSchema = z.object({
 				IconUrl: z.string().optional().nullable(),
 				Description: z.string(),
 				MaxAmountOfPlayers: z.coerce.number().int().min(1, "Deve ter pelo menos 1 jogador."),
-				StartDate: z.date({
-					required_error: "A data de início da partida é obrigatória.",
-				}),
-				EndDate: z.date({
-					required_error: "A data de término da partida é obrigatória.",
-				}),
+				StartDate: z.date().optional().nullable(),
+				EndDate: z.date().optional().nullable(),
 				Price: z.coerce.number().min(100, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
 			}),
 		)
@@ -328,14 +324,14 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 						MaxAmountOfPlayers: match.MaxAmountOfPlayers,
 					} as any
 
+					if (match.Price) {
+						plannedMatchToEdit.Price = match.Price * 100
+					}
 					if (match.StartDate) {
 						plannedMatchToEdit.StartDate = match.StartDate.toISOString().replace('.000', '')
 					}
 					if (match.EndDate) {
 						plannedMatchToEdit.EndDate = match.EndDate.toISOString().replace('.000', '')
-					}
-					if (match.Price) {
-						plannedMatchToEdit.Price = match.Price * 100
 					}
 
 					reqBody.MatchesToEdit.push(plannedMatchToEdit)
@@ -400,16 +396,20 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 				const pm = {
 					Id: String(i.Id),
 					Description: i.Description,
-					EndDate: new Date(i.EndDate),
 					GameId: i.GameId,
 					IconUrl: i.GameIconUrl,
 					MaxAmountOfPlayers: i.MaxAmountOfPlayers,
 					Name: i.Name,
-					StartDate: new Date(i.StartDate),
 				} as any
 
 				if (i.Price) {
 					pm.Price = i.Price / 100
+				}
+				if (i.StartDate) {
+					pm.StartDate = new Date(i.StartDate)
+				}
+				if (i.EndDate) {
+					pm.EndDate = new Date(i.EndDate)
 				}
 
 				return pm
@@ -462,10 +462,6 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 
 	// Add new planned match
 	const addPlannedMatch = (game: MinimumGameData) => {
-		const eventStartDate = form.getValues().StartDate
-		const matchStartDate = eventStartDate || new Date()
-		const matchEndDate = new Date(matchStartDate.getTime() + 2 * 60 * 60 * 1000) // 2 hours later
-
 		append({
 			// Matches that are not registered in the database receive this ID, since
 			// we do not use this to do anything, we use the ORIGINAL ID of matches in the
@@ -476,8 +472,6 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 			IconUrl: game.IconUrl,
 			Description: "",
 			MaxAmountOfPlayers: game.MaxAmountOfPlayers,
-			StartDate: matchStartDate,
-			EndDate: matchEndDate,
 		})
 		setGameQuery("")
 		setIsGamePopoverOpen(false)
@@ -1136,7 +1130,7 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 																		<PopoverContent className="w-auto p-0" align="start">
 																			<CalendarComponent
 																				mode="single"
-																				selected={field.value}
+																				selected={field.value as (Date | undefined)}
 																				onSelect={field.onChange}
 																				initialFocus
 																				locale={ptBR}
@@ -1193,7 +1187,7 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 																		<PopoverContent className="w-auto p-0" align="start">
 																			<CalendarComponent
 																				mode="single"
-																				selected={field.value}
+																				selected={field.value as (Date | undefined)}
 																				onSelect={field.onChange}
 																				initialFocus
 																				locale={ptBR}

@@ -10,7 +10,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Users, DollarSign, Clock, GamepadIcon } from "lucide-react"
+import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Users, Clock, GamepadIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -50,7 +50,7 @@ const formSchema = z.object({
 			message: "Se especificada, a capacidade deve ser de pelo menos 1 pessoa.",
 		})
 		.optional(),
-	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional(),
+	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
@@ -73,12 +73,8 @@ const formSchema = z.object({
 				IconUrl: z.string().optional(),
 				Description: z.string(),
 				MaxAmountOfPlayers: z.coerce.number().int().min(1, "Deve ter pelo menos 1 jogador."),
-				StartDate: z.date({
-					required_error: "A data de início da partida é obrigatória.",
-				}),
-				EndDate: z.date({
-					required_error: "A data de término da partida é obrigatória.",
-				}),
+				StartDate: z.date().optional().nullable(),
+				EndDate: z.date().optional().nullable(),
 				Price: z.coerce.number().min(100, "O preço deve ser maior ou igual a R$ 1,00.").optional(),
 			}),
 		)
@@ -257,12 +253,16 @@ export function FormCreateEvent() {
 					IconUrl: plannedMatch.IconUrl,
 					Description: plannedMatch.Description,
 					MaxAmountOfPlayers: plannedMatch.MaxAmountOfPlayers,
-					StartDate: plannedMatch.StartDate.toISOString().replace('.000', ''),
-					EndDate: plannedMatch.EndDate.toISOString().replace('.000', ''),
 				} as any
 
 				if (plannedMatch.Price) {
 					pm.Price = plannedMatch.Price * 100
+				}
+				if (plannedMatch.StartDate) {
+					pm.StartDate = plannedMatch.StartDate.toISOString().replace('.000', '')
+				}
+				if (plannedMatch.EndDate) {
+					pm.Price = plannedMatch.EndDate.toISOString().replace('.000', '')
 				}
 
 				reqBody.PlannedMatches.push(pm)
@@ -369,18 +369,12 @@ export function FormCreateEvent() {
 
 	// Add new planned match
 	const addPlannedMatch = (game: MinimumGameData) => {
-		const eventStartDate = form.getValues().StartDate
-		const matchStartDate = eventStartDate || new Date()
-		const matchEndDate = new Date(matchStartDate.getTime() + 2 * 60 * 60 * 1000) // 2 hours later
-
 		append({
 			GameId: game.Id,
 			Name: game.Name,
 			IconUrl: game.IconUrl,
 			Description: "",
 			MaxAmountOfPlayers: game.MaxAmountOfPlayers,
-			StartDate: matchStartDate,
-			EndDate: matchEndDate,
 		})
 		setGameQuery("")
 		setIsGamePopoverOpen(false)
@@ -994,7 +988,7 @@ export function FormCreateEvent() {
 																			<PopoverContent className="w-auto p-0" align="start">
 																				<CalendarComponent
 																					mode="single"
-																					selected={field.value}
+																					selected={field.value as (Date | undefined)}
 																					onSelect={field.onChange}
 																					initialFocus
 																					locale={ptBR}
@@ -1051,7 +1045,7 @@ export function FormCreateEvent() {
 																			<PopoverContent className="w-auto p-0" align="start">
 																				<CalendarComponent
 																					mode="single"
-																					selected={field.value}
+																					selected={field.value as (Date | undefined)}
 																					onSelect={field.onChange}
 																					initialFocus
 																					locale={ptBR}
