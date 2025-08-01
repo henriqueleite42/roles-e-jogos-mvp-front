@@ -152,12 +152,13 @@ export interface EventData {
 
 export interface EventPlannedMatch {
 	Id: number
+	GameId: number
 	GameIconUrl?: string
 	Name: string
 	Description: string
 	MaxAmountOfPlayers: number
-	StartDate: string
-	EndDate: string
+	StartDate?: string
+	EndDate?: string
 	Price?: number
 }
 
@@ -370,17 +371,6 @@ export interface ResponseListEventTicketBuyers {
 	Pagination: PaginationString
 }
 
-export interface EventPlannedMatch {
-	Id: number
-	GameId: number
-	GameIconUrl?: string
-	Name: string
-	Description: string
-	MaxAmountOfPlayers: number
-	StartDate: string
-	EndDate: string
-	Price?: number
-}
 
 export interface ResponseListEventPlannedMatches {
 	Data: Array<EventPlannedMatch>

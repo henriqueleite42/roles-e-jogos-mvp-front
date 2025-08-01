@@ -206,12 +206,16 @@ export default async function EventPage({ params }: { params: { slug: string } }
 												<div className="flex items-center gap-4 text-sm text-muted-foreground">
 													<div className="flex items-center gap-1">
 														<Calendar className="h-4 w-4" />
-														{formatEventDate(match.StartDate)}
+														{match.StartDate ? formatEventDate(match.StartDate) : "Sem horário definido"}
 													</div>
-													<div className="flex items-center gap-1">
-														<Clock className="h-4 w-4" />
-														{formatDuration(match.StartDate, match.EndDate)}
-													</div>
+													{
+														match.StartDate && match.EndDate && (
+															<div className="flex items-center gap-1">
+																<Clock className="h-4 w-4" />
+																{formatDuration(match.StartDate, match.EndDate)}
+															</div>
+														)
+													}
 												</div>
 											</div>
 										</div>
