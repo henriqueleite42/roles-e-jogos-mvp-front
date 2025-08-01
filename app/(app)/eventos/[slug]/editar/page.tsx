@@ -3,6 +3,7 @@ import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { redirect } from "next/navigation";
 import EditEventPage from "./content";
+import { getAvailableSpots } from "../utils";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 	const { slug } = await params
@@ -12,6 +13,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
 		redirect("/eventos")
 	}
+
+	// Account
 
 	const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
 		method: 'GET',
@@ -30,6 +33,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	const account = await resAccount.json() as Profile
 
+	// Event
+
 	const resEvent = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events?slug=" + slug, {
 		method: "GET",
 		credentials: "include"
@@ -41,44 +46,53 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	}
 
 	const event = await resEvent.json() as EventData
+	console.log(event);
 
 	if (!event) {
 		redirect("/eventos")
 	}
 
-	if (event.OwnerId !== account.AccountId) {
+	if (event.Organizer.AccountId !== account.AccountId) {
 		redirect("/eventos")
 	}
 
-	const resEventAttendances = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/attendances?limit=100&eventId=" + event.Id, {
+	// Ticket Buyers
+
+	const resEventTicketBuyers = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/tickets/buyers?limit=100&eventId=" + event.Id, {
 		method: "GET",
 		credentials: "include"
 	})
 
-	if (!resEventAttendances.ok) {
-		console.error(await resEventAttendances.text())
+	if (!resEventTicketBuyers.ok) {
+		console.error(await resEventTicketBuyers.text())
 		return (<></>)
 	}
 
-	const attendances = await resEventAttendances.json() as ResponseListEventTicketBuyers
+	const ticketBuyersRes = await resEventTicketBuyers.json() as ResponseListEventTicketBuyers
+	const ticketBuyers = ticketBuyersRes.Data
 
-	const resEventGames = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/games?limit=100&eventId=" + event.Id, {
+	// Planned Matches
+
+	const resEventPlannedMatches = await fetch(process.env.NEXT_PUBLIC_API_URL + "/events/planned-matches?limit=100&eventId=" + event.Id, {
 		method: "GET",
 		credentials: "include"
 	})
 
-	if (!resEventGames.ok) {
-		console.error(await resEventGames.text())
+	if (!resEventPlannedMatches.ok) {
+		console.error(await resEventPlannedMatches.text())
 		return (<></>)
 	}
 
-	const games = await resEventGames.json() as ResponseListEventPlannedMatches
+	const plannedMatchesRes = await resEventPlannedMatches.json() as ResponseListEventPlannedMatches
+	const plannedMatches = plannedMatchesRes.Data
+
+	const { confirmationsCount } = getAvailableSpots(event, ticketBuyers)
 
 	return (
 		<>
 			<Header title="Evento" displayBackButton />
 
-			<EditEventPage event={event} attendances={attendances} plannedMatches={games} />
+			<EditEventPage event={event} plannedMatches={plannedMatches} confirmationsCount={confirmationsCount} />
 		</>
 	)
 }

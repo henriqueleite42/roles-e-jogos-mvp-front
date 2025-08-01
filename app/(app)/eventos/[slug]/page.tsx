@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { EventDetails } from "./details"
 import { formatEventDate } from "@/lib/dates"
 import { formatDisplayPrice } from "@/lib/price"
+import { redirect } from 'next/navigation';
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -69,7 +70,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 	if (!resEvent.ok) {
 		console.error(await resEvent.text())
-		return (<></>)
+		redirect("/eventos")
 	}
 
 	const event = await resEvent.json() as EventData
@@ -145,7 +146,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 			<Header title="Evento" displayBackButton />
 
 			<main className="flex-1 container mx-auto p-2 mb-10">
-				{event.OwnerId === account?.AccountId && (
+				{event.Organizer.AccountId === account?.AccountId && (
 					<div className="flex justify-center align-center mb-5">
 						<Button type="button" className="text-white" asChild>
 							<Link href={"/eventos/" + event.Slug + "/editar"}>
@@ -193,7 +194,11 @@ export default async function EventPage({ params }: { params: { slug: string } }
 														)}
 														<Badge variant="secondary" className="gap-1">
 															<Users className="h-3 w-3" />
-															Até {match.MaxAmountOfPlayers} jogadores
+															{
+																match.MaxAmountOfPlayers === 1 ?
+																	"Até 1 jogador" :
+																	`Até ${match.MaxAmountOfPlayers} jogadores`
+															}
 														</Badge>
 													</div>
 												</div>

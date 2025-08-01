@@ -167,8 +167,7 @@ export default function Events() {
 
 									{/* Price Badge */}
 									<div className="flex-shrink-0">
-										<Badge variant={event.Price ? "default" : "secondary"} className="flex items-center gap-1">
-											{event.Price && <DollarSign className="h-3 w-3" />}
+										<Badge variant={event.Price ? "secondary" : "green"} className="flex items-center gap-1">
 											{formatDisplayPrice(event.Price)}
 										</Badge>
 									</div>

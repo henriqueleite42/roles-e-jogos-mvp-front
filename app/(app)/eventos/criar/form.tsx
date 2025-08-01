@@ -221,13 +221,16 @@ export function FormCreateEvent() {
 			const reqBody = {
 				Name: body.Name,
 				Description: body.Description,
-				StartDate: body.StartDate.toISOString(),
-				EndDate: body.EndDate?.toISOString(),
+				StartDate: body.StartDate.toISOString().replace('.000', ''),
+				EndDate: body.EndDate.toISOString().replace('.000', ''),
 				Capacity: body.Capacity,
-				Price: body.Price,
 				LocationId: body.Location.Id,
-				PlannedMatches: body.PlannedMatches,
+				PlannedMatches: [],
 			} as any
+
+			if (body.Price) {
+				reqBody.Price = body.Price * 100
+			}
 
 			if (body.EventImage !== null) {
 				const { FilePath } = await uploadImage({
@@ -245,6 +248,24 @@ export function FormCreateEvent() {
 
 			if (!reqBody.IconPath && !reqBody.IconUrl) {
 				throw new Error("icon required")
+			}
+
+			for (const plannedMatch of body.PlannedMatches) {
+				const pm = {
+					GameId: plannedMatch.GameId,
+					Name: plannedMatch.Name,
+					IconUrl: plannedMatch.IconUrl,
+					Description: plannedMatch.Description,
+					MaxAmountOfPlayers: plannedMatch.MaxAmountOfPlayers,
+					StartDate: plannedMatch.StartDate.toISOString().replace('.000', ''),
+					EndDate: plannedMatch.EndDate.toISOString().replace('.000', ''),
+				} as any
+
+				if (plannedMatch.Price) {
+					pm.Price = plannedMatch.Price * 100
+				}
+
+				reqBody.PlannedMatches.push(pm)
 			}
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {

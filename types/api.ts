@@ -131,7 +131,6 @@ export interface EventGame {
 
 export interface EventData {
 	Id: number
-	OwnerId: number
 	Name: string
 	Description: string
 	Slug: string

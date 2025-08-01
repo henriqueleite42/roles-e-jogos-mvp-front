@@ -1,5 +1,5 @@
 
 export function formatDisplayPrice(price?: number): string {
 	if (!price) return "Gratuito"
-	return `R$ ${price.toFixed(2).replace(".", ",")}`
+	return `R$ ${(price / 100).toFixed(2).replace(".", ",")}`
 }

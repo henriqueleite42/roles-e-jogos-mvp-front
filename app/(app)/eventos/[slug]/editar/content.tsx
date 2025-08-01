@@ -3,14 +3,14 @@
 import type React from "react"
 
 import { useState } from "react"
-import { useParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Trash2, AlertTriangle, Triangle, GamepadIcon, Clock, Users } from "lucide-react"
+import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Trash2, Triangle, GamepadIcon, Clock, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -34,8 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { EventData, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseSearchGames, ResponseSearchLocations, MinimumGameData } from "@/types/api"
-import { getAvailableSpots } from "../utils"
+import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch } from "@/types/api"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
 
@@ -61,17 +60,16 @@ const formSchema = z.object({
 		.min(1, {
 			message: "Se especificada, a capacidade deve ser de pelo menos 1 pessoa.",
 		})
-		.optional(),
-	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional(),
+		.optional()
+		.nullable(),
+	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
 			Name: z.string(),
+			Slug: z.string(),
 			Address: z.string(),
 			IconUrl: z.string().optional().nullable(),
-			Kind: z.string(),
-			CreatedBy: z.number().int(),
-			CreatedAt: z.coerce.date(),
 		},
 		{
 			required_error: "Selecione um local para o evento.",
@@ -83,7 +81,7 @@ const formSchema = z.object({
 				Id: z.string(),
 				GameId: z.number().int(),
 				Name: z.string(),
-				IconUrl: z.string().optional(),
+				IconUrl: z.string().optional().nullable(),
 				Description: z.string(),
 				MaxAmountOfPlayers: z.coerce.number().int().min(1, "Deve ter pelo menos 1 jogador."),
 				StartDate: z.date({
@@ -92,7 +90,7 @@ const formSchema = z.object({
 				EndDate: z.date({
 					required_error: "A data de término da partida é obrigatória.",
 				}),
-				Price: z.coerce.number().min(100, "O preço deve ser maior ou igual a R$ 1,00.").optional(),
+				Price: z.coerce.number().min(100, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
 			}),
 		)
 		.optional()
@@ -131,7 +129,13 @@ interface MutationParams extends FormValues {
 	EventImage: File | null
 }
 
-export default function EditEventPage({ event, attendances, plannedMatches }: { event: EventData, attendances: ResponseListEventTicketBuyers, plannedMatches: ResponseListEventPlannedMatches }) {
+interface Params {
+	event: EventData
+	confirmationsCount: number
+	plannedMatches: Array<EventPlannedMatch>
+}
+
+export default function EditEventPage({ event, confirmationsCount, plannedMatches }: Params) {
 	const router = useRouter()
 	const { toast } = useToast()
 
@@ -145,8 +149,6 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 
 	const debouncedLocationQuery = useDebounce(locationQuery)
 	const debouncedGameQuery = useDebounce(gameQuery)
-
-	const { confirmationsCount } = getAvailableSpots(event, attendances.Data)
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data: locationsData, isLoading: isSearchingLocations } = useQuery<ResponseSearchLocations>({
@@ -241,27 +243,15 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 	const editEventMutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
 			const reqBody: any = {
-				EventId: event.Id
+				EventId: event.Id,
+				StartDate: body.StartDate.toISOString().replace('.000', ''),
+				EndDate: body.EndDate.toISOString().replace('.000', ''),
+				Name: body.Name,
+				Description: body.Description,
+				Capacity: body.Capacity,
+				LocationId: body.Location.Id,
 			}
 
-			if (body.Name != event.Name) {
-				reqBody.Name = body.Name
-			}
-			if (body.Description != event.Description) {
-				reqBody.Description = body.Description
-			}
-			if (body.StartDate.toISOString().replace('.000', '') != event.StartDate) {
-				reqBody.StartDate = body.StartDate.toISOString().replace('.000', '')
-			}
-			if (body.EndDate.toISOString().replace('.000', '') != event.EndDate) {
-				reqBody.EndDate = body.EndDate.toISOString().replace('.000', '')
-			}
-			if (body.Capacity != event.Capacity) {
-				reqBody.Capacity = body.Capacity
-			}
-			if (body.Location.Id != event.Location.Id) {
-				reqBody.LocationId = body.Location.Id
-			}
 			if (body.EventImage !== null) {
 				const { FilePath } = await uploadImage({
 					FileName: body.EventImage?.name,
@@ -275,7 +265,11 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 				reqBody.IconUrl = body.PlannedMatches[0].IconUrl || ""
 			}
 			if (!reqBody.IconPath && !reqBody.IconUrl) {
-				throw new Error("icon required")
+				if (event.IconUrl) {
+					reqBody.IconUrl = event.IconUrl
+				} else {
+					throw new Error("icon required")
+				}
 			}
 
 			const bodyPlannedMatches = {} as Record<string, true>
@@ -284,7 +278,7 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 			}
 
 			const existentMatchesIds = {} as Record<string, true>
-			for (const match of plannedMatches.Data) {
+			for (const match of plannedMatches) {
 				const id = String(match.Id)
 				if (bodyPlannedMatches[id]) {
 					existentMatchesIds[id] = true
@@ -298,7 +292,7 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 			}
 
 			for (const match of body.PlannedMatches) {
-				if (existentMatchesIds[String(match.Id)]) {
+				if (match.Id === DEFAULT_MATCH_ID) {
 					if (!reqBody.MatchesToCreate) {
 						reqBody.MatchesToCreate = []
 					}
@@ -308,14 +302,16 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 						Name: match.Name,
 						Description: match.Description,
 						MaxAmountOfPlayers: match.MaxAmountOfPlayers,
-						Price: match.Price
 					} as any
 
-					if (body.StartDate) {
-						plannedMatchToCreate.StartDate = body.StartDate.toISOString().replace('.000', '')
+					if (match.StartDate) {
+						plannedMatchToCreate.StartDate = match.StartDate.toISOString().replace('.000', '')
 					}
-					if (body.EndDate) {
-						plannedMatchToCreate.EndDate = body.EndDate.toISOString().replace('.000', '')
+					if (match.EndDate) {
+						plannedMatchToCreate.EndDate = match.EndDate.toISOString().replace('.000', '')
+					}
+					if (match.Price) {
+						plannedMatchToCreate.Price = match.Price * 100
 					}
 
 					reqBody.MatchesToCreate.push(plannedMatchToCreate)
@@ -330,14 +326,16 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 						Name: match.Name,
 						Description: match.Description,
 						MaxAmountOfPlayers: match.MaxAmountOfPlayers,
-						Price: match.Price
 					} as any
 
-					if (body.StartDate) {
-						plannedMatchToEdit.StartDate = body.StartDate.toISOString().replace('.000', '')
+					if (match.StartDate) {
+						plannedMatchToEdit.StartDate = match.StartDate.toISOString().replace('.000', '')
 					}
-					if (body.EndDate) {
-						plannedMatchToEdit.EndDate = body.EndDate.toISOString().replace('.000', '')
+					if (match.EndDate) {
+						plannedMatchToEdit.EndDate = match.EndDate.toISOString().replace('.000', '')
+					}
+					if (match.Price) {
+						plannedMatchToEdit.Price = match.Price * 100
 					}
 
 					reqBody.MatchesToEdit.push(plannedMatchToEdit)
@@ -398,17 +396,24 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 			Location: event.Location,
 			Name: event.Name,
 			StartDate: new Date(event.StartDate),
-			PlannedMatches: plannedMatches.Data.map(i => ({
-				Id: String(i.Id),
-				Description: i.Description,
-				EndDate: new Date(i.EndDate),
-				GameId: i.GameId,
-				IconUrl: i.GameIconUrl,
-				MaxAmountOfPlayers: i.MaxAmountOfPlayers,
-				Name: i.Name,
-				Price: i.Price,
-				StartDate: new Date(i.StartDate),
-			}))
+			PlannedMatches: plannedMatches.map(i => {
+				const pm = {
+					Id: String(i.Id),
+					Description: i.Description,
+					EndDate: new Date(i.EndDate),
+					GameId: i.GameId,
+					IconUrl: i.GameIconUrl,
+					MaxAmountOfPlayers: i.MaxAmountOfPlayers,
+					Name: i.Name,
+					StartDate: new Date(i.StartDate),
+				} as any
+
+				if (i.Price) {
+					pm.Price = i.Price / 100
+				}
+
+				return pm
+			})
 		},
 	})
 
@@ -514,7 +519,7 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 									<DialogDescription>
 										Tem certeza que deseja cancelar este evento? Esta ação não pode ser desfeita e todos os
 										participantes confirmados serão notificados sobre o cancelamento.
-										{attendances.Data.length > 0 && (
+										{confirmationsCount > 0 && (
 											<div className="mt-2 p-2 bg-amber-50 border border-amber-200 rounded text-amber-800 text-sm">
 												<strong>{confirmationsCount} participante(s)</strong> confirmado(s) será(ão)
 												notificado(s).
@@ -1060,11 +1065,8 @@ export default function EditEventPage({ event, attendances, plannedMatches }: { 
 																	<div className="relative">
 																		<Users className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
 																		<Input
-																			type="number"
-																			min="1"
 																			className="pl-10"
 																			{...field}
-																			onChange={(e) => field.onChange(Number(e.target.value))}
 																		/>
 																	</div>
 																</FormControl>
