@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, MapPin, Users, Share2, Eye, DollarSign } from "lucide-react"
+import { Calendar, MapPin, Users, Share2, Eye, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
@@ -226,6 +226,18 @@ export default function Events() {
 					<div className="text-center py-10">
 						<Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
 						<p className="text-muted-foreground">Nenhum evento encontrado.</p>
+					</div>
+				)}
+
+				{allEvents.length > 0 && (
+					/* Infinite scroll observer element */
+					<div ref={observerTarget} className="w-full py-4 flex justify-center">
+						{isFetchingNextPage && (
+							<div className="flex items-center gap-2">
+								<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+								<span className="text-sm text-muted-foreground">Carregando mais jogos...</span>
+							</div>
+						)}
 					</div>
 				)}
 			</main>
