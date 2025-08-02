@@ -194,6 +194,7 @@ export interface MinimumEventData {
 	Slug: string
 	Name: string
 	StartDate: string
+	Price?: number
 }
 
 export interface MinimumEventDataWithLocation extends MinimumEventData {
@@ -303,6 +304,11 @@ export interface ExternalLocation {
 	FullAddress: string
 	Latitude: number
 	Longitude: number
+}
+
+export interface AccountEventTicket {
+	Event: MinimumEventData
+	Amount: number
 }
 
 export interface CommunityData {
@@ -515,4 +521,9 @@ export interface ResponseListCommunityMembers {
 		Limit: number
 		Next?: string
 	}
+}
+
+export interface ResponseAccountEventTickets {
+	Data: Array<AccountEventTicket>
+	Pagination: PaginationTimestampId
 }
