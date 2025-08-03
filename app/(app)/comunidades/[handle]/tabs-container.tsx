@@ -36,7 +36,7 @@ const TABS: Array<Tab> = [
 	{
 		key: "eventos",
 		description: "Eventos",
-		getComponent: ({ community }: Props) => (<ProfileEvents community={community} />),
+		getComponent: ({ community, member }: Props) => (<ProfileEvents community={community} member={member} />),
 		shouldDisplay: () => true
 	},
 	// {
