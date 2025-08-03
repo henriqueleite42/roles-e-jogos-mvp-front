@@ -33,12 +33,12 @@ const TABS: Array<Tab> = [
 		getComponent: ({ community }: Props) => (<ProfileGames community={community} />),
 		shouldDisplay: () => true
 	},
-	// {
-	// 	key: "events",
-	// 	description: "Eventos",
-	// 	getComponent: ({ community }: Props) => (<ProfileEvents community={community} />),
-	// 	shouldDisplay: () => true
-	// },
+	{
+		key: "events",
+		description: "Eventos",
+		getComponent: ({ community }: Props) => (<ProfileEvents community={community} />),
+		shouldDisplay: () => true
+	},
 	// {
 	// 	key: "gallery",
 	// 	description: "Galeria",

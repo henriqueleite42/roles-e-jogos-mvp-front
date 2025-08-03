@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { formatEventDate } from "@/lib/dates"
 import { CommunityData, ResponseListEventsByAccount } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { Calendar, MapPin, Loader2, AlertCircle } from "lucide-react"
+import { Calendar, MapPin, Loader2, AlertCircle, Plus } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useRef } from "react"
@@ -95,6 +95,15 @@ export function ProfileEvents({ community }: { community: CommunityData }) {
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
+				<div className="flex justify-center align-center mb-5">
+					<Button type="button" className="text-white" asChild>
+						<Link href={`/comunidades/${community.Handle}/eventos/criar`}>
+							<Plus className="h-4 w-4" />
+							Criar evento
+						</Link>
+					</Button>
+				</div>
+
 				<div className="space-y-4">
 					{isPending && (
 						<div className="container mx-auto py-8 px-4 flex flex-col items-center justify-center min-h-[100vh]">
@@ -134,7 +143,8 @@ export function ProfileEvents({ community }: { community: CommunityData }) {
 								<div className="flex items-center gap-4 text-xs text-muted-foreground">
 									<div className="flex items-center gap-1">
 										<MapPin className="h-3 w-3" />
-										<span>{event.Location.Name}</span>
+										{/* <span>{event.Location.Name}</span> */}
+										<span>Foo</span>
 									</div>
 								</div>
 							</div>

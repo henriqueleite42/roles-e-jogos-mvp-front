@@ -10,7 +10,7 @@ import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
-import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Users, Clock, GamepadIcon, Building2, Home, SquareArrowOutUpRight, DollarSign, Ban } from "lucide-react"
+import { Calendar, ImageIcon, Loader2, MapPin, Search, X, Plus, Users, Clock, GamepadIcon, Home, SquareArrowOutUpRight, DollarSign, Ban } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -119,7 +119,11 @@ interface MutationParams extends FormValues {
 	EventImage: File | null
 }
 
-export function FormCreateEvent() {
+interface Params {
+	communityId: number
+}
+
+export function FormCreateEvent({ communityId }: Params) {
 	const { toast } = useToast()
 	const router = useRouter()
 
@@ -220,6 +224,7 @@ export function FormCreateEvent() {
 	const mutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
 			const reqBody = {
+				CommunityId: communityId,
 				Name: body.Name,
 				Description: body.Description,
 				Type: body.Type,

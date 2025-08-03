@@ -402,7 +402,7 @@ export interface ResponseListEventsByGame {
 }
 
 export interface ResponseListEventsByAccount {
-	Data: Array<MinimumEventData>
+	Data: Array<MinimumEventDataWithLocation>
 	Pagination: PaginationTimestampId
 }
 
