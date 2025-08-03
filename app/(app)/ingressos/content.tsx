@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { Calendar, CalendarIcon, Loader2, TicketIcon } from "lucide-react"
+import { Calendar, CalendarIcon, Loader2, Ticket, TicketIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ResponseAccountEventTickets } from "@/types/api"
@@ -12,7 +12,7 @@ import { formatDate } from "@/lib/dates"
 
 export default function Content() {
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data: accountTickets, hasNextPage, isFetchingNextPage, fetchNextPage } = useInfiniteQuery<ResponseAccountEventTickets>({
+	const { data: accountTickets, hasNextPage, isFetchingNextPage, fetchNextPage, isPending } = useInfiniteQuery<ResponseAccountEventTickets>({
 		queryKey: ["account-tickets"],
 		staleTime: 1000 * 60 * 5, // 5 minutes
 		queryFn: async ({ pageParam = null }) => {
@@ -119,7 +119,14 @@ export default function Content() {
 					</Card>
 				))}
 
-				{allAccountTickets.length === 0 && (
+				{isPending && (
+					<div className="text-center py-10">
+						<Ticket className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+						<p className="text-muted-foreground">Carregando ingressos...</p>
+					</div>
+				)}
+
+				{!isPending && allAccountTickets.length === 0 && (
 					<div className="text-center py-10">
 						<Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
 						<p className="text-muted-foreground">Nenhum ingresso encontrado.</p>

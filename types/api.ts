@@ -29,6 +29,8 @@ export type AchievementId = "CONNECT_LUDOPEDIA"
 
 export type CommunityAffiliationType = "PUBLIC" | "INVITE_ONLY"
 
+export type EventTicketStatus = "WAITING_PAYMENT" | "PAID" | "ATTENDED"
+
 export interface ResponseGetNextEvents {
 	Data: Array<MinimumEventDataWithLocation>
 	Pagination: {
@@ -69,6 +71,14 @@ export interface PaginationId {
 	Current?: number
 	Next?: number
 	Limit: number
+}
+
+export interface EventTicketData {
+	Id: number
+	Status: EventTicketStatus
+	CreatedAt: string
+	PaidAt?: string
+	AttendedAt?: string
 }
 
 export interface GameData {
@@ -526,4 +536,9 @@ export interface ResponseListCommunityMembers {
 export interface ResponseAccountEventTickets {
 	Data: Array<AccountEventTicket>
 	Pagination: PaginationTimestampId
+}
+
+export interface ResponseAccountEventTicketsByEvent {
+	Data: Array<EventTicketData>
+	Pagination: PaginationId
 }
