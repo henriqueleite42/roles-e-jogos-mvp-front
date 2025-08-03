@@ -22,25 +22,25 @@ interface Tab {
 
 const TABS: Array<Tab> = [
 	{
-		key: "members",
+		key: "membros",
 		description: "Membros",
 		getComponent: ({ community }: Props) => (<ProfileMembers community={community} />),
 		shouldDisplay: () => true
 	},
 	{
-		key: "games",
+		key: "jogos",
 		description: "Jogos",
 		getComponent: ({ community }: Props) => (<ProfileGames community={community} />),
 		shouldDisplay: () => true
 	},
 	{
-		key: "events",
+		key: "eventos",
 		description: "Eventos",
 		getComponent: ({ community }: Props) => (<ProfileEvents community={community} />),
 		shouldDisplay: () => true
 	},
 	// {
-	// 	key: "gallery",
+	// 	key: "galeria",
 	// 	description: "Galeria",
 	// 	getComponent: ({ community }: Props) => (<ProfileGallery community={community} />),
 	// 	shouldDisplay: () => true
@@ -61,7 +61,6 @@ export function ProfileTabsContainer(i: Props) {
 					<TabsTrigger key={tab.key} value={tab.key} className="w-full">{tab.description}</TabsTrigger>
 				))}
 			</TabsList>
-
 
 			{validTabs.map(tab => (
 				<TabsContent key={tab.key} value={tab.key} className="space-y-6">

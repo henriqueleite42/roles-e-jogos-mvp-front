@@ -6,7 +6,6 @@ import { useMemo, useState } from "react"
 import { ProfileGames } from "./games"
 import { ProfileEvents } from "./events"
 import { ProfileGallery } from "./gallery"
-import { cn } from "@/lib/utils"
 import { Connections } from "./connections"
 import { ProfileAchievements } from "./achievements"
 

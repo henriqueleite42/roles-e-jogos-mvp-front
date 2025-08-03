@@ -4,7 +4,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { formatEventDate } from "@/lib/dates"
-import { CommunityData, ResponseListEventsByAccount } from "@/types/api"
+import { CommunityData, ResponseListEventsByAccount, ResponseListEventsByCommunity } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { Calendar, MapPin, Loader2, AlertCircle, Plus } from "lucide-react"
 import Image from "next/image"
@@ -13,7 +13,7 @@ import { useEffect, useMemo, useRef } from "react"
 
 export function ProfileEvents({ community }: { community: CommunityData }) {
 	// Use TanStack Query for data fetching with infinite scroll
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, error } = useInfiniteQuery<ResponseListEventsByAccount>({
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, error } = useInfiniteQuery<ResponseListEventsByCommunity>({
 		queryKey: ["events-community", community.Id],
 		queryFn: async ({ pageParam = null }) => {
 			if (!community.Id) {
@@ -26,15 +26,15 @@ export function ProfileEvents({ community }: { community: CommunityData }) {
 				}
 			}
 
-			const queryObj: Record<string, string> = {
+			const query = new URLSearchParams({
 				communityId: String(community.Id),
-			}
+			})
 
-			if (pageParam) {
-				queryObj.after = String(pageParam)
+			const pp = pageParam as any
+			if (pp?.Timestamp && pp?.Id) {
+				query.set("afterTimestamp", String(pp.Timestamp))
+				query.set("afterId", String(pp.Id))
 			}
-
-			const query = new URLSearchParams(queryObj)
 
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/community?${query.toString()}`, {
 				credentials: "include"

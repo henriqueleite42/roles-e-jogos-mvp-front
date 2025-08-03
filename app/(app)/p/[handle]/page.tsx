@@ -75,7 +75,7 @@ export default async function ProfilePage({ params }: { params: { handle: string
 	}
 
 	return (
-		<div className="flex flex-col min-h-screen bg-gradient-to-b from-orange-50 to-white">
+		<div className="flex flex-col min-h-screen">
 			<Header title={profile.Handle} displayBackButton />
 
 			<main className="flex-1 container mx-auto py-6 px-4 mb-10">

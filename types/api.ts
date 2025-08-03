@@ -397,11 +397,21 @@ export interface ResponseListEventPlannedMatches {
 }
 
 export interface ResponseListEventsByGame {
-	Data: Array<MinimumEventData>
+	Data: Array<MinimumEventDataWithLocation>
 	Pagination: PaginationTimestampId
 }
 
 export interface ResponseListEventsByAccount {
+	Data: Array<MinimumEventDataWithLocation>
+	Pagination: PaginationTimestampId
+}
+
+export interface ResponseListEventsByLocation {
+	Data: Array<MinimumEventDataWithLocation>
+	Pagination: PaginationTimestampId
+}
+
+export interface ResponseListEventsByCommunity {
 	Data: Array<MinimumEventDataWithLocation>
 	Pagination: PaginationTimestampId
 }
