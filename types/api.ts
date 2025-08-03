@@ -160,7 +160,7 @@ export interface EventData {
 		Address: string
 		IconUrl?: string
 	}
-	Organizer: MinimumProfileData
+	Organizer: MinimumCommunityData
 }
 
 export interface EventPlannedMatch {
@@ -343,11 +343,7 @@ export interface CommunityData {
 export interface MinimumCommunityData {
 	Id: number,
 	Handle: string,
-	Name: string
 	AvatarUrl?: string,
-	AffiliationType: CommunityAffiliationType,
-	MemberCount: number,
-	CreatedAt: string,
 }
 
 export interface CommunityMemberData {
@@ -551,4 +547,8 @@ export interface ResponseAccountEventTickets {
 export interface ResponseAccountEventTicketsByEvent {
 	Data: Array<EventTicketData>
 	Pagination: PaginationId
+}
+
+export interface ResponseListCommunitiesIdsManagedByUser {
+	Data: Array<number>
 }

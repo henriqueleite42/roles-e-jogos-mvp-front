@@ -17,7 +17,7 @@ export default async function Page() {
 	const cookieStore = await cookies();
 
 	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		redirect("/eventos")
+		redirect("/conta")
 	}
 
 	return <Content />
