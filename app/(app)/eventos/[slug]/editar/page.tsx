@@ -2,7 +2,7 @@ import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPla
 import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { redirect } from "next/navigation";
-import EditEventPage from "./content";
+import Content from "./content";
 import { getAvailableSpots } from "../utils";
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -46,7 +46,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	}
 
 	const event = await resEvent.json() as EventData
-	console.log(event);
 
 	if (!event) {
 		redirect("/eventos")
@@ -92,7 +91,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		<>
 			<Header title="Evento" displayBackButton />
 
-			<EditEventPage event={event} plannedMatches={plannedMatches} confirmationsCount={confirmationsCount} />
+			<Content event={event} plannedMatches={plannedMatches} confirmationsCount={confirmationsCount} />
 		</>
 	)
 }
