@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Bell, Calendar, Dice6, Home, Plus, User } from 'lucide-react'
+import { Bell, Calendar, Dice6, Home, Plus, Ticket, User } from 'lucide-react'
 import Link from "next/link"
 
 import '../globals.css'
@@ -180,11 +180,16 @@ export default function RootLayout({
 							<span className="text-xs mt-1">Eventos</span>
 						</Link>
 
-						<Link href="/eventos/criar" className="flex flex-col items-center p-2 relative">
+						{/* <Link href="/eventos/criar" className="flex flex-col items-center p-2 relative">
 							<div className="absolute -top-5 rounded-full bg-gradient-to-r from-primary to-primary-foreground p-3 shadow-lg">
 								<Plus className="h-6 w-6 text-white" />
 							</div>
 							<span className="text-xs mt-7 font-medium text-primary">Criar evento</span>
+						</Link> */}
+
+						<Link href="/ingressos" className="flex flex-col items-center p-2 text-red-950">
+							<Ticket className="h-6 w-6" />
+							<span className="text-xs mt-1">Ingressos</span>
 						</Link>
 
 						<Link href="/notificacoes" className="flex flex-col items-center p-2 text-red-950">

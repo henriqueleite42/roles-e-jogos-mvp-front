@@ -1,8 +1,8 @@
-import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches } from "@/types/api"
+import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesIdsManagedByUser } from "@/types/api"
 import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { redirect } from "next/navigation";
-import EditEventPage from "./content";
+import Content from "./content";
 import { getAvailableSpots } from "../utils";
 
 export default async function Page({ params }: { params: { slug: string } }) {
@@ -11,27 +11,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	const cookieStore = await cookies();
 
 	if (!cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		redirect("/eventos")
+		redirect("/conta")
 	}
-
-	// Account
-
-	const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
-		method: 'GET',
-		cache: 'no-store',
-		headers: {
-			Cookie: cookieStore.toString()
-		}
-	}).catch(() => ({
-		ok: false
-	} as Response));
-
-	if (!resAccount.ok) {
-		console.error(await resAccount.text())
-		redirect("/eventos")
-	}
-
-	const account = await resAccount.json() as Profile
 
 	// Event
 
@@ -46,13 +27,34 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	}
 
 	const event = await resEvent.json() as EventData
-	console.log(event);
 
 	if (!event) {
 		redirect("/eventos")
 	}
 
-	if (event.Organizer.AccountId !== account.AccountId) {
+	// User managed communities
+
+	var managedCommunities = [] as Array<number>
+	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed/ids', {
+			method: 'GET',
+			cache: 'no-store',
+			headers: {
+				Cookie: cookieStore.toString()
+			}
+		}).catch(() => ({
+			ok: false
+		} as Response));
+
+		if (res.ok) {
+			const resJson = await res.json() as ResponseListCommunitiesIdsManagedByUser
+			managedCommunities = resJson.Data
+		} else {
+			console.error(await res.text())
+		}
+	}
+
+	if (!managedCommunities.includes(event.Organizer.Id)) {
 		redirect("/eventos")
 	}
 
@@ -92,7 +94,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		<>
 			<Header title="Evento" displayBackButton />
 
-			<EditEventPage event={event} plannedMatches={plannedMatches} confirmationsCount={confirmationsCount} />
+			<Content event={event} plannedMatches={plannedMatches} confirmationsCount={confirmationsCount} />
 		</>
 	)
 }

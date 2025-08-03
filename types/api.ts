@@ -29,6 +29,8 @@ export type AchievementId = "CONNECT_LUDOPEDIA"
 
 export type CommunityAffiliationType = "PUBLIC" | "INVITE_ONLY"
 
+export type EventTicketStatus = "WAITING_PAYMENT" | "PAID" | "ATTENDED"
+
 export interface ResponseGetNextEvents {
 	Data: Array<MinimumEventDataWithLocation>
 	Pagination: {
@@ -69,6 +71,14 @@ export interface PaginationId {
 	Current?: number
 	Next?: number
 	Limit: number
+}
+
+export interface EventTicketData {
+	Id: number
+	Status: EventTicketStatus
+	CreatedAt: string
+	PaidAt?: string
+	AttendedAt?: string
 }
 
 export interface GameData {
@@ -150,7 +160,7 @@ export interface EventData {
 		Address: string
 		IconUrl?: string
 	}
-	Organizer: MinimumProfileData
+	Organizer: MinimumCommunityData
 }
 
 export interface EventPlannedMatch {
@@ -194,6 +204,7 @@ export interface MinimumEventData {
 	Slug: string
 	Name: string
 	StartDate: string
+	Price?: number
 }
 
 export interface MinimumEventDataWithLocation extends MinimumEventData {
@@ -305,6 +316,11 @@ export interface ExternalLocation {
 	Longitude: number
 }
 
+export interface AccountEventTicket {
+	Event: MinimumEventData
+	Amount: number
+}
+
 export interface CommunityData {
 	AffiliationType: CommunityAffiliationType,
 	AvatarUrl?: string,
@@ -327,11 +343,7 @@ export interface CommunityData {
 export interface MinimumCommunityData {
 	Id: number,
 	Handle: string,
-	Name: string
 	AvatarUrl?: string,
-	AffiliationType: CommunityAffiliationType,
-	MemberCount: number,
-	CreatedAt: string,
 }
 
 export interface CommunityMemberData {
@@ -381,12 +393,22 @@ export interface ResponseListEventPlannedMatches {
 }
 
 export interface ResponseListEventsByGame {
-	Data: Array<MinimumEventData>
+	Data: Array<MinimumEventDataWithLocation>
 	Pagination: PaginationTimestampId
 }
 
 export interface ResponseListEventsByAccount {
-	Data: Array<MinimumEventData>
+	Data: Array<MinimumEventDataWithLocation>
+	Pagination: PaginationTimestampId
+}
+
+export interface ResponseListEventsByLocation {
+	Data: Array<MinimumEventDataWithLocation>
+	Pagination: PaginationTimestampId
+}
+
+export interface ResponseListEventsByCommunity {
+	Data: Array<MinimumEventDataWithLocation>
 	Pagination: PaginationTimestampId
 }
 
@@ -515,4 +537,18 @@ export interface ResponseListCommunityMembers {
 		Limit: number
 		Next?: string
 	}
+}
+
+export interface ResponseAccountEventTickets {
+	Data: Array<AccountEventTicket>
+	Pagination: PaginationTimestampId
+}
+
+export interface ResponseAccountEventTicketsByEvent {
+	Data: Array<EventTicketData>
+	Pagination: PaginationId
+}
+
+export interface ResponseListCommunitiesIdsManagedByUser {
+	Data: Array<number>
 }

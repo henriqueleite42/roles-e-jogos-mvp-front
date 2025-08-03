@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches } from "@/types/api"
+import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesIdsManagedByUser } from "@/types/api"
 import { Calendar, Clock, DollarSign, GamepadIcon, Pencil, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
@@ -105,6 +105,28 @@ export default async function EventPage({ params }: { params: { slug: string } }
 	const plannedMatchesRes = await resEventPlannedMatches.json() as ResponseListEventPlannedMatches
 	const plannedMatches = plannedMatchesRes.Data
 
+	// User managed communities
+
+	var managedCommunities = [] as Array<number>
+	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
+		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed/ids', {
+			method: 'GET',
+			cache: 'no-store',
+			headers: {
+				Cookie: cookieStore.toString()
+			}
+		}).catch(() => ({
+			ok: false
+		} as Response));
+
+		if (res.ok) {
+			const resJson = await res.json() as ResponseListCommunitiesIdsManagedByUser
+			managedCommunities = resJson.Data
+		} else {
+			console.error(await res.text())
+		}
+	}
+
 	// Account
 
 	var account: Profile | null = null
@@ -146,7 +168,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 			<Header title="Evento" displayBackButton />
 
 			<main className="flex-1 container mx-auto p-2 mb-10">
-				{event.Organizer.AccountId === account?.AccountId && (
+				{managedCommunities.includes(event.Organizer.Id) && (
 					<div className="flex justify-center align-center mb-5">
 						<Button type="button" className="text-white" asChild>
 							<Link href={"/eventos/" + event.Slug + "/editar"}>

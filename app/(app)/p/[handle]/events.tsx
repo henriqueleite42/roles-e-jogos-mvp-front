@@ -26,15 +26,15 @@ export function ProfileEvents({ profile }: { profile: Profile }) {
 				}
 			}
 
-			const queryObj: Record<string, string> = {
+			const query = new URLSearchParams({
 				accountId: String(profile.AccountId),
-			}
+			})
 
-			if (pageParam) {
-				queryObj.after = String(pageParam)
+			const pp = pageParam as any
+			if (pp?.Timestamp && pp?.Id) {
+				query.set("afterTimestamp", String(pp.Timestamp))
+				query.set("afterId", String(pp.Id))
 			}
-
-			const query = new URLSearchParams(queryObj)
 
 			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/account?${query.toString()}`, {
 				credentials: "include"

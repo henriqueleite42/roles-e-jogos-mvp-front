@@ -1,11 +1,10 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { EventData, Profile, ResponseListEventTicketBuyers } from "@/types/api"
+import { EventData, Profile } from "@/types/api"
 import Image from "next/image"
 import { ShareButton } from "./share"
 import { Calendar, Clock, CreditCard, DollarSign, Loader2, MapPin, Minus, Plus, ShoppingCart, SquareArrowOutUpRight, User, Users } from "lucide-react"
-import { getAvailableSpots } from "./utils"
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { formatEventDate } from "@/lib/dates"
