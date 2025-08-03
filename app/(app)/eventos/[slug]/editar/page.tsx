@@ -1,4 +1,4 @@
-import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesIdsManagedByUser } from "@/types/api"
+import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesManagedByUser } from "@/types/api"
 import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { redirect } from "next/navigation";
@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	var managedCommunities = [] as Array<number>
 	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed/ids', {
+		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed', {
 			method: 'GET',
 			cache: 'no-store',
 			headers: {
@@ -47,8 +47,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		} as Response));
 
 		if (res.ok) {
-			const resJson = await res.json() as ResponseListCommunitiesIdsManagedByUser
-			managedCommunities = resJson.Data
+			const resJson = await res.json() as ResponseListCommunitiesManagedByUser
+			managedCommunities = resJson.Data.map(c => c.Id)
 		} else {
 			console.error(await res.text())
 		}

@@ -1,6 +1,7 @@
 import Link from "next/link"
-import { Calendar, MapPin, Download, Camera, Video, MessageCircle, Image, UserRound, Users } from "lucide-react"
+import { Calendar, MapPin, Download, Camera, Video, MessageCircle, Image, UserRound, Users, Plus } from "lucide-react"
 import { Header } from "@/components/header"
+import { Button } from "@/components/ui/button"
 
 export default function HomePage() {
 	return (
@@ -8,6 +9,14 @@ export default function HomePage() {
 			<Header />
 
 			<main className="flex-1 p-3">
+				<div className="flex mb-4">
+					<Button asChild>
+						<Link href="/eventos/criar" className="text-white w-full">
+							<Plus className="mr-2 h-4 w-4" /> Criar Evento
+						</Link>
+					</Button>
+				</div>
+
 				<div className="grid grid-cols-2 gap-3 max-w-md mx-auto pt-2 md:grid-cols-4 md:max-w-5xl">
 					{/* Communities Card */}
 					<Link

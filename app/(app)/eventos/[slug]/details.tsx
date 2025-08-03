@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { EventData, Profile } from "@/types/api"
+import { EventData, EventType, Profile } from "@/types/api"
 import Image from "next/image"
 import { ShareButton } from "./share"
 import { Calendar, Clock, CreditCard, DollarSign, Loader2, MapPin, Minus, Plus, ShoppingCart, SquareArrowOutUpRight, User, Users } from "lucide-react"
@@ -25,6 +25,32 @@ interface Params {
 function formatDisplayPrice(price?: number): string {
 	if (!price) return "Gratuito"
 	return `R$ ${(price / 100).toFixed(2).replace(".", ",")}`
+}
+
+function getPaymentText(eventType: EventType, isFull: boolean) {
+	if (isFull) {
+		return "Evento lotado"
+	}
+
+	switch (eventType) {
+		case "PAID_ON_SITE":
+		case "FREE":
+			return "Reservar vagas"
+		case "BUY_ON_THIRD_PARTY":
+		default:
+			return "Comprar ingressos"
+	}
+}
+
+function getCompletePurchaseText(eventType: EventType) {
+	switch (eventType) {
+		case "PAID_ON_SITE":
+		case "FREE":
+			return "Finalizar reserva"
+		case "BUY_ON_THIRD_PARTY":
+		default:
+			return "Finalizar compra"
+	}
 }
 
 export const EventDetails = ({ event, account, availableSpots, isFull }: Params) => {
@@ -246,12 +272,12 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 									disabled={isFull}
 								>
 									<ShoppingCart className="h-5 w-5" />
-									{isFull ? "Evento Lotado" : "Comprar Ingressos"}
+									{getPaymentText(event.Type, isFull)}
 								</Button>
 							</DialogTrigger>
 							<DialogContent className="sm:max-w-md">
 								<DialogHeader>
-									<DialogTitle>Comprar Ingressos</DialogTitle>
+									<DialogTitle>{getPaymentText(event.Type, isFull)}</DialogTitle>
 									<DialogDescription>Selecione a quantidade de ingressos</DialogDescription>
 								</DialogHeader>
 
@@ -328,7 +354,7 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 										) : (
 											<CreditCard className="h-4 w-4" />
 										)}
-										{isPending ? "Processando..." : "Finalizar Compra"}
+										{isPending ? "Processando..." : getCompletePurchaseText(event.Type)}
 									</Button>
 								</DialogFooter>
 							</DialogContent>

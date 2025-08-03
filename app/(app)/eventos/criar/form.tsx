@@ -23,8 +23,8 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { useDebounce } from "@/hooks/use-debounce"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query"
-import { EventData, MinimumGameData, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
+import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query"
+import { EventData, MinimumCommunityData, MinimumGameData, ResponseListCommunitiesManagedByUser, ResponseSearchGames, ResponseSearchLocations } from "@/types/api"
 import { useToast } from "@/hooks/use-toast"
 import { uploadImage } from "@/lib/api/upload-image"
 import { Header } from "@/components/header"
@@ -56,6 +56,16 @@ const formSchema = z.object({
 		.optional(),
 	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
 	ExternalUrl: z.string().url().optional().nullable(),
+	Community: z.object(
+		{
+			Id: z.number().int(),
+			Handle: z.string(),
+			AvatarUrl: z.string().optional(),
+		},
+		{
+			required_error: "Selecione uma comunidade organizadora.",
+		},
+	),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
@@ -120,10 +130,10 @@ interface MutationParams extends FormValues {
 }
 
 interface Params {
-	communityId: number
+	communities: Array<MinimumCommunityData>
 }
 
-export function FormCreateEvent({ communityId }: Params) {
+export function FormCreateEvent({ communities }: Params) {
 	const { toast } = useToast()
 	const router = useRouter()
 
@@ -224,7 +234,7 @@ export function FormCreateEvent({ communityId }: Params) {
 	const mutation = useMutation({
 		mutationFn: async (body: MutationParams) => {
 			const reqBody = {
-				CommunityId: communityId,
+				CommunityId: body.Community.Id,
 				Name: body.Name,
 				Description: body.Description,
 				Type: body.Type,
@@ -336,6 +346,7 @@ export function FormCreateEvent({ communityId }: Params) {
 			Description: "",
 			Type: "FREE",
 			PlannedMatches: [],
+			Community: communities[0],
 		},
 	})
 
@@ -420,6 +431,86 @@ export function FormCreateEvent({ communityId }: Params) {
 								{/* Event Basic Information */}
 								<div className="space-y-6">
 									<h3 className="text-lg font-semibold">Informações Básicas</h3>
+
+
+									{/* Community Organizer */}
+									<FormField
+										control={form.control}
+										name="Community"
+										render={({ field }) => (
+											<FormItem className="flex flex-col">
+												<FormLabel>Comunidade Organizadora</FormLabel>
+												<Popover>
+													<PopoverTrigger asChild>
+														<FormControl>
+															<Button
+																variant="outline"
+																role="combobox"
+																className={cn("w-full justify-between", !field.value && "text-muted-foreground")}
+															>
+																{field.value ? (
+																	<div className="flex items-center gap-2 text-left">
+																		{field.value.AvatarUrl && (
+																			<div className="h-6 w-6 relative flex-shrink-0">
+																				<Image
+																					src={field.value.AvatarUrl || "/placeholder.svg"}
+																					alt={field.value.Handle}
+																					fill
+																					className="object-cover rounded-full"
+																				/>
+																			</div>
+																		)}
+																		<div className="truncate">
+																			<div>{field.value.Handle}</div>
+																		</div>
+																	</div>
+																) : (
+																	<div className="flex items-center gap-2">
+																		<Users className="h-4 w-4" />
+																		<span>Selecionar comunidade...</span>
+																	</div>
+																)}
+															</Button>
+														</FormControl>
+													</PopoverTrigger>
+													<PopoverContent className="w-[300px] p-0" align="start">
+														<Command>
+															<CommandList>
+																<CommandGroup>
+																	{communities.map((community) => (
+																		<CommandItem
+																			key={community.Id}
+																			value={community.Handle}
+																			onSelect={() => {
+																				form.setValue("Community", community, { shouldValidate: true })
+																			}}
+																			className="flex items-center gap-3 p-3"
+																		>
+																			{community.AvatarUrl && (
+																				<div className="h-8 w-8 relative flex-shrink-0">
+																					<Image
+																						src={community.AvatarUrl || "/placeholder.svg"}
+																						alt={community.Handle}
+																						fill
+																						className="object-cover rounded-full"
+																					/>
+																				</div>
+																			)}
+																			<div className="flex flex-col">
+																				<div className="font-medium">{community.Handle}</div>
+																			</div>
+																		</CommandItem>
+																	))}
+																</CommandGroup>
+															</CommandList>
+														</Command>
+													</PopoverContent>
+												</Popover>
+												<FormDescription>Selecione a comunidade que está organizando este evento.</FormDescription>
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
 
 									{/* Event Type */}
 									<FormField

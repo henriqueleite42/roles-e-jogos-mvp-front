@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesIdsManagedByUser } from "@/types/api"
+import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesManagedByUser } from "@/types/api"
 import { Calendar, Clock, DollarSign, GamepadIcon, Pencil, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
@@ -109,7 +109,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 	var managedCommunities = [] as Array<number>
 	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed/ids', {
+		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed', {
 			method: 'GET',
 			cache: 'no-store',
 			headers: {
@@ -120,8 +120,8 @@ export default async function EventPage({ params }: { params: { slug: string } }
 		} as Response));
 
 		if (res.ok) {
-			const resJson = await res.json() as ResponseListCommunitiesIdsManagedByUser
-			managedCommunities = resJson.Data
+			const resJson = await res.json() as ResponseListCommunitiesManagedByUser
+			managedCommunities = resJson.Data.map(c => c.Id)
 		} else {
 			console.error(await res.text())
 		}
