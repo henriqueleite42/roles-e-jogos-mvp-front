@@ -446,11 +446,7 @@ export interface GameCollection {
 
 export interface ResponseGames {
 	Data: Array<GameCollection>
-	Pagination: {
-		Current?: string
-		Limit: number
-		Next?: string
-	}
+	Pagination: PaginationString
 }
 
 export interface ConnectionData {
@@ -494,11 +490,7 @@ export interface NotificationDataEventCanceled {
 
 export interface ResponseListLatestNotifications {
 	Data: Array<NotificationData>
-	Pagination: {
-		Current?: number
-		Limit: number
-		Next?: number
-	}
+	Pagination: PaginationId
 }
 
 export interface AccountAchievementData {
@@ -514,29 +506,17 @@ export interface AccountAchievementData {
 
 export interface ResponseListAccountAchievements {
 	Data: Array<AccountAchievementData>
-	Pagination: {
-		Current?: number
-		Limit: number
-		Next?: number
-	}
+	Pagination: PaginationId
 }
 
 export interface ResponseListCommunities {
 	Data: Array<CommunityData>
-	Pagination: {
-		Current?: number
-		Limit: number
-		Next?: number
-	}
+	Pagination: PaginationId
 }
 
 export interface ResponseListCommunityMembers {
 	Data: Array<CommunityMemberData>
-	Pagination: {
-		Current?: string
-		Limit: number
-		Next?: string
-	}
+	Pagination: PaginationString
 }
 
 export interface ResponseAccountEventTickets {
@@ -549,6 +529,7 @@ export interface ResponseAccountEventTicketsByEvent {
 	Pagination: PaginationId
 }
 
-export interface ResponseListCommunitiesIdsManagedByUser {
-	Data: Array<number>
+export interface ResponseListCommunitiesManagedByUser {
+	Data: Array<MinimumCommunityData>
+	Pagination: PaginationString
 }

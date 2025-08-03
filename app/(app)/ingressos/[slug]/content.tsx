@@ -18,6 +18,8 @@ import { formatEventDate } from "@/lib/dates"
 import { formatDisplayPrice } from "@/lib/price"
 import { useToast } from "@/hooks/use-toast"
 import QRCode from "react-qr-code";
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 interface Params {
 	account: Profile
@@ -181,6 +183,17 @@ export default function TicketDetailsPage({ account, event }: Params) {
 							<div className="font-medium mb-2">Descrição</div>
 							<p className="text-sm text-muted-foreground">{event.Description}</p>
 						</div>
+
+						<Separator />
+
+						{/* See complete event */}
+						<div>
+							<Button variant="link" size="sm" className="flex-1 w-full" asChild>
+								<Link href={`/eventos/${event.Slug}`}>
+									Ver evento completo
+								</Link>
+							</Button>
+						</div>
 					</CardContent>
 				</Card>
 			</div>
@@ -250,9 +263,8 @@ export default function TicketDetailsPage({ account, event }: Params) {
 													<div className="text-lg font-semibold">{formatDisplayPrice(event.Price)}</div>
 												</div>
 
-												<Separator />
-
 												{/* Actions */}
+												{/* <Separator /> */}
 												{/* <div className="flex gap-2">
 											<Button variant="outline" size="sm" onClick={() => handleDownloadTicket(ticket.Id)}>
 												<DownloadIcon className="h-4 w-4 mr-2" />

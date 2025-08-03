@@ -578,14 +578,29 @@
 	],
 	"shortcuts": [
 		{
-			"name": "Jogos",
-			"url": "/jogos",
-			"description": "Veja os jogos da galera!"
-		},
-		{
 			"name": "Eventos",
 			"url": "/eventos",
-			"description": "Veja nossos proximos eventos!"
+			"description": "Veja nossos proximos eventos"
+		},
+		{
+			"name": "Criar Evento",
+			"url": "/eventos/criar",
+			"description": "Crie um evento"
+		},
+		{
+			"name": "Comunidades",
+			"url": "/comunidades",
+			"description": "Conheça as melhores comunidades lúdicas da região"
+		},
+		{
+			"name": "Mapa",
+			"url": "/mapa",
+			"description": "Encontre os locais para jogar"
+		},
+		{
+			"name": "Minha conta",
+			"url": "/conta",
+			"description": "Veja sua conta"
 		}
 	],
 	"url_handlers": [
