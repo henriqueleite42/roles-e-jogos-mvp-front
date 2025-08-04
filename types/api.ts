@@ -533,3 +533,9 @@ export interface ResponseListCommunitiesManagedByUser {
 	Data: Array<MinimumCommunityData>
 	Pagination: PaginationString
 }
+
+export interface ResponseValidateTicket {
+	Event: MinimumEventData
+	Profile: MinimumProfileData
+	Ticket: EventTicketData
+}

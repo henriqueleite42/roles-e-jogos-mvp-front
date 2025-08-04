@@ -53,10 +53,9 @@ function getPaymentText(eventType: EventType) {
 	}
 }
 
-function getQrCodeValue(account: Profile, event: EventData, ticket: EventTicketData) {
+function getQrCodeValue(account: Profile, ticket: EventTicketData) {
 	const query = new URLSearchParams({
 		accountId: String(account.AccountId),
-		eventId: String(event.Id),
 		ticketId: String(ticket.Id),
 	}).toString()
 
@@ -108,7 +107,7 @@ export default function TicketDetailsPage({ account, event }: Params) {
 	}
 
 	return (
-		<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+		<main className="grid grid-cols-1 lg:grid-cols-3 gap-8 min-h-screen mt-4">
 			{/* Event Information */}
 			<div className="lg:col-span-1">
 				<Card>
@@ -227,7 +226,7 @@ export default function TicketDetailsPage({ account, event }: Params) {
 											{/* QR Code */}
 											<div className="text-center">
 												<div className="bg-white p-4 rounded-lg border-2 border-dashed border-gray-300 inline-block">
-													<QRCode value={getQrCodeValue(account, event, ticket)} className="w-64 h-64 mx-auto" />
+													<QRCode value={getQrCodeValue(account, ticket)} className="w-64 h-64 mx-auto" />
 												</div>
 												<p className="text-sm text-muted-foreground mt-2">Apresente este QR Code na entrada do evento</p>
 											</div>
@@ -308,6 +307,6 @@ export default function TicketDetailsPage({ account, event }: Params) {
 					</>
 				)}
 			</div>
-		</div>
+		</main>
 	)
 }
