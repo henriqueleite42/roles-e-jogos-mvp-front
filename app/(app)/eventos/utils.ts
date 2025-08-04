@@ -10,6 +10,6 @@ export function getShareData(event: EventData) {
 	return {
 		title: event.Name,
 		text: `${event.Name} - ${weekday}, ${formatEventDate(event.StartDate)}`,
-		url: window.location.href,
+		url: `${process.env.NEXT_PUBLIC_WEBSITE_URL}/eventos/${event.Slug}`,
 	}
 }

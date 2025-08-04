@@ -82,7 +82,7 @@ export default function Events() {
 			if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
 				await navigator.share(shareData)
 			} else {
-				await navigator.clipboard.writeText(`${window.location.origin}/eventos/${event.Slug}`)
+				await navigator.clipboard.writeText(shareData.url)
 				toast({
 					title: "Link copiado",
 					description: "O link do evento foi copiado para a área de transferência.",

@@ -15,7 +15,7 @@ const handleShare = async (event: EventData) => {
 			await navigator.share(shareData)
 		} else {
 			// Fallback to clipboard (typically desktop)
-			await navigator.clipboard.writeText(window.location.href)
+			await navigator.clipboard.writeText(shareData.url)
 			toast({
 				title: "Link copiado",
 				description: "O link do evento foi copiado para a área de transferência.",
