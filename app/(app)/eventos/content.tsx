@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { Calendar, MapPin, Users, Share2, Eye, Loader2, Plus } from "lucide-react"
+import { Calendar, MapPin, Users, Share2, Eye, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useToast } from "@/hooks/use-toast"
@@ -13,6 +13,7 @@ import { formatEventDate } from "@/lib/dates"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { formatDisplayPrice } from "@/lib/price"
+import { getShareData } from "./utils"
 
 function formatDateRange(startDate: string, endDate?: string): string {
 	const start = formatEventDate(startDate)
@@ -75,11 +76,7 @@ export default function Events() {
 	}, [events])
 
 	const handleShare = async (event: EventData) => {
-		const shareData = {
-			title: event.Name,
-			text: `${event.Name} - ${event.Description.substring(0, 100)}...`,
-			url: `${window.location.origin}/eventos/${event.Slug}`,
-		}
+		const shareData = getShareData(event)
 
 		try {
 			if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {

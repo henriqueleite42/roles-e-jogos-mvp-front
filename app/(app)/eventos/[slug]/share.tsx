@@ -4,22 +4,15 @@ import { Button } from "@/components/ui/button"
 import { toast } from "@/hooks/use-toast"
 import { EventData } from "@/types/api"
 import { Share2 } from "lucide-react"
+import { getShareData } from "../utils"
 
 const handleShare = async (event: EventData) => {
-	const shareData = {
-		title: event.Name,
-		text: `${event.Name} - ${event.Description.substring(0, 100)}...`,
-		url: window.location.href,
-	}
+	const shareData = getShareData(event)
 
 	try {
 		// Check if Web Share API is supported (typically mobile)
 		if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
 			await navigator.share(shareData)
-			toast({
-				title: "Evento compartilhado",
-				description: "O evento foi compartilhado com sucesso.",
-			})
 		} else {
 			// Fallback to clipboard (typically desktop)
 			await navigator.clipboard.writeText(window.location.href)
