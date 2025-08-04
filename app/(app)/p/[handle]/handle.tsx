@@ -105,7 +105,7 @@ export function Handle({ profile, auth }: Props) {
 											{...field}
 											placeholder="Ex: joaosilva"
 											onChange={(e) => {
-												const onlyAllowed = e.target.value.replace(/[^a-z0-9_.]/g, '');
+												const onlyAllowed = e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '');
 
 												field.onChange(onlyAllowed);
 											}}

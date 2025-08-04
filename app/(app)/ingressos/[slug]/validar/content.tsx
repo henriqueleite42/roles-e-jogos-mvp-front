@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { Camera, CameraOff, CheckCircle, XCircle, Scan, AlertCircle } from "lucide-react"
-import { toast } from "@/hooks/use-toast"
+import { Toast, toast } from "@/hooks/use-toast"
 import QrScanner from "qr-scanner"
 import { useMutation } from "@tanstack/react-query"
 import { EventData, ResponseValidateTicket } from "@/types/api"
@@ -15,7 +15,6 @@ import "./QrStyles.css";
 interface Params {
 	event: EventData
 }
-
 
 export default function ValidateTicketsPage({ event }: Params) {
 	const [isScanning, setIsScanning] = useState(false)
@@ -39,8 +38,9 @@ export default function ValidateTicketsPage({ event }: Params) {
 			})
 
 			if (!res.ok) {
-				console.error(await res.text())
-				throw new Error(`Fail to join community ${res.status}`)
+				const txt = await res.text()
+				console.error(txt)
+				throw new Error(txt)
 			}
 
 			return await res.json() as ResponseValidateTicket
@@ -49,12 +49,26 @@ export default function ValidateTicketsPage({ event }: Params) {
 			setValidationResult(response)
 		},
 		onError: (error) => {
-			console.error('Error uploading or updating profile img:', error)
-			toast({
-				title: "Erro ao entrar na comunidade",
-				description: error.message,
-				variant: "destructive",
-			})
+			console.error('Error validating event:', error)
+
+			let message = error.message
+			if (error.message.includes("forbidden")) {
+				message = "Você não tem permissão para validar ingressos desse evento"
+			}
+			if (error.message.includes("forbidden: user is not ticket owner")) {
+				message = "Ingresso falsificado"
+			}
+			if (error.message.includes("forbidden: ticket doesn't belongs to this event")) {
+				message = "Ingresso não pertence a esse evento"
+			}
+			if (error.message.includes("bad request: user already attended event")) {
+				message = "Ingresso já foi utilizado"
+			}
+			if (error.message.includes("bad request: ticket not paid yet")) {
+				message = "Ingresso ainda não foi pago"
+			}
+
+			setValidationErrorMsg(message)
 		},
 	})
 
@@ -128,6 +142,8 @@ export default function ValidateTicketsPage({ event }: Params) {
 					errorMessage = "Nenhuma câmera foi encontrada."
 				} else if (error.name === "NotSupportedError") {
 					errorMessage = "Câmera não suportada neste navegador."
+				} else if (error.name === "NotReadableError") {
+					errorMessage = "Câmera está sendo usada por outro aplicativo."
 				}
 			}
 
@@ -152,7 +168,7 @@ export default function ValidateTicketsPage({ event }: Params) {
 		if (mutation.isPending || scannedCodes.includes(qrCodeData)) return
 
 		// Check if the QR code contains a valid URL
-		if (!qrCodeData.startsWith("https")) {
+		if (!process.env.NEXT_PUBLIC_API_URL!.startsWith("http://localhost") && !qrCodeData.startsWith("https")) {
 			toast({
 				title: "QR Code Inválido",
 				description: "O QR code escaneado não contém uma URL válida.",
@@ -181,6 +197,7 @@ export default function ValidateTicketsPage({ event }: Params) {
 	// Close validation dialog and restart scanning
 	const closeValidationDialog = () => {
 		setValidationResult(null)
+		setValidationErrorMsg(null)
 		if (hasCamera && hasPermission) {
 			startScanning()
 		}
@@ -233,27 +250,17 @@ export default function ValidateTicketsPage({ event }: Params) {
 							<video
 								ref={videoRef}
 								className="w-full h-full object-cover"
-								style={{ display: isScanning ? "block" : "none" }}
+								autoPlay
+								playsInline
+								muted
 							/>
 
 							{!isScanning && (
-								<div className="w-full h-full flex items-center justify-center text-white">
+								<div className="absolute w-full h-full flex items-center justify-center text-white top-0 left-0">
 									<div className="text-center">
 										<Camera className="h-16 w-16 mx-auto mb-4 opacity-50" />
 										<p className="text-lg">Câmera desligada</p>
 										<p className="text-sm opacity-75">Clique em "Iniciar Scanner" para começar</p>
-									</div>
-								</div>
-							)}
-
-							{/* Scanning overlay */}
-							{isScanning && (
-								<div className="absolute inset-0 flex items-center justify-center pointer-events-none w-80 h-80">
-									<div className="w-64 h-64 border-2 border-orange-500 rounded-lg relative">
-										<div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-orange-500 rounded-tl-lg"></div>
-										<div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-orange-500 rounded-tr-lg"></div>
-										<div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-orange-500 rounded-bl-lg"></div>
-										<div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-orange-500 rounded-br-lg"></div>
 									</div>
 								</div>
 							)}
@@ -310,11 +317,21 @@ export default function ValidateTicketsPage({ event }: Params) {
 							</Badge>
 						</div>
 					)}
+
+					{/* Debug info */}
+					{process.env.NODE_ENV === "development" && (
+						<div className="text-xs text-muted-foreground space-y-1 p-2 bg-gray-50 rounded">
+							<p>Debug Info:</p>
+							<p>• Camera: {hasCamera === null ? "Loading..." : hasCamera ? "Available" : "Not available"}</p>
+							<p>• Permission: {hasPermission === null ? "Not requested" : hasPermission ? "Granted" : "Denied"}</p>
+							<p>• Scanning: {isScanning ? "Active" : "Inactive"}</p>
+						</div>
+					)}
 				</CardContent>
 			</Card>
 
 			{/* Validation Result Dialog */}
-			<Dialog open={!!validationResult} onOpenChange={() => setValidationResult(null)}>
+			<Dialog open={Boolean(validationErrorMsg) || Boolean(validationResult)} onOpenChange={() => closeValidationDialog()}>
 				<DialogContent className="sm:max-w-md">
 					<DialogHeader>
 						<DialogTitle className="flex items-center gap-3">
@@ -351,7 +368,7 @@ export default function ValidateTicketsPage({ event }: Params) {
 
 						<Button
 							onClick={closeValidationDialog}
-							className="w-full"
+							className="w-full text-white"
 							variant={!validationErrorMsg && validationResult ? "default" : "destructive"}
 						>
 							Continuar Escaneando
