@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { EventData, Profile, ResponseListEventTicketBuyers, ResponseListEventPlannedMatches, ResponseListCommunitiesManagedByUser } from "@/types/api"
-import { Calendar, Clock, DollarSign, GamepadIcon, Pencil, Users } from "lucide-react"
+import { Calendar, Clock, DollarSign, GamepadIcon, Pencil, Ticket, Users } from "lucide-react"
 import { Metadata } from "next"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
@@ -56,6 +56,10 @@ function formatDuration(startDate: string, endDate: string): string {
 		const minutes = diffInMinutes % 60
 		return minutes > 0 ? `${hours}h ${minutes}min` : `${hours}h`
 	}
+}
+
+function hasTicketValidation(event: EventData) {
+	return ["FREE", "PAID_ON_SITE"].includes(event.Type)
 }
 
 export default async function EventPage({ params }: { params: { slug: string } }) {
@@ -169,13 +173,24 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 			<main className="flex-1 container mx-auto p-2 mb-10">
 				{managedCommunities.includes(event.Organizer.Id) && (
-					<div className="flex justify-center align-center mb-5">
-						<Button type="button" className="text-white" asChild>
+					<div className="flex justify-center align-center mb-5 gap-2">
+						<Button className="text-white" asChild>
 							<Link href={"/eventos/" + event.Slug + "/editar"}>
 								<Pencil className="h-4 w-4" />
 								Editar evento
 							</Link>
 						</Button>
+
+						{
+							hasTicketValidation(event) && (
+								<Button className="text-white" asChild>
+									<Link href={`/ingressos/${event.Slug}/validar`}>
+										<Ticket className="h-4 w-4" />
+										Validar ingressos
+									</Link>
+								</Button>
+							)
+						}
 					</div>
 				)}
 
