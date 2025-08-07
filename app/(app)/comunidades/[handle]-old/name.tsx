@@ -40,13 +40,12 @@ export function Name({ community, member }: Props) {
 
 	const mutation = useMutation({
 		mutationFn: async (body: UpdateNameInput) => {
-			if (body.NewName === community.Name) return false
+			if (body.NewName === community.Name) return
 
-			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/name', {
-				method: 'PUT',
+			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
+				method: 'PATCH',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					CommunityId: community.Id,
 					Name: body.NewName
 				}),
 				credentials: 'include',
@@ -57,14 +56,10 @@ export function Name({ community, member }: Props) {
 				console.error(error);
 				throw new Error(error);
 			}
-
-			return true
 		},
-		onSuccess: (refresh) => {
+		onSuccess: () => {
 			setIsEditingName(false);
-			if (refresh) {
-				router.refresh();
-			}
+			router.refresh();
 		}
 	});
 
@@ -117,7 +112,7 @@ export function Name({ community, member }: Props) {
 						<h1 className="text-2xl font-bold italic">Sem nome definido</h1>
 					)
 				}
-				{member?.IsOwner && (
+				{/* {member?.IsOwner && (
 					<Button
 						size="icon"
 						variant="ghost"
@@ -128,7 +123,7 @@ export function Name({ community, member }: Props) {
 					>
 						<Edit2 className="h-4 w-4" />
 					</Button>
-				)}
+				)} */}
 			</div>
 		);
 	}

@@ -41,6 +41,10 @@ const formSchema = z.object({
 		message: "A descrição deve ter no maximo 1024 caracteres.",
 	}),
 	AffiliationType: z.enum(["PUBLIC"]),
+	WebsiteUrl: z.string().url().optional().nullable(),
+	WhatsappUrl: z.string().url().optional().nullable(),
+	InstagramUrl: z.string().url().optional().nullable(),
+	TiktokUrl: z.string().url().optional().nullable(),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
@@ -124,6 +128,10 @@ export default function FormCreateCommunity() {
 				Description: body.Description,
 				AffiliationType: body.AffiliationType,
 				LocationId: body.Location.Id,
+				WebsiteUrl: body.WebsiteUrl,
+				WhatsappUrl: body.WhatsappUrl,
+				InstagramUrl: body.InstagramUrl,
+				TiktokUrl: body.TiktokUrl,
 			} as any
 
 			if (!body.CommunityImage) {
@@ -420,9 +428,66 @@ export default function FormCreateCommunity() {
 									)}
 								/>
 
+								{/* Website Url */}
+								<FormField
+									control={form.control}
+									name="WebsiteUrl"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Site da comunidade</FormLabel>
+											<FormControl>
+												<Input placeholder="Ex: https://rolesejogos.com.br" {...field} value={field.value || undefined} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								{/* Whatsapp Url */}
+								<FormField
+									control={form.control}
+									name="WhatsappUrl"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>WhatsApp da comunidade</FormLabel>
+											<FormControl>
+												<Input placeholder="Ex: https://chat.whatsapp.com/rolesejogos" {...field} value={field.value || undefined} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								{/* Instagram Url */}
+								<FormField
+									control={form.control}
+									name="InstagramUrl"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Instagram da comunidade</FormLabel>
+											<FormControl>
+												<Input placeholder="Ex: https://www.instagram.com/rolesejogos" {...field} value={field.value || undefined} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								{/* Tiktok Url */}
+								<FormField
+									control={form.control}
+									name="TiktokUrl"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>TikTok da comunidade</FormLabel>
+											<FormControl>
+												<Input placeholder="Ex: https://tiktok.com/@rolesejogos" {...field} value={field.value || undefined} />
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+
 								<div className="flex justify-end gap-4 pt-4">
 									<Button type="button" variant="outline" asChild>
-										<Link href="/eventos">Cancelar</Link>
+										<Link href="/comunidades">Cancelar</Link>
 									</Button>
 									<Button type="submit" disabled={mutation.isPending} className="text-white">
 										{mutation.isPending ? (

@@ -7,7 +7,11 @@ export function getAvailableSpots(event: EventData, ticketBuyers: Array<EventTic
 		isFull: true,
 	}
 
-	const confirmationsCount = ticketBuyers.length
+	let confirmationsCount = 0
+	for (const buyer of ticketBuyers) {
+		confirmationsCount += buyer.AmountOfTickets
+	}
+
 	const availableSpots = event.Capacity ?
 		event.Capacity - confirmationsCount
 		: Number.MAX_VALUE

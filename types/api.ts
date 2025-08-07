@@ -329,7 +329,11 @@ export interface CommunityData {
 	Id: number,
 	Name: string
 	Description: string
-	MemberCount: number,
+	MemberCount: number
+	WebsiteUrl?: string
+	WhatsappUrl?: string
+	InstagramUrl?: string
+	TiktokUrl?: string
 	Location: {
 		IconUrl?: string
 		Id: number
@@ -351,7 +355,7 @@ export interface CommunityMemberData {
 	Role: {
 		Id: number
 		Name: string
-		Permission: string
+		Permissions: string
 	}
 	IsOwner: boolean
 	MemberSince: string

@@ -1,25 +1,48 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card";
-import { useToast } from "@/hooks/use-toast";
-import { CommunityData, CommunityMemberData, Profile } from "@/types/api";
-import { AvatarComponent } from "./avatar";
-import { Button } from "@/components/ui/button";
-import { ArrowRightFromLine, MapPin, Share2 } from "lucide-react";
-import { Handle } from "./handle";
-import { Name } from "./name";
-import { getDescription } from "@/lib/description";
-import { useMutation } from "@tanstack/react-query";
+import { Badge } from "@/components/ui/badge"
+import { CommunityData, CommunityMemberData } from "@/types/api"
+import { AvatarComponent } from "./avatar"
+import { Globe, MapPin, Share2, UserPlus } from "lucide-react"
+import { InstagramIcon } from "@/components/icons/instagram"
+import { WhatsAppIcon } from "@/components/icons/whatsapp"
+import { TikTokIcon } from "@/components/icons/tiktok"
+import { Button } from "@/components/ui/button"
+import { useMutation } from "@tanstack/react-query"
+import { getDescription } from "@/lib/description"
+import { useToast } from "@/hooks/use-toast"
+import { Handle } from "./handle"
+import { Name } from "./name"
 
 interface Props {
 	member?: CommunityMemberData
 	community: CommunityData
 }
 
-export function CommunityDetails({ community, member }: Props) {
+const getAffiliationBadge = (type: string) => {
+	switch (type) {
+		case "PUBLIC":
+			return (
+				<Badge variant="secondary" className="bg-green-100 text-green-800">
+					Pública
+				</Badge>
+			)
+		case "INVITE_ONLY":
+			return (
+				<Badge variant="secondary" className="bg-purple-100 text-purple-800">
+					Apenas Convite
+				</Badge>
+			)
+		default:
+			return <Badge variant="secondary">Desconhecido</Badge>
+	}
+}
+
+
+export function Details({ community, member }: Props) {
 	const { toast } = useToast()
 
-	const shareProfile = async () => {
+	const handleShareCommunity = async () => {
 		const shareData = {
 			title: community.Name,
 			text: getDescription(community.Description),
@@ -76,78 +99,98 @@ export function CommunityDetails({ community, member }: Props) {
 		},
 	})
 
-	const joinCommunity = () => {
+	const handleJoinCommunity = () => {
 		mutation.mutate()
 	}
 
 	return (
-		<>
-			<Card className="mb-6">
-				<CardContent className="p-6">
-					<div className="flex flex-col sm:flex-row gap-6">
-						<div className="flex flex-col items-center sm:items-start">
-							<AvatarComponent community={community} member={member} />
-						</div>
+		<div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+			<div className="flex flex-col md:flex-row gap-6">
+				<AvatarComponent community={community} member={member} />
 
-						<div className="flex-1">
-							<Name community={community} member={member} />
-							<Handle community={community} member={member} />
-							<div className="flex gap-2 items-center">
-								<MapPin className="h-4 w-4" />
-								<p>{community.Location.City}, {community.Location.State}</p>
-							</div>
-							<p className="text-lg mb-4 whitespace-pre-line overflow-hidden text-ellipsis break-words">{community.Description}</p>
-
-							{/* {profile.location && (
-							<div className="flex items-center gap-1 text-sm text-muted-foreground mb-3">
-								<MapPin className="h-4 w-4" />
-								<span>{profile.location}</span>
-							</div>
-						)} */}
-							{/* {profile.bio && <p className="text-muted-foreground mb-4">{profile.bio}</p>} */}
-
-							{/* Quick Stats */}
-							{/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-							<div className="text-center">
-								<div className="text-xl font-bold text-orange-600">{profile.stats.totalGames}</div>
-								<div className="text-xs text-muted-foreground">Jogos</div>
-							</div>
-							<div className="text-center">
-								<div className="text-xl font-bold text-purple-600">{profile.stats.totalEvents}</div>
-								<div className="text-xs text-muted-foreground">Eventos</div>
-							</div>
-							<div className="text-center">
-								<div className="text-xl font-bold text-green-600">{earnedBadges.length}</div>
-								<div className="text-xs text-muted-foreground">Conquistas</div>
-							</div>
-							<div className="text-center">
-								<div className="text-xl font-bold text-blue-600">{profile.stats.totalPlayTime}</div>
-								<div className="text-xs text-muted-foreground">Tempo jogado</div>
-							</div>
-						</div> */}
-							<div className="flex justify-end">
-								<Button className="text-white" onClick={shareProfile}>
-									<Share2 className="h-4 w-4" />
-									Compartilhar
-								</Button>
-							</div>
-						</div>
+				<div className="flex-1">
+					<div className="flex items-center gap-2">
+						<Name community={community} member={member} />
+						{getAffiliationBadge(community.AffiliationType)}
 					</div>
-				</CardContent>
-			</Card>
 
-			{
-				!member && (
-					<Card className="mb-6">
-						<CardContent className="p-6">
-							<Button className="text-white w-full" onClick={joinCommunity}>
-								<ArrowRightFromLine className="h-4 w-4" />
-								Entrar na comunidade
+					<Handle community={community} member={member} />
+
+					{community.Location && (
+						<div className="flex items-center gap-1 text-gray-500">
+							<MapPin className="w-4 h-4" />
+							<span>{community.Location.City}, {community.Location.State}</span>
+						</div>
+					)}
+
+					<p className="text-gray-700 text-lg mb-4 whitespace-pre-line overflow-hidden text-ellipsis break-words">
+						{community.Description}
+					</p>
+
+					{/* Social Media Links */}
+					<div className="flex flex-wrap justify-center md:justify-start gap-3 mb-4">
+						{community.InstagramUrl && (
+							<a
+								href={community.InstagramUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-purple-600 hover:to-pink-600 transition-colors"
+							>
+								<InstagramIcon className="w-4 h-4" />
+							</a>
+						)}
+
+						{community.WhatsappUrl && (
+							<a
+								href={community.WhatsappUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 px-3 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+							>
+								<WhatsAppIcon className="w-4 h-4" />
+							</a>
+						)}
+
+						{community.TiktokUrl && (
+							<a
+								href={community.TiktokUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 px-3 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+							>
+								<TikTokIcon className="w-4 h-4" />
+							</a>
+						)}
+
+						{community.WebsiteUrl && (
+							<a
+								href={community.WebsiteUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="flex items-center gap-2 px-3 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+							>
+								<Globe className="w-4 h-4" />
+							</a>
+						)}
+					</div>
+
+					{/* Action Buttons */}
+					<div className="flex flex-wrap justify-center md:justify-start gap-3">
+						{!member && (
+							<Button onClick={handleJoinCommunity} className="text-white w-full">
+								<UserPlus className="w-4 h-4 mr-2" />
+								Entrar na Comunidade
 							</Button>
-						</CardContent>
-					</Card>
-				)
-			}
-		</>
+						)}
+
+						<Button variant={member ? undefined : "outline"}
+							onClick={handleShareCommunity} className={member ? "text-white w-full" : "w-full"}>
+							<Share2 className="w-4 h-4 mr-2" />
+							Compartilhar
+						</Button>
+					</div>
+				</div>
+			</div>
+		</div>
 	)
 }

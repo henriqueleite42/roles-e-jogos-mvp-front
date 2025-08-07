@@ -8,7 +8,6 @@ import { getAvailableSpots } from "./utils"
 import { cookies } from "next/headers"
 import { Header } from "@/components/header"
 import { EventImages } from "./images"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import Loading from "@/components/ui/loading"
 import { getDescription } from "@/lib/description"
 import Link from "next/link"
@@ -17,6 +16,7 @@ import { EventDetails } from "./details"
 import { formatEventDate } from "@/lib/dates"
 import { formatDisplayPrice } from "@/lib/price"
 import { redirect } from 'next/navigation';
+import { Confirmations } from "./confirmations"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
 	const { slug } = await params
@@ -163,8 +163,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 	}
 
 	const {
-		availableSpots,
-		isFull
+		availableSpots
 	} = getAvailableSpots(event, ticketBuyers)
 
 	return (
@@ -196,7 +195,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 
 				<div className="max-w-4xl mx-auto space-y-4">
 					{/* Event Header */}
-					<EventDetails event={event} account={account} availableSpots={availableSpots} isFull={isFull} />
+					<EventDetails event={event} account={account} availableSpots={availableSpots} />
 
 					{/* Planned Matches Section */}
 					{plannedMatches.length > 0 && (
@@ -263,37 +262,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
 					)}
 
 					{/* Confirmations Section */}
-					<Card>
-						<CardHeader>
-							<CardTitle>
-								Participantes Confirmados
-							</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<div className="flex flex-wrap gap-2">
-								{ticketBuyers.map((person) => (
-									<div key={person.Profile.AccountId} className="flex items-center gap-2 border rounded-full px-3 py-1">
-										<Avatar className="w-6 h-6">
-											<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
-											<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>
-										</Avatar>
-										<span className="text-sm">{person.Profile.Handle}</span>
-										{
-											person.AmountOfTickets > 1 && (
-												<Badge variant="secondary" className="text-xs ml-1">
-													x{person.AmountOfTickets}
-												</Badge>
-											)
-										}
-									</div>
-								))}
-
-								{ticketBuyers.length === 0 && (
-									<p className="text-sm text-muted-foreground">Nenhuma confirmação ainda</p>
-								)}
-							</div>
-						</CardContent>
-					</Card>
+					<Confirmations event={event} />
 
 					<EventImages event={event} />
 
