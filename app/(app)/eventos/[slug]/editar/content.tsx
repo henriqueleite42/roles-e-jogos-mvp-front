@@ -34,7 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch } from "@/types/api"
+import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch, MinimumEventData } from "@/types/api"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -352,7 +352,7 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 			}
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/events', {
-				method: 'PATCH',
+				method: 'PUT',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(reqBody),
 				credentials: 'include',
@@ -364,9 +364,11 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 				console.error(error);
 				throw new Error(error)
 			}
+
+			return await res.json() as MinimumEventData
 		},
-		onSuccess: () => {
-			router.push("/eventos")
+		onSuccess: (event) => {
+			router.push(`/eventos/${event.Slug}`)
 		},
 		onError: (err) => {
 			if (err.message === "file size exceeded") {

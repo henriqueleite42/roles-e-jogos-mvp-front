@@ -2,14 +2,14 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CommunityData, ResponseGames } from "@/types/api";
+import { CommunityData, Profile, ResponseGames, ResponseSearchPersonalGames } from "@/types/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { AlertCircle, Gamepad, Loader2, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef } from "react";
 
-export function Games({ community }: { community: CommunityData }) {
+export function ProfileGames({ community }: { community: CommunityData }) {
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, error } = useInfiniteQuery<ResponseGames>({
 		queryKey: ["games-community", community.Id],

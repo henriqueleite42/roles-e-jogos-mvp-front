@@ -11,7 +11,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useMemo, useRef } from "react"
 
-export function Events({ community, member }: { community: CommunityData, member: CommunityMemberData | undefined }) {
+export function ProfileEvents({ community, member }: { community: CommunityData, member: CommunityMemberData | undefined }) {
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, error } = useInfiniteQuery<ResponseListEventsByCommunity>({
 		queryKey: ["events-community", community.Id],
@@ -95,6 +95,17 @@ export function Events({ community, member }: { community: CommunityData, member
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
+				{member?.IsOwner && (
+					<div className="flex justify-center align-center mb-5">
+						<Button type="button" className="text-white" asChild>
+							<Link href={`/comunidades/${community.Handle}/eventos/criar`}>
+								<Plus className="h-4 w-4" />
+								Criar evento
+							</Link>
+						</Button>
+					</div>
+				)}
+
 				<div className="space-y-4">
 					{isPending && (
 						<div className="container mx-auto py-8 px-4 flex flex-col items-center justify-center min-h-[100vh]">

@@ -11,18 +11,18 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from 'react-hook-form';
-import { Profile } from '@/types/api';
+import { CommunityData, CommunityMemberData, Profile } from '@/types/api';
 
 interface Props {
-	auth?: Profile
-	profile: Profile
+	member?: CommunityMemberData
+	community: CommunityData
 }
 
 const updateHandleSchema = z.object({
 	NewHandle: z
 		.string()
 		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
-		.max(24, 'Seu username pode ter no maximo 16 caracteres')
+		.max(16, 'Seu username pode ter no maximo 16 caracteres')
 		.regex(/^[a-z0-9_.]*$/, "Seu username pode conter apenas letras minusculas, numeros, _ e ."),
 }).refine((data) => {
 	if (!data.NewHandle) return false;
@@ -40,25 +40,10 @@ const updateHandleSchema = z.object({
 }, {
 	message: "Seu username não pode começar ou terminar com _ ou .",
 	path: ["NewHandle"]
-}).refine((data) => {
-	if (!data.NewHandle) return false;
-
-	if (
-		new RegExp("^\\d").test(data.NewHandle) ||
-		new RegExp("\\d$").test(data.NewHandle)
-	) {
-		return false;
-	}
-
-	return true;
-}, {
-	message: "Seu username não pode começar ou terminar com números",
-	path: ["NewHandle"]
 });
-
 type UpdateHandleInput = z.infer<typeof updateHandleSchema>;
 
-export function Handle({ profile, auth }: Props) {
+export function Handle({ community, member }: Props) {
 	const router = useRouter();
 
 	const [isEditingHandle, setIsEditingHandle] = useState(false);
@@ -67,13 +52,13 @@ export function Handle({ profile, auth }: Props) {
 	const form = useForm<UpdateHandleInput>({
 		resolver: zodResolver(updateHandleSchema),
 		defaultValues: {
-			NewHandle: profile.Handle,
+			NewHandle: community.Handle,
 		},
 	})
 
 	const mutation = useMutation({
 		mutationFn: async (body: UpdateHandleInput) => {
-			if (body.NewHandle === profile.Handle) return
+			if (body.NewHandle === community.Handle) return
 
 			const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/handle', {
 				method: 'PUT',
@@ -120,7 +105,7 @@ export function Handle({ profile, auth }: Props) {
 											{...field}
 											placeholder="Ex: joaosilva"
 											onChange={(e) => {
-												const onlyAllowed = e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '');
+												const onlyAllowed = e.target.value.replace(/[^a-z0-9_.]/g, '');
 
 												field.onChange(onlyAllowed);
 											}}
@@ -149,9 +134,9 @@ export function Handle({ profile, auth }: Props) {
 		);
 	} else {
 		return (
-			<div className="flex items-center gap-2 mb-4">
-				<p className="text-muted-foreground">@{profile.Handle}</p>
-				{profile.AccountId === auth?.AccountId && (
+			<div className="flex items-center gap-2">
+				<p className="text-muted-foreground">@{community.Handle}</p>
+				{/* {community.AccountId === auth?.AccountId && (
 					<Button
 						size="icon"
 						variant="ghost"
@@ -162,7 +147,7 @@ export function Handle({ profile, auth }: Props) {
 					>
 						<Edit2 className="h-4 w-4" />
 					</Button>
-				)}
+				)} */}
 			</div>
 		);
 	}

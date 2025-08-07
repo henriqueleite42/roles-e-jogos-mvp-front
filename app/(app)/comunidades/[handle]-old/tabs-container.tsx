@@ -3,10 +3,10 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CommunityData, CommunityMemberData } from "@/types/api"
 import { useMemo, useState } from "react"
-import { Games } from "./games"
-import { Events } from "./events"
-import { Gallery } from "./gallery"
-import { Members } from "./members"
+import { ProfileGames } from "./games"
+import { ProfileEvents } from "./events"
+import { ProfileGallery } from "./gallery"
+import { ProfileMembers } from "./members"
 
 interface Props {
 	member?: CommunityMemberData
@@ -22,32 +22,32 @@ interface Tab {
 
 const TABS: Array<Tab> = [
 	{
-		key: "eventos",
-		description: "Eventos",
-		getComponent: ({ community, member }: Props) => (<Events community={community} member={member} />),
-		shouldDisplay: () => true
-	},
-	{
 		key: "membros",
 		description: "Membros",
-		getComponent: ({ community }: Props) => (<Members community={community} />),
+		getComponent: ({ community }: Props) => (<ProfileMembers community={community} />),
 		shouldDisplay: () => true
 	},
 	{
 		key: "jogos",
 		description: "Jogos",
-		getComponent: ({ community }: Props) => (<Games community={community} />),
+		getComponent: ({ community }: Props) => (<ProfileGames community={community} />),
+		shouldDisplay: () => true
+	},
+	{
+		key: "eventos",
+		description: "Eventos",
+		getComponent: ({ community, member }: Props) => (<ProfileEvents community={community} member={member} />),
 		shouldDisplay: () => true
 	},
 	// {
 	// 	key: "galeria",
 	// 	description: "Galeria",
-	// 	getComponent: ({ community }: Props) => (<Gallery community={community} />),
+	// 	getComponent: ({ community }: Props) => (<ProfileGallery community={community} />),
 	// 	shouldDisplay: () => true
 	// },
 ]
 
-export function TabsContainer(i: Props) {
+export function ProfileTabsContainer(i: Props) {
 	const validTabs = useMemo(() => {
 		return TABS.filter(t => t.shouldDisplay(i))
 	}, [i])

@@ -11,15 +11,14 @@ import { formatEventDate } from "@/lib/dates"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import { useState } from "react"
-import { useMutation } from "@tanstack/react-query"
+import { useMemo, useState } from "react"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Link from "next/link"
 
 interface Params {
 	account: Profile | null
 	event: EventData
 	availableSpots: number
-	isFull: boolean
 }
 
 function formatDisplayPrice(price?: number): string {
@@ -53,9 +52,11 @@ function getCompletePurchaseText(eventType: EventType) {
 	}
 }
 
-export const EventDetails = ({ event, account, availableSpots, isFull }: Params) => {
+export const EventDetails = ({ event, account, availableSpots }: Params) => {
+	const queryClient = useQueryClient()
 	const { toast } = useToast()
 
+	const [curAvailableSpots, setCurAvailableSpots] = useState(availableSpots)
 	const [ticketQuantity, setTicketQuantity] = useState(1)
 	const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -98,8 +99,6 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 				throw new Error("unauthorized")
 			}
 
-			console.log(ticketQuantity);
-
 			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/tickets/free`, {
 				method: "POST",
 				body: JSON.stringify({
@@ -117,12 +116,14 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 			}
 		},
 		onSuccess: () => {
+			setCurAvailableSpots(prevVal => prevVal - ticketQuantity)
 			setTicketQuantity(1)
 			setIsDialogOpen(false)
 			toast({
 				title: "Ingressos comprados com sucesso!",
 				description: "Seus ingressos podem ser encontrados na pagina de ingressos."
 			})
+			queryClient.invalidateQueries({ queryKey: ["event-ticket-buyers", event.Id] })
 		},
 		onError: (error) => {
 			console.error('Error creating tickets:', error)
@@ -134,6 +135,14 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 		},
 
 	})
+
+	const isFull = useMemo(() => {
+		if (!event.Capacity) {
+			return false
+		}
+
+		return curAvailableSpots <= 0
+	}, [curAvailableSpots])
 
 	const totalPrice = (event.Price || 0) * ticketQuantity
 
@@ -204,8 +213,8 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 							<p className="text-sm text-muted-foreground">
 								{event.Capacity ? (
 									<span className={cn(isFull ? "text-red-600 font-medium" : "")}>
-										{availableSpots !== null && availableSpots > 0
-											? `${availableSpots} vagas disponíveis`
+										{curAvailableSpots !== null && curAvailableSpots > 0
+											? `${curAvailableSpots} vagas disponíveis`
 											: "Evento lotado"}
 									</span>
 								) : (
@@ -320,11 +329,10 @@ export const EventDetails = ({ event, account, availableSpots, isFull }: Params)
 												<Plus className="h-4 w-4" />
 											</Button>
 										</div>
-										{availableSpots !== Number.MAX_VALUE && (
-											<p className="text-xs text-muted-foreground text-center">
-												Máximo: {availableSpots} ingressos disponíveis
-											</p>
-										)}
+										{event.Capacity && curAvailableSpots !== null && curAvailableSpots > 0
+											&& (<p className="text-xs text-muted-foreground text-center">
+												Máximo: {curAvailableSpots} ingressos disponíveis
+											</p>)}
 									</div>
 
 									{/* Price Summary */}

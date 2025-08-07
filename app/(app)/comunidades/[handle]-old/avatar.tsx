@@ -50,22 +50,21 @@ export function AvatarComponent({ community, member }: Props) {
 			const { FilePath } = await uploadImage({
 				FileName: fileName,
 				ImageBlob: croppedImage,
-				Kind: "COMMUNITY_AVATAR_IMG"
+				Kind: "AVATAR_IMG"
 			})
 
-			const responseUpdateAvatar = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/communities/avatar`, {
-				method: 'PUT',
+			const responseUpdateProfile = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/profiles/me`, {
+				method: "PATCH",
 				body: JSON.stringify({
-					CommunityId: community.Id,
 					AvatarPath: FilePath,
 				}),
 				headers: { 'Content-Type': 'application/json' },
 				credentials: "include"
 			})
 
-			if (!responseUpdateAvatar.ok) {
-				console.error(await responseUpdateAvatar.text())
-				throw new Error(`Fail to update community avatar ${responseUpdateAvatar.status}`)
+			if (!responseUpdateProfile.ok) {
+				console.error(await responseUpdateProfile.text())
+				throw new Error(`Fail to update profile ${responseUpdateProfile.status}`)
 			}
 		},
 		onSuccess: () => {
@@ -97,7 +96,7 @@ export function AvatarComponent({ community, member }: Props) {
 
 	return (
 		<>
-			<div className="flex justify-center items-end mb-4">
+			<div className="flex justify-between items-end mb-4">
 				<div className="relative">
 					<Avatar className="h-24 w-24">
 						{community.AvatarUrl ? (
@@ -141,7 +140,7 @@ export function AvatarComponent({ community, member }: Props) {
 					<DialogContent className="sm:max-w-md">
 						<DialogHeader>
 							<DialogTitle>Ajustar imagem</DialogTitle>
-							<DialogDescription>Arraste para ajustar e recortar a foto da comunidade.</DialogDescription>
+							<DialogDescription>Arraste para ajustar e recortar sua foto de perfil.</DialogDescription>
 						</DialogHeader>
 						{imageFile && <ImageCropper imageFile={imageFile} onCropComplete={uploadImg} onCancelCrop={onCancelCrop} />}
 					</DialogContent>

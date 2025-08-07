@@ -1,39 +1,14 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { isBitSet } from "@/lib/permissions";
-import { CommunityData, ResponseListCommunityMembers } from "@/types/api";
+import { CommunityData, Profile, ResponseListCommunityMembers, ResponseSearchPersonalGames } from "@/types/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { AlertCircle, Loader2, Users } from "lucide-react";
+import { AlertCircle, Crown, Gamepad, Loader2, Users } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef } from "react";
 
-const getRoleBadge = (permissions?: string) => {
-	if (!permissions) {
-		return null
-	}
-
-	if (isBitSet(permissions, 0)) {
-		return (
-			<Badge variant="destructive" className="text-xs">
-				Criador
-			</Badge>
-		)
-	}
-	if (isBitSet(permissions, 1)) {
-		return (
-			<Badge variant="secondary" className="text-xs bg-blue-100 text-blue-800">
-				Admin
-			</Badge>
-		)
-	}
-
-	return null
-}
-
-export function Members({ community }: { community: CommunityData }) {
+export function ProfileMembers({ community }: { community: CommunityData }) {
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, error } = useInfiniteQuery<ResponseListCommunityMembers>({
 		queryKey: ["community-members", community.Id],
@@ -103,7 +78,7 @@ export function Members({ community }: { community: CommunityData }) {
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Users className="h-5 w-5" />
-					Membros ({community.MemberCount})
+					Membros
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
@@ -126,30 +101,27 @@ export function Members({ community }: { community: CommunityData }) {
 						</div>
 					)}
 					{allItems.map((member) => (
-						<Link href={"/p/" + member.Profile.Handle} key={member.Profile.AccountId}>
-							<Card key={member.Profile.AccountId} className="hover:shadow-md transition-shadow">
-								<CardContent className="p-4">
-									<div className="flex items-center gap-4">
-										<Avatar className="w-12 h-12">
-											<AvatarImage src={member.Profile.AvatarUrl || "/placeholder.svg"} alt={member.Profile.Handle} />
-											<AvatarFallback>
-												{member.Profile.Handle.split(" ")
-													.map((word) => word[0])
-													.join("")
-													.slice(0, 2)}
-											</AvatarFallback>
-										</Avatar>
-
-										<div className="flex-1">
-											<div className="flex items-center gap-2 mb-1">
-												<h3 className="font-semibold">{member.Profile.Handle}</h3>
-												{getRoleBadge(member.Role.Permissions)}
-											</div>
-											<p className="text-gray-600 text-sm">@{member.Profile.Handle}</p>
-										</div>
+						<Link href={"/p/" + member.Profile.Handle} key={member.Profile.AccountId} className="flex items-center gap-3 p-3 border rounded-lg">
+							<div className="w-12 h-12 relative rounded-lg overflow-hidden">
+								<Image
+									src={member.Profile.AvatarUrl || "/placeholder.svg"}
+									alt={member.Profile.Handle}
+									fill
+									className="object-cover"
+								/>
+							</div>
+							<div className="flex-1">
+								<div className="flex items-center gap-2">
+									<h4 className="font-medium">{member.Profile.Handle}</h4>
+								</div>
+							</div>
+							{
+								member.IsOwner && (
+									<div>
+										<Crown className="text-orange-500 h-5 w-5" />
 									</div>
-								</CardContent>
-							</Card>
+								)
+							}
 						</Link>
 					))}
 

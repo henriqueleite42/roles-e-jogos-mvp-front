@@ -1,15 +1,12 @@
 import { Header } from "@/components/header"
+import { CommunityDetails } from "./details"
+import { ProfileTabsContainer } from "./tabs-container"
 import { redirect } from "next/navigation";
 import { CommunityData, CommunityMemberData } from "@/types/api";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { getDescription } from "@/lib/description";
-import { Details } from "./details";
-import { TabsContainer } from "./tabs-container";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Pencil } from "lucide-react";
 
 async function getCommunity(handle: string): Promise<CommunityData | undefined> {
 	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/handle?handle=' + handle);
@@ -80,23 +77,11 @@ export default async function ProfilePage({ params }: { params: { handle: string
 			<Header title={community.Name} displayBackButton />
 
 			<main className="flex-1 container mx-auto py-6 px-4 mb-10">
-				{member?.IsOwner && (
-
-					<div className="flex justify-center align-center mb-5 gap-2">
-						<Button className="text-white" asChild>
-							<Link href={"/comunidades/" + community.Handle + "/editar"}>
-								<Pencil className="h-4 w-4" />
-								Editar comunidade
-							</Link>
-						</Button>
-					</div>
-				)}
-
 				{/* Profile Header */}
-				<Details community={community} member={member} />
+				<CommunityDetails community={community} member={member} />
 
 				{/* Tabs Navigation */}
-				<TabsContainer community={community} member={member} />
+				<ProfileTabsContainer community={community} member={member} />
 			</main>
 		</div>
 	)
