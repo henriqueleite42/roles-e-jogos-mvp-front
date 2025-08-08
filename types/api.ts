@@ -160,7 +160,7 @@ export interface EventData {
 		Address: string
 		IconUrl?: string
 	}
-	Organizer: MinimumCommunityData
+	Organizer: MinimumProfileData
 }
 
 export interface EventPlannedMatch {
@@ -229,7 +229,7 @@ export interface ResponseSearchEvents {
 }
 
 export interface MinimumProfileData {
-	AccountId: number
+	Id: number
 	Handle: string
 	AvatarUrl?: string
 }
@@ -344,7 +344,7 @@ export interface CommunityData {
 	}
 }
 
-export interface MinimumCommunityData {
+export interface MinimumProfileData {
 	Id: number,
 	Handle: string,
 	AvatarUrl?: string,
@@ -534,12 +534,11 @@ export interface ResponseAccountEventTicketsByEvent {
 }
 
 export interface ResponseListCommunitiesManagedByUser {
-	Data: Array<MinimumCommunityData>
+	Data: Array<MinimumProfileData>
 	Pagination: PaginationString
 }
 
 export interface ResponseValidateTicket {
-	Event: MinimumEventData
 	Profile: MinimumProfileData
 	Ticket: EventTicketData
 }

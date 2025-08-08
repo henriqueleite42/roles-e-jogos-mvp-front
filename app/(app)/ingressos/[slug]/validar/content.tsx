@@ -355,7 +355,7 @@ export default function ValidateTicketsPage({ event }: Params) {
 								<div className="text-2xl font-bold text-green-600">✓ Entrada Autorizada</div>
 								<div className="space-y-2">
 									<p className="text-lg font-semibold">{validationResult.Profile.Handle}</p>
-									<p className="text-sm text-muted-foreground">Evento: {validationResult.Event.Name}</p>
+									<p className="text-sm text-muted-foreground">Evento: {event.Name}</p>
 									<p className="text-xs text-muted-foreground">Ingresso: #{validationResult.Ticket.Id.toString().padStart(6, "0")}</p>
 								</div>
 							</div>

@@ -42,7 +42,7 @@ export function Confirmations({ event }: Props) {
 			<CardContent>
 				<div className="flex flex-wrap gap-2">
 					{data?.Data.map((person) => (
-						<div key={person.Profile.AccountId} className="flex items-center gap-2 border rounded-full px-3 py-1">
+						<div key={person.Profile.Id} className="flex items-center gap-2 border rounded-full px-3 py-1">
 							<Avatar className="w-6 h-6">
 								<AvatarImage src={person.Profile.AvatarUrl || "/placeholder.svg"} alt={person.Profile.Handle} />
 								<AvatarFallback className="text-xs">{person.Profile.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>

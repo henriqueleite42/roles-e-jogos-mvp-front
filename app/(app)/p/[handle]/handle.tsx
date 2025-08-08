@@ -22,7 +22,7 @@ const updateHandleSchema = z.object({
 	NewHandle: z
 		.string()
 		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
-		.max(24, 'Seu username pode ter no maximo 16 caracteres')
+		.max(24, 'Seu username pode ter no maximo 24 caracteres')
 		.regex(/^[a-z0-9_.]*$/, "Seu username pode conter apenas letras minusculas, numeros, _ e ."),
 }).refine((data) => {
 	if (!data.NewHandle) return false;
@@ -43,18 +43,26 @@ const updateHandleSchema = z.object({
 }).refine((data) => {
 	if (!data.NewHandle) return false;
 
-	if (
-		new RegExp("^\\d").test(data.NewHandle) ||
-		new RegExp("\\d$").test(data.NewHandle)
-	) {
+	if (new RegExp("^\\d").test(data.NewHandle)) {
 		return false;
 	}
 
 	return true;
 }, {
-	message: "Seu username não pode começar ou terminar com números",
+	message: "Seu username não pode começar com números",
 	path: ["NewHandle"]
-});
+}).refine((data) => {
+	if (!data.NewHandle) return false;
+
+	if (new RegExp("^\\d$").test(data.NewHandle)) {
+		return false;
+	}
+
+	return true;
+}, {
+	message: "Seu username não pode ser apenas números",
+	path: ["NewHandle"]
+})
 
 type UpdateHandleInput = z.infer<typeof updateHandleSchema>;
 

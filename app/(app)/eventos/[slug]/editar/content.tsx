@@ -45,9 +45,13 @@ const DEFAULT_MATCH_ID = "CREATED_NOW"
 const formSchema = z.object({
 	Name: z.string().min(3, {
 		message: "O nome do evento deve ter pelo menos 3 caracteres.",
+	}).max(128, {
+		message: "O nome deve ter no máximo 128 caracteres.",
 	}),
 	Description: z.string().min(10, {
 		message: "A descrição deve ter pelo menos 10 caracteres.",
+	}).max(5120, {
+		message: "A descrição deve ter no máximo 5120 caracteres.",
 	}),
 	Type: z.enum(["FREE", "PAID_ON_SITE", "BUY_ON_THIRD_PARTY"], {
 		required_error: "Selecione o tipo de evento.",
