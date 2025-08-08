@@ -21,9 +21,9 @@ interface Props {
 const updateHandleSchema = z.object({
 	NewHandle: z
 		.string()
-		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
-		.max(24, 'Seu username pode ter no maximo 24 caracteres')
-		.regex(/^[a-z0-9_.]*$/, "Seu username pode conter apenas letras minusculas, numeros, _ e ."),
+		.min(3, 'O identificador precisa ter pelo menos 3 caracteres')
+		.max(24, 'O identificador pode ter no maximo 24 caracteres')
+		.regex(/^[a-z0-9_.]*$/, "O identificador pode conter apenas letras minusculas, numeros, _ e ."),
 }).refine((data) => {
 	if (!data.NewHandle) return false;
 
@@ -38,23 +38,32 @@ const updateHandleSchema = z.object({
 
 	return true;
 }, {
-	message: "Seu username não pode começar ou terminar com _ ou .",
+	message: "O identificador não pode começar ou terminar com _ ou .",
 	path: ["NewHandle"]
 }).refine((data) => {
 	if (!data.NewHandle) return false;
 
-	if (
-		new RegExp("^\\d").test(data.NewHandle) ||
-		new RegExp("\\d$").test(data.NewHandle)
-	) {
+	if (new RegExp("^\\d").test(data.NewHandle)) {
 		return false;
 	}
 
 	return true;
 }, {
-	message: "Seu username não pode começar ou terminar com números",
+	message: "O identificador não pode começar com números",
+	path: ["NewHandle"]
+}).refine((data) => {
+	if (!data.NewHandle) return false;
+
+	if (new RegExp("^\\d$").test(data.NewHandle)) {
+		return false;
+	}
+
+	return true;
+}, {
+	message: "O identificador não pode ser apenas números",
 	path: ["NewHandle"]
 });
+
 type UpdateHandleInput = z.infer<typeof updateHandleSchema>;
 
 export function Handle({ community, member }: Props) {

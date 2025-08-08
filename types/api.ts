@@ -539,7 +539,6 @@ export interface ResponseListCommunitiesManagedByUser {
 }
 
 export interface ResponseValidateTicket {
-	Event: MinimumEventData
 	Profile: MinimumProfileData
 	Ticket: EventTicketData
 }

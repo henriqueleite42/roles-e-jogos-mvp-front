@@ -43,18 +43,26 @@ const updateHandleSchema = z.object({
 }).refine((data) => {
 	if (!data.NewHandle) return false;
 
-	if (
-		new RegExp("^\\d").test(data.NewHandle) ||
-		new RegExp("\\d$").test(data.NewHandle)
-	) {
+	if (new RegExp("^\\d").test(data.NewHandle)) {
 		return false;
 	}
 
 	return true;
 }, {
-	message: "Seu username não pode começar ou terminar com números",
+	message: "Seu username não pode começar com números",
 	path: ["NewHandle"]
-});
+}).refine((data) => {
+	if (!data.NewHandle) return false;
+
+	if (new RegExp("^\\d$").test(data.NewHandle)) {
+		return false;
+	}
+
+	return true;
+}, {
+	message: "Seu username não pode ser apenas números",
+	path: ["NewHandle"]
+})
 
 type UpdateHandleInput = z.infer<typeof updateHandleSchema>;
 

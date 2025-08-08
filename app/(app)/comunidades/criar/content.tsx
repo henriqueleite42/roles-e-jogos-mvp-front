@@ -77,16 +77,24 @@ const formSchema = z.object({
 }).refine((data) => {
 	if (!data.Handle) return false;
 
-	if (
-		new RegExp("^\\d").test(data.Handle) ||
-		new RegExp("\\d$").test(data.Handle)
-	) {
+	if (new RegExp("^\\d").test(data.Handle)) {
 		return false;
 	}
 
 	return true;
 }, {
-	message: "O identificador não pode começar ou terminar com números",
+	message: "O identificador não pode começar com números",
+	path: ["Handle"]
+}).refine((data) => {
+	if (!data.Handle) return false;
+
+	if (new RegExp("^\\d$").test(data.Handle)) {
+		return false;
+	}
+
+	return true;
+}, {
+	message: "O identificador não pode ser apenas números",
 	path: ["Handle"]
 });
 
