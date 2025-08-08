@@ -1,4 +1,4 @@
-import { ResponseListCommunitiesManagedByUser } from "@/types/api";
+import { Profile, ResponseListCommunitiesManagedByUser } from "@/types/api";
 import { FormCreateEvent } from "./form";
 import { cookies } from "next/headers"
 import { redirect } from 'next/navigation';
@@ -15,7 +15,10 @@ export default async function CreateEventPage() {
 		redirect("/conta")
 	}
 
-	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed', {
+	// Managed Communities
+
+
+	const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
 		method: 'GET',
 		cache: 'no-store',
 		headers: {
@@ -25,17 +28,30 @@ export default async function CreateEventPage() {
 		ok: false
 	} as Response));
 
-	if (!res.ok) {
-		console.error(await res.text())
+	if (!resAccount.ok) {
+		redirect("/conta")
+	}
+
+	const account = await resAccount.json() as Profile
+
+	// Managed Communities
+
+	const resManagedCommunities = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed', {
+		method: 'GET',
+		cache: 'no-store',
+		headers: {
+			Cookie: cookieStore.toString()
+		}
+	}).catch(() => ({
+		ok: false
+	} as Response));
+
+	if (!resManagedCommunities.ok) {
+		console.error(await resManagedCommunities.text())
 		redirect("/eventos")
 	}
 
-	const resJson = await res.json() as ResponseListCommunitiesManagedByUser
+	const resJson = await resManagedCommunities.json() as ResponseListCommunitiesManagedByUser
 
-	if (resJson.Data.length === 0) {
-		console.error(await res.text())
-		redirect("/eventos")
-	}
-
-	return <FormCreateEvent communities={resJson.Data} />
+	return <FormCreateEvent communities={resJson.Data} account={account} />
 }

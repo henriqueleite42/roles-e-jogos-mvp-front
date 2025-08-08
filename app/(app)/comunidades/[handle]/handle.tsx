@@ -22,7 +22,7 @@ const updateHandleSchema = z.object({
 	NewHandle: z
 		.string()
 		.min(3, 'Seu username precisa ter pelo menos 3 caracteres')
-		.max(24, 'Seu username pode ter no maximo 16 caracteres')
+		.max(24, 'Seu username pode ter no maximo 24 caracteres')
 		.regex(/^[a-z0-9_.]*$/, "Seu username pode conter apenas letras minusculas, numeros, _ e ."),
 }).refine((data) => {
 	if (!data.NewHandle) return false;
@@ -126,7 +126,6 @@ export function Handle({ community, member }: Props) {
 											placeholder="Ex: rolesejogos"
 											onChange={(e) => {
 												const onlyAllowed = e.target.value.toLowerCase().replace(/[^a-z0-9_.]/g, '');
-
 												field.onChange(onlyAllowed);
 											}}
 										/>

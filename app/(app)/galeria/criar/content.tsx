@@ -47,7 +47,7 @@ const imageFormSchema = z.object({
 	Peoples: z
 		.array(
 			z.object({
-				AccountId: z.coerce.number().int(),
+				Id: z.coerce.number().int(),
 				Handle: z.string(),
 				AvatarUrl: z.string().optional().nullable(),
 			}),
@@ -311,7 +311,7 @@ export function CreateImagePage() {
 				locationId = body.Location.Id
 			}
 			for (const person of body.Peoples) {
-				peopleIds.push(person.AccountId)
+				peopleIds.push(person.Id)
 			}
 
 			await new Promise((res, rej) => {
@@ -741,11 +741,11 @@ export function CreateImagePage() {
 													<CommandGroup>
 														{(peoplesQuery?.Data || []).map((people) => {
 															// Check if people is already selected
-															const isSelected = form.getValues().Peoples?.some((g) => g.AccountId === people.AccountId)
+															const isSelected = form.getValues().Peoples?.some((g) => g.Id === people.Id)
 
 															return (
 																<CommandItem
-																	key={people.AccountId}
+																	key={people.Id}
 																	value={people.Handle}
 																	disabled={isSelected}
 																	onSelect={() => {
@@ -802,7 +802,7 @@ export function CreateImagePage() {
 											{field.value && field.value.length > 0 ? (
 												<div className="grid grid-cols-1 md:grid-cols-2 gap-2">
 													{field.value.map((people, index) => (
-														<div key={people.AccountId} className="flex items-center gap-2 border rounded-md p-2 bg-muted/20">
+														<div key={people.Id} className="flex items-center gap-2 border rounded-md p-2 bg-muted/20">
 															{people.AvatarUrl && (
 																<div className="h-8 w-8 relative flex-shrink-0">
 																	<NextImage

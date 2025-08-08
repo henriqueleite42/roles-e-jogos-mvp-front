@@ -72,7 +72,7 @@ export const GameOwners = ({ game }: Params) => {
 						}
 						<div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
 							{allOwners.map((owner) => (
-								<div key={owner.AccountId} className="flex items-center gap-2 p-2 border rounded-lg">
+								<div key={owner.Id} className="flex items-center gap-2 p-2 border rounded-lg">
 									<Avatar className="w-8 h-8">
 										<AvatarImage src={owner.AvatarUrl || "/placeholder.svg"} alt={owner.Handle} />
 										<AvatarFallback className="text-xs">{owner.Handle.substring(0, 2).toUpperCase()}</AvatarFallback>

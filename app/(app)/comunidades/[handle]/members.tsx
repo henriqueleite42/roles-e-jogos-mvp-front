@@ -126,8 +126,8 @@ export function Members({ community }: { community: CommunityData }) {
 						</div>
 					)}
 					{allItems.map((member) => (
-						<Link href={"/p/" + member.Profile.Handle} key={member.Profile.AccountId}>
-							<Card key={member.Profile.AccountId} className="hover:shadow-md transition-shadow">
+						<Link href={"/p/" + member.Profile.Handle} key={member.Profile.Id}>
+							<Card key={member.Profile.Id} className="hover:shadow-md transition-shadow">
 								<CardContent className="p-4">
 									<div className="flex items-center gap-4">
 										<Avatar className="w-12 h-12">
