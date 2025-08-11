@@ -35,7 +35,7 @@ import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch, MinimumEventData } from "@/types/api"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
@@ -142,6 +142,7 @@ interface Params {
 
 export default function EditEventPage({ event, confirmationsCount, plannedMatches }: Params) {
 	const router = useRouter()
+	const queryClient = useQueryClient()
 	const { toast } = useToast()
 
 	const [eventImage, setEventImage] = useState<File | null>(null)
@@ -233,6 +234,7 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 			}
 		},
 		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["events"] })
 			router.push("/eventos")
 		},
 		onError: (err) => {
@@ -372,6 +374,7 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 			return await res.json() as MinimumEventData
 		},
 		onSuccess: (event) => {
+			queryClient.invalidateQueries({ queryKey: ["events"] })
 			router.push(`/eventos/${event.Slug}`)
 		},
 		onError: (err) => {
