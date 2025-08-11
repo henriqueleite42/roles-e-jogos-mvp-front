@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -34,7 +34,7 @@ import { useDebounce } from "@/hooks/use-debounce"
 import { useToast } from "@/hooks/use-toast"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch, MinimumEventData } from "@/types/api"
+import { EventData, ResponseSearchGames, ResponseSearchLocations, MinimumGameData, EventPlannedMatch, MinimumEventData, MinimumProfileData, Profile } from "@/types/api"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { uploadImage } from "@/lib/api/upload-image"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -72,6 +72,17 @@ const formSchema = z.object({
 		.nullable(),
 	Price: z.coerce.number().min(1, "O preço deve ser maior ou igual a R$ 1,00.").optional().nullable(),
 	ExternalUrl: z.string().url().optional().nullable(),
+	Organizer: z.object(
+		{
+			Id: z.number().int(),
+			Handle: z.string(),
+			AvatarUrl: z.string().optional(),
+			Type: z.enum(["ACCOUNT", "COMMUNITY"])
+		},
+		{
+			required_error: "Selecione um organizador para o evento.",
+		},
+	),
 	Location: z.object(
 		{
 			Id: z.coerce.number().int(),
@@ -135,12 +146,14 @@ interface MutationParams extends FormValues {
 }
 
 interface Params {
+	account: Profile
 	event: EventData
 	confirmationsCount: number
 	plannedMatches: Array<EventPlannedMatch>
+	communities: Array<MinimumProfileData>
 }
 
-export default function EditEventPage({ event, confirmationsCount, plannedMatches }: Params) {
+export default function EditEventPage({ account, event, confirmationsCount, plannedMatches, communities }: Params) {
 	const router = useRouter()
 	const queryClient = useQueryClient()
 	const { toast } = useToast()
@@ -155,6 +168,21 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 
 	const debouncedLocationQuery = useDebounce(locationQuery)
 	const debouncedGameQuery = useDebounce(gameQuery)
+
+	const organizers = useMemo<Array<FormValues["Organizer"]>>(() => ([
+		{
+			Id: account.AccountId,
+			AvatarUrl: account.AvatarUrl,
+			Handle: account.Handle,
+			Type: "ACCOUNT",
+		} as FormValues["Organizer"],
+		...communities.map((c) => ({
+			Id: c.Id,
+			AvatarUrl: c.AvatarUrl,
+			Handle: c.Handle,
+			Type: "COMMUNITY",
+		} as FormValues["Organizer"]))
+	]), [communities, account])
 
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data: locationsData, isLoading: isSearchingLocations } = useQuery<ResponseSearchLocations>({
@@ -258,6 +286,10 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 				Description: body.Description,
 				Capacity: body.Capacity,
 				LocationId: body.Location.Id,
+			}
+
+			if (body.Organizer.Type === "COMMUNITY") {
+				reqBody.CommunityId = body.Organizer.Id
 			}
 
 			if (body.Type !== "FREE" && body.Price) {
@@ -417,6 +449,12 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 			Price: event.Price ? event.Price / 100 : undefined,
 			ExternalUrl: event.ExternalUrl,
 			StartDate: new Date(event.StartDate),
+			Organizer: {
+				AvatarUrl: event.Organizer.AvatarUrl,
+				Handle: event.Organizer.Handle,
+				Id: event.Organizer.Id,
+				Type: event.Organizer.Id === account.AccountId ? "ACCOUNT" : "COMMUNITY"
+			},
 			PlannedMatches: plannedMatches.map(i => {
 				const pm = {
 					Id: String(i.Id),
@@ -574,6 +612,85 @@ export default function EditEventPage({ event, confirmationsCount, plannedMatche
 							{/* Event Basic Information */}
 							<div className="space-y-6">
 								<h3 className="text-lg font-semibold">Informações Básicas</h3>
+
+								{/* Organizer */}
+								<FormField
+									control={form.control}
+									name="Organizer"
+									render={({ field }) => (
+										<FormItem className="flex flex-col">
+											<FormLabel>Organizador</FormLabel>
+											<Popover>
+												<PopoverTrigger asChild>
+													<FormControl>
+														<Button
+															variant="outline"
+															role="combobox"
+															className={cn("w-full justify-between", !field.value && "text-muted-foreground")}
+														>
+															{field.value ? (
+																<div className="flex items-center gap-2 text-left">
+																	{field.value.AvatarUrl && (
+																		<div className="h-6 w-6 relative flex-shrink-0">
+																			<Image
+																				src={field.value.AvatarUrl || "/placeholder.svg"}
+																				alt={field.value.Handle}
+																				fill
+																				className="object-cover rounded-full"
+																			/>
+																		</div>
+																	)}
+																	<div className="truncate">
+																		<div>{field.value.Handle}</div>
+																	</div>
+																</div>
+															) : (
+																<div className="flex items-center gap-2">
+																	<Users className="h-4 w-4" />
+																	<span>Selecionar organizador...</span>
+																</div>
+															)}
+														</Button>
+													</FormControl>
+												</PopoverTrigger>
+												<PopoverContent className="w-[300px] p-0" align="start">
+													<Command>
+														<CommandList>
+															<CommandGroup>
+																{organizers.map((organizer) => (
+																	<CommandItem
+																		key={organizer.Id}
+																		value={organizer.Handle}
+																		onSelect={() => {
+																			form.setValue("Organizer", organizer, { shouldValidate: true })
+																		}}
+																		className="flex items-center gap-3 p-3"
+																	>
+																		{organizer.AvatarUrl && (
+																			<div className="h-8 w-8 relative flex-shrink-0">
+																				<Image
+																					src={organizer.AvatarUrl || "/placeholder.svg"}
+																					alt={organizer.Handle}
+																					fill
+																					className="object-cover rounded-full"
+																				/>
+																			</div>
+																		)}
+																		<div className="flex flex-col">
+																			<div className="font-medium">{organizer.Handle}</div>
+																		</div>
+																	</CommandItem>
+																))}
+															</CommandGroup>
+														</CommandList>
+													</Command>
+												</PopoverContent>
+											</Popover>
+											<FormDescription>Selecione quem está organizando este evento.</FormDescription>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 
 								{/* Event Type */}
 								<FormField

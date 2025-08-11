@@ -15,8 +15,7 @@ export default async function CreateEventPage() {
 		redirect("/conta")
 	}
 
-	// Managed Communities
-
+	// Account
 
 	const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
 		method: 'GET',

@@ -32,31 +32,42 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		redirect("/eventos")
 	}
 
-	// User managed communities
+	// Account
 
-	var managedCommunities = [] as Array<number>
-	if (cookieStore.get(process.env.SESSION_COOKIE_NAME!)) {
-		const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed', {
-			method: 'GET',
-			cache: 'no-store',
-			headers: {
-				Cookie: cookieStore.toString()
-			}
-		}).catch(() => ({
-			ok: false
-		} as Response));
-
-		if (res.ok) {
-			const resJson = await res.json() as ResponseListCommunitiesManagedByUser
-			managedCommunities = resJson.Data.map(c => c.Id)
-		} else {
-			console.error(await res.text())
+	const resAccount = await fetch(process.env.NEXT_PUBLIC_API_URL + '/profiles/me', {
+		method: 'GET',
+		cache: 'no-store',
+		headers: {
+			Cookie: cookieStore.toString()
 		}
+	}).catch(() => ({
+		ok: false
+	} as Response));
+
+	if (!resAccount.ok) {
+		redirect("/conta")
 	}
 
-	if (!managedCommunities.includes(event.Organizer.Id)) {
+	const account = await resAccount.json() as Profile
+
+	// Managed Communities
+
+	const resManagedCommunities = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/managed', {
+		method: 'GET',
+		cache: 'no-store',
+		headers: {
+			Cookie: cookieStore.toString()
+		}
+	}).catch(() => ({
+		ok: false
+	} as Response));
+
+	if (!resManagedCommunities.ok) {
+		console.error(await resManagedCommunities.text())
 		redirect("/eventos")
 	}
+
+	const managedCommunities = await resManagedCommunities.json() as ResponseListCommunitiesManagedByUser
 
 	// Ticket Buyers
 
@@ -94,7 +105,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		<>
 			<Header title="Evento" displayBackButton />
 
-			<Content event={event} plannedMatches={plannedMatches} confirmationsCount={confirmationsCount} />
+			<Content
+				account={account}
+				event={event}
+				plannedMatches={plannedMatches}
+				confirmationsCount={confirmationsCount}
+				communities={managedCommunities.Data}
+			/>
 		</>
 	)
 }
