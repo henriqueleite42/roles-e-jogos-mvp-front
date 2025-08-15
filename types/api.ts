@@ -31,6 +31,14 @@ export type CommunityAffiliationType = "PUBLIC" | "INVITE_ONLY"
 
 export type EventTicketStatus = "WAITING_PAYMENT" | "PAID" | "ATTENDED"
 
+export enum CommunityPermissions {
+	Owner = 0,
+	Admin = 1,
+	FinanceAndLegal = 2,
+	EventManage = 3,
+	TicketValidate = 4,
+}
+
 export interface ResponseGetNextEvents {
 	Data: Array<MinimumEventDataWithLocation>
 	Pagination: {
@@ -352,11 +360,7 @@ export interface MinimumProfileData {
 
 export interface CommunityMemberData {
 	Profile: MinimumProfileData
-	Role: {
-		Id: number
-		Name: string
-		Permissions: string
-	}
+	Role: MinimumCommunityRoleData
 	IsOwner: boolean
 	MemberSince: string
 }
@@ -368,6 +372,30 @@ export interface LocationMarker {
 	Latitude: number
 	Longitude: number
 	Kind: LocationKind
+}
+
+export interface CommunityRole {
+	Id: number
+	CommunityId: number
+	Name: string
+	Permissions: string
+	IsOwnerRole: boolean
+	IsDefaultRole: boolean
+	CreatedAt: boolean
+}
+
+export interface CommunityRoleData {
+	Id: number
+	Name: string
+	Permissions: string
+	IsOwnerRole: boolean
+	IsDefaultRole: boolean
+}
+
+export interface MinimumCommunityRoleData {
+	Id: number
+	Name: string
+	Permissions: string
 }
 
 export interface ResponseGetGallery {
@@ -541,4 +569,9 @@ export interface ResponseListCommunitiesManagedByUser {
 export interface ResponseValidateTicket {
 	Profile: MinimumProfileData
 	Ticket: EventTicketData
+}
+
+export interface ResponseListCommunityRoles {
+	Data: Array<CommunityRole>
+	Pagination: PaginationId
 }

@@ -9,7 +9,7 @@ import { Details } from "./details";
 import { TabsContainer } from "./tabs-container";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Pencil } from "lucide-react";
+import { Pencil, User } from "lucide-react";
 
 async function getCommunity(handle: string): Promise<CommunityData | undefined> {
 	const res = await fetch(process.env.NEXT_PUBLIC_API_URL + '/communities/handle?handle=' + handle);
@@ -81,12 +81,18 @@ export default async function ProfilePage({ params }: { params: { handle: string
 
 			<main className="flex-1 container mx-auto py-6 px-4 mb-10">
 				{member?.IsOwner && (
-
 					<div className="flex justify-center align-center mb-5 gap-2">
 						<Button className="text-white" asChild>
 							<Link href={"/comunidades/" + community.Handle + "/editar"}>
 								<Pencil className="h-4 w-4" />
 								Editar comunidade
+							</Link>
+						</Button>
+
+						<Button className="text-white" asChild>
+							<Link href={"/comunidades/" + community.Handle + "/membros"}>
+								<User className="h-4 w-4" />
+								Editar membros
 							</Link>
 						</Button>
 					</div>

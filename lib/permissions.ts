@@ -4,11 +4,7 @@ export function isBitSet(base64Str: string, bitIndex: number) {
 	const bytes = Uint8Array.from(binaryStr, c => c.charCodeAt(0));
 
 	const byteIndex = Math.floor(bitIndex / 8);
-	const bitPosition = bitIndex % 8;
+	const bitPosition = 7 - (bitIndex % 8);
 
-	// Out of bounds check
-	if (byteIndex >= bytes.length) return false;
-
-	// Check if the bit is set
 	return (bytes[byteIndex] & (1 << bitPosition)) !== 0;
 }
