@@ -1,29 +1,29 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Edit, Eye, Plus, Shield, Trash2 } from "lucide-react"
+import { Edit, Eye, Loader2, Plus, Shield } from "lucide-react"
 import Link from "next/link"
-import { CommunityData, ResponseListCommunityRoles } from "@/types/api"
-import { getRoleIcon } from "../membros/content"
+import { CommunityData, CommunityPermissions, ResponseListCommunityRoles } from "@/types/api"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import { isBitSet } from "@/lib/permissions"
+import { getRoleIcon } from "../../utils"
 
 interface Props {
 	community: CommunityData
 }
 
-export function getRoleColorClass(permissions: string) {
+function getRoleColorClass(permissions: string) {
 	if (!permissions) {
 		return "bg-gray-100"
 	}
 
-	if (isBitSet(permissions, 0)) {
+	if (isBitSet(permissions, CommunityPermissions.Owner)) {
 		return "bg-primary text-white"
 	}
-	if (isBitSet(permissions, 1)) {
+	if (isBitSet(permissions, CommunityPermissions.Admin)) {
 		return "bg-blue-800 text-blue-100"
 	}
 
@@ -33,13 +33,13 @@ export function getRoleColorClass(permissions: string) {
 export default function CommunityRolesPage({ community }: Props) {
 	// Use TanStack Query for data fetching with infinite scroll
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } = useInfiniteQuery<ResponseListCommunityRoles>({
-		queryKey: ["community-roles", community.Id],
+		queryKey: ["community-roles", community?.Id],
 		queryFn: async ({ pageParam = null }) => {
 			const queryObj: Record<string, string> = {
 				communityId: String(community.Id),
 			}
 
-			if (pageParam) {
+			if (pageParam && pageParam !== null) {
 				queryObj.after = String(pageParam)
 			}
 
@@ -53,14 +53,20 @@ export default function CommunityRolesPage({ community }: Props) {
 				throw new Error(`Erro ao pegar dados da API: ${response.status}`)
 			}
 
-			return response.json()
+			const output = await response.json() as ResponseListCommunityRoles
+
+			return {
+				Data: output?.Data || [],
+				Pagination: output?.Pagination || {}
+			}
 		},
 		getNextPageParam: (lastPage) => {
-			// Return undefined if there are no more pages or if nextCursor is not provided
-			return lastPage.Pagination.Next || undefined
+			if (!lastPage) return null
+			if (!lastPage.Pagination) return null
+			return lastPage.Pagination.Next ?? null
 		},
 		initialPageParam: null,
-		enabled: Boolean(community.Id)
+		enabled: Boolean(community?.Id)
 	})
 
 	// Process all items from all pages
@@ -68,9 +74,31 @@ export default function CommunityRolesPage({ community }: Props) {
 		if (!data) return []
 
 		// Flatten the pages array and extract items from each page
-		return data.pages.flatMap((page) => page.Data || [])
+		return data?.pages?.flatMap((page) => page.Data || [])
 	}, [data])
 
+	// Observer for infinite scroll
+	const observerTarget = useRef<HTMLDivElement | null>(null)
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		if (!hasNextPage || !observerTarget.current || isFetchingNextPage) return
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting) {
+					fetchNextPage()
+				}
+			},
+			{ threshold: 0.5 },
+		)
+
+		observer.observe(observerTarget.current)
+
+		return () => {
+			observer.disconnect()
+		}
+	}, [hasNextPage, isFetchingNextPage])
 
 	if (isPending) {
 		return (
@@ -97,72 +125,86 @@ export default function CommunityRolesPage({ community }: Props) {
 					<h2 className="text-xl font-semibold">Gerenciar Cargos</h2>
 					<p className="text-muted-foreground">Configure os cargos e suas permissões</p>
 				</div>
-				<Button className="text-white" disabled>
-					<Plus className="h-4 w-4 mr-2" />
-					Criar Cargo
+				<Button className="text-white" disabled asChild>
+					<Link href={`/comunidades/${community.Handle}/cargos/criar`}>
+						<Plus className="h-4 w-4 mr-2" />
+						Criar Cargo
+					</Link>
 				</Button>
 			</div>
 
 			{/* Roles List */}
-			<div className="space-y-4">
-				{allItems.map((role) => (
-					<Card key={role.Id} className="hover:shadow-md transition-shadow">
-						<CardContent className="p-6 ">
-							<div className="flex flex-col gap-2">
-								<div className="flex justify-start items-center gap-4">
-									<div className="flex items-center gap-3">
-										<div className={`w-3 h-3 rounded-full ${getRoleColorClass(role.Permissions)}`} />
-										<div className="p-2 bg-gray-100 rounded-lg">{getRoleIcon(role.Permissions)}</div>
-									</div>
-
-									<div className="flex-1">
-										<div className="flex items-center gap-2 mb-1">
-											<h3 className="text-lg font-semibold">{role.Name}</h3>
-											{(role.IsDefaultRole || role.IsOwnerRole) && (
-												<Badge variant="secondary" className="text-xs">
-													Padrão
-												</Badge>
-											)}
+			{allItems?.length > 0 && (
+				<div className="space-y-4">
+					{allItems.map((role) => (
+						<Card key={role.Id} className="hover:shadow-md transition-shadow">
+							<CardContent className="p-6 ">
+								<div className="flex flex-col gap-2">
+									<div className="flex justify-start items-center gap-4">
+										<div className="flex items-center gap-3">
+											<div className={`w-3 h-3 rounded-full ${getRoleColorClass(role.Permissions)}`} />
+											<div className="p-2 bg-gray-100 rounded-lg">{getRoleIcon(role.Permissions)}</div>
 										</div>
-										{/* <p className="text-muted-foreground text-sm mb-2">{role.description}</p> */}
+
+										<div className="flex-1">
+											<div className="flex items-center gap-2 mb-1">
+												<h3 className="text-lg font-semibold">{role.Name}</h3>
+												{(role.IsDefaultRole || role.IsOwnerRole) && (
+													<Badge variant="secondary" className="text-xs">
+														Padrão
+													</Badge>
+												)}
+											</div>
+											{/* <p className="text-muted-foreground text-sm mb-2">{role.description}</p> */}
+										</div>
 									</div>
-								</div>
 
-								<div className="flex items-center justify-end gap-2">
-									{(role.IsDefaultRole || role.IsOwnerRole) && (
-										<Button variant="outline" size="sm" asChild>
-											<Link href={`/comunidades/${community.Handle}/cargos/${role.Id}`}>
-												<Eye className="h-4 w-4 mr-2" />
-												Ver Permissões
-											</Link>
-										</Button>
-									)}
-									{(!role.IsDefaultRole && !role.IsOwnerRole) && (
-										<Button variant="outline" size="sm" asChild>
-											<Link href={`/comunidades/${community.Handle}/cargos/${role.Id}`}>
-												<Edit className="h-4 w-4 mr-2" />
-												Editar Permissões
-											</Link>
-										</Button>
-									)}
+									<div className="flex items-center justify-end gap-2">
+										{(role.IsDefaultRole || role.IsOwnerRole) && (
+											<Button variant="outline" size="sm" asChild>
+												<Link href={`/comunidades/${community.Handle}/cargos/${role.Id}`}>
+													<Eye className="h-4 w-4 mr-2" />
+													Ver Permissões
+												</Link>
+											</Button>
+										)}
+										{(!role.IsDefaultRole && !role.IsOwnerRole) && (
+											<Button variant="outline" size="sm" asChild>
+												<Link href={`/comunidades/${community.Handle}/cargos/${role.Id}`}>
+													<Edit className="h-4 w-4 mr-2" />
+													Editar Permissões
+												</Link>
+											</Button>
+										)}
 
 
-									<Button
+										{/* <Button
 										variant="outline"
 										size="sm"
 										className="text-red-600 hover:text-red-700 bg-transparent"
 										disabled={role.IsDefaultRole || role.IsOwnerRole}
 									>
 										<Trash2 className="h-4 w-4" />
-									</Button>
+									</Button> */}
+									</div>
 								</div>
-							</div>
-						</CardContent>
-					</Card>
-				))}
-			</div>
+							</CardContent>
+						</Card>
+					))}
 
-			{allItems.length === 0 && (
+					{/* Infinite scroll observer element */}
+					<div ref={observerTarget} className="w-full py-4 flex justify-center">
+						{isFetchingNextPage && (
+							<div className="\flex items-center gap-2">
+								<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+								<span className="text-sm text-muted-foreground">Carregando mais jogos...</span>
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+
+			{allItems?.length === 0 && (
 				<Card>
 					<CardContent className="py-12 text-center">
 						<Shield className="h-12 w-12 text-gray-400 mx-auto mb-4" />

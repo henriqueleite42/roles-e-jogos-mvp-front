@@ -38,8 +38,7 @@ async function getMember(cookies: ReadonlyRequestCookies, communityId: number): 
 }
 
 export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
-	const { handle } = await params
-	const community = await getCommunity(handle)
+	const community = await getCommunity(params.handle)
 
 	if (!community) {
 		return {
@@ -62,6 +61,7 @@ export async function generateMetadata({ params }: { params: { handle: string } 
 
 export default async function Page({ params }: { params: { handle: string } }) {
 	const { handle } = await params
+
 	const cookieStore = await cookies();
 
 	const community = await getCommunity(handle)
@@ -73,14 +73,14 @@ export default async function Page({ params }: { params: { handle: string } }) {
 	const member = await getMember(cookieStore, community.Id)
 
 	if (!member) {
-		redirect('/comunidades')
+		redirect('/comunidades/' + handle)
 	}
 
 	return (
 		<div className="flex flex-col min-h-screen">
 			<Header title={community.Name} displayBackButton />
 
-			<Content community={community} member={member} />
+			<Content community={community} />
 		</div>
 	)
 }

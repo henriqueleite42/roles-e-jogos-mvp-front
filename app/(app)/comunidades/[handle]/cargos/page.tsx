@@ -38,7 +38,8 @@ async function getMember(cookies: ReadonlyRequestCookies, communityId: number): 
 }
 
 export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
-	const community = await getCommunity(params.handle)
+	const { handle } = await params
+	const community = await getCommunity(handle)
 
 	if (!community) {
 		return {
@@ -67,12 +68,14 @@ export default async function Page({ params }: { params: { handle: string } }) {
 
 	if (!community) {
 		redirect('/comunidades')
+		return
 	}
 
 	const member = await getMember(cookieStore, community.Id)
 
 	if (!member) {
 		redirect('/comunidades')
+		return
 	}
 
 	return (

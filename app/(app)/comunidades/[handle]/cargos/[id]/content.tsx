@@ -44,7 +44,7 @@ interface Props {
 	roleId: number
 }
 
-const categories: PermissionCategory[] = [
+export const categories: PermissionCategory[] = [
 	{
 		name: "Administrativo",
 		description: "Permissões relacionadas à administração da comunidade",
@@ -257,8 +257,8 @@ export default function Content({ community, roleId }: Props) {
 						<Card key={category.name}>
 							<CardHeader>
 								<div className="flex items-center gap-3">
-									<div className="p-2 bg-orange-100 rounded-lg">
-										<category.icon className="h-5 w-5 text-orange-600" />
+									<div className="p-2 bg-primary rounded-lg">
+										<category.icon className="h-5 w-5 text-white" />
 									</div>
 									<div className="flex-1">
 										<CardTitle className="text-lg">{category.name}</CardTitle>

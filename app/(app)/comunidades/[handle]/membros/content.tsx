@@ -4,33 +4,18 @@ import { useEffect, useMemo, useRef } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Users, Crown, Shield, User, Calendar, Pencil } from "lucide-react"
+import { Users, Crown, Pencil, Loader2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import { CommunityData, CommunityMemberData, CommunityRole, ResponseListCommunityMembers, ResponseListCommunityRoles } from "@/types/api"
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { isBitSet } from "@/lib/permissions"
 import { getRoleBadge } from "../members"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { getRoleIcon } from "../../utils"
 
 interface Props {
 	member: CommunityMemberData
 	community: CommunityData
-}
-
-export const getRoleIcon = (permissions?: string) => {
-	if (!permissions) {
-		return null
-	}
-
-	if (isBitSet(permissions, 0)) {
-		return <Crown className="h-4 w-4" />
-	}
-	if (isBitSet(permissions, 1)) {
-		return <Shield className="h-4 w-4" />
-	}
-
-	return <User className="h-4 w-4" />
 }
 
 export default function Content({ community, member }: Props) {
@@ -78,7 +63,7 @@ export default function Content({ community, member }: Props) {
 	}, [data])
 
 	const { data: roles, isLoading } = useQuery<ResponseListCommunityRoles>({
-		queryKey: ["community-roles", community.Id],
+		queryKey: ["community-all-roles", community.Id],
 		queryFn: async () => {
 			const query = new URLSearchParams({
 				limit: String(100),
@@ -152,7 +137,7 @@ export default function Content({ community, member }: Props) {
 				throw new Error(`Fail to update member role ${res.status}`)
 			}
 
-			return roles?.Data.find(r => String(r.Id) === newRoleIdStr)
+			return roles?.Data?.find(r => String(r.Id) === newRoleIdStr)
 		},
 		onSuccess: (role?: CommunityRole) => {
 			if (role) {
@@ -290,6 +275,16 @@ export default function Content({ community, member }: Props) {
 								</p>
 							</div>
 						)}
+
+						{/* Infinite scroll observer element */}
+						<div ref={observerTarget} className="w-full py-4 flex justify-center">
+							{isFetchingNextPage && (
+								<div className="flex items-center gap-2">
+									<Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+									<span className="text-sm text-muted-foreground">Carregando mais jogos...</span>
+								</div>
+							)}
+						</div>
 					</div>
 				</CardContent>
 			</Card>
