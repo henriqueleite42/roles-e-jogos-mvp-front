@@ -318,16 +318,12 @@ export function CreateImagePage() {
 				const img = new Image()
 				img.onload = async () => {
 					var filePath = ""
-					if (process.env.NEXT_PUBLIC_NODE_ENV === "development") {
-						filePath = "/foo/bar.jpg"
-					} else {
-						const { FilePath } = await uploadImage({
-							FileName: body.Image!.name,
-							ImageBlob: body.Image!,
-							Kind: "MEDIA_IMAGE"
-						})
-						filePath = FilePath
-					}
+					const { FilePath } = await uploadImage({
+						FileName: body.Image!.name,
+						ImageBlob: body.Image!,
+						Kind: "MEDIA_IMAGE"
+					})
+					filePath = FilePath
 
 					const response = await fetch(process.env.NEXT_PUBLIC_API_URL + '/medias', {
 						method: 'POST',

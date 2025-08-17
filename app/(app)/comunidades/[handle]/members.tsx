@@ -4,28 +4,28 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { isBitSet } from "@/lib/permissions";
-import { CommunityData, ResponseListCommunityMembers } from "@/types/api";
+import { CommunityData, MinimumCommunityRoleData, ResponseListCommunityMembers } from "@/types/api";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { AlertCircle, Loader2, Users } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useRef } from "react";
 
-const getRoleBadge = (permissions?: string) => {
-	if (!permissions) {
+export const getRoleBadge = (role?: MinimumCommunityRoleData) => {
+	if (!role?.Permissions) {
 		return null
 	}
 
-	if (isBitSet(permissions, 0)) {
+	if (isBitSet(role.Permissions, 0)) {
 		return (
-			<Badge variant="destructive" className="text-xs">
-				Criador
+			<Badge className="text-xs">
+				{role.Name}
 			</Badge>
 		)
 	}
-	if (isBitSet(permissions, 1)) {
+	if (isBitSet(role.Permissions, 1)) {
 		return (
-			<Badge variant="secondary" className="text-xs bg-blue-100 text-blue-800">
-				Admin
+			<Badge variant="secondary" className="text-xs bg-blue-800 text-blue-100">
+				{role.Name}
 			</Badge>
 		)
 	}
@@ -143,7 +143,7 @@ export function Members({ community }: { community: CommunityData }) {
 										<div className="flex-1">
 											<div className="flex items-center gap-2 mb-1">
 												<h3 className="font-semibold">{member.Profile.Handle}</h3>
-												{getRoleBadge(member.Role.Permissions)}
+												{getRoleBadge(member.Role)}
 											</div>
 											<p className="text-gray-600 text-sm">@{member.Profile.Handle}</p>
 										</div>
