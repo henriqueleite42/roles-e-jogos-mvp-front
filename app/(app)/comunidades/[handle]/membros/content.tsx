@@ -120,12 +120,12 @@ export default function Content({ community, member }: Props) {
 	}, [hasNextPage, isFetchingNextPage])
 
 	const mutation = useMutation({
-		mutationFn: async ({ memberId, newRoleIdStr }: { memberId: number, newRoleIdStr: string }) => {
+		mutationFn: async ({ member, newRoleIdStr }: { member: CommunityMemberData, newRoleIdStr: string }) => {
 			const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/communities/members/role`, {
 				method: 'PATCH',
 				body: JSON.stringify({
 					CommunityId: community.Id,
-					MemberId: memberId,
+					MemberId: member.Profile.Id,
 					NewRoleId: parseInt(newRoleIdStr, 10),
 				}),
 				headers: { 'Content-Type': 'application/json' },
@@ -137,9 +137,12 @@ export default function Content({ community, member }: Props) {
 				throw new Error(`Fail to update member role ${res.status}`)
 			}
 
-			return roles?.Data?.find(r => String(r.Id) === newRoleIdStr)
+			return {
+				member,
+				role: roles?.Data?.find(r => String(r.Id) === newRoleIdStr),
+			}
 		},
-		onSuccess: (role?: CommunityRole) => {
+		onSuccess: ({ member, role }: { member: CommunityMemberData, role?: CommunityRole }) => {
 			if (role) {
 				toast({
 					title: "Cargo atualizado!",
@@ -243,7 +246,7 @@ export default function Content({ community, member }: Props) {
 										<Select
 											value={String(member.Role.Id)}
 											onValueChange={(value: string) => mutation.mutate({
-												memberId: member.Profile.Id,
+												member: member,
 												newRoleIdStr: value
 											})}
 										>
